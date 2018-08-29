@@ -1,1 +1,1 @@
-# Integrated-Visualization-of-Sports-Analytics-Results
+# Integrated Visualization of Sports Analytics Results

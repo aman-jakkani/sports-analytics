@@ -1,0 +1,6 @@
+package edu.sportanalytics.guiinterface;
+
+public class RestServer
+{
+
+}

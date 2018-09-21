@@ -1,0 +1,24 @@
+<!doctype html>
+<html>
+<head>
+    <title>RestDemo</title>
+</head>
+    <body>
+        <script>
+            
+            function loadResource()
+            {
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        document.getElementById("1").innerHTML = xhttp.responseText;
+                    }
+                };
+                xhttp.open("GET", "/rest/DemoRestResource", true);
+                xhttp.send();
+            }
+        </script>
+        <input type="button" value="Load Resource" onclick="loadResource();"/>
+        <div id="1"> not loaded </div>
+    </body>
+</html>

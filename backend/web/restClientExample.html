@@ -14,7 +14,7 @@
                         document.getElementById("1").innerHTML = xhttp.responseText;
                     }
                 };
-                xhttp.open("GET", "/rest/DemoRestResource", true);
+                xhttp.open("GET", "/rest/DemoRestResource?caller=testcaller", true);
                 xhttp.send();
             }
         </script>

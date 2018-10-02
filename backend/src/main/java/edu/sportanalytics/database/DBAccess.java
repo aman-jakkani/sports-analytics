@@ -11,10 +11,9 @@ public class DBAccess {
 	private static Connection conn;
 	private static ResultSet rs;
 
-	public DBAccess() {
+	private DBAccess() {
 		try {
-			conn = DriverManager.getConnection("jdbc:oracle:thin:@dboracleserv.inform.hs-hannover.de:1521:db01", "user",
-					"password");
+			conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "system", "sports-analytics");
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
@@ -24,10 +23,23 @@ public class DBAccess {
 	public ResultSet createQuery(String query) {
 		Statement stmt = null;
 		try {
+			stmt = conn.createStatement();
 			rs = stmt.executeQuery(query);
+
+			/* Placeholder for rs-processing */
+
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
+		} finally {
+			try {
+				stmt.close();
+				rs.close();
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+				e.printStackTrace();
+			}
+
 		}
 		return rs;
 

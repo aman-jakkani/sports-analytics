@@ -1,6 +1,7 @@
 package edu.sportanalytics.control;
 
 import javax.swing.*;
+import javax.swing.text.DefaultCaret;
 import java.util.logging.*;
 
 class Logging
@@ -14,7 +15,8 @@ class Logging
         if (loggingArea == null)
         {
             loggingArea = new JTextArea();
-            loggingArea.setAutoscrolls(true);
+            DefaultCaret caret = (DefaultCaret)loggingArea.getCaret();
+            caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
             loggingArea.setEditable(false);
             handler = new TextAreaHandler();
             Logger.getLogger("").addHandler(handler);

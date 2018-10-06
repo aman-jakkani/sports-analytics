@@ -20,12 +20,11 @@ public class WebServer
         private static WebServer instance = null;
 
         private HttpServer server;
-        private final String serverURI = "http://localhost:8080/web";
 
         private WebServer() throws IOException
         {
             HttpServer server = RestServer.getInstance().getServer();
-            server.createContext("/web", new SimpleHttpHandler());
+            server.createContext("/", new SimpleHttpHandler());
         }
 
         public static WebServer getInstance()
@@ -56,10 +55,18 @@ class SimpleHttpHandler implements HttpHandler {
 
     public static final Logger log = Logger.getLogger(SimpleHttpHandler.class.getName());
 
+
+    //HTML files must not start with "rest"!
     public void handle(HttpExchange t) throws IOException {
-        String root = "./";
+        String root = "./web";
         URI uri = t.getRequestURI();
         String path = uri.getPath();
+
+        if(path.equals("/"))
+        {
+            log.info("Requesting root. Redirecting to index.html");
+            path = "/index.html";
+        }
 
         log.info("Received http request for path: " + path);
 

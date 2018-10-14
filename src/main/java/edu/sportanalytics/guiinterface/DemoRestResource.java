@@ -14,7 +14,6 @@ public class DemoRestResource
 
     @GET
     @Produces(MediaType.TEXT_PLAIN)
-    @QueryParam("caller")
     public String getDemoResource(@QueryParam("caller")String caller)
     {
         log.info("DemoRestResource requested");

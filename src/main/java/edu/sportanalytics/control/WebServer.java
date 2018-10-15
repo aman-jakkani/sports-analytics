@@ -21,7 +21,7 @@ public class WebServer
 
         private HttpServer server;
 
-        private WebServer() throws IOException
+        private WebServer()
         {
             HttpServer server = RestServer.getInstance().getServer();
             server.createContext("/", new SimpleHttpHandler());

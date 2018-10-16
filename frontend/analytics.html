@@ -26,25 +26,40 @@
 		<div class="w3-container">
 
 		<h1>OPTIONS</h1>
-    <form>
+		<script language="JavaScript">
+		   function execute() {
+		   document.getElementById('hiddenText').style.display="block";
+		   showSecondStatisticInput();
+		   showAnalysisInput();
+		   }
+		   function showSecondStatisticInput() {
+        document.getElementById('stat2').innerHTML = 
+                    document.getElementById("secondStatistic").value;
+    }
+    	   function showAnalysisInput() {
+        document.getElementById('analyze').innerHTML = 
+                    document.getElementById("analysis").value;
+    }
+  </script>
+    <form method = "GET">
        <fieldset>
           <legend>Choose a Sport</legend>
           <p>
              <label>Sports</label>
-             <select id = "myList">
+             <select id = "sport">
+               <option value = "" >--Make a choice--</option>
                <option value = "1">Basketball</option>
                <option value = "2">Soccer</option>
                
              </select>
           </p>
        </fieldset>
-    </form> 
-    <form>
        <fieldset>
           <legend>Choose a League</legend>
           <p>
              <label>League</label>
-             <select id = "myList">
+             <select id = "league">
+               <option value = "" >--Make a choice--</option>
                <option value = "1">one</option>
                <option value = "2">two</option>
                <option value = "3">three</option>
@@ -52,13 +67,12 @@
              </select>
           </p>
        </fieldset>
-    </form>
-    <form>
        <fieldset>
           <legend>Choose a Team</legend>
           <p>
              <label>Team</label>
-             <select id = "myList">
+             <select id = "team">
+               <option value = "" >--Make a choice--</option>
                <option value = "1">one</option>
                <option value = "2">two</option>
                <option value = "3">three</option>
@@ -66,13 +80,12 @@
              </select>
           </p>
        </fieldset>
-    </form>
-    <form>
        <fieldset>
           <legend>Choose a Season</legend>
           <p>
              <label>Season</label>
-             <select id = "myList">
+             <select id = "season">
+               <option value = "" >--Make a choice--</option>
                <option value = "1">one</option>
                <option value = "2">two</option>
                <option value = "3">three</option>
@@ -80,13 +93,12 @@
              </select>
           </p>
        </fieldset>
-    </form>
-    <form>
        <fieldset>
           <legend>Choose a Game</legend>
           <p>
              <label>Game</label>
-             <select id = "myList">
+             <select id = "game">
+               <option value = "" >--Make a choice--</option>
                <option value = "1">one</option>
                <option value = "2">two</option>
                <option value = "3">three</option>
@@ -94,13 +106,12 @@
              </select>
           </p>
        </fieldset>
-    </form>
-    <form>
        <fieldset>
           <legend>Choose First Statistic</legend>
           <p>
              <label>Statistic</label>
-             <select id = "myList">
+             <select id = "firstStatistic">
+               <option value = "" >--Make a choice--</option>
                <option value = "1">one</option>
                <option value = "2">two</option>
                <option value = "3">three</option>
@@ -108,13 +119,12 @@
              </select>
           </p>
        </fieldset>
-    </form>
-    <form>
        <fieldset>
           <legend>Choose Second Statistic</legend>
           <p>
              <label>Statistic</label>
-             <select id = "myList">
+             <select id = "secondStatistic">
+               <option value = "" >--Make a choice--</option>
                <option value = "1">one</option>
                <option value = "2">two</option>
                <option value = "3">three</option>
@@ -122,26 +132,66 @@
              </select>
           </p>
        </fieldset>
-    </form>
-    <form>
        <fieldset>
           <legend>Choose Analysis Type*</legend>
           <p>
              <label>Statistic</label>
-             <select id = "myList">
-               <option value = "1">CUBE</option>
-               <option value = "2">ROLLUP</option>
-               <option value = "3">Simple Query</option>
-               <option value = "4">Compare Simple Queries</option>
+             <select id = "analysis">
+               <option value = "" >--Make a choice--</option>
+               <option value = "CUBE">CUBE</option>
+               <option value = "ROLLUP">ROLLUP</option>
+               <option value = "SIMPLE">Simple Query</option>
+               <option value = "COMPARE">Compare Simple Queries</option>
              </select>
           </p>
        </fieldset>
+       </br>
+       <input type = "button" onclick = "execute()" value = "SUBMIT"></input>
+       </br>
+       </br>
+       <div id ="ab"></div> 
     </form>
-    <br />
-<br />
-		<a href="analysis.html" class="button">Submit</a>
-			
-				
+
+  <div style="display: none;" id="hiddenText">Results: </div>
+  <p><span id='stat2'></span></p>
+  <p><span id='analyze'></span></p>
+
+			<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+  // Add smooth scrolling to all links
+  $("a").on('click', function(event) {
+
+    // Make sure this.hash has a value before overriding default behavior
+    if (this.hash !== "") {
+      // Prevent default anchor click behavior
+      event.preventDefault();
+
+      // Store hash
+      var hash = this.hash;
+
+      // Using jQuery's animate() method to add smooth page scroll
+      // The optional number (800) specifies the number of milliseconds it takes to scroll to the specified area
+      $('html, body').animate({
+        scrollTop: $(hash).offset().top
+      }, 800, function(){
+   
+        // Add hash (#) to URL when done scrolling (default click behavior)
+        window.location.hash = hash;
+      });
+    } // End if
+  });
+});
+</script>	
+ <style>
+body, html, .main {
+    height: 100%;
+}
+
+section {
+    min-height: 100%;
+}
+</style>
 			
 		</div>  
 	</body>

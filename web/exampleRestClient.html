@@ -1,0 +1,26 @@
+<!doctype html>
+<html>
+<head>
+    <title>RestDemo</title>
+</head>
+    <br>
+        <script>
+            
+            function loadResource()
+            {
+                var xhttp = new XMLHttpRequest();
+                var parameter = document.getElementById("parameter").value;
+                xhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        document.getElementById("response").innerHTML = xhttp.responseText;
+                    }
+                };
+                xhttp.open("GET", "/rest/DemoRestResource?caller=".concat(parameter), true);
+                xhttp.send();
+            }
+        </script>
+        From: <input name= type="text" id="parameter"> <br>
+        <input type="button" value="Load Resource" onclick="loadResource();"/>
+        <div id="response"> not loaded </div>
+    </body>
+</html>

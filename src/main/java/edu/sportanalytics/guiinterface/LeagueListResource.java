@@ -1,5 +1,7 @@
 package edu.sportanalytics.guiinterface;
 
+import edu.sportanalytics.database.SportsEnum;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -18,6 +20,21 @@ public class LeagueListResource
     public String getData(@QueryParam("sports")String sports)
     {
         log.info("League list for sport " + sports + " requested");
+
+        SportsEnum type;
+        if(sports.equals("Soccer"))
+        {
+            type = SportsEnum.SOCCER;
+        }
+        else if(sports.equals("Basketball"))
+        {
+            type = SportsEnum.BASKETBALL;
+        }
+        else
+        {
+            log.severe("Unknown sports parameter: " + sports);
+        }
+        //List<String> leagues = dbcontroller.getLeague(Sports sports);
         //Here call query to receive all leagues for this particular sports
         //Wrap it in JSON String
 

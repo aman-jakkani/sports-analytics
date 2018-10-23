@@ -17,7 +17,7 @@ public class RestServer
     private static RestServer instance = null;
 
     private HttpServer server;
-    private final String serverURI = "http://localhost:8080/rest";
+    private final String serverURI = "http://localhost:8081/rest";
 
     private RestServer()
     {
@@ -30,16 +30,16 @@ public class RestServer
     {
         if(instance == null)
         {
-            try
-            {
+            //try
+            //{
                 instance = new RestServer();
                 WebServer.getInstance(); //ini
-            }
-            catch (Exception e)
-            {
-                log.severe("Error creating RestServer: " + e.getMessage());
-                instance=null;
-            }
+            //}
+            //catch (Exception e)
+            //{
+            //    log.severe("Error creating RestServer: " + e.getMessage());
+            //    instance=null;
+            //}
         }
         return instance;
     }

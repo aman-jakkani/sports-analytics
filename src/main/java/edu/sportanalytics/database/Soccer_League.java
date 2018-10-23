@@ -1,5 +1,4 @@
 package edu.sportanalytics.database;
-
 public class Soccer_League {
 	private String NAME;
 	private int LEAGUE_ID;

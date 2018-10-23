@@ -7,7 +7,7 @@ public class BasketballController extends DatabaseController
 
     public List<String> getLeagues()
     {
-        //DB query for getting Soccer Leagues
+        //no leagues in Basketball
         return null;
     }
 

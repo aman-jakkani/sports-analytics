@@ -11,7 +11,7 @@ public class SoccerController extends DatabaseController
 	public SoccerController() {
 		super();
 
-		leaguesList = super.getDb().createQueryLeagues("SELECT NAME FROM SOCCER02.LEAGUE");
+		leaguesList = super.getDb().createQueryLeagues("SELECT NAME, LEAGUE_ID FROM SOCCER02.LEAGUE");
 
 	}
 

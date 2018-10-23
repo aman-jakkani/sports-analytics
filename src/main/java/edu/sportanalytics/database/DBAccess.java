@@ -24,14 +24,14 @@ public class DBAccess {
 
 	public ArrayList<Soccer_League> createQueryLeagues(String query) {
 		Statement stmt = null;
-		ArrayList<Soccer_League> list = new ArrayList<Soccer_League>() ;
+		ArrayList<Soccer_League> list = new ArrayList<Soccer_League>();
 		try {
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(query);
 
 			/* Placeholder for rs-processing */
 			while (rs.next()) {
-				list.add(new Soccer_League(rs.getString(1),rs.getInt(2)));
+				list.add(new Soccer_League(rs.getString("NAME"), rs.getInt("LEAGUE_ID")));
 			}
 
 		} catch (SQLException e) {

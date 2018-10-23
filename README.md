@@ -1,1 +1,2 @@
-# Integrated Visualization of Sports Analytics Results
+# Sports Analytics
+An integrated visualization of sports analytics

@@ -5,6 +5,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DBAccess {
 	private static DBAccess instance;
@@ -20,13 +22,17 @@ public class DBAccess {
 		}
 	}
 
-	public ResultSet createQuery(String query) {
+	public ArrayList<Soccer_League> createQueryLeagues(String query) {
 		Statement stmt = null;
+		ArrayList<Soccer_League> list = new ArrayList<Soccer_League>();
 		try {
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(query);
 
 			/* Placeholder for rs-processing */
+			while (rs.next()) {
+				list.add(new Soccer_League(rs.getString("NAME"), rs.getInt("LEAGUE_ID")));
+			}
 
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
@@ -41,7 +47,7 @@ public class DBAccess {
 			}
 
 		}
-		return rs;
+		return list;
 
 	}
 
@@ -61,6 +67,10 @@ public class DBAccess {
 			instance = new DBAccess();
 		}
 		return instance;
+	}
+
+	public static Connection getConn() {
+		return conn;
 	}
 
 }

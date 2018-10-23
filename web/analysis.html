@@ -23,11 +23,39 @@
 		</div>
 		
 		<div class="w3-container">
-			
+		<script type="text/javascript">
+			var select = document.querySelector('select');
+			var para = document.querySelector('p');
+			select.addEventListener('change', setAnalysis);
+
+function setAnalysis() {
+  var choice = select.value;
+
+  if (choice === 'CUBE') {
+    var analysisStr = "You chose cube!";
+    para.textContent = 'It is nice and sunny outside today. Wear shorts! Go to the beach, or the park, and get an ice cream.';
+      } else if (choice === 'ROLLUP {
+    var analysisStr = "You chose rollup.";
+  } else if (choice === 'SIMPLE') {
+    var analysisStr = "You chose simple query.";
+  } else if (choice === 'COMPARE') {
+    var analysisStr = "You chose compare queries.";
+  } else {
+    var analysisStr = "";
+  }
+}
+
+
+			</script>
 
 			
-			
-				
+				<h1> 
+				"You chose" 
+					<script type="text/javascript">
+        				document.write(analysisStr)
+      				</script>
+      			</h1>
+<p></p>
 			
 		</div>  
 	</body>

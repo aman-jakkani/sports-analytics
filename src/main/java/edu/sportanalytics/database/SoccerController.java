@@ -6,7 +6,7 @@ import java.util.List;
 public class SoccerController extends DatabaseController
 
 {
-	private ArrayList<Soccer_League> leaguesList;
+	private List<Soccer_League> leaguesList;
 
 	public SoccerController() {
 		super();
@@ -16,7 +16,7 @@ public class SoccerController extends DatabaseController
 	}
 
 	public List<String> getLeagues() {
-		List<String> nameLeagues = null;
+		List<String> nameLeagues = new ArrayList<String>();
 		for (Soccer_League s : leaguesList) {
 			nameLeagues.add(s.getNAME());
 		}

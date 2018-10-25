@@ -50,6 +50,13 @@ class Main
 
         JPanel buttonPanel = new JPanel(new FlowLayout());
 
+        JButton serverPropertiesButton = new JButton("ServerProperties");
+        serverPropertiesButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+
         JButton exitButton = new JButton("Exit");
         exitButton.addActionListener(new ActionListener()
         {
@@ -59,6 +66,7 @@ class Main
             }
         });
 
+        buttonPanel.add(serverPropertiesButton);
         buttonPanel.add(exitButton);
 
         contentPane.add(buttonPanel, BorderLayout.SOUTH);

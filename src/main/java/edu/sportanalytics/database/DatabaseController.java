@@ -6,7 +6,7 @@ public abstract class DatabaseController {
 	private DBAccess db;
 
 	public DatabaseController() {
-		db = DBAccess.createConnection();
+		db = DBAccess.getInstance();
 
 	}
 

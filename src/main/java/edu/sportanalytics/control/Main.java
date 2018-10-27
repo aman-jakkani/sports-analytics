@@ -1,5 +1,7 @@
 package edu.sportanalytics.control;
 
+import edu.sportanalytics.database.DBAccess;
+import edu.sportanalytics.database.DatabaseProperties;
 import edu.sportanalytics.guiinterface.RestServer;
 
 import javax.swing.*;
@@ -35,12 +37,14 @@ class Main
         log.info("Main window initialized");
 
         RestServer.getInstance(); //only for starting
+        DBAccess.getInstance().establishConnection();
 
         log.info("Finished initialization");
     }
 
     private static Container buildMainFrame()
     {
+
         Container contentPane = new Container();
         contentPane.setLayout(new BorderLayout());
 
@@ -50,10 +54,11 @@ class Main
 
         JPanel buttonPanel = new JPanel(new FlowLayout());
 
-        JButton serverPropertiesButton = new JButton("ServerProperties");
+        final DBAccess connection = DBAccess.getInstance();
+        JButton serverPropertiesButton = new JButton("DatabaseProperties");
         serverPropertiesButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-
+                new DatabaseProperties(connection);
             }
         });
 
@@ -79,6 +84,7 @@ class Main
         try
         {
             RestServer.getInstance().close();
+            DBAccess.getInstance().resetConnection();
         }
         catch (Exception e)
         {

@@ -5,7 +5,6 @@
 	<title>Sports Analytics</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-	// test
 	<body>
 		<!-- Sidebar -->
 		<div class="w3-sidebar w3-dark-gray w3-bar-block" style="width:15%">
@@ -37,12 +36,36 @@
             document.getElementById("status").options[0]=new Option("Select status","");
             document.getElementById("status").options[1]=new Option("OPEN","open");
             document.getElementById("status").options[2]=new Option("DELIVERED","delivered");
+            document.getElementById("status").options[3]=new Option("","");
             break;
         case "online" :
             document.getElementById("status").options[0]=new Option("Select status","");
             document.getElementById("status").options[1]=new Option("OPEN","open");
             document.getElementById("status").options[2]=new Option("DELIVERED","delivered");
             document.getElementById("status").options[3]=new Option("SHIPPED","shipped");
+            break;
+        }
+        return true;
+    }
+    
+       function dynamicdropdown1(listindex1)
+    {
+        switch (listindex1)
+        {
+        case "open" :
+            document.getElementById("status").options[0]=new Option("Select status","");
+            document.getElementById("status").options[1]=new Option("GOOD","good");
+            document.getElementById("status").options[2]=new Option("BAD","bad");
+            break;
+        case "delivered" :
+            document.getElementById("status").options[0]=new Option("Select status","");
+            document.getElementById("status").options[1]=new Option("OPEN","open");
+            document.getElementById("status").options[2]=new Option("DELIVERED","delivered");
+            break;
+        case "shipped" :
+            document.getElementById("status").options[0]=new Option("Select status","");
+            document.getElementById("status").options[1]=new Option("OPEN","open");
+            document.getElementById("status").options[2]=new Option("DELIVERED","delivered");
             break;
         }
         return true;
@@ -66,6 +89,17 @@
         <select id="status" name="status">
             <option value="open">OPEN</option>
             <option value="delivered">DELIVERED</option>
+        </select>
+        </noscript>
+    </div>
+        <div class="sub_category_div1" id="sub_category_div1">Rating:
+        <script type="text/javascript" language="JavaScript">
+        document.write('<select name="rating" id="status"><option value="">Select rating</option></select>')
+        </script>
+        <noscript>
+        <select id="status" name="status">
+            <option value="good">GOOD</option>
+            <option value="bad">BAD/option>
         </select>
         </noscript>
     </div>

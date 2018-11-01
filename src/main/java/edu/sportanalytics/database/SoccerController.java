@@ -19,7 +19,7 @@ public class SoccerController extends DatabaseController
 		leaguesList = createQueryLeagues("SELECT NAME, LEAGUE_ID FROM SOCCER02.LEAGUE");
 
 	}
-
+	// returns an ArrayList with Name-Attributes of the Leagues-Objects
 	public List<String> getLeagues() {
 		List<String> nameLeagues = new ArrayList<String>();
 		for (Soccer_League s : leaguesList) {

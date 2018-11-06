@@ -1,66 +1,38 @@
 package edu.sportanalytics.database;
 
-import java.util.Date;
-
 public class Soccer_Match {
-
-	private int Match_ID, Team_HomeTeam_ID, Team_AwayTeam_ID, Seasonstage_Seasonstage_ID, Leauge_League_ID, result;
-	private Date date;
+	
+	private int Match_ID;
+	private int HomeTeam_ID;
+	private int AwayTeam_ID;
+	private int Season_ID;
+	
+	public Soccer_Match(int Match_ID, int HomeTeam_ID,int AwayTeam_ID, 
+						int Season_ID){
+		
+		this.Match_ID = Match_ID;
+		this.HomeTeam_ID = HomeTeam_ID;
+		this.AwayTeam_ID = AwayTeam_ID;
+		this.Season_ID = Season_ID;
+		
+	}
 
 	public int getMatch_ID() {
 		return Match_ID;
 	}
 
-	public void setMatch_ID(int match_ID) {
-		Match_ID = match_ID;
+	public int getHomeTeam_ID() {
+		return HomeTeam_ID;
 	}
 
-	public int getTeam_HomeTeam_ID() {
-		return Team_HomeTeam_ID;
+	public int getAwayTeam_ID() {
+		return AwayTeam_ID;
 	}
 
-	public void setTeam_HomeTeam_ID(int team_HomeTeam_ID) {
-		Team_HomeTeam_ID = team_HomeTeam_ID;
+	public int getSeason_ID() {
+		return Season_ID;
 	}
-
-	public int getTeam_AwayTeam_ID() {
-		return Team_AwayTeam_ID;
-	}
-
-	public void setTeam_AwayTeam_ID(int team_AwayTeam_ID) {
-		Team_AwayTeam_ID = team_AwayTeam_ID;
-	}
-
-	public int getSeasonstage_Seasonstage_ID() {
-		return Seasonstage_Seasonstage_ID;
-	}
-
-	public void setSeasonstage_Seasonstage_ID(int seasonstage_Seasonstage_ID) {
-		Seasonstage_Seasonstage_ID = seasonstage_Seasonstage_ID;
-	}
-
-	public int getLeauge_League_ID() {
-		return Leauge_League_ID;
-	}
-
-	public void setLeauge_League_ID(int leauge_League_ID) {
-		Leauge_League_ID = leauge_League_ID;
-	}
-
-	public int getResult() {
-		return result;
-	}
-
-	public void setResult(int result) {
-		this.result = result;
-	}
-
-	public Date getDate() {
-		return date;
-	}
-
-	public void setDate(Date date) {
-		this.date = date;
-	}
+	
+	
 
 }

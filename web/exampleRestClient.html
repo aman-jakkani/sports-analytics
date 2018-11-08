@@ -3,6 +3,7 @@
 <head>
     <title>RestDemo</title>
 </head>
+    <body>
     <br>
         <script>
             
@@ -22,5 +23,35 @@
         From: <input name= type="text" id="parameter"> <br>
         <input type="button" value="Load Resource" onclick="loadResource();"/>
         <div id="response"> not loaded </div>
+    <br>
+
+    <!-- Using new RestCaller.js -->
+    <script type="text/javascript" src="RestCaller.js"></script>
+    <script>
+        function leaguesRequested() {
+            //2nd comma needed because js otherwise transforms it to 1DArray
+            //Should work fine for no or more than 1 parameter
+            var parameters = [["sports", "Soccer"],];
+            var json = getRestResource("LeagueListResource", parameters);
+
+            //here whole rest request already finished
+            //the rest is only processing the json string
+
+            var htmlLeagueString = "Leagues:<br/>";
+            console.log("Leagues found: ".concat(json.leagues.length));
+            for(var i = 0; i < json.leagues.length; i++)
+            {
+                htmlLeagueString = htmlLeagueString.concat(json.leagues[i]);
+                htmlLeagueString = htmlLeagueString.concat("<br/>");
+            }
+
+            document.getElementById("leaguesList").innerHTML = htmlLeagueString;
+        }
+
+    </script>
+
+    <input type="button" value="load Leagues" onclick="leaguesRequested();"/>
+    <div id="leaguesList"> not loaded</div>
+
     </body>
 </html>

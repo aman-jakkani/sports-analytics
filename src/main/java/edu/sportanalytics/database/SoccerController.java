@@ -164,7 +164,7 @@ public class SoccerController extends DatabaseController
 		ResultSet rs = null;
 		try {
 			stmt = DBAccess.getConn().createStatement();
-			rs = stmt.executeQuery("SELECT NAME, LEAGUE_ID FROM SOCCER02.LEAGUE");
+			rs = stmt.executeQuery("SELECT * FROM SOCCER02.LEAGUE");
 
 			while (rs.next()) {
 				Soccer_League lg = new Soccer_League();

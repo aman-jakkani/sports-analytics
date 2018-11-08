@@ -2,6 +2,7 @@ package edu.sportanalytics.guiinterface;
 
 import edu.sportanalytics.database.DBAccess;
 import edu.sportanalytics.database.SportsEnum;
+import org.json.JSONObject;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -40,7 +41,13 @@ public class LeagueListResource
         List<String> leagues = DBAccess.getInstance().getController(type).getLeagues();
         //Here call query to receive all leagues for this particular sports
         //Wrap it in JSON String
+        JSONObject jo = new JSONObject();
+        jo.put("leagues", leagues);
 
-        return "Not implemented";
+        String returnString = jo.toString();
+
+        log.info("JSON String created: " + returnString);
+
+        return returnString;
     }
 }

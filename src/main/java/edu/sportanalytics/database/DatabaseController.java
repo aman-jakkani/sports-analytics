@@ -16,9 +16,9 @@ public abstract class DatabaseController {
 
 	public abstract List<String> getLeagues();
 
-	public abstract List<String> getTeams();
+	public abstract List<String> getTeams(String league);
 
-	public abstract List<String> getSeason(String team);
+	public abstract List<String> getSeason(String league, String team);
 
 	public abstract List<String> getGame(String season, String team);
 

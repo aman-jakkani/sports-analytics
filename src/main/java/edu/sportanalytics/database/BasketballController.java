@@ -11,15 +11,25 @@ public class BasketballController extends DatabaseController
         return null;
     }
 
-    public List<String> getTeams() {
-        return null;
-    }
 
-    public List<String> getSeason(String team) {
-        return null;
-    }
 
-    public List<String> getGame(String season, String team) {
-        return null;
-    }
+	@Override
+	public List<String> getTeams(String league) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<String> getSeason(String league, String team) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	@Override
+	public List<String> getGame(String season, String team) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

@@ -4,7 +4,8 @@ import java.util.Date;
 
 public class Soccer_Match {
 
-	private int Match_ID, Team_HomeTeam_ID, Team_AwayTeam_ID, Seasonstage_Seasonstage_ID, Leauge_League_ID, result;
+	private int Match_ID, Team_HomeTeam_ID, Team_AwayTeam_ID, result;
+	private String Seasonstage_name, Leauge_name;
 	private Date date;
 
 	public int getMatch_ID() {
@@ -31,20 +32,20 @@ public class Soccer_Match {
 		Team_AwayTeam_ID = team_AwayTeam_ID;
 	}
 
-	public int getSeasonstage_Seasonstage_ID() {
-		return Seasonstage_Seasonstage_ID;
+	public String getSeasonstage_name() {
+		return Seasonstage_name;
 	}
 
-	public void setSeasonstage_Seasonstage_ID(int seasonstage_Seasonstage_ID) {
-		Seasonstage_Seasonstage_ID = seasonstage_Seasonstage_ID;
+	public void setSeasonstage_name(String seasonstage_name) {
+		Seasonstage_name = seasonstage_name;
 	}
 
-	public int getLeauge_League_ID() {
-		return Leauge_League_ID;
+	public String getLeauge_name() {
+		return Leauge_name;
 	}
 
-	public void setLeauge_League_ID(int leauge_League_ID) {
-		Leauge_League_ID = leauge_League_ID;
+	public void setLeauge_name(String leauge_name) {
+		Leauge_name = leauge_name;
 	}
 
 	public int getResult() {

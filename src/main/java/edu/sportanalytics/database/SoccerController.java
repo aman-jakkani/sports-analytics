@@ -71,7 +71,8 @@ public class SoccerController extends DatabaseController
 					"SELECT * FROM SOCCER02.TEAM t join SOCCER02.MATCH m on(t.TEAM_ID = m.team_awayteam_id OR t.TEAM_ID = m.team_hometeam_id)join SOCCER02.SEASONSTAGE s on(m.SEASONSTAGE_SEASONSTAGE_ID=s.SEASONSTAGE_ID)Join Soccer02.league l on(m.LEAGUE_LEAGUE_ID=l.league_id) WHERE t.LONG_NAME='"
 							+ team.long_name + "' AND s.name='" + stage.getName());
 			while (rs.next()) {
-				Soccer_Match match = new Soccer_Match();
+				//TODO
+				/*Soccer_Match match = new Soccer_Match();
 				match.setLeauge_name(rs.getString("l.name"));
 				match.setMatch_ID(rs.getInt("m.Match_ID"));
 				match.setResult(rs.getInt("m.Result"));
@@ -80,6 +81,7 @@ public class SoccerController extends DatabaseController
 				match.setTeam_HomeTeam_ID(rs.getInt("m.Team_HomeTeam_ID"));
 				match.setDate(rs.getDate("m.date"));
 				tempList.add(match);
+				*/
 			}
 		} catch (SQLException e) {
 			log.severe(e.getMessage());
@@ -140,10 +142,10 @@ public class SoccerController extends DatabaseController
 							+ league + "'");
 			while (rs.next()) {
 				Soccer_Team team = new Soccer_Team();
-				team.setLong_name(rs.getString("t.long_name"));
-				team.setShort_name(rs.getString("t.short_name"));
-				team.setTeam_id(rs.getInt("t.team_id"));
-				team.setTeam_api_id(rs.getInt("t.team_api_id"));
+				team.setLong_name(rs.getString("long_name"));
+				team.setShort_name(rs.getString("short_name"));
+				team.setTeam_id(rs.getInt("team_id"));
+				team.setTeam_api_id(rs.getInt("team_api_id"));
 				tempList.add(team);
 			}
 		} catch (SQLException e) {

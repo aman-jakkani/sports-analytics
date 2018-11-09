@@ -27,6 +27,7 @@
 
     <!-- Using new RestCaller.js -->
     <script type="text/javascript" src="RestCaller.js"></script>
+    
     <script>
         function leaguesRequested() {
             //2nd comma needed because js otherwise transforms it to 1DArray
@@ -52,6 +53,65 @@
 
     <input type="button" value="load Leagues" onclick="leaguesRequested();"/>
     <div id="leaguesList"> not loaded</div>
+    
+    
+        <br>
+
+	    <script>
+        function teamsRequested() {
+           
+            var parameters = [["sports", "Soccer"],["league", "Germany 1. Bundesliga"],];
+            var json = getRestResource("TeamListResource", parameters);
+
+            //here whole rest request already finished
+            //the rest is only processing the json string
+
+            var htmlTeamString = "Teams:<br/>";
+            console.log("Teams found: ".concat(json.teams.length));
+            for(var i = 0; i < json.teams.length; i++)
+            {
+                htmlTeamString = htmlTeamString.concat(json.teams[i]);
+                htmlTeamString = htmlTeamString.concat("<br/>");
+            }
+
+            document.getElementById("teamsList").innerHTML = htmlTeamString;
+        }
+
+    </script>
+
+    <input type="button" value="load Teams" onclick="teamsRequested();"/>
+    <div id="teamsList"> not loaded</div>
+    
+    <br>
+	    
+	    <script>
+	    //Returns an empty strin currently
+        function seasonsRequested() {
+            var parameters = [["sports", "Soccer"],["leagues", "Germany 1. Bundesliga"],["team", "Hannover 96"]];
+            var json = getRestResource("SeasonListResource", parameters);
+
+            //here whole rest request already finished
+            //the rest is only processing the json string
+
+            var htmlSeasonString = "Season:<br/>";
+            console.log("Seasons found: ".concat(json.seasons.length));
+            for(var i = 0; i < json.seasons.length; i++)
+            {
+                htmlSeasonString = htmlSeasonString.concat(json.seasons[i]);
+                htmlSeasonString = htmlSeasonString.concat("<br/>");
+            }
+
+            document.getElementById("seasonsList").innerHTML = htmlSeasonString;
+        }
+
+    </script>
+
+    <input type="button" value="load Seasons" onclick="seasonsRequested();"/>
+    <div id="seasonsList"> not loaded</div>
+    
+    
+	
+
 
     </body>
 </html>

@@ -26,21 +26,7 @@
 		<div class="w3-container">
 
 		<h1>OPTIONS</h1>
-		<script language="JavaScript">
-		   function execute() {
-		   document.getElementById('hiddenText').style.display="block";
-		   showSecondStatisticInput();
-		   showAnalysisInput();
-		   }
-		   function showSecondStatisticInput() {
-        document.getElementById('stat2').innerHTML = 
-                    document.getElementById("secondStatistic").value;
-    }
-    	   function showAnalysisInput() {
-        document.getElementById('analyze').innerHTML = 
-                    document.getElementById("analysis").value;
-    }
- 		</script>
+	
     <form method = "GET">
     
 			
@@ -133,6 +119,7 @@
     
 
   <div style="display: none;" id="hiddenText">Results: </div>
+  <p><span id='stat1'></span></p>
   <p><span id='stat2'></span></p>
   <p><span id='analyze'></span></p>
 
@@ -150,5 +137,6 @@ section {
 		</div>  
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 		<script src="js/dropdown.js"></script>
+		<script src="js/results.js"></script>
 	</body>
 </html>

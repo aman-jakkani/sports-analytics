@@ -1,33 +1,45 @@
 package edu.sportanalytics.database;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Basketball_Team{
+    private int team_id, team_api_id;
+    String long_name, short_name;
 
-    private int teamID;
-    private List<Integer> playerIDs;
-    private int wins;
-    private int losses;
-
-    public Basketball_Team(int teamID, List<Integer> playerIDs, int wins, int losses){
-        this.teamID = teamID;
-        this.playerIDs = playerIDs;
-        this.wins = wins;
-        this.losses = losses;
+    public Basketball_Team(int team_id, int team_api_id, String long_name, String short_name){
+        this.team_id = team_id;
+        this.team_api_id = team_api_id;
+        this.long_name = long_name;
+        this.short_name = short_name;
+    }
+    
+    public long getTeam_id(){
+        return team_id;
     }
 
-    public int getWins(){
-        return wins;
+    public void setTeam_id(int team_id){
+        this.team_id = team_id;
     }
-    public int getLosses(){
-        return losses;
+    
+    public String getLong_name(){
+        return long_name;
     }
-    /*public int getWins(){
-        return teamID
-    }
-    public int getWins(){
-        return teamID
-    }*/
 
+    public void setLong_name(String long_name){
+        this.long_name = long_name;
+    }
+
+    public String getShort_name(){
+        return short_name;
+    }
+
+    public void setShort_name(String short_name){
+        this.short_name = short_name;
+    }
+
+    public int getTeam_api_id(){
+        return team_api_id;
+    }
+
+    public void setTeam_api_id(int team_api_id){
+        this.team_api_id = team_api_id;
+    }
 }

@@ -7,7 +7,7 @@ public class Basketball_Game {
     private int Game_ID, HomeTeam_ID, AwayTeam_ID, result, home_team_score, away_team_score;
     private String League_name;
     private int Season;
-    private Date data;
+    private Date date;
     private String host, guest; // gastgeber = host, gast = guest
 
     public Basketball_Game(int Game_ID, int HomeTeam_ID, int AwayTeam_ID, int Season){

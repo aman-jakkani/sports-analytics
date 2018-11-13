@@ -54,13 +54,15 @@ public class SoccerController extends DatabaseController
 		return nameSeasons;
 	}
 
+	// returns formatted Strings to display soccer matches with Teams, Scores
+	// and Team_IDs
 	@Override
 	public List<String> getGame(String season, String team) {
 		matchesList = findMatches(team, season);
 		List<String> matchesString = new ArrayList<String>();
 		for (Soccer_Match s : matchesList) {
 			matchesString.add(s.getGastgeber() + " vs " + s.getGast() + " (" + s.getHome_team_goal() + " : "
-					+ s.getAway_team_goal() + ")");
+					+ s.getAway_team_goal() + ") MATCH_ID: " + s.getMatch_ID());
 		}
 
 		return matchesString;
@@ -101,7 +103,7 @@ public class SoccerController extends DatabaseController
 			stmt = DBAccess.getConn().createStatement();
 
 			rs = stmt.executeQuery(
-					"Select t1.long_name AS t1, t2.long_name AS t2, home_team_goal, away_team_goal FROM (SOCCER02.MATCH m join SOCCER02.SEASONSTAGE s on (s.SEASONSTAGE_ID = m.SEASONSTAGE_SEASONSTAGE_ID)),SOCCER02.TEAM t1,SOCCER02.TEAM t2 where (t1.team_id=m.team_hometeam_id and t2.team_id = m.team_awayteam_id)AND s.name='"
+					"Select t1.long_name AS t1, t2.long_name AS t2, home_team_goal, away_team_goal, Match_id FROM (SOCCER02.MATCH m join SOCCER02.SEASONSTAGE s on (s.SEASONSTAGE_ID = m.SEASONSTAGE_SEASONSTAGE_ID)),SOCCER02.TEAM t1,SOCCER02.TEAM t2 where (t1.team_id=m.team_hometeam_id and t2.team_id = m.team_awayteam_id)AND s.name='"
 							+ season + "' AND (t1.long_name='" + team + "' or t2.long_name='" + team + "')");
 			while (rs.next()) {
 				Soccer_Match match = new Soccer_Match();
@@ -109,6 +111,7 @@ public class SoccerController extends DatabaseController
 				match.setGast(rs.getString("t2"));
 				match.setAway_team_goal(rs.getInt("away_team_goal"));
 				match.setHome_team_goal(rs.getInt("home_team_goal"));
+				match.setMatch_ID(rs.getInt("Match_ID"));
 				tempList.add(match);
 			}
 		} catch (SQLException e) {

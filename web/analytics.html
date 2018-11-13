@@ -1,7 +1,7 @@
-
-<!DOCTYPE html>
-<!--Front page -->
+<!doctype html>
+<!--Front Page-->
 <html>
+
 	<title>Sports Analytics</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -25,126 +25,123 @@
 		
 		<div class="w3-container">
 
-		<h1>OPTIONS</h1>
-	
-    <form method = "GET">
-    
-			
-       <fieldset>
-          <legend>Choose a Sport</legend>
-          <p>
-             <label>Sports</label>
-             <select id = "sport">
-               <option value = "0">--Make a choice--</option>
-               <option value = "1">Basketball</option>
-               <option value = "2">Soccer</option>
-               
-             </select>
-          </p>
-       </fieldset>
+    <body>
+    <br>
+        <script>
+            function loadResource()
+            {
+                var xhttp = new XMLHttpRequest();
+                var parameter = document.getElementById("parameter").value;
+                xhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        document.getElementById("response").innerHTML = xhttp.responseText;
+                    }
+                };
+                xhttp.open("GET", "/rest/DemoRestResource?caller=".concat(parameter), true);
+                xhttp.send();
+            }
+        </script>
+    <br>
 
-       <fieldset>
-          <legend>Choose a League</legend>
-          <p>
-             <label>League</label>
-             <select id = "league">
-               <option value = "nullLeague" >--Make a choice--</option>
-             </select>
-          </p>
-       </fieldset>
+    <!-- Include jQuery -->
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 
-       <fieldset>
-          <legend>Choose a Team</legend>
-          <p>
-             <label>Team</label>
-             <select id = "team">
-               <option value = "nullTeam" >--Make a choice--</option>
-             </select>
-          </p>
-       </fieldset>
+    <!-- Using new RestCaller.js -->
+    <script type="text/javascript" src="JS/RestCaller.js"></script>
 
-       <fieldset>
-          <legend>Choose a Season</legend>
-          <p>
-             <label>Season</label>
-             <select id = "season">
-               <option value = "nullSeason" >--Make a choice--</option>
-             </select>
-          </p>
-       </fieldset>
+    <!-- Import dropdown javascript logic -->
+    <script type="text/javascript" src="JS/resources.js"></script>
 
-       <fieldset>
-          <legend>Choose a Game</legend>
-          <p>
-             <label>Game</label>
-             <select id = "game">
-               <option value = "nullGame" >--Make a choice--</option>
-             </select>
-          </p>
-       </fieldset>
+        <form method = "GET">
+            <fieldset>
+                <legend>Pick a Sport</legend>
+                <p> 
+                    <label>Sport</label>
+                    <select id = "sport">
+                        <option value = "null">--Make a Choice--</option>
+                        <option value = "Basketball">Basketball</option>
+                        <option value = "Soccer">Soccer</option>
+                    </select>
+                </p>
+            </fieldset>
 
-       <fieldset>
-          <legend>Choose First Statistic</legend>
-          <p>
-             <label>Statistic</label>
-             <select id = "firstStatistic">
-               <option value = "nullStat1" >--Make a choice--</option>
-             </select>
-          </p>
-       </fieldset>
+            <fieldset>
+                <legend>Pick a League</legend>
+                <p>
+                    <label>League</label>
+                    <select id = "league">
+                        <option value = "null">--Make a Choice--</option>
+                    </select>
+                </p>
+            </fieldset>
 
-       <fieldset>
-          <legend>Choose Second Statistic</legend>
-          <p>
-             <label>Statistic</label>
-             <select id = "secondStatistic">
-               <option value = "nullStat2" >--Make a choice--</option>
-             </select>
-          </p>
-       </fieldset>
+            <fieldset>
+                <legend>Pick a Team</legend>
+                <p>
+                    <label>Team</label>
+                    <select id = "team">
+                        <option value = "null">--Make a choice</option>
+                    </select>
+                </p>
+            </fieldset>
 
-       <fieldset>
-          <legend>Choose Analysis Type*</legend>
-          <p>
-             <label>Statistic</label>
-             <select id = "analysis">
-               <option value = "nullAnalysis" >--Make a choice--</option>
-               <option value = "CUBE">CUBE</option>
-               <option value = "ROLLUP">ROLLUP</option>
-               <option value = "SIMPLE">Simple Query</option>
-               <option value = "COMPARE">Compare Simple Queries</option>
-             </select>
-          </p>
-       </fieldset>
 
-       </br>
-       <input type = "button" onclick = "execute()" value = "SUBMIT"></input>
-       </br>
-       </br>
-       <div id = "ab"></div> 
-    </form>
-    
+            <fieldset>
+                <legend>Choose a Season</legend>
+                <p>
+                    <label>Season</label>
+                    <select id = "season">
+                        <option value = "null" >--Make a choice--</option>
+                    </select>
+                </p>
+            </fieldset>
 
-  <div style="display: none;" id="hiddenText">Results: </div>
-  <p><span id = 'stat1'> </span></p>
-  <p><span id = 'stat2'> </span></p>
-  <p><span id = 'analysis'> </span></p>
+<!-- 
+            <fieldset>
+                <legend>Choose a Game</legend>
+                <p>
+                    <label>Game</label>
+                    <select id = "game">
+                        <option value = "null" >--Make a choice--</option>
+                    </select>
+                </p>
+            </fieldset>  
+-->
+            <fieldset>
+                    <legend>Choose First Statistic</legend>
+                    <p>
+                       <label>Statistic</label>
+                       <select id = "firstStatistic">
+                         <option value = "null" >--Make a choice--</option>
+                       </select>
+                    </p>
+                 </fieldset>
+          
+            <fieldset>
+                <legend>Choose Second Statistic</legend>
+                <p>
+                    <label>Statistic</label>
+                    <select id = "secondStatistic">
+                        <option value = "null" >--Make a choice--</option>
+                    </select>
+                </p>
+            </fieldset>
+          
+            <fieldset>
+                <legend>Choose Analysis Type*</legend>
+                <p>
+                    <label>Statistic</label>
+                    <select id = "analysis">
+                        <option value = "null" >--Make a choice--</option>
+                        <option value = "CUBE">CUBE</option>
+                        <option value = "ROLLUP">ROLLUP</option>
+                        <option value = "SIMPLE">Simple Query</option>
+                        <option value = "COMPARE">Compare Simple Queries</option>
+                    </select>
+                </p>
+            </fieldset>
 
-				
- <style>
-body, html, .main {
-    height: 100%;
-}
+        </form>
 
-section {
-    min-height: 100%;
-}
-</style>
-			
-		</div>  
-		<script type="text/javascript" src="RestCaller.js"></script>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-		<script src="js/dropdown.js"></script>
-		<script src="js/results.js"></script>
-	</body>
+    </body>
 </html>

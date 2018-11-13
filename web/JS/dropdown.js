@@ -15,6 +15,10 @@ $(document).ready(function() {
 
         statsRequested(sport)
         $("#secondStatistic").html(getStats(sport));
+
+        $("#team").html(defaultString);
+        $("#season").html(defaultString);
+        $("#game").html(defaultString);
       } 
 
       else if ($(this).attr('id') == 'league') {

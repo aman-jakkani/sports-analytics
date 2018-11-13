@@ -96,7 +96,7 @@
                 </p>
             </fieldset>
 
-<!-- 
+<!--
             <fieldset>
                 <legend>Choose a Game</legend>
                 <p>
@@ -106,7 +106,7 @@
                     </select>
                 </p>
             </fieldset>  
--->
+         -->
             <fieldset>
                     <legend>Choose First Statistic</legend>
                     <p>
@@ -142,6 +142,18 @@
             </fieldset>
 
         </form>
+      <!-- Import dropdown javascript logic -->
+      <br>
+      <script type="text/javascript" src="JS/results.js"></script>
+      <input type = "button" onclick = "showData()" value = "SUBMIT"></input>
+
+      <div style="display: none;" id="hiddenText">Results: </div>
+      <p><span id = 'chosenSport'> </span></p>
+      <p><span id = 'chosenLeague'> </span></p>
+      <p><span id = 'chosenTeam'> </span></p>
+      <p><span id = 'chosenSeason'> </span></p>
+      <p><span id = 'chosenFirstStat'></span></p>
+      <p><span id = 'chosenSecondStat'> </span></p>
 
     </body>
 </html>

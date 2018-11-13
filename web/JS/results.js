@@ -1,12 +1,10 @@
-function execute() {
+function showData() {
         document.getElementById('hiddenText').style.display="block";
-        // how does this work?? 
-        show('sport','sport');
-        show('team', 'team');
-        show('stat1', 'firstStatistic');
-        show('stat2', 'secondStatistic');
-        show('analyze', 'analysis');
-}
-function show(id, id_name){
-        document.getElementByID(id).innerHTML = document.getElementByID(id_name).value;
+
+        document.getElementById('chosenSport').innerHTML = document.getElementById("sport").value;
+        document.getElementById('chosenLeague').innerHTML = document.getElementById("league").value;
+        document.getElementById('chosenTeam').innerHTML = document.getElementById("team").value;
+        document.getElementById('chosenSeason').innerHTML = document.getElementById("season").value;
+        document.getElementById('chosenFirstStat').innerHTML = document.getElementById("firstStatistic").value;
+        document.getElementById('chosenSecondStat').innerHTML = document.getElementById("secondStatistic").value;
 }

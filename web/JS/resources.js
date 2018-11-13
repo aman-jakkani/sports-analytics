@@ -52,7 +52,7 @@ run: $(document).ready(function() {
         }
 
         else if ($(this).attr('id') == "game"){
-          // add game stuff here too
+          game = $("#game").val();
         }
       });
     })
@@ -169,8 +169,13 @@ function getGames(sport, league, team, season){
 }
 
 
-// return string of possible stats for a given sport
+// return string of possible stats for a given sport. Need json string before this can be generalized
 function getStats(sport){
-  var htmlStatString = "<option value = \"null\" >--Make a choice*--</option>";
+  var htmlStatString = "<option value = \"null\" >--Make a choice--</option>";
+  if (sport == "Basketball"){
+    htmlStatString = htmlStatString.concat("<option value = \"Field Goals\" >Field Goals</option>");
+  } else if (sport == "Soccer"){
+    htmlStatString = htmlStatString.concat("<option value = \"Possession Time\" >Possession Time</option>")
+  }
   return htmlStatString;
 }

@@ -85,9 +85,9 @@
     <br>
 	    
 	    <script>
-	    //Returns an empty strin currently
+	    
         function seasonsRequested() {
-            var parameters = [["sports", "Soccer"],["leagues", "Germany 1. Bundesliga"],["team", "Hannover 96"]];
+            var parameters = [["sports", "Soccer"],["league", "Germany 1. Bundesliga"],["team", "Hannover 96"]];
             var json = getRestResource("SeasonListResource", parameters);
 
             //here whole rest request already finished
@@ -108,6 +108,33 @@
 
     <input type="button" value="load Seasons" onclick="seasonsRequested();"/>
     <div id="seasonsList"> not loaded</div>
+    
+    
+    
+    <br>
+	  <script>
+        function matchesRequested() {
+            var parameters = [["sports", "Soccer"],["season", "2015/2016"],["team", "Hannover 96"]];
+            var json = getRestResource("MatchListResource", parameters);
+
+            //here whole rest request already finished
+            //the rest is only processing the json string
+
+            var htmlMatchString = "Match:<br/>";
+            console.log("Match found: ".concat(json.match.length));
+            for(var i = 0; i < json.match.length; i++)
+            {
+                htmlMatchString = htmlMatchString.concat(json.match[i]);
+                htmlMatchString = htmlMatchString.concat("<br/>");
+            }
+
+            document.getElementById("matchesList").innerHTML = htmlMatchString;
+        }
+
+    </script>
+
+    <input type="button" value="load Matches" onclick="matchesRequested();"/>
+    <div id="matchesList"> not loaded</div>
     
     
 	

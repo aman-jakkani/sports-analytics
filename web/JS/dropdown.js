@@ -43,6 +43,8 @@ function getLeagues(sport) {
   // return default option if there are no leagues in the sport, or if no sport is selected
   if (json.leagues.length == 0) return htmlLeagueString;
 
+
+  console.log("Leagues found: ".concat(json.leagues.length));
   // create string for every league
   for (i = 0; i < json.leagues.length; ++i){
     htmlLeagueString = htmlLeagueString.concat("<option value=" + (i + 1) + ">" + json.leagues[i] + "</option>");
@@ -65,6 +67,8 @@ function getTeams(sport, league){
 
   var htmlTeamString = "<option value=0 >--Make a choice--</option>";
 
+
+  console.log("Teams found: ".concat(json.teams.length));
   // return default string if there are no teams for a specific league, or if no league is selected
   if (json.teams.length == 0) return htmlTeamString;
 
@@ -86,6 +90,8 @@ function getSeasons(sport, league, team){
   // return default string if there are no teams for a specific league, or if no league is selected
   if (json.seasons.length == 0) return htmlSeasonString;
 
+
+  console.log("Seasons found: ".concat(json.seasons.length));
   for (i = 0; i < json.seasons.length; ++i){
     htmlSeasonString = htmlSeasonString.concat("<option value=" + (i + 1) + ">" + json.seasons[i] + "</option>")
   }
@@ -105,6 +111,8 @@ function getGames(sport, league, team, season){
   // return default string if there are no teams for a specific league, or if no league is selected
   if (json.matches.length == 0) return htmlMatchString;
 
+
+  console.log("Matches found: ".concat(json.matches.length));
   for (i = 0; i < json.matches.length; ++i){
     htmlMatchString = htmlMatchString.concat("<option value=" + (i + 1) + ">" + json.matches[i] + "</option>")
   }

@@ -30,6 +30,19 @@ $(document).ready(function() {
   );
 });
 
+
+function loadResource()
+            {
+                var xhttp = new XMLHttpRequest();
+                var parameter = document.getElementById("parameter").value;
+                xhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        document.getElementById("response").innerHTML = xhttp.responseText;
+                    }
+                };
+                xhttp.open("GET", "/rest/DemoRestResource?caller=".concat(parameter), true);
+                xhttp.send();
+            }
 // Note: need to include loadResources() ?
 
 // get string of leagues

@@ -22,4 +22,9 @@ public abstract class DatabaseController {
 
 	public abstract List<String> getGame(String season, String team);
 
+	// Only needed for SoccerController
+	public List<String> getYellowCards(int matchid) {
+		return null;
+	}
+
 }

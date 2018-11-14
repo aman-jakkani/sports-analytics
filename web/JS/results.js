@@ -28,7 +28,13 @@ let massPopChart = new Chart(myChart, {
 		]
 	}]
 	},
-	options:{}
+	options:{
+		title:{
+			display:true,
+			text: 'Most Wins by NBA Teams in 2017-2018 Season',
+			fontsize:25
+		}
+	}
 });
 
 }

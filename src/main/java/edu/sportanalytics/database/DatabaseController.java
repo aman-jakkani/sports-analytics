@@ -22,8 +22,34 @@ public abstract class DatabaseController {
 
 	public abstract List<String> getGame(String season, String team);
 
-	// Only needed for SoccerController
+	public List<String> getPointsInSeason(int matchid) {
+		// TODO
+		return null;
+	}
+
+	public List<String> getAvgHeigth(int matchid) {
+		// TODO
+		return null;
+	}
+
+	public List<String> getAvgWeight(int matchid) {
+		// TODO
+		return null;
+	}
+
+	/*
+	 * The following is only needed for the SoccerController
+	 */
 	public List<String> getYellowCards(int matchid) {
+		return null;
+	}
+
+	public List<String> getRedCards(int matchid) {
+		// TODO
+		return null;
+	}
+
+	public List<String> getCornerCnt(int matchid) {
 		return null;
 	}
 

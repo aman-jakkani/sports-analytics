@@ -1,5 +1,6 @@
 package edu.sportanalytics.database;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -64,47 +65,69 @@ public class SoccerController extends DatabaseController
 			matchesString.add(s.getGastgeber() + " vs " + s.getGast() + " (" + s.getHome_team_goal() + " : "
 					+ s.getAway_team_goal() + ") MATCH_ID: " + s.getMatch_ID());
 		}
-
 		return matchesString;
 	}
 
+	// returns a List containing the sum of yellow Cards for both halfs for the
+	// home- and awayteam.
 	@Override
 	public List<String> getYellowCards(int matchid) {
-		// TODO
-		List<String> tempList = findYellowCards(matchid);
-		return tempList;
-	}
-
-	public List<String> findYellowCards(int matchid) {
-		List<String> tempList = new ArrayList<String>();
-		Statement stmt = null;
+		List<String> yellowList = new ArrayList<String>();
+		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {
-			stmt = DBAccess.getConn().createStatement();
-			rs = stmt.executeQuery(
-					"SELECT HOMEYELLOWCNT,AWAYYELLOWCNT FROM SOCCER02.MATCHRELDIMMART WHERE Match_Id =" + matchid);
+			ps = DBAccess.getConn().prepareStatement(
+					"select ((HOMEYELLOWCNT)+(HOMEYELLOW2CNT)) AS SUM_YELLOW_HOME, ((AWAYYELLOWCNT)+(AWAYYELLOW2CNT))SUM_YELLOW_AWAY FROM SOCCER02.MATCHRELDIMMART WHERE Match_ID=?");
+			ps.setInt(1, matchid);
+			rs = ps.executeQuery();
 			while (rs.next()) {
-				tempList.add(Integer.toString(rs.getInt("HOMEYELLOWCNT")));
-				tempList.add(Integer.toString(rs.getInt("AWAYYELLOWCNT")));
+				yellowList.add(Integer.toString(rs.getInt("SUM_YELLOW_HOME")));
+				yellowList.add(Integer.toString(rs.getInt("SUM_YELLOW_AWAY")));
 			}
+			ps.close();
+			rs.close();
 		} catch (SQLException e) {
 			log.severe(e.getMessage());
 		}
-		return tempList;
+		return yellowList;
+	}
 
+	// returns a List containing number of corners for the
+	// home- and awayteam.
+	@Override
+	public List<String> getCornerCnt(int matchid) {
+		List<String> cornersCntList = new ArrayList<String>();
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			ps = DBAccess.getConn().prepareStatement(
+					"SELECT HOMECORNERCNT,AWAYCORNERCNT FROM SOCCER02.MATCHRELDIMMART WHERE Match_ID=?");
+			ps.setInt(1, matchid);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				cornersCntList.add(Integer.toString(rs.getInt("HOMECORNERCNT")));
+				cornersCntList.add(Integer.toString(rs.getInt("AWAYCORNERCNT")));
+			}
+			ps.close();
+			rs.close();
+		} catch (SQLException e) {
+			log.severe(e.getMessage());
+		}
+		return cornersCntList;
 	}
 
 	// returns a List of every Match of a Team in a Season
 	public List<Soccer_Match> findMatches(String team, String season) {
 		List<Soccer_Match> tempList = new ArrayList<Soccer_Match>();
-		Statement stmt = null;
+		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {
-			stmt = DBAccess.getConn().createStatement();
-
-			rs = stmt.executeQuery(
-					"Select t1.long_name AS t1, t2.long_name AS t2, home_team_goal, away_team_goal, Match_id FROM (SOCCER02.MATCH m join SOCCER02.SEASONSTAGE s on (s.SEASONSTAGE_ID = m.SEASONSTAGE_SEASONSTAGE_ID)),SOCCER02.TEAM t1,SOCCER02.TEAM t2 where (t1.team_id=m.team_hometeam_id and t2.team_id = m.team_awayteam_id)AND s.name='"
-							+ season + "' AND (t1.long_name='" + team + "' or t2.long_name='" + team + "')");
+			ps = DBAccess.getConn().prepareStatement(
+					"Select t1.long_name AS t1, t2.long_name AS t2, home_team_goal, away_team_goal, Match_id FROM (SOCCER02.MATCH m join SOCCER02.SEASONSTAGE s on (s.SEASONSTAGE_ID = m.SEASONSTAGE_SEASONSTAGE_ID)),SOCCER02.TEAM t1,SOCCER02.TEAM t2 where (t1.team_id=m.team_hometeam_id and t2.team_id = m.team_awayteam_id)AND s.name=? AND (t1.long_name=? or t2.long_name=?)");
+			ps.setString(1, season);
+			ps.setString(2, team);
+			ps.setString(3, team);
+			rs = ps.executeQuery();
 			while (rs.next()) {
 				Soccer_Match match = new Soccer_Match();
 				match.setGastgeber(rs.getString("t1"));
@@ -118,7 +141,7 @@ public class SoccerController extends DatabaseController
 			log.severe(e.getMessage());
 		} finally {
 			try {
-				stmt.close();
+				ps.close();
 				rs.close();
 			} catch (SQLException e) {
 				log.severe(e.getMessage());
@@ -132,13 +155,14 @@ public class SoccerController extends DatabaseController
 	// returns a List of every Seasonstage for a team in their league
 	public List<Soccer_Seasonstage> findSeasonstages(String league, String team) {
 		List<Soccer_Seasonstage> tempList = new ArrayList<Soccer_Seasonstage>();
-		Statement stmt = null;
+		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {
-			stmt = DBAccess.getConn().createStatement();
-			rs = stmt.executeQuery(
-					"SELECT DISTINCT s.name FROM SOCCER02.LEAGUE l join SOCCER02.MATCH m on(l.league_id=m.league_league_id) join SOCCER02.TEAM t on(m.AWAY_TEAM_API_ID=t.TEAM_API_ID)join SOCCER02.SEASONSTAGE s on(m.SEASONSTAGE_SEASONSTAGE_ID=s.SEASONSTAGE_ID) WHERE l.NAME='"
-							+ league + "' AND t.LONG_NAME='" + team + "'");
+			ps = DBAccess.getConn().prepareStatement(
+					"SELECT DISTINCT s.name FROM SOCCER02.LEAGUE l join SOCCER02.MATCH m on(l.league_id=m.league_league_id) join SOCCER02.TEAM t on(m.AWAY_TEAM_API_ID=t.TEAM_API_ID)join SOCCER02.SEASONSTAGE s on(m.SEASONSTAGE_SEASONSTAGE_ID=s.SEASONSTAGE_ID) WHERE l.NAME=? AND t.LONG_NAME=?");
+			ps.setString(1, league);
+			ps.setString(2, team);
+			rs = ps.executeQuery();
 			while (rs.next()) {
 				Soccer_Seasonstage stage = new Soccer_Seasonstage();
 				stage.setName(rs.getString("name"));
@@ -148,7 +172,7 @@ public class SoccerController extends DatabaseController
 			log.severe(e.getMessage());
 		} finally {
 			try {
-				stmt.close();
+				ps.close();
 				rs.close();
 			} catch (SQLException e) {
 				log.severe(e.getMessage());
@@ -162,26 +186,26 @@ public class SoccerController extends DatabaseController
 	// returns a List of every Team of the specific League
 	public List<Soccer_Team> findTeams(String league) {
 		List<Soccer_Team> tempList = new ArrayList<Soccer_Team>();
-		Statement stmt = null;
+		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {
-			stmt = DBAccess.getConn().createStatement();
-			rs = stmt.executeQuery(
-					"SELECT DISTINCT t.LONG_NAME, t.SHort_name, t.team_id, t.TEAM_API_ID FROM SOCCER02.LEAGUE l join SOCCER02.MATCH m on(l.league_id=m.league_league_id) join SOCCER02.TEAM t on(m.AWAY_TEAM_API_ID=t.TEAM_API_ID) WHERE l.NAME='"
-							+ league + "'");
+			ps = DBAccess.getConn().prepareStatement(
+					"SELECT DISTINCT t.LONG_NAME, t.SHort_name, t.team_id FROM SOCCER02.LEAGUE l join SOCCER02.MATCH m on(l.league_id=m.league_league_id) join SOCCER02.TEAM t on (t.TEAM_API_ID = m.home_team_api_id)WHERE l.NAME=?");
+			ps.setString(1, league);
+			rs = ps.executeQuery();
 			while (rs.next()) {
 				Soccer_Team team = new Soccer_Team();
-				team.setLong_name(rs.getString("long_name"));
-				team.setShort_name(rs.getString("short_name"));
-				team.setTeam_id(rs.getInt("team_id"));
-				team.setTeam_api_id(rs.getInt("team_api_id"));
+				team.setLong_name(rs.getString("LONG_NAME"));
+				team.setShort_name(rs.getString("SHORT_NAME"));
+				team.setTeam_id(rs.getInt("TEAM_ID"));
+
 				tempList.add(team);
 			}
 		} catch (SQLException e) {
 			log.severe(e.getMessage());
 		} finally {
 			try {
-				stmt.close();
+				ps.close();
 				rs.close();
 			} catch (SQLException e) {
 				log.severe(e.getMessage());

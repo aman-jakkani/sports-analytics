@@ -1,66 +1,64 @@
 
-// This will be called anytime a dropdown menu option is clicked
-// analytics object will store values for sport, league, season, and team even through changes
-var analytics = { 
+// This will be called anytime a dropdown menu option is clicked. 
+// Stores previous values of sport, league, team, season, and game
+var dropdown = { 
   sport: "null",
   league: "null",
   team: "null",
   season: "null",
   game: "null",
 
-run: $(document).ready(function() {
-      var defaultString = "<option value = \"null\" >--Make a choice--</option>";
+  run: $(document).ready(function() {
+    var defaultString = "<option value = \"null\" >--Make a choice--</option>";
 
-      $("#sport, #league, #team, #season").change(function() {
+    $("#sport, #league, #team, #season").change(function() {
 
-        if ($(this).attr('id') == 'sport') {
-          sport = $(this).val();
-          $("#league").html(getLeagues(sport));
+      if ($(this).attr('id') == 'sport') {
+        sport = $(this).val();
+        $("#league").html(getLeagues(sport));
 
-          getStats(sport)
-          $("#firstStatistic").html(getStats(sport));
+        $("#firstStatistic").html(getStats(sport));
 
-          getStats(sport)
-          $("#secondStatistic").html(getStats(sport));
+        $("#secondStatistic").html(getStats(sport));
 
-          // Reset options below league
-          $("#team").html(defaultString);
-          $("#season").html(defaultString);
-          $("#game").html(defaultString);
-        } 
+        // Reset options below league
+        $("#team").html(defaultString);
+        $("#season").html(defaultString);
+        $("#game").html(defaultString);
+      } 
 
-        else if ($(this).attr('id') == 'league') {
-          league = $("#league").val();
-          $("#team").html(getTeams(sport, league));
+      else if ($(this).attr('id') == 'league') {
+        league = $("#league").val();
+        $("#team").html(getTeams(sport, league));
 
-          // Reset options below team
-          $("#season").html(defaultString);
-          $("#game").html(defaultString);
-        }
+        // Reset options below team
+        $("#season").html(defaultString);
+        $("#game").html(defaultString);
+      }
 
-        else if ($(this).attr('id') == 'team') {
-          team = $("#team").val();
-          $("#season").html(getSeasons(sport, league, team));
+      else if ($(this).attr('id') == 'team') {
+        team = $("#team").val();
+        $("#season").html(getSeasons(sport, league, team));
 
-          // Reset games
-          $("#game").html(defaultString);
-        }
+        // Reset games
+        $("#game").html(defaultString);
+      }
 
-        else if ($(this).attr('id') == 'season') {
-          season = $("#season").val();
-          $("#game").html(getGames(sport, league, team, season));
-        }
+      else if ($(this).attr('id') == 'season') {
+        season = $("#season").val();
+        $("#game").html(getGames(sport, league, team, season));
+      }
 
-        else if ($(this).attr('id') == "game"){
-          game = $("#game").val();
-        }
-      });
-    })
+      else if ($(this).attr('id') == "game"){
+        game = $("#game").val();
+      }
+    });
+  })
 }
 
 
 
-// get string of leagues
+// get array of leagues based on sport
 function getLeagues(sport) {
 
   var parameters = [["sports", sport], ];
@@ -68,13 +66,7 @@ function getLeagues(sport) {
 
   if (sport == "null") return htmlLeagueString;
 
-  console.log("Sport: ".concat(sport));
-
   var json = getRestResource("LeagueListResource", parameters);
-
-
-  // return default option if there are no leagues in the sport, or if no sport is selected
-  if (json.leagues.length == 0) return htmlLeagueString;
 
   console.log("Leagues found: ".concat(json.leagues.length));
 
@@ -85,14 +77,13 @@ function getLeagues(sport) {
 
   document.getElementById("league").innerHTML = htmlLeagueString;
 
-  // for debugging
-  console.log(htmlLeagueString);
   return htmlLeagueString; 
 };
 
 
-// return string of all teams for a given sport/league
+// return array of teams based on sport/league
 function getTeams(sport, league){
+
   var parameters = [["sports", sport], ["league", league]];
   var htmlTeamString = "<option value = \"null\" >--Make a choice--</option>";
 
@@ -102,17 +93,12 @@ function getTeams(sport, league){
 
   console.log("Teams found: ".concat(json.teams.length));
 
-  // return default string if there are no teams for a specific league, or if no league is selected
-  if (json.teams.length == 0) return htmlTeamString;
-
   for (i = 0; i < json.teams.length; ++i){
     htmlTeamString = htmlTeamString.concat("<option value = \"" + json.teams[i] + "\">" + json.teams[i] + "</option>")
   }
 
   document.getElementById("team").innerHTML = htmlTeamString;
 
-  // for debugging
-  console.log(htmlTeamString);
   return htmlTeamString;
 }
 
@@ -126,10 +112,6 @@ function getSeasons(sport, league, team){
 
   var json = getRestResource("SeasonListResource", parameters);
 
-
-  // return default string if there are no teams for a specific league, or if no league is selected
-  if (json.seasons.length == 0) return htmlSeasonString;
-
   console.log("Seasons found: ".concat(json.seasons.length));
 
   for (i = 0; i < json.seasons.length; ++i){
@@ -138,8 +120,6 @@ function getSeasons(sport, league, team){
 
   document.getElementById("season").innerHTML = htmlSeasonString;
 
-  // for debugging
-  console.log(htmlSeasonString);
   return htmlSeasonString;
 }
 
@@ -147,13 +127,11 @@ function getSeasons(sport, league, team){
 // return string of all games for a given sport/league/team/season
 function getGames(sport, league, team, season){
   var parameters = [["sports", sport], ["league", league], ["team", team], ["season", season]];
-  var json = getRestResource("MatchListResource", parameters);
-
   var htmlMatchString = "<option value = \"null\" >--Make a choice--</option>";
 
+  if (sport == "null" || league == "null" || team == "null" || season == "null") return htmlMatchString;
 
-  // return default string if there are no teams for a specific league, or if no league is selected
-  if (json.match.length == 0) return htmlMatchString;
+  var json = getRestResource("MatchListResource", parameters);
 
   console.log("Matches found: ".concat(json.match.length));
 
@@ -163,19 +141,20 @@ function getGames(sport, league, team, season){
 
   document.getElementById("game").innerHTML = htmlMatchString;
 
-  // for debuggging
-  console.log(htmlMatchString);
   return htmlMatchString;
 }
 
 
-// return string of possible stats for a given sport. Need json string before this can be generalized
+// return string of possible stats for a given sport
 function getStats(sport){
   var htmlStatString = "<option value = \"null\" >--Make a choice--</option>";
+
+  // Hardcoded in temporarily
   if (sport == "Basketball"){
     htmlStatString = htmlStatString.concat("<option value = \"Field Goals\" >Field Goals</option>");
   } else if (sport == "Soccer"){
     htmlStatString = htmlStatString.concat("<option value = \"Possession Time\" >Possession Time</option>")
   }
+
   return htmlStatString;
 }

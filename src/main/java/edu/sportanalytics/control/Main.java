@@ -37,7 +37,8 @@ class Main
         log.info("Main window initialized");
 
         RestServer.getInstance(); //only for starting
-        DBAccess.getInstance().establishConnection();
+
+        new DatabaseProperties(DBAccess.getInstance());
 
         log.info("Finished initialization");
     }

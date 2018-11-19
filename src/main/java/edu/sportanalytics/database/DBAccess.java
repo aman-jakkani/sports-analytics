@@ -25,7 +25,7 @@ public class DBAccess {
 		port = "1521";
 		sid = "/orcl";
 		username = "SYSTEM";
-		pw = "oracle"; // <----- very very bad.... dont try this at home ;)
+		pw="";
 	}
 
 	/* Close DB-Connection and reset classobject instance */

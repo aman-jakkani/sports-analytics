@@ -31,7 +31,7 @@ public class SoccerController extends DatabaseController
 		}
 		return nameLeagues;
 	}
-	
+
 
 	// returns LongNames of the Teams in a specific league
 	@Override

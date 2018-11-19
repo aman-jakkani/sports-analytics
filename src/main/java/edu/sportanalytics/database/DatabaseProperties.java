@@ -26,20 +26,18 @@ public class DatabaseProperties extends JFrame
 
     private void buildDialog()
     {
-        this.getContentPane().setLayout(new BorderLayout());
-
-        JPanel formPanel = new JPanel(new GridLayout(5,2));
+        this.getContentPane().setLayout(new GridLayout(6,2));
 
         //server url
         JLabel serverURLL = new JLabel("ServerURL:", JLabel.TRAILING);
-        formPanel.add(serverURLL);
+        this.getContentPane().add(serverURLL);
         final JTextField serverURLTF = new JTextField();
         serverURLL.setLabelFor(serverURLTF);
-        formPanel.add(serverURLTF);
+        this.getContentPane().add(serverURLTF);
 
         //portnumber
         JLabel portL = new JLabel("Port:", JLabel.TRAILING);
-        formPanel.add(portL);
+        this.getContentPane().add(portL);
         //interger only
         NumberFormat format = NumberFormat.getInstance();
         format.setGroupingUsed(false);
@@ -51,33 +49,29 @@ public class DatabaseProperties extends JFrame
         formatter.setCommitsOnValidEdit(true);
         final JFormattedTextField portTF = new JFormattedTextField(formatter);
         portL.setLabelFor(portTF);
-        formPanel.add(portTF);
+        this.getContentPane().add(portTF);
 
         //SID
         JLabel sidL = new JLabel("SID:", JLabel.TRAILING);
-        formPanel.add(sidL);
+        this.getContentPane().add(sidL);
         final JTextField sidTF = new JTextField();
         sidL.setLabelFor(sidTF);
-        formPanel.add(sidTF);
+        this.getContentPane().add(sidTF);
 
 
         //username
         JLabel usernameL = new JLabel("Username:", JLabel.TRAILING);
-        formPanel.add(usernameL);
+        this.getContentPane().add(usernameL);
         final JTextField usernameTF = new JTextField();
         usernameL.setLabelFor(usernameTF);
-        formPanel.add(usernameTF);
+        this.getContentPane().add(usernameTF);
 
         //password
         JLabel passwordL = new JLabel("Password:", JLabel.TRAILING);
-        formPanel.add(passwordL);
+        this.getContentPane().add(passwordL);
         final JPasswordField passwordTF = new JPasswordField();
         passwordL.setLabelFor(passwordTF);
-        formPanel.add(passwordTF);
-
-        this.getContentPane().add(formPanel, BorderLayout.NORTH);
-
-        JPanel buttonPanel = new JPanel(new GridLayout(1,2));
+        this.getContentPane().add(passwordTF);
 
         JButton okButton = new JButton("OK");
         okButton.addActionListener(new ActionListener() {
@@ -92,7 +86,7 @@ public class DatabaseProperties extends JFrame
                 exit();
             }
         });
-        buttonPanel.add(okButton);
+        this.getContentPane().add(okButton);
 
         JButton cancelButton = new JButton("Cancel");
         cancelButton.addActionListener(new ActionListener() {
@@ -101,9 +95,7 @@ public class DatabaseProperties extends JFrame
                 exit();
             }
         });
-        buttonPanel.add(cancelButton);
-
-        this.getContentPane().add(buttonPanel, BorderLayout.SOUTH);
+        this.getContentPane().add(cancelButton);
 
         //init
         serverURLTF.setText(connection.getServerURL());
@@ -111,6 +103,8 @@ public class DatabaseProperties extends JFrame
         sidTF.setText(connection.getSid());
         usernameTF.setText(connection.getUsername());
 
+        this.getRootPane().setDefaultButton(okButton);
+        okButton.requestFocus();
     }
 
     private void exit()

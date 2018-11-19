@@ -24,7 +24,7 @@ public class DBAccess {
 		serverURL = "sportanalysisdb.inform.hs-hannover.de";
 		port = "1521";
 		sid = "/orcl";
-		username = "SYSTEM";
+		username = "SOCCER02";
 		pw="";
 	}
 

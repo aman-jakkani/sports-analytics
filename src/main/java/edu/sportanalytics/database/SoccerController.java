@@ -11,6 +11,9 @@ import java.util.logging.Logger;
 public class SoccerController extends DatabaseController
 
 {
+	private Statement stmt;
+	private PreparedStatement ps;
+	private ResultSet rs;
 	private List<Soccer_League> leaguesList;
 	private List<Soccer_Team> teamList;
 	private List<Soccer_Seasonstage> seasonstageList;
@@ -85,11 +88,10 @@ public class SoccerController extends DatabaseController
 				yellowList.add(Integer.toString(rs.getInt("SUM_YELLOW_HOME")));
 				yellowList.add(Integer.toString(rs.getInt("SUM_YELLOW_AWAY")));
 			}
-			ps.close();
-			rs.close();
 		} catch (SQLException e) {
 			log.severe(e.getMessage());
 		}
+		tryClose();
 		return yellowList;
 	}
 
@@ -109,11 +111,10 @@ public class SoccerController extends DatabaseController
 				cornersCntList.add(Integer.toString(rs.getInt("HOMECORNERCNT")));
 				cornersCntList.add(Integer.toString(rs.getInt("AWAYCORNERCNT")));
 			}
-			ps.close();
-			rs.close();
 		} catch (SQLException e) {
 			log.severe(e.getMessage());
 		}
+		tryClose();
 		return cornersCntList;
 	}
 
@@ -140,15 +141,8 @@ public class SoccerController extends DatabaseController
 			}
 		} catch (SQLException e) {
 			log.severe(e.getMessage());
-		} finally {
-			try {
-				ps.close();
-				rs.close();
-			} catch (SQLException e) {
-				log.severe(e.getMessage());
-			}
-
-		}
+		} 
+		tryClose();
 
 		return tempList;
 	}
@@ -171,15 +165,8 @@ public class SoccerController extends DatabaseController
 			}
 		} catch (SQLException e) {
 			log.severe(e.getMessage());
-		} finally {
-			try {
-				ps.close();
-				rs.close();
-			} catch (SQLException e) {
-				log.severe(e.getMessage());
-			}
-
-		}
+		} 
+		tryClose();
 
 		return tempList;
 	}
@@ -204,16 +191,8 @@ public class SoccerController extends DatabaseController
 			}
 		} catch (SQLException e) {
 			log.severe(e.getMessage());
-		} finally {
-			try {
-				ps.close();
-				rs.close();
-			} catch (SQLException e) {
-				log.severe(e.getMessage());
-			}
-
-		}
-
+		} 
+		tryClose();
 		return tempList;
 	}
 
@@ -236,15 +215,10 @@ public class SoccerController extends DatabaseController
 
 		} catch (SQLException e) {
 			log.severe(e.getMessage());
-		} finally {
-			try {
-				stmt.close();
-				rs.close();
-			} catch (SQLException e) {
-				log.severe(e.getMessage());
-			}
+		} 
+		tryClose();
 
-		}
+		
 		return tempList;
 
 	}
@@ -255,6 +229,19 @@ public class SoccerController extends DatabaseController
 
 	public List<Soccer_Team> getTeamList() {
 		return teamList;
+	}
+	public void tryClose(){
+		try {
+			if(stmt !=null){
+				stmt.close();
+			}else if(ps != null){
+				ps.close();
+			}else if(rs !=null){
+				rs.close();
+			}
+		} catch (SQLException e) {
+			log.severe("tryClose: "+e.getMessage());
+		}
 	}
 
 }

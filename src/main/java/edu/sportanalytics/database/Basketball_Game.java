@@ -10,13 +10,7 @@ public class Basketball_Game {
     private Date date;
     private String host, guest; // gastgeber = host, gast = guest
 
-    public Basketball_Game(int Game_ID, int HomeTeam_ID, int AwayTeam_ID, int Season){
-        this.Game_ID = Game_ID;
-        this.HomeTeam_ID = HomeTeam_ID;
-        this.AwayTeam_ID = AwayTeam_ID;
-        this.Season = Season;
-        // TODO: finish constructor - determine what all should be included in formal arguments
-    }
+  
 
     public int getGame_ID() {
         return Game_ID;

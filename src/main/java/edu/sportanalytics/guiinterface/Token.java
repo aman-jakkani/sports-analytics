@@ -31,7 +31,7 @@ public class Token {
 		return match;
 	}
 
-	public int getMatchID() {
+	public String getMatchID() {
 		int j = 0;
 		String matchTemp = getMatch();
 		for (int i = 0; i < matchTemp.length(); i++) {
@@ -39,8 +39,8 @@ public class Token {
 				j = i;
 			}
 		}
-		matchTemp = match.substring(j + 1, matchTemp.length() - 1);
-		return Integer.parseInt(matchTemp);
+		matchTemp = match.substring(j + 1, matchTemp.length());
+		return matchTemp;
 	}
 
 	public Token(SportsEnum type, String league, String team, String season, String match) {

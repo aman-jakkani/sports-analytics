@@ -35,7 +35,6 @@ public class SoccerController extends DatabaseController
 		return nameLeagues;
 	}
 
-
 	// returns LongNames of the Teams in a specific league
 	@Override
 	public List<String> getTeams(String league) {
@@ -67,22 +66,46 @@ public class SoccerController extends DatabaseController
 		List<String> matchesString = new ArrayList<String>();
 		for (Soccer_Match s : matchesList) {
 			matchesString.add(s.getGastgeber() + " vs " + s.getGast() + " (" + s.getHome_team_goal() + " : "
-					+ s.getAway_team_goal() + ") MATCH_ID: " + s.getMatch_ID());
+					+ s.getAway_team_goal() + ") MATCH_ID:" + s.getMatch_ID());
 		}
 		return matchesString;
+	}
+
+	@Override
+	public List<String> getBallPossession(String matchid) {
+		List<String> possessionList = new ArrayList<String>();
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			ps = DBAccess.getConn().prepareStatement(
+					"SELECT ((HOMEPOS_FSTHALF + HOMEPOS_SCNDHALF)/2) AS HOMEPOSS, ((AWAYPOS_FSTHALF + AWAYPOS_SCNDHALF)/2) AS AWAYPOSS FROM SOCCER02.MATCHRELDIMMART WHERE MATCH_ID =?");
+			
+			ps.setString(1, matchid);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				possessionList.add(Integer.toString(rs.getInt("HOMEPOSS")));
+				possessionList.add(Integer.toString(rs.getInt("AWAYPOSS")));
+				System.out.println(possessionList);
+			}
+			
+		} catch (SQLException e) {
+			log.severe(e.getMessage());
+		}
+		tryClose();
+		return possessionList;
 	}
 
 	// returns a List containing the sum of yellow Cards for both halfs for the
 	// home- and awayteam.
 	@Override
-	public List<String> getYellowCards(int matchid) {
+	public List<String> getYellowCards(String matchid) {
 		List<String> yellowList = new ArrayList<String>();
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {
 			ps = DBAccess.getConn().prepareStatement(
 					"select ((HOMEYELLOWCNT)+(HOMEYELLOW2CNT)) AS SUM_YELLOW_HOME, ((AWAYYELLOWCNT)+(AWAYYELLOW2CNT))SUM_YELLOW_AWAY FROM SOCCER02.MATCHRELDIMMART WHERE Match_ID=?");
-			ps.setInt(1, matchid);
+			ps.setString(1, matchid);
 			rs = ps.executeQuery();
 			while (rs.next()) {
 				yellowList.add(Integer.toString(rs.getInt("SUM_YELLOW_HOME")));
@@ -98,17 +121,18 @@ public class SoccerController extends DatabaseController
 	// returns a List containing number of corners for the
 	// home- and awayteam.
 	@Override
-	public List<String> getCornerCnt(int matchid) {
+	public List<String> getCornerCnt(String matchid) {
 		List<String> cornersCntList = new ArrayList<String>();
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {
 			ps = DBAccess.getConn().prepareStatement(
 					"SELECT HOMECORNERCNT,AWAYCORNERCNT FROM SOCCER02.MATCHRELDIMMART WHERE Match_ID=?");
-			ps.setInt(1, matchid);
+			ps.setString(1, matchid);
 			rs = ps.executeQuery();
 			while (rs.next()) {
-				cornersCntList.add(Integer.toString(rs.getInt("HOMECORNERCNT")));
+				
+				cornersCntList.add(String.valueOf(rs.getInt("HOMECORNERCNT")));
 				cornersCntList.add(Integer.toString(rs.getInt("AWAYCORNERCNT")));
 			}
 		} catch (SQLException e) {
@@ -141,7 +165,7 @@ public class SoccerController extends DatabaseController
 			}
 		} catch (SQLException e) {
 			log.severe(e.getMessage());
-		} 
+		}
 		tryClose();
 
 		return tempList;
@@ -165,7 +189,7 @@ public class SoccerController extends DatabaseController
 			}
 		} catch (SQLException e) {
 			log.severe(e.getMessage());
-		} 
+		}
 		tryClose();
 
 		return tempList;
@@ -191,7 +215,7 @@ public class SoccerController extends DatabaseController
 			}
 		} catch (SQLException e) {
 			log.severe(e.getMessage());
-		} 
+		}
 		tryClose();
 		return tempList;
 	}
@@ -215,10 +239,9 @@ public class SoccerController extends DatabaseController
 
 		} catch (SQLException e) {
 			log.severe(e.getMessage());
-		} 
+		}
 		tryClose();
 
-		
 		return tempList;
 
 	}
@@ -230,17 +253,18 @@ public class SoccerController extends DatabaseController
 	public List<Soccer_Team> getTeamList() {
 		return teamList;
 	}
-	public void tryClose(){
+
+	public void tryClose() {
 		try {
-			if(stmt !=null){
+			if (stmt != null) {
 				stmt.close();
-			}else if(ps != null){
+			} else if (ps != null) {
 				ps.close();
-			}else if(rs !=null){
+			} else if (rs != null) {
 				rs.close();
 			}
 		} catch (SQLException e) {
-			log.severe("tryClose: "+e.getMessage());
+			log.severe("tryClose: " + e.getMessage());
 		}
 	}
 

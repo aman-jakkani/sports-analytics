@@ -21,18 +21,22 @@ public abstract class DatabaseController {
 	public abstract List<String> getSeason(String league, String team);
 
 	public abstract List<String> getGame(String season, String team);
+	
+	public List<String> getBallPossession(String matchid){
+		return null;
+	}
 
-	public List<String> getPointsInSeason(int matchid) {
+	public List<String> getPointsInSeason(String matchid) {
 		// TODO
 		return null;
 	}
 
-	public List<String> getAvgHeigth(int matchid) {
+	public List<String> getAvgHeigth(String matchid) {
 		// TODO
 		return null;
 	}
 
-	public List<String> getAvgWeight(int matchid) {
+	public List<String> getAvgWeight(String matchid) {
 		// TODO
 		return null;
 	}
@@ -40,17 +44,16 @@ public abstract class DatabaseController {
 	/*
 	 * The following is only needed for the SoccerController
 	 */
-	public List<String> getYellowCards(int matchid) {
+	public List<String> getYellowCards(String matchid) {
 		return null;
 	}
 
-	public List<String> getRedCards(int matchid) {
+	public List<String> getRedCards(String matchid) {
 		// TODO
 		return null;
 	}
 
-	public List<String> getCornerCnt(int matchid) {
+	public List<String> getCornerCnt(String matchid) {
 		return null;
 	}
-
 }

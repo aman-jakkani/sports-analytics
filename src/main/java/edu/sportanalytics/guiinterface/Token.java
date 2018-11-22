@@ -50,7 +50,16 @@ public class Token {
 		this.season = season;
 		this.match = match;
 
-		tokenMap.put(this.hashCode(), this);
+		if(tokenMap.containsKey(this.counter))
+        {
+            tokenMap.remove(counter);
+        }
+		tokenMap.put(this.counter, this);
+		counter--;
+		if(counter == 0)
+        {
+            counter = MAX_MAPSIZE;
+        }
 	}
 
 	@Override
@@ -58,6 +67,8 @@ public class Token {
 		return java.util.Objects.hash(type, league, team, season, match);
 	}
 
+	private static final int MAX_MAPSIZE = 1000000; //Should be enough for starting
+	private static int counter = MAX_MAPSIZE;
 	private static HashMap<Integer, Token> tokenMap = new HashMap<Integer, Token>();
 
 	public static Token getToken(int key) {

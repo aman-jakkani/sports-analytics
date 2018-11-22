@@ -4,39 +4,23 @@ import java.util.Date;
 
 public class Basketball_Game {
 
-    private int Game_ID, HomeTeam_ID, AwayTeam_ID, result, home_team_score, away_team_score;
-    private String League_name;
+    private int GID, HomeTID, VisitorTID, result,sequence, season , Attendance;
+    private String League_name, status, tvbroadcast, timeplayed;
     private int Season;
     private Date date;
     private String host, guest; // gastgeber = host, gast = guest
 
   
 
-    public int getGame_ID() {
-        return Game_ID;
-    }
+    public int getGID() {
+		return GID;
+	}
 
-    public void setGame_ID(int Game_ID) {
-        this.Game_ID = Game_ID;
-    }
+	public void setGID(int gID) {
+		GID = gID;
+	}
 
-    public int getHomeTeam_ID() {
-        return HomeTeam_ID;
-    }
-
-    public void setHomeTeam_ID(int HomeTeam_ID) {
-        this.HomeTeam_ID = HomeTeam_ID;
-    }
-
-    public int getAwayTeam_ID() {
-        return AwayTeam_ID;
-    }
-
-    public void setAwayTeam_ID(int AwayTeam_ID) {
-        this.AwayTeam_ID = AwayTeam_ID;
-    }
-
-    public int getSeason(){
+	public int getSeason(){
         return Season;
     }
 
@@ -86,19 +70,65 @@ public class Basketball_Game {
         this.guest = guest;
     }
 
-    public int getHomeTeamScore() {
-        return home_team_score;
-    }
+	public int getHomeTID() {
+		return HomeTID;
+	}
 
-    public void setHomeTeamScore(int home_team_score) {
-        this.home_team_score = home_team_score;
-    }
+	public void setHomeTID(int homeTID) {
+		HomeTID = homeTID;
+	}
 
-    public int getAwayTeamScore() {
-        return away_team_score;
-    }
+	public int getVisitorTID() {
+		return VisitorTID;
+	}
 
-    public void setAwayTeamScore(int away_team_score) {
-        this.away_team_score = away_team_score;
-    }
+	public void setVisitorTID(int visitorTID) {
+		VisitorTID = visitorTID;
+	}
+
+	public int getSequence() {
+		return sequence;
+	}
+
+	public void setSequence(int sequence) {
+		this.sequence = sequence;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public String getTvbroadcast() {
+		return tvbroadcast;
+	}
+
+	public void setTvbroadcast(String tvbroadcast) {
+		this.tvbroadcast = tvbroadcast;
+	}
+
+	public String getTimeplayed() {
+		return timeplayed;
+	}
+
+	public void setTimeplayed(String timeplayed) {
+		this.timeplayed = timeplayed;
+	}
+
+	public int getAttendance() {
+		return Attendance;
+	}
+
+	public void setAttendance(int attendance) {
+		Attendance = attendance;
+	}
+
+	public String getLeague_name() {
+		return League_name;
+	}
+
+ 
 }

@@ -66,7 +66,7 @@ public class BasketballController extends DatabaseController {
 		List<String> gamesString = new ArrayList<String>();
 
 		for (Basketball_Game b : gamesList){
-			gamesString.add(b.getHost() + " vs " + b.getGuest() + " (" + b.getHomeTeamScore() + " : " + b.getAwayTeamScore() + " )");
+//			gamesString.add(b.getHost() + " vs " + b.getGuest() + " (" + b.getHomeTeamScore() + " : " + b.getAwayTeamScore() + " )");
 		}
 
 		return gamesString;
@@ -104,18 +104,24 @@ public class BasketballController extends DatabaseController {
 	// finds games + info from team/season
 	private List<Basketball_Game> findGames(String team, String season){
 		List<Basketball_Game> gList = new ArrayList<Basketball_Game>();
-		//yet to come: seq, staus , tvbroadcast,timeplayed,attendance
+		//yet to come: seq, status , tvbroadcast,timeplayed,attendance
 		
 		try {
 			Statement stmt = DBAccess.getConn().createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT GAME_ID, HOME_TEAM_ID, AWAY_TEAM_ID, GAME_DATE  from BASKETBALL.GAME ;");
+			ResultSet rs = stmt.executeQuery("SELECT GID,SEQUENCE,STATUS,HOMETID,VISTORTID,SEASON,TVBROADCAST,DATEMMDD,DATEYYYY,TIMEPLAYED,ATTENDANCE FROM BASKETBALL.GAME;;");
 			
 			while(rs.next()) {
 				Basketball_Game bg = new Basketball_Game();
-				bg.setAwayTeam_ID(rs.getInt("AWAY_TEAM_ID"));
-				bg.setGame_ID(rs.getInt("Game_ID"));
-				bg.setHomeTeam_ID(rs.getInt("HOME_TEAM_ID"));
-				bg.setDate(rs.getDate("GAME_DATE"));
+				bg.setGID(rs.getInt("GID"));
+				bg.setSequence(rs.getInt("SEQUENCE"));
+				bg.setStatus(rs.getString("STATUS"));
+				bg.setVisitorTID(rs.getInt("VISITORTID"));
+				bg.setHomeTID(rs.getInt("HOMETUID"));
+				bg.setSeason(rs.getInt("STATUS"));
+				bg.setTvbroadcast(rs.getString("TVBROADCAST"));
+				bg.setTimeplayed(rs.getString("TIMEPLAYED"));
+				bg.setAttendance(rs.getInt("ATTENDANCE"));
+				//bg.setDate(rs.getDate("GAME_DATE"));
 				
 				gList.add(bg);
 				
@@ -135,17 +141,13 @@ public class BasketballController extends DatabaseController {
 	// Finds Season from league/team
 	private List<Basketball_Season> findSeason(String league, String team){
 		List<Basketball_Season> bsList = new ArrayList<Basketball_Season>();
-		
-		
+
 		try {
 			Statement stmt = DBAccess.getConn().createStatement();
 			ResultSet rs = stmt.executeQuery("");
 			
 			while(rs.next()) {
 				Basketball_Season bs = new Basketball_Season();
-				
-				
-				
 				bsList.add(bs);
 			}
 			

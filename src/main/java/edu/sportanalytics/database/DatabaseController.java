@@ -25,6 +25,9 @@ public abstract class DatabaseController {
 	public List<String> getBallPossession(String matchid){
 		return null;
 	}
+	public List<String> getFouls(String matchid){
+		return null;
+	}
 
 	public List<String> getPointsInSeason(String matchid) {
 		// TODO
@@ -49,7 +52,6 @@ public abstract class DatabaseController {
 	}
 
 	public List<String> getRedCards(String matchid) {
-		// TODO
 		return null;
 	}
 

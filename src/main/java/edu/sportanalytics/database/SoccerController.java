@@ -79,15 +79,14 @@ public class SoccerController extends DatabaseController
 		try {
 			ps = DBAccess.getConn().prepareStatement(
 					"SELECT ((HOMEPOS_FSTHALF + HOMEPOS_SCNDHALF)/2) AS HOMEPOSS, ((AWAYPOS_FSTHALF + AWAYPOS_SCNDHALF)/2) AS AWAYPOSS FROM SOCCER02.MATCHRELDIMMART WHERE MATCH_ID =?");
-			
+
 			ps.setString(1, matchid);
 			rs = ps.executeQuery();
 			while (rs.next()) {
 				possessionList.add(Integer.toString(rs.getInt("HOMEPOSS")));
 				possessionList.add(Integer.toString(rs.getInt("AWAYPOSS")));
-				System.out.println(possessionList);
 			}
-			
+
 		} catch (SQLException e) {
 			log.severe(e.getMessage());
 		}
@@ -118,6 +117,50 @@ public class SoccerController extends DatabaseController
 		return yellowList;
 	}
 
+	// returns a List containing the sum of red Cards for both halfs for the
+	// home- and awayteam.
+	@Override
+	public List<String> getRedCards(String matchid) {
+		List<String> redList = new ArrayList<String>();
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			ps = DBAccess.getConn().prepareStatement(
+					"select ((HOMEREDCNT)+(HOMERED2CNT)) AS SUM_RED_HOME, ((AWAYREDCNT)+(AWAYRED2CNT))SUM_RED_AWAY FROM SOCCER02.MATCHRELDIMMART WHERE Match_ID=?");
+			ps.setString(1, matchid);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				redList.add(Integer.toString(rs.getInt("SUM_RED_HOME")));
+				redList.add(Integer.toString(rs.getInt("SUM_YELLOW_AWAY")));
+			}
+		} catch (SQLException e) {
+			log.severe(e.getMessage());
+		}
+		tryClose();
+		return redList;
+	}
+
+	@Override
+	public List<String> getFouls(String matchid) {
+		List<String> foulsList = new ArrayList<String>();
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			ps = DBAccess.getConn()
+					.prepareStatement("SELECT HOMEFOULCNT, AWAYFOULCNT FROM SOCCER02.MATCHRELDIMMART WHERE Match_ID=?");
+			ps.setString(1, matchid);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				foulsList.add(Integer.toString(rs.getInt("HOMEFOULCNT")));
+				foulsList.add(Integer.toString(rs.getInt("AWAYFOULCNT")));
+			}
+		} catch (SQLException e) {
+			log.severe(e.getMessage());
+		}
+		tryClose();
+		return foulsList;
+	}
+
 	// returns a List containing number of corners for the
 	// home- and awayteam.
 	@Override
@@ -131,7 +174,7 @@ public class SoccerController extends DatabaseController
 			ps.setString(1, matchid);
 			rs = ps.executeQuery();
 			while (rs.next()) {
-				
+
 				cornersCntList.add(String.valueOf(rs.getInt("HOMECORNERCNT")));
 				cornersCntList.add(Integer.toString(rs.getInt("AWAYCORNERCNT")));
 			}

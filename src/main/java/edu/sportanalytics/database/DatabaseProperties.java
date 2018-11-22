@@ -19,8 +19,7 @@ public class DatabaseProperties extends JFrame
     {
         this.connection = connection;
         buildDialog();
-        this.pack();
-        this.setVisible(true);
+
         log.info("Created database properties dialog.");
     }
 
@@ -105,6 +104,10 @@ public class DatabaseProperties extends JFrame
 
         this.getRootPane().setDefaultButton(okButton);
         okButton.requestFocus();
+
+        this.pack();
+        this.setVisible(true);
+        passwordTF.requestFocusInWindow();
     }
 
     private void exit()

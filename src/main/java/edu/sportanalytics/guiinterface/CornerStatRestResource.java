@@ -17,7 +17,7 @@ import edu.sportanalytics.database.SportsEnum;
 @Path("CornerStatRestResource")
 public class CornerStatRestResource {
 
-	private static final Logger log = Logger.getLogger(LeagueListResource.class.getName());
+	private static final Logger log = Logger.getLogger(CornerStatRestResource.class.getName());
 
 
     @GET

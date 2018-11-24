@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 public class TokenResource
 {
 
-    private static final Logger log = Logger.getLogger(SeasonListResource.class.getName());
+    private static final Logger log = Logger.getLogger(TokenResource.class.getName());
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)

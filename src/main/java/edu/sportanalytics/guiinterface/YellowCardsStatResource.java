@@ -17,7 +17,7 @@ import edu.sportanalytics.database.SportsEnum;
 @Path("YellowCardsStatResource")
 public class YellowCardsStatResource {
 
-	private static final Logger log = Logger.getLogger(LeagueListResource.class.getName());
+	private static final Logger log = Logger.getLogger(YellowCardsStatResource.class.getName());
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)

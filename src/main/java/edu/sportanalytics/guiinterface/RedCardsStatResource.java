@@ -15,7 +15,7 @@ import edu.sportanalytics.database.SportsEnum;
 
 public class RedCardsStatResource {
 
-	private static final Logger log = Logger.getLogger(LeagueListResource.class.getName());
+	private static final Logger log = Logger.getLogger(RedCardsStatResource.class.getName());
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)

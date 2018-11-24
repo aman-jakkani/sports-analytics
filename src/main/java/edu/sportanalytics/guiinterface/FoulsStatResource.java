@@ -17,7 +17,7 @@ import edu.sportanalytics.database.SportsEnum;
 @Path("FoulsStatResource")
 public class FoulsStatResource {
 
-	private static final Logger log = Logger.getLogger(LeagueListResource.class.getName());
+	private static final Logger log = Logger.getLogger(FoulsStatResource.class.getName());
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)

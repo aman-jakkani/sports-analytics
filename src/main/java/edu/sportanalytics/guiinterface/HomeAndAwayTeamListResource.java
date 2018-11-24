@@ -14,10 +14,9 @@ import org.json.JSONObject;
 import edu.sportanalytics.database.DBAccess;
 import edu.sportanalytics.database.SportsEnum;
 
-@Path("BallPossessionStatResource")
-public class BallPossessionStatResource {
-
-	private static final Logger log = Logger.getLogger(BallPossessionStatResource.class.getName());
+@Path("HomeAndAwayTeamListResource")
+public class HomeAndAwayTeamListResource {
+	private static final Logger log = Logger.getLogger(HomeAndAwayTeamListResource.class.getName());
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
@@ -25,10 +24,10 @@ public class BallPossessionStatResource {
 		Token tk = Token.getToken(token);
 		SportsEnum type = Token.getToken(token).getSports();
 
-		List<String> possession = DBAccess.getInstance().getController(type).getBallPossession(tk.getMatchID());
+		List<String> homeAndAwayTeam = DBAccess.getInstance().getController(type).getHomeAndAwayTeam(tk.getMatchID());
 
 		JSONObject jo = new JSONObject();
-		jo.put("possession", possession);
+		jo.put("homeAndAwayTeam", homeAndAwayTeam);
 
 		String returnString = jo.toString();
 
@@ -36,5 +35,4 @@ public class BallPossessionStatResource {
 
 		return returnString;
 	}
-
 }

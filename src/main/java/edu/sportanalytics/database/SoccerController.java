@@ -71,6 +71,32 @@ public class SoccerController extends DatabaseController
 		return matchesString;
 	}
 
+	// returns the home- and awayteam for a game
+	@Override
+	public List<String> getHomeAndAwayTeam(String matchid) {
+		List<String> teamList = new ArrayList<String>();
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			ps = DBAccess.getConn().prepareStatement(
+					"SELECT t1.LONG_NAME AS t1, t2.LONG_NAME AS t2 FROM SOCCER02.MATCH m, SOCCER02.TEAM t1,SOCCER02.TEAM t2 where (t1.team_id=m.team_hometeam_id and t2.team_id = m.team_awayteam_id)AND m.Match_Id =?");
+
+			ps.setString(1, matchid);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				teamList.add(rs.getString("t1"));
+				teamList.add(rs.getString("t2"));
+			}
+
+		} catch (SQLException e) {
+			log.severe(e.getMessage());
+		}
+		tryClose();
+		return teamList;
+	}
+
+	// returns a List containing ball-possession for the
+	// home- and away-team at a game
 	@Override
 	public List<String> getBallPossession(String matchid) {
 		List<String> possessionList = new ArrayList<String>();
@@ -94,8 +120,9 @@ public class SoccerController extends DatabaseController
 		return possessionList;
 	}
 
-	// returns a List containing the sum of yellow Cards for both halfs for the
-	// home- and awayteam.
+	// returns a List containing the sum of yellow Cards for both half-times for
+	// the
+	// home- and away-team at a game
 	@Override
 	public List<String> getYellowCards(String matchid) {
 		List<String> yellowList = new ArrayList<String>();
@@ -117,8 +144,9 @@ public class SoccerController extends DatabaseController
 		return yellowList;
 	}
 
-	// returns a List containing the sum of red Cards for both halfs for the
-	// home- and awayteam.
+	// returns a List containing the sum of red Cards for both half-times for
+	// the
+	// home- and away-team at a game
 	@Override
 	public List<String> getRedCards(String matchid) {
 		List<String> redList = new ArrayList<String>();
@@ -140,6 +168,7 @@ public class SoccerController extends DatabaseController
 		return redList;
 	}
 
+	// returns fouls of the home- and away-team at a game
 	@Override
 	public List<String> getFouls(String matchid) {
 		List<String> foulsList = new ArrayList<String>();

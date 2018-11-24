@@ -43,6 +43,10 @@ public abstract class DatabaseController {
 		// TODO
 		return null;
 	}
+	
+	public List<String> getHomeAndAwayTeam(String matchid){
+		return null;
+	}
 
 	/*
 	 * The following is only needed for the SoccerController

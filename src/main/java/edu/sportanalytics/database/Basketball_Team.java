@@ -2,14 +2,8 @@ package edu.sportanalytics.database;
 
 public class Basketball_Team{
     private int team_id, team_api_id;
-    String long_name, short_name;
+    String long_name, short_name, abbreviation, location;
 
-    public Basketball_Team(int team_id, int team_api_id, String long_name, String short_name){
-        this.team_id = team_id;
-        this.team_api_id = team_api_id;
-        this.long_name = long_name;
-        this.short_name = short_name;
-    }
     
     public long getTeam_id(){
         return team_id;
@@ -19,7 +13,15 @@ public class Basketball_Team{
         this.team_id = team_id;
     }
     
-    public String getLong_name(){
+    public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
+
+	public String getLong_name(){
         return long_name;
     }
 
@@ -27,7 +29,15 @@ public class Basketball_Team{
         this.long_name = long_name;
     }
 
-    public String getShort_name(){
+    public String getAbrevation() {
+		return abbreviation;
+	}
+
+	public void setAbrevation(String abbreviation) {
+		this.abbreviation = abbreviation;
+	}
+
+	public String getShort_name(){
         return short_name;
     }
 

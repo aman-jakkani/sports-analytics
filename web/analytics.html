@@ -114,6 +114,16 @@
 
 
             <fieldset>
+                    <legend>Choose Statistic</legend>
+                    <p>
+                        <label>Statistic</label>
+                        <select id = "stat1">
+                            <option value = "null">--Make a choice--</option>
+                        </select>
+                    </p>
+            </fieldset>           
+
+            <fieldset>
                 <legend>Choose Chart Type</legend>
                 <p>
                     <label>Chart</label>
@@ -123,7 +133,7 @@
                 </p>
             </fieldset>
 
-
+<!--
             <fieldset>
                 <legend>Choose Axes Type</legend>
                 <p>
@@ -133,28 +143,30 @@
                     </select>
                 </p>
             </fieldset>
-        
+-->        
         </form>
 
-      <!-- Import dropdown javascript logic -->
-      <br>
-      <script type="text/javascript" src="js/results.js"></script>
-      <input type = "button" onclick = "showData()" value = "SUBMIT"></input>
+    <!-- Import dropdown javascript logic -->
+    <br>
+    <script type="text/javascript" src="js/results.js"></script>
 
-      <div style="display: none;" id="hiddenText">Results: </div>
-      <p><span id = 'chosenSport'> </span></p>
-      <p><span id = 'chosenLeague'> </span></p>
-      <p><span id = 'chosenTeam'> </span></p>
-      <p><span id = 'chosenSeason'> </span></p>
-      <p><span id = 'chosenGame'> </span></p> 
-      <p><span id = 'chosenAxes'></span></p>
-      
-      <!--  jump to seperate page 
-      <script type="text/javascript" src="js/results.js"></script> -->
-      
-      <div class = "container">
-      
-      <canvas id = "myChart"></canvas>
+    <!-- Create Submit Button, link to showData() function -->
+    <input type = "button" onclick = "showData();" value = "SUBMIT"></input>
+
+    <!-- Display Stats in a list -->
+    <div style="display: none;" id="hiddenText">Results: </div>
+    <p><span id = 'chosenSport'> </span></p>
+    <p><span id = 'chosenLeague'> </span></p>
+    <p><span id = 'chosenTeam'> </span></p>
+    <p><span id = 'chosenSeason'> </span></p>
+    <p><span id = 'chosenStat1' ></span></p>
+    <p><span id = 'chartType' ></span></p>
+    <p><span id = 'chosenGame'> </span></p> 
+    <p><span id = 'chosenAxes'></span></p>
+
+    <canvas id="myChart" width="400" height="400"></canvas>
+
+
     <br>
 
     </body>

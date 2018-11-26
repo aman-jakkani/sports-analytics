@@ -1,12 +1,16 @@
-
 // This will be called anytime a dropdown menu option is clicked. 
 // Stores previous values of sport, league, team, season, and game
+
 var dropdown = { 
   sport: "null",
   league: "null",
   team: "null",
   season: "null",
   game: "null",
+  stat1: "null",
+  stat2: "null",
+  chartType: "null",
+  axes: "axes",
 
   run: $(document).ready(function() {
     var defaultString = "<option value = \"null\" >--Make a choice--</option>";
@@ -17,14 +21,16 @@ var dropdown = {
         sport = $(this).val();
         $("#league").html(getLeagues(sport));
 
-        $("#firstStatistic").html(getStats(sport));
+        $("#stat1").html(getStats(sport));
 
-        $("#secondStatistic").html(getStats(sport));
+        $("#stat2").html(getStats(sport));
 
         // Reset options below league
         $("#team").html(defaultString);
         $("#season").html(defaultString);
         $("#game").html(defaultString);
+        $("firstStatistic").html(defaultString);
+        $("secondStatistic").html(defaultString);
       } 
 
       else if ($(this).attr('id') == 'league') {
@@ -51,6 +57,29 @@ var dropdown = {
 
       else if ($(this).attr('id') == "game"){
         game = $("#game").val();
+        $("#firstStatistic").html(getStats(sport, league, team, season)); 
+        $("#secondStatistic").html(getStats(sport, league, team, season)); 
+        $("#chartType").html(getCharts()); 
+
+        // Reset Axes
+        $("axes").html(defaultString);
+      }
+
+      else if ($(this).attr('id') == "firstStatistic"){
+        stat1 = $("#firstStatistic").val();       
+      }
+
+      else if ($(this).attr('id') == "secondStatistic"){
+        stat2 = $("secondStatistic").val();       
+      }
+
+      else if ($(this).attr('id') == "chartType"){
+        chartType = $("chartType").val();
+        $("#axes").html(getStats(chartType)); 
+      }
+
+      else if ($(this).attr('id') == "axes"){
+        axes = $("axes").val();
       }
     });
   })
@@ -86,7 +115,8 @@ function getTeams(sport, league){
 
   var parameters = [["sports", sport], ["league", league]];
   var htmlTeamString = "<option value = \"null\" >--Make a choice--</option>";
-
+  
+  // place conditionals to get allow passing null values when other values are present (pass in all teams)
   if (sport == "null" || league == "null") return htmlTeamString;
 
   var json = getRestResource("TeamListResource", parameters);
@@ -108,6 +138,7 @@ function getSeasons(sport, league, team){
   var parameters = [["sports", sport], ["league", league], ["team", team]];
   var htmlSeasonString = "<option value = \"null\" >--Make a choice--</option>";
 
+  // place conditionals to get allow passing null values when other values are present (pass in all teams)
   if (sport == "null" || league == "null" || team == "null") return htmlSeasonString;
 
   var json = getRestResource("SeasonListResource", parameters);
@@ -129,6 +160,7 @@ function getGames(sport, league, team, season){
   var parameters = [["sports", sport], ["league", league], ["team", team], ["season", season]];
   var htmlMatchString = "<option value = \"null\" >--Make a choice--</option>";
 
+  // place conditionals to get allow passing null values when other values are present (pass in all teams)
   if (sport == "null" || league == "null" || team == "null" || season == "null") return htmlMatchString;
 
   var json = getRestResource("MatchListResource", parameters);
@@ -146,15 +178,41 @@ function getGames(sport, league, team, season){
 
 
 // return string of possible stats for a given sport
-function getStats(sport){
+function getStats(sport, league, team, game){
   var htmlStatString = "<option value = \"null\" >--Make a choice--</option>";
 
-  // Hardcoded in temporarily
-  if (sport == "Basketball"){
-    htmlStatString = htmlStatString.concat("<option value = \"Field Goals\" >Field Goals</option>");
-  } else if (sport == "Soccer"){
-    htmlStatString = htmlStatString.concat("<option value = \"Possession Time\" >Possession Time</option>")
-  }
+  // place conditionals to get allow passing null values when other values are present (pass in all teams)
+  if (sport == "null" || league == "null" || team == "null" || season == "null") return htmlStatString;
+  var parameters = [["sport", sport], ["league", league], ["team", team], ["game", game]];
+
+  console.log("Generating Token...");
+  console.log("Sport: " + sport + ", League: " + league + ", Team: " + team + "Game: " + game);
+
+  var token = getRestResource("TokenResource", parameters);
+
 
   return htmlStatString;
+}
+
+
+function getCharts(){
+  var htmlChartString = "<option value = \"null\" >--Make a choice--</option>";
+
+  var charts = [['barChart', 'Bar Chart'], ['lineChart','Line Chart'], ['horizontalBarChart', 'Horizontal Bar Chart'], ['pieChart', 'Pie Chart'], ['donutChart', 'Donut Chart'], ['radarChart','Radar Chart'], ['polarAreaChart', 'Polar Area Chart']];
+
+  for (i = 0; i < charts.length; ++i){
+    htmlChartString = htmlChart.concat("<option value = \"" + charts[i][0] + "\" >" + charts[i][1] + "</option>")
+  }
+
+  return htmlChartString;
+}
+
+function getAxes(chartType){
+  var htmlAxesString = "<option value = \"null\" >--Make a choice--</option>";
+  
+  switch (chartType){
+    var htmlAxesString = [[" ", ]]  
+  }
+
+  return htmlAxesString;
 }

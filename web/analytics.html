@@ -50,10 +50,10 @@
     <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 
     <!-- Using new RestCaller.js -->
-    <script type="text/javascript" src="JS/RestCaller.js"></script>
+    <script type="text/javascript" src="js/RestCaller.js"></script>
 
     <!-- Import dropdown javascript logic -->
-    <script type="text/javascript" src="JS/resources.js"></script>
+    <script type="text/javascript" src="js/resources.js"></script>
 
         <form method = "GET">
             <fieldset>
@@ -68,6 +68,7 @@
                 </p>
             </fieldset>
 
+
             <fieldset>
                 <legend>Pick a League</legend>
                 <p>
@@ -77,6 +78,7 @@
                     </select>
                 </p>
             </fieldset>
+
 
             <fieldset>
                 <legend>Pick a Team</legend>
@@ -109,45 +111,34 @@
                     </select>
                 </p>
             </fieldset>  
-         
+
+
             <fieldset>
-                    <legend>Choose First Statistic</legend>
-                    <p>
-                       <label>Statistic</label>
-                       <select id = "firstStatistic">
-                         <option value = "null" >--Make a choice--</option>
-                       </select>
-                    </p>
-                 </fieldset>
-          
-            <fieldset>
-                <legend>Choose Second Statistic</legend>
+                <legend>Choose Chart Type</legend>
                 <p>
-                    <label>Statistic</label>
-                    <select id = "secondStatistic">
-                        <option value = "null" >--Make a choice--</option>
-                    </select>
-                </p>
-            </fieldset>
-          
-            <fieldset>
-                <legend>Choose Analysis Type*</legend>
-                <p>
-                    <label>Statistic</label>
-                    <select id = "analysis">
-                        <option value = "null" >--Make a choice--</option>
-                        <option value = "CUBE">CUBE</option>
-                        <option value = "ROLLUP">ROLLUP</option>
-                        <option value = "SIMPLE">Simple Query</option>
-                        <option value = "COMPARE">Compare Simple Queries</option>
+                    <label>Chart</label>
+                    <select id = "chart">
+                        <option value = "null">--Make a choice--</option>
                     </select>
                 </p>
             </fieldset>
 
+
+            <fieldset>
+                <legend>Choose Axes Type</legend>
+                <p>
+                    <label>Chart</label>
+                    <select id = "axes">
+                        <option value = "null">--Make a choice--</option>
+                    </select>
+                </p>
+            </fieldset>
+        
         </form>
+
       <!-- Import dropdown javascript logic -->
       <br>
-      <script type="text/javascript" src="JS/results.js"></script>
+      <script type="text/javascript" src="js/results.js"></script>
       <input type = "button" onclick = "showData()" value = "SUBMIT"></input>
 
       <div style="display: none;" id="hiddenText">Results: </div>
@@ -155,18 +146,16 @@
       <p><span id = 'chosenLeague'> </span></p>
       <p><span id = 'chosenTeam'> </span></p>
       <p><span id = 'chosenSeason'> </span></p>
-      <p><span id = 'chosenGame'> </span></p>    
-      <p><span id = 'chosenFirstStat'></span></p>
-      <p><span id = 'chosenSecondStat'> </span></p>
-      <p><span id = 'chosenAnalysis'> </span></p>   
+      <p><span id = 'chosenGame'> </span></p> 
+      <p><span id = 'chosenAxes'></span></p>
       
-      <!--  Figure out how to jump to a seperate page -->
+      <!--  jump to seperate page 
+      <script type="text/javascript" src="js/results.js"></script> -->
       
       <div class = "container">
       
       <canvas id = "myChart"></canvas>
-       </div>
-
+    <br>
 
     </body>
 </html>

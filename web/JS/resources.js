@@ -182,9 +182,9 @@ function getGames(sport, league, team, season){
 function getCharts(){
   var htmlChartString = "<option value = \"null\" >--Make a choice--</option>";
 
-  var charts = [['barChart', 'Bar Chart'], ['lineChart','Line Chart'], ['horizontalBarChart', 'Horizontal Bar Chart'], 
-                ['pieChart', 'Pie Chart'], ['donutChart', 'Donut Chart'], ['radarChart','Radar Chart'], 
-                ['polarAreaChart', 'Polar Area Chart']];
+  var charts = [['bar', 'Bar Chart'], ['line','Line Chart'], ['horizontalBar', 'Horizontal Bar Chart'], 
+                ['pie', 'Pie Chart'], ['doughnut', 'Doughnut Chart'], ['radar','Radar Chart'], 
+                ['polarArea', 'Polar Area Chart']];
   
   console.log("Number of charts: ".concat(charts.length));
  

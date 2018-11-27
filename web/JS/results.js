@@ -77,7 +77,7 @@ function showChart(chartType, parameters){
                         break;
 
                 case 'line':
-                        // lineChart();
+                        lineChart();
                         console.log('Line Chart Selected.');
                         break;
 

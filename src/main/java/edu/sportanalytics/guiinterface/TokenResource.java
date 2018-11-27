@@ -23,7 +23,7 @@ public class TokenResource
             @QueryParam("league") String league,
             @QueryParam("sports") String sports)
      {
-        log.info("TokeRequested");
+        log.info("Token Requested for Game: ");
         SportsEnum type;
         if (sports.equals("Soccer")) {
             type = SportsEnum.SOCCER;
@@ -35,8 +35,8 @@ public class TokenResource
         }
 
         int token = new Token(type,league, team, season, match).hashCode();
-        //Query for getting list of different Teams in given league
-        //Wrap in in JSON String
+        // Query for getting list of different Teams in given league
+        // Wrap in in JSON String
 
         JSONObject jo = new JSONObject();
         jo.put("token", token);

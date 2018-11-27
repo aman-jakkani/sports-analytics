@@ -15,7 +15,7 @@ function showData() {
         var parameters = [["sports", "Soccer"],];
 
         league = getRestResource("LeagueListResource", parameters);
-        parameters.push(["league", league.leagues[1]]);
+        parameters.push(["league", league.leagues[0]]);
 
         team = getRestResource("TeamListResource", parameters);
         parameters.push(["team", team.teams[0]]);
@@ -33,17 +33,14 @@ function showData() {
 
         // ------------------------------------------------------------------
 
-        /*var button = document.getElementById("SUBMIT");
-                SUBMIT.addEventListener("click", function(){
-        myChart.destroy();
-        });*/
-
+        // don't plot anything if a chart type isn't selected
+        if (document.getElementById("chartType").value == "null") return;
 
         var ctx = document.getElementById("myChart");
-        if(window.bar != undefined)
-        window.bar.destroy();
 
-        //var myChart 
+        // prevent chart from showing old data when mouse is scrolled over it
+        if(window.bar != undefined) window.bar.destroy();
+
         window.bar = new Chart(ctx, {
         type: document.getElementById("chartType").value, // bar, horizontal bar, pie, line, doughnut, radar, polarArea
         data: {

@@ -23,9 +23,9 @@ window.bar.destroy();
 window.bar = new Chart(ctx, {
     type: document.getElementById("chartType").value, // bar, horizontal bar, pie, line, doughnut, radar, polarArea
     data: {
-        labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+        labels: ["Rockets", "Mavericks", "Lakers", "Celtics", "Kings", "Thunder"],
         datasets: [{
-            label: '# of Votes',
+            label: '# of Technical Fouls',
             data: [12, 19, 3, 5, 2, 3],
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',

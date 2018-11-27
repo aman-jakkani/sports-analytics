@@ -33,7 +33,7 @@ function showData() {
         console.log(parameters);
 
         var token = getRestResource("TokenResource", parameters);
-        console.log("Token: " + token);
+        console.log("Token: " + token["token"]);
 
         // ------------------------------------------------------------------
 

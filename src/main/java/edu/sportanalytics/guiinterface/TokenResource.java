@@ -36,7 +36,8 @@ public class TokenResource
             log.severe("Unknown sports parameter: " + sports);
         }
 
-        int token = new Token(type,league, team, season, match).hashCode();
+        int token = Token.getCurrentCnt();
+        new Token(type,league, team, season, match);
         // Query for getting list of different Teams in given league
         // Wrap in in JSON String
 

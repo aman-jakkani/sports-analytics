@@ -3,8 +3,11 @@ package edu.sportanalytics.guiinterface;
 import edu.sportanalytics.database.SportsEnum;
 
 import java.util.HashMap;
+import java.util.logging.Logger;
 
 public class Token {
+	private static final Logger log = Logger.getLogger(Token.class.getName());
+
 	private SportsEnum type;
 	private String league;
 	private String team;
@@ -55,10 +58,12 @@ public class Token {
             tokenMap.remove(counter);
         }
 		tokenMap.put(this.counter, this);
+		log.info("Token with cnt " + counter + " created");
 		counter--;
 		if(counter == 0)
         {
             counter = MAX_MAPSIZE;
+            log.warning("Max tokenmapsize. Deleting older Tokens.");
         }
 	}
 
@@ -73,5 +78,9 @@ public class Token {
 
 	public static Token getToken(int key) {
 		return tokenMap.get(key);
+	}
+	public static int getCurrentCnt()
+	{
+		return counter;
 	}
 }

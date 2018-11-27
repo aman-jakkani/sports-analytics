@@ -9,11 +9,18 @@ function showData() {
         document.getElementById('chosenGame').innerHTML = document.getElementById("game").value;
         
 
-if (myChart != undefined)
-	myChart.destroy();
+/*var button = document.getElementById("SUBMIT");
+	SUBMIT.addEventListener("click", function(){
+    myChart.destroy();
+});*/
+
 
 var ctx = document.getElementById("myChart");
-var myChart = new Chart(ctx, {
+if(window.bar != undefined)
+window.bar.destroy();
+
+//var myChart 
+window.bar = new Chart(ctx, {
     type: document.getElementById("chartType").value, // bar, horizontal bar, pie, line, doughnut, radar, polarArea
     data: {
         labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
@@ -41,6 +48,11 @@ var myChart = new Chart(ctx, {
     },
     options: {
         scales: {
+        	 xAxes: [{
+                ticks: {
+                    beginAtZero:true
+                }
+            }],
             yAxes: [{
                 ticks: {
                     beginAtZero:true

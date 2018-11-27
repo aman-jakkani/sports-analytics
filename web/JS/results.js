@@ -9,9 +9,13 @@ function showData() {
         document.getElementById('chosenGame').innerHTML = document.getElementById("game").value;
         // document.getElementById('chosenChart').innerHTML = document.getElementById("chartType").value;
 
-        // This block is for testing out the Token Resource. Remove later
+        /* 
+                This block is for testing out the Token Resource. 
+                Gets the first combination of sport, league, team, season, and match then
+                trys to create a token from it. 
+                The token currently returns undefined
+        */
         // ------------------------------------------------------------------
-
         var parameters = [["sports", "Soccer"],];
 
         league = getRestResource("LeagueListResource", parameters);

@@ -28,9 +28,61 @@ function showData() {
  
         console.log(parameters);
 
+        var token = getRestResource("TokenResource", parameters);
+        console.log("Token: " + token);
+
         // ------------------------------------------------------------------
 
-        var token = getRestResource("TokenResource", parameters);
+        /*var button = document.getElementById("SUBMIT");
+                SUBMIT.addEventListener("click", function(){
+        myChart.destroy();
+        });*/
 
-        console.log("Token: " + token);
+
+        var ctx = document.getElementById("myChart");
+        if(window.bar != undefined)
+        window.bar.destroy();
+
+        //var myChart 
+        window.bar = new Chart(ctx, {
+        type: document.getElementById("chartType").value, // bar, horizontal bar, pie, line, doughnut, radar, polarArea
+        data: {
+                labels: ["Rockets", "Mavericks", "Lakers", "Celtics", "Kings", "Thunder"],
+                datasets: [{
+                label: '# of Technical Fouls',
+                data: [12, 19, 3, 5, 2, 3],
+                backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                        'rgba(255,99,132,1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+                }]
+        },
+        options: {
+                scales: {
+                        xAxes: [{
+                        ticks: {
+                        beginAtZero:true
+                        }
+                }],
+                yAxes: [{
+                        ticks: {
+                        beginAtZero:true
+                        }
+                }]
+                }
+        }
+    });   
 }

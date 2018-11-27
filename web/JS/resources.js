@@ -10,7 +10,9 @@ var dropdown = {
   stat1: "null",
   stat2: "null",
   chartType: "null",
-  axes: "axes",
+  axes: "null",
+  token: "null",
+  parameter: "null",
 
   run: $(document).ready(function() {
     var defaultString = "<option value = \"null\" >--Make a choice--</option>";
@@ -65,25 +67,21 @@ var dropdown = {
       else if ($(this).attr('id') == "game"){
         game = $("#game").val();
         $("#stat1").html(getStats(sport, league, team, season)); 
+        parameters = [["sports", sport], ["league", league], ["team", team], ["season", season], ["match", game]];
+        token = getRestResource("TokenResource", parameters);
 
         // Reset chart type and axes
         $("#chartType").html(getCharts()); 
-        $("axes").html(defaultString);
       }
+
       else if ($(this).attr('id') == "stat1"){
         stat1 = $("#stat1").val();
         // $("#chartType").html(getCharts()); 
         
-        
       }
 
       else if ($(this).attr('id') == "chartType"){
-        chartType = $("chartType").val();
-        $("#axes").html(getStats(chartType)); 
-      }
-
-      else if ($(this).attr('id') == "axes"){
-        axes = $("axes").val();
+        chartType = $("chartType").val(); 
       }
     });
   })
@@ -192,10 +190,9 @@ function getCharts(){
  
   for (i = 0; i < charts.length; ++i){
     htmlChartString = htmlChartString.concat("<option value = \"" + charts[i][0] + "\" >" + charts[i][1] + "</option>");
-    console.log(charts[i][0] + ": " + charts[i][1]);
   }
 
-  document.getElementById("chart").innerHTML = htmlChartString;
+  document.getElementById("chartType").innerHTML = htmlChartString;
 
   return htmlChartString;
 }

@@ -4,7 +4,7 @@
 
 	<title>Sports Analytics</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<script src = "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
+    <script src = "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 	
@@ -112,7 +112,7 @@
                 </p>
             </fieldset>  
 
-
+<!---
             <fieldset>
                     <legend>Choose Statistic</legend>
                     <p>
@@ -122,36 +122,27 @@
                         </select>
                     </p>
             </fieldset>           
+-->
 
             <fieldset>
                 <legend>Choose Chart Type</legend>
                 <p>
                     <label>Chart</label>
-                    <select id = "chart">
+                    <select id = "chartType">
                         <option value = "null">--Make a choice--</option>
                     </select>
                 </p>
             </fieldset>
-
-<!--
-            <fieldset>
-                <legend>Choose Axes Type</legend>
-                <p>
-                    <label>Chart</label>
-                    <select id = "axes">
-                        <option value = "null">--Make a choice--</option>
-                    </select>
-                </p>
-            </fieldset>
--->        
+    
         </form>
 
     <!-- Import dropdown javascript logic -->
+    <script type = "text/javascript" src = "js/results.js"></script>
     <br>
-    <script type="text/javascript" src="js/results.js"></script>
+
 
     <!-- Create Submit Button, link to showData() function -->
-    <input type = "button" onclick = "showData();" value = "SUBMIT"></input>
+    <button onclick="showData()" id="SUBMIT">SUBMIT</button>
 
     <!-- Display Stats in a list -->
     <div style="display: none;" id="hiddenText">Results: </div>
@@ -160,13 +151,13 @@
     <p><span id = 'chosenTeam'> </span></p>
     <p><span id = 'chosenSeason'> </span></p>
     <p><span id = 'chosenStat1' ></span></p>
-    <p><span id = 'chartType' ></span></p>
+    <p><span id = 'chosenChart' ></span></p>
     <p><span id = 'chosenGame'> </span></p> 
     <p><span id = 'chosenAxes'></span></p>
-
+    
+    <div>
     <canvas id="myChart" width="400" height="400"></canvas>
-    <script>
-    </script>
+    </div>
 
     <br>
 

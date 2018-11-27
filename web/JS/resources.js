@@ -7,12 +7,8 @@ var dropdown = {
   team: "null",
   season: "null",
   game: "null",
-  stat1: "null",
-  stat2: "null",
   chartType: "null",
-  axes: "null",
   token: "null",
-  parameter: "null",
 
   run: $(document).ready(function() {
     var defaultString = "<option value = \"null\" >--Make a choice--</option>";
@@ -67,21 +63,16 @@ var dropdown = {
       else if ($(this).attr('id') == "game"){
         game = $("#game").val();
         $("#stat1").html(getStats(sport, league, team, season)); 
-        parameters = [["sports", sport], ["league", league], ["team", team], ["season", season], ["match", game]];
-        token = getRestResource("TokenResource", parameters);
+
+        // token = getToken(sport, league, team, season, game);
 
         // Reset chart type and axes
         $("#chartType").html(getCharts()); 
       }
 
-      else if ($(this).attr('id') == "stat1"){
-        stat1 = $("#stat1").val();
-        // $("#chartType").html(getCharts()); 
-        
-      }
-
       else if ($(this).attr('id') == "chartType"){
         chartType = $("chartType").val(); 
+
       }
     });
   })
@@ -182,9 +173,13 @@ function getGames(sport, league, team, season){
 function getCharts(){
   var htmlChartString = "<option value = \"null\" >--Make a choice--</option>";
 
+  /*
   var charts = [['bar', 'Bar Chart'], ['line','Line Chart'], ['horizontalBar', 'Horizontal Bar Chart'], 
                 ['pie', 'Pie Chart'], ['doughnut', 'Doughnut Chart'], ['radar','Radar Chart'], 
                 ['polarArea', 'Polar Area Chart']];
+  */
+
+ var charts = [['bar', 'Bar Chart'], ['line','Line Chart'], ['radar','Radar Chart']];
   
   console.log("Number of charts: ".concat(charts.length));
  
@@ -198,15 +193,12 @@ function getCharts(){
 }
 
 
-function getAxes(chartType){
-  var htmlAxesString = "<option value = \"null\" >--Make a choice--</option>";
-  var axes = [["linear", "Linear"], ["log", "Logarithmic"]];
-  
-  switch (chartType){
-    case "barChart": htmlAxesString.concat("<option value = \"" + axes[i][0] + "\" >" + axes[i][1] + "</option>");
-    default: htmlAxesString.concat("<option value = \"" + axes[i][0] + "\" >" + axes[i][1] + "</option>");
-  }
-  return htmlAxesString;
+function getToken(sport, league, team, season, game){
+  var parameters = [["sports", sport], ["league", league], ["team", team], ["season", season], ["match", game]];
+
+  var token = getRestResources("TokenResource", parameters);
+  console.log("Token: " + token["token"]);
+
 }
 
 

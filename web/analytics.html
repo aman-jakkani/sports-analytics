@@ -4,7 +4,7 @@
 
 	<title>Sports Analytics</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<script src = "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
+    <script src = "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 	
@@ -50,10 +50,10 @@
     <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 
     <!-- Using new RestCaller.js -->
-    <script type="text/javascript" src="JS/RestCaller.js"></script>
+    <script type="text/javascript" src="js/RestCaller.js"></script>
 
     <!-- Import dropdown javascript logic -->
-    <script type="text/javascript" src="JS/resources.js"></script>
+    <script type="text/javascript" src="js/resources.js"></script>
 
         <form method = "GET">
             <fieldset>
@@ -68,6 +68,7 @@
                 </p>
             </fieldset>
 
+
             <fieldset>
                 <legend>Pick a League</legend>
                 <p>
@@ -77,6 +78,7 @@
                     </select>
                 </p>
             </fieldset>
+
 
             <fieldset>
                 <legend>Pick a Team</legend>
@@ -109,62 +111,54 @@
                     </select>
                 </p>
             </fieldset>  
-         
+
+<!---
             <fieldset>
-                    <legend>Choose First Statistic</legend>
+                    <legend>Choose Statistic</legend>
                     <p>
-                       <label>Statistic</label>
-                       <select id = "firstStatistic">
-                         <option value = "null" >--Make a choice--</option>
-                       </select>
+                        <label>Statistic</label>
+                        <select id = "stat1">
+                            <option value = "null">--Make a choice--</option>
+                        </select>
                     </p>
-                 </fieldset>
-          
-            <fieldset>
-                <legend>Choose Second Statistic</legend>
-                <p>
-                    <label>Statistic</label>
-                    <select id = "secondStatistic">
-                        <option value = "null" >--Make a choice--</option>
-                    </select>
-                </p>
-            </fieldset>
-          
-            <fieldset>
-                <legend>Choose Analysis Type*</legend>
-                <p>
-                    <label>Statistic</label>
-                    <select id = "analysis">
-                        <option value = "null" >--Make a choice--</option>
-                        <option value = "CUBE">CUBE</option>
-                        <option value = "ROLLUP">ROLLUP</option>
-                        <option value = "SIMPLE">Simple Query</option>
-                        <option value = "COMPARE">Compare Simple Queries</option>
-                    </select>
-                </p>
-            </fieldset>
+            </fieldset>           
+-->
 
+            <fieldset>
+                <legend>Choose Chart Type</legend>
+                <p>
+                    <label>Chart</label>
+                    <select id = "chartType">
+                        <option value = "null">--Make a choice--</option>
+                    </select>
+                </p>
+            </fieldset>
+    
         </form>
-      <!-- Import dropdown javascript logic -->
-      <br>
-      <script type="text/javascript" src="JS/results.js"></script>
-      <input type = "button" onclick = "showData()" value = "SUBMIT"></input>
 
-      <div style="display: none;" id="hiddenText">Results: </div>
-      <p><span id = 'chosenSport'> </span></p>
-      <p><span id = 'chosenLeague'> </span></p>
-      <p><span id = 'chosenTeam'> </span></p>
-      <p><span id = 'chosenSeason'> </span></p>
-      <p><span id = 'chosenGame'> </span></p>    
-      <p><span id = 'chosenFirstStat'></span></p>
-      <p><span id = 'chosenSecondStat'> </span></p>
-      <p><span id = 'chosenAnalysis'> </span></p>     
-      
-      <div class = "container">
-      
-      <canvas id = "myChart"></canvas>
-       </div>
+    <!-- Import dropdown javascript logic -->
+    <script type = "text/javascript" src = "js/results.js"></script>
+    <br>
 
+
+    <!-- Create Submit Button, link to showData() function -->
+    <button onclick="showData()" id="SUBMIT">SUBMIT</button>
+
+    <!-- Display Stats in a list -->
+    <div style="display: none;" id="hiddenText">Results: </div>
+    <p><span id = 'chosenSport'> </span></p>
+    <p><span id = 'chosenLeague'> </span></p>
+    <p><span id = 'chosenTeam'> </span></p>
+    <p><span id = 'chosenSeason'> </span></p>
+    <p><span id = 'chosenStat1' ></span></p>
+    <p><span id = 'chosenGame'> </span></p> 
+    <p><span id = 'chosenAxes'></span></p>
+    
+    <div>
+    <canvas id="myChart" width="400" height="400"></canvas>
+    </div>
+
+    <br>
 
     </body>
 </html>

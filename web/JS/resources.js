@@ -1,12 +1,18 @@
-
 // This will be called anytime a dropdown menu option is clicked. 
 // Stores previous values of sport, league, team, season, and game
+
 var dropdown = { 
   sport: "null",
   league: "null",
   team: "null",
   season: "null",
   game: "null",
+  stat1: "null",
+  stat2: "null",
+  chartType: "null",
+  axes: "null",
+  token: "null",
+  parameter: "null",
 
   run: $(document).ready(function() {
     var defaultString = "<option value = \"null\" >--Make a choice--</option>";
@@ -17,14 +23,15 @@ var dropdown = {
         sport = $(this).val();
         $("#league").html(getLeagues(sport));
 
-        $("#firstStatistic").html(getStats(sport));
-
-        $("#secondStatistic").html(getStats(sport));
+        $("#chartType").html(getCharts());
 
         // Reset options below league
         $("#team").html(defaultString);
         $("#season").html(defaultString);
         $("#game").html(defaultString);
+        $("#stat1").html(defaultString);        
+        // $("#chartType").html(defaultString); 
+        $("axes").html(defaultString);
       } 
 
       else if ($(this).attr('id') == 'league') {
@@ -34,6 +41,9 @@ var dropdown = {
         // Reset options below team
         $("#season").html(defaultString);
         $("#game").html(defaultString);
+        $("#stat1").html(defaultString);        
+        // $("#chartType").html(defaultString); 
+        $("axes").html(defaultString);
       }
 
       else if ($(this).attr('id') == 'team') {
@@ -47,10 +57,31 @@ var dropdown = {
       else if ($(this).attr('id') == 'season') {
         season = $("#season").val();
         $("#game").html(getGames(sport, league, team, season));
+
+        // reset options below game
+        $("#stat1").html(defaultString);        
+        // $("#chartType").html(defaultString); 
+        $("axes").html(defaultString);
       }
 
       else if ($(this).attr('id') == "game"){
         game = $("#game").val();
+        $("#stat1").html(getStats(sport, league, team, season)); 
+        parameters = [["sports", sport], ["league", league], ["team", team], ["season", season], ["match", game]];
+        token = getRestResource("TokenResource", parameters);
+
+        // Reset chart type and axes
+        $("#chartType").html(getCharts()); 
+      }
+
+      else if ($(this).attr('id') == "stat1"){
+        stat1 = $("#stat1").val();
+        // $("#chartType").html(getCharts()); 
+        
+      }
+
+      else if ($(this).attr('id') == "chartType"){
+        chartType = $("chartType").val(); 
       }
     });
   })
@@ -81,12 +112,13 @@ function getLeagues(sport) {
 };
 
 
-// return array of teams based on sport/league
+// return string of all teams based on sport/league
 function getTeams(sport, league){
 
   var parameters = [["sports", sport], ["league", league]];
   var htmlTeamString = "<option value = \"null\" >--Make a choice--</option>";
-
+  
+  // place conditionals to get allow passing null values when other values are present (pass in all teams)
   if (sport == "null" || league == "null") return htmlTeamString;
 
   var json = getRestResource("TeamListResource", parameters);
@@ -108,6 +140,7 @@ function getSeasons(sport, league, team){
   var parameters = [["sports", sport], ["league", league], ["team", team]];
   var htmlSeasonString = "<option value = \"null\" >--Make a choice--</option>";
 
+  // place conditionals to get allow passing null values when other values are present (pass in all teams)
   if (sport == "null" || league == "null" || team == "null") return htmlSeasonString;
 
   var json = getRestResource("SeasonListResource", parameters);
@@ -129,6 +162,7 @@ function getGames(sport, league, team, season){
   var parameters = [["sports", sport], ["league", league], ["team", team], ["season", season]];
   var htmlMatchString = "<option value = \"null\" >--Make a choice--</option>";
 
+  // place conditionals to get allow passing null values when other values are present (pass in all teams)
   if (sport == "null" || league == "null" || team == "null" || season == "null") return htmlMatchString;
 
   var json = getRestResource("MatchListResource", parameters);
@@ -145,16 +179,69 @@ function getGames(sport, league, team, season){
 }
 
 
+function getCharts(){
+  var htmlChartString = "<option value = \"null\" >--Make a choice--</option>";
+
+  var charts = [['bar', 'Bar Chart'], ['line','Line Chart'], ['horizontalBar', 'Horizontal Bar Chart'], 
+                ['pie', 'Pie Chart'], ['doughnut', 'Doughnut Chart'], ['radar','Radar Chart'], 
+                ['polarArea', 'Polar Area Chart']];
+  
+  console.log("Number of charts: ".concat(charts.length));
+ 
+  for (i = 0; i < charts.length; ++i){
+    htmlChartString = htmlChartString.concat("<option value = \"" + charts[i][0] + "\" >" + charts[i][1] + "</option>");
+  }
+
+  document.getElementById("chartType").innerHTML = htmlChartString;
+
+  return htmlChartString;
+}
+
+
+function getAxes(chartType){
+  var htmlAxesString = "<option value = \"null\" >--Make a choice--</option>";
+  var axes = [["linear", "Linear"], ["log", "Logarithmic"]];
+  
+  switch (chartType){
+    case "barChart": htmlAxesString.concat("<option value = \"" + axes[i][0] + "\" >" + axes[i][1] + "</option>");
+    default: htmlAxesString.concat("<option value = \"" + axes[i][0] + "\" >" + axes[i][1] + "</option>");
+  }
+  return htmlAxesString;
+}
+
+
 // return string of possible stats for a given sport
-function getStats(sport){
+function getStats(sport, league, team, game){
   var htmlStatString = "<option value = \"null\" >--Make a choice--</option>";
 
-  // Hardcoded in temporarily
-  if (sport == "Basketball"){
-    htmlStatString = htmlStatString.concat("<option value = \"Field Goals\" >Field Goals</option>");
-  } else if (sport == "Soccer"){
-    htmlStatString = htmlStatString.concat("<option value = \"Possession Time\" >Possession Time</option>")
+  // place conditionals to get allow passing null values when other values are present (pass in all teams)
+  if (sport == "null" || league == "null" || team == "null" || season == "null") return htmlStatString;
+
+  console.log("Sport: " + sport + ", League: " + league + ", Team: " + team + "Game: " + game);
+
+  if (sport == "Soccer"){
+    htmlTokenString = getSoccerStats(htmlTokenString);
+  } else if (sport == "Basketball"){
+    htmlTokenString = getBasketballStats(htmlTokenString);
   }
 
   return htmlStatString;
 }
+
+
+function getSoccerStats(htmlTokenString){
+  htmlTokenString = htmlTokenString.concat("<option value = \"teamsInMatch\">Home and Away Teams</option>");
+  htmlTokenString = htmlTokenString.concat("<option value = \"ballPossession\">Ball Possession</option>");
+  htmlTokenString = htmlTokenString.concat("<option value = \"yellowCards\">Yellow Cards</option>");
+  htmlTokenString = htmlTokenString.concat("<option value = \"cornerStats\">Corner Stats</option>");
+  htmlTokenString = htmlTokenString.concat("<option value = \"redCards\">Red Cards</option>");
+  htmlTokenString = htmlTokenString.concat("<option value = \"foulStats\">Foul Stats</option>");
+  return htmlTokenString;
+}
+
+
+function getBasketballStats(htmlTokenString){
+  
+  return htmlTokenString;
+}
+

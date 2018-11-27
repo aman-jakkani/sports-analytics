@@ -1,3 +1,4 @@
+// can't generate another token
 function showData() {
         document.getElementById('hiddenText').style.display="block";
 
@@ -6,42 +7,62 @@ function showData() {
         document.getElementById('chosenTeam').innerHTML = document.getElementById("team").value;
         document.getElementById('chosenSeason').innerHTML = document.getElementById("season").value;
         document.getElementById('chosenGame').innerHTML = document.getElementById("game").value;
-        document.getElementById('chosenFirstStat').innerHTML = document.getElementById("firstStatistic").value;
-        document.getElementById('chosenSecondStat').innerHTML = document.getElementById("secondStatistic").value;
-        document.getElementById('chosenAnalysis').innerHTML = document.getElementById("analysis").value;   
+        
 
-let myChart = document.getElementById('myChart').getContext('2d');
+/*var button = document.getElementById("SUBMIT");
+	SUBMIT.addEventListener("click", function(){
+    myChart.destroy();
+});*/
 
-let massPopChart = new Chart(myChart, {
-	type: 'bar', //bar, horizontal bar, pie, line, doughnut, radar, polarArea
-	data:{
-	labels: ['Rockets','Raptors','Warriors','Celtics','76ers','Cavaliers'],
-	datasets: [{
-		label:'Wins',
-		data: [
-			65,
-			59,
-			58,
-			55,
-			52,
-			50
-		]
-	}]
-	},
-	options:{
-		title:{
-			display:true,
-			text: 'Most Wins by NBA Teams in 2017-2018 Season',
-			fontsize:25
-		},
-		scales: {
-          yAxes: [{
-            ticks: {
-                beginAtZero: true
-            }
-          }]
-		}
-	}
-});
 
+var ctx = document.getElementById("myChart");
+if(window.bar != undefined)
+window.bar.destroy();
+
+//var myChart 
+window.bar = new Chart(ctx, {
+    type: document.getElementById("chartType").value, // bar, horizontal bar, pie, line, doughnut, radar, polarArea
+    data: {
+        labels: ["Rockets", "Mavericks", "Lakers", "Celtics", "Kings", "Thunder"],
+        datasets: [{
+            label: '# of Technical Fouls',
+            data: [12, 19, 3, 5, 2, 3],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255,99,132,1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+        	 xAxes: [{
+                ticks: {
+                    beginAtZero:true
+                }
+            }],
+            yAxes: [{
+                ticks: {
+                    beginAtZero:true
+                }
+            }]
+        }
+    }
+});   
 }
+    
+
+
+

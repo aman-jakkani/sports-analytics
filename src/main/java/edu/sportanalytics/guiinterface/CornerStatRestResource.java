@@ -12,6 +12,7 @@ import javax.ws.rs.core.MediaType;
 import org.json.JSONObject;
 
 import edu.sportanalytics.database.DBAccess;
+import edu.sportanalytics.database.SoccerController;
 import edu.sportanalytics.database.SportsEnum;
 
 @Path("CornerStatRestResource")
@@ -25,9 +26,8 @@ public class CornerStatRestResource {
     public String getData(@QueryParam("token")int token)
     {
     	Token tk = Token.getToken(token); 
-        SportsEnum type= Token.getToken(token).getSports();
-      
-        List<String> corners = DBAccess.getInstance().getController(type).getCornerCnt(tk.getMatchID());
+        SoccerController sc = (SoccerController)DBAccess.getInstance().getController(SportsEnum.SOCCER);
+        List<String> corners = sc.getCornerCnt(tk.getMatchID());
         
         JSONObject jo = new JSONObject();
         jo.put("corners", corners);

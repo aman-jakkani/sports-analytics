@@ -11,6 +11,7 @@ import javax.ws.rs.core.MediaType;
 import org.json.JSONObject;
 
 import edu.sportanalytics.database.DBAccess;
+import edu.sportanalytics.database.SoccerController;
 import edu.sportanalytics.database.SportsEnum;
 
 public class RedCardsStatResource {
@@ -21,9 +22,9 @@ public class RedCardsStatResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public String getData(@QueryParam("token") int token) {
 		Token tk = Token.getToken(token);
-		SportsEnum type = Token.getToken(token).getSports();
-
-		List<String> redCardList = DBAccess.getInstance().getController(type).getRedCards(tk.getMatchID());
+		
+		SoccerController sc = (SoccerController)DBAccess.getInstance().getController(SportsEnum.SOCCER);
+		List<String> redCardList = sc.getRedCards(tk.getMatchID());
 
 		JSONObject jo = new JSONObject();
 		jo.put("redCards", redCardList);

@@ -40,7 +40,7 @@ public class BasketballController extends DatabaseController {
 		List<String> longNameLeagues = new ArrayList<String>();
 
 		for (Basketball_Team b : teamList){
-			longNameLeagues.add(b.getLong_name());
+			longNameLeagues.add(b.getName());
 		}
 		System.out.println(leaguesList);
 
@@ -108,20 +108,21 @@ public class BasketballController extends DatabaseController {
 		
 		try {
 			Statement stmt = DBAccess.getConn().createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT GID,SEQUENCE,STATUS,HOMETID,VISTORTID,SEASON,TVBROADCAST,DATEMMDD,DATEYYYY,TIMEPLAYED,ATTENDANCE FROM BASKETBALL.GAME;;");
+			ResultSet rs = stmt.executeQuery("SELECT GID,SEQUENCE,STATUS,HOMETID,VISTORTID,SEASON,TVBROADCAST,"
+					+ "DATEMMDD,DATEYYYY,TIMEPLAYED,ATTENDANCE FROM BASKETBALL.GAME;");
 			
 			while(rs.next()) {
 				Basketball_Game bg = new Basketball_Game();
 				bg.setGID(rs.getInt("GID"));
 				bg.setSequence(rs.getInt("SEQUENCE"));
 				bg.setStatus(rs.getString("STATUS"));
+				bg.setHomeTID(rs.getInt("HOMETID"));
 				bg.setVisitorTID(rs.getInt("VISITORTID"));
-				bg.setHomeTID(rs.getInt("HOMETUID"));
-				bg.setSeason(rs.getInt("STATUS"));
+				bg.setSeason(rs.getInt("SEASON"));
 				bg.setTvbroadcast(rs.getString("TVBROADCAST"));
 				bg.setTimeplayed(rs.getString("TIMEPLAYED"));
 				bg.setAttendance(rs.getInt("ATTENDANCE"));
-				//bg.setDate(rs.getDate("GAME_DATE"));
+				bg.setDate(rs.getString("DATEMMDD"), rs.getString("DATEYYYY"));
 				
 				gList.add(bg);
 				
@@ -165,15 +166,18 @@ public class BasketballController extends DatabaseController {
 		
 		try {
 			Statement stmt = DBAccess.getConn().createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT NAME , ABBREVIATION, LOCATION , NICKNAME  from BASKETBALL.TEAM ;");
+			ResultSet rs = stmt.executeQuery("SELECT TEAM_ID, NAME , ABBREVIATION, CITY , Code, W, L, PCT  from BASKETBALL.TEAM ;");
 			
 			while(rs.next()) {
 				Basketball_Team bt = new Basketball_Team();
-				bt.setLong_name(rs.getString("NAME"));
-				//No ID yet
+				bt.setTeam_id(rs.getInt("TEAM_ID"));
+				bt.setName(rs.getString("NAME"));
 				bt.setAbrevation(rs.getString("ABBREVIATION"));
-				bt.setLocation(rs.getString("LOCATION"));
-				bt.setShort_name(rs.getString("NICKNAME"));
+				bt.setCity(rs.getString("City"));
+				bt.setCode(rs.getString("CODE"));
+				bt.setWins(rs.getInt("W"));
+				bt.setLoses(rs.getInt("L"));
+				bt.setPct(Float.toString(rs.getFloat("PCT")));
 				
 				teamList.add(bt);
 			}

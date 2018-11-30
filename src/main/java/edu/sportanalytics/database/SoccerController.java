@@ -5,7 +5,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -21,8 +20,8 @@ public class SoccerController extends DatabaseController
 	private List<Soccer_Match> matchesList;
 	private static final Logger log = Logger.getLogger(SoccerController.class.getName());
 
-	public SoccerController() {
-		super();
+	public SoccerController(DBAccess dba) {
+		super(dba);
 	}
 
 	// returns an ArrayList with Name-Attributes of the Leagues-Objects

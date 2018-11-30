@@ -5,9 +5,13 @@ import java.util.List;
 public abstract class DatabaseController {
 	private DBAccess db;
 
-	public DatabaseController() {
-		db = DBAccess.getInstance();
+	public DatabaseController(DBAccess dba) {
 
+	}
+
+	public void setDB(DBAccess dba)
+	{
+		db = dba;
 	}
 
 	public DBAccess getDb() {

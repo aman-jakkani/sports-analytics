@@ -19,8 +19,8 @@ public class BasketballController extends DatabaseController {
 	private List<Basketball_Season> seasonList;
 	private static final Logger log = Logger.getLogger(BasketballController.class.getName());
 
-	public BasketballController(){
-		super();
+	public BasketballController(DBAccess dba){
+		super(dba);
 	}
 
 	@Override

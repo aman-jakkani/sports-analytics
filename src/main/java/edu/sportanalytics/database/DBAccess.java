@@ -18,6 +18,10 @@ public class DBAccess {
 	private String username;
 	private String pw;
 
+	//Controller
+	private SoccerController soccerController;
+	private BasketballController basketballController;
+
 	private DBAccess()
 	{
 		//Default values
@@ -26,6 +30,9 @@ public class DBAccess {
 		sid = "/orcl";
 		username = "SOCCER02";
 		pw="";
+
+		soccerController = new SoccerController(this);
+		basketballController = new BasketballController(this);
 	}
 
 	/* Close DB-Connection and reset classobject instance */
@@ -110,11 +117,11 @@ public class DBAccess {
 	{
 		if(type == SportsEnum.SOCCER)
 		{
-			return new SoccerController();
+			return soccerController;
 		}
 		else if(type == SportsEnum.BASKETBALL)
 		{
-			return new BasketballController();
+			return basketballController;
 		}
 		else
 		{

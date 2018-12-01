@@ -1,8 +1,8 @@
 package edu.sportanalytics.database;
 
 public class Basketball_Team{
-    private int team_id, wins, loses;
-    String name, code, abbreviation, city,pct;
+    private int wins, loses;
+    String name, code, abbreviation, city,pct,team_id;
 
     
     public String getPct() {
@@ -13,7 +13,7 @@ public class Basketball_Team{
 		this.pct = pct;
 	}
 
-	public long getTeam_id(){
+	public String getTeam_id(){
         return team_id;
     }
 
@@ -33,7 +33,7 @@ public class Basketball_Team{
 		this.loses = loses;
 	}
 
-	public void setTeam_id(int team_id){
+	public void setTeam_id(String team_id){
         this.team_id = team_id;
     }
 

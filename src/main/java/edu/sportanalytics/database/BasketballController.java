@@ -53,7 +53,7 @@ public class BasketballController extends DatabaseController {
 		List<String> seasonNames = new ArrayList<String>();
 
 		for (Basketball_Season s : seasonList){
-			seasonNames.add(s.getName());
+			seasonNames.add(s.getSeasonYear());
 		}
 
 		return seasonNames;
@@ -81,9 +81,7 @@ public class BasketballController extends DatabaseController {
 		try {
 			stmt = DBAccess.getConn().createStatement();
 			rs = stmt.executeQuery("SELECT NAME ,LEAGUE_ID  from BASKETBALL.LEAGUE ");
-			
-			
-			
+	
 			while(rs.next()) {
 				Basketball_League bl = new Basketball_League();
 				bl.setName(rs.getString("NAME"));
@@ -104,13 +102,16 @@ public class BasketballController extends DatabaseController {
 	// finds games + info from team/season
 	private List<Basketball_Game> findGames(String team, String season){
 		List<Basketball_Game> gList = new ArrayList<Basketball_Game>();
-		//yet to come: seq, status , tvbroadcast,timeplayed,attendance
+		ps = null;
+		rs = null;
 		
 		try {
-			Statement stmt = DBAccess.getConn().createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT GID,SEQUENCE,STATUS,HOMETID,VISTORTID,SEASON,TVBROADCAST,"
-					+ "DATEMMDD,DATEYYYY,TIMEPLAYED,ATTENDANCE FROM BASKETBALL.GAME;");
-			
+			ps = DBAccess.getConn().prepareStatement("SELECT GID,SEQUENCE,STATUS,HOMETID,VISITORTID,TVBROADCAST,"
+					+ "DATEMMDD,DATEYYYY,TIMEPLAYED,ATTENDANCE FROM BASKETBALL.GAME join BASKETBALL.TEAM "
+					+ "on  (VISITORTID = team_id ) OR (HOMETID = team_id) WHERE NAME LIKE ? and SEASON = ? ");
+			ps.setString(1, team);
+			ps.setString(2, season);
+			rs = ps.executeQuery();
 			while(rs.next()) {
 				Basketball_Game bg = new Basketball_Game();
 				bg.setGID(rs.getInt("GID"));
@@ -118,7 +119,6 @@ public class BasketballController extends DatabaseController {
 				bg.setStatus(rs.getString("STATUS"));
 				bg.setHomeTID(rs.getInt("HOMETID"));
 				bg.setVisitorTID(rs.getInt("VISITORTID"));
-				bg.setSeason(rs.getInt("SEASON"));
 				bg.setTvbroadcast(rs.getString("TVBROADCAST"));
 				bg.setTimeplayed(rs.getString("TIMEPLAYED"));
 				bg.setAttendance(rs.getInt("ATTENDANCE"));
@@ -135,20 +135,24 @@ public class BasketballController extends DatabaseController {
 		}
 		
 		
-		
+		tryClose();
 		return gList;
 	}
 
 	// Finds Season from league/team
 	private List<Basketball_Season> findSeason(String league, String team){
 		List<Basketball_Season> bsList = new ArrayList<Basketball_Season>();
-
+		ps = null;
+		rs = null;
+		
 		try {
-			Statement stmt = DBAccess.getConn().createStatement();
-			ResultSet rs = stmt.executeQuery("");
-			
+			ps = DBAccess.getConn().prepareStatement("SELECT distinct SEASON from BASKETBALL.GAME  join BASKETBALL.TEAM "
+					+ "on  (VISITORTID = team_id ) OR (HOMETID = team_id) WHERE NAME LIKE ? ");
+			ps.setString(1, team);
+			rs = ps.executeQuery();
 			while(rs.next()) {
 				Basketball_Season bs = new Basketball_Season();
+				bs.setSeasonYear(rs.getString("SEASON"));
 				bsList.add(bs);
 			}
 			
@@ -157,6 +161,7 @@ public class BasketballController extends DatabaseController {
 			log.severe(e.getMessage());;
 		}
 		
+		tryClose();
 		return bsList;
 	}
 
@@ -164,13 +169,15 @@ public class BasketballController extends DatabaseController {
 	private List<Basketball_Team> findTeams(String league){
 		List<Basketball_Team> teamList = new ArrayList<Basketball_Team>();
 		
+		ps = null;
+		rs= null;
+		
 		try {
-			Statement stmt = DBAccess.getConn().createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT TEAM_ID, NAME , ABBREVIATION, CITY , Code, W, L, PCT  from BASKETBALL.TEAM ;");
-			
+			ps = DBAccess.getConn().prepareStatement("SELECT TEAM_ID, NAME , ABBREVIATION, CITY , Code, W, L, PCT  from BASKETBALL.TEAM");
+			rs = ps.executeQuery();
 			while(rs.next()) {
 				Basketball_Team bt = new Basketball_Team();
-				bt.setTeam_id(rs.getInt("TEAM_ID"));
+				bt.setTeam_id(rs.getString("TEAM_ID"));
 				bt.setName(rs.getString("NAME"));
 				bt.setAbrevation(rs.getString("ABBREVIATION"));
 				bt.setCity(rs.getString("City"));
@@ -187,6 +194,7 @@ public class BasketballController extends DatabaseController {
 			log.severe(e.getMessage());
 		}
 		
+		tryClose();
 		
 		return teamList;
 	}

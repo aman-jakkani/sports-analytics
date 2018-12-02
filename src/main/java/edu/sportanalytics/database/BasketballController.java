@@ -65,8 +65,9 @@ public class BasketballController extends DatabaseController {
 		gamesList = findGames(team, season);
 		List<String> gamesString = new ArrayList<String>();
 
+		//Functionality not finished
 		for (Basketball_Game b : gamesList){
-//			gamesString.add(b.getHost() + " vs " + b.getGuest() + " (" + b.getHomeTeamScore() + " : " + b.getAwayTeamScore() + " )");
+			gamesString.add(b.getHomeTID()+ " vs " + b.getVisitorTID() + " (" + b.getScoreHome() + " : " + b.getScoreVisitor() + " )");
 		}
 
 		return gamesString;

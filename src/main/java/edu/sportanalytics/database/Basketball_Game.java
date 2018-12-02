@@ -4,28 +4,36 @@ import java.util.Date;
 
 public class Basketball_Game {
 
-    private int GID, HomeTID, VisitorTID, result,sequence, season , Attendance;
+    private int GID, HomeTID, VisitorTID, result,sequence , Attendance, ScoreVisitor, ScoreHome;
     private String League_name, status, tvbroadcast, timeplayed, date;
-    private int Season;
+
     private String host, guest; // gastgeber = host, gast = guest
 
   
 
-    public int getGID() {
+    public int getScoreVisitor() {
+		return ScoreVisitor;
+	}
+
+	public void setScoreVisitor(int scoreVisitor) {
+		ScoreVisitor = scoreVisitor;
+	}
+
+	public int getScoreHome() {
+		return ScoreHome;
+	}
+
+	public void setScoreHome(int scoreHome) {
+		ScoreHome = scoreHome;
+	}
+
+	public int getGID() {
 		return GID;
 	}
 
 	public void setGID(int gID) {
 		GID = gID;
 	}
-
-	public int getSeason(){
-        return Season;
-    }
-
-    public void setSeason(int Season) {
-        this.Season = Season;
-    }
 
     public String getLeague_Name() {
         return League_name;

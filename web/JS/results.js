@@ -42,6 +42,14 @@ function plotChart() {
         var chartType = document.getElementById("chartType").value;
 
         plotDefault(chartType, homeTeamName, awayTeamName, homeTeamData, awayTeamData);
+
+        document.getElementById("Charts").style.display = "block";
+        document.getElementById("Dropdown").style.display = "none";
+}
+
+function backToDropdown(){
+    document.getElementById("Charts").style.display = "none";
+    document.getElementById("Dropdown").style.display = "block";
 }
 
 function plotDefault(chartType, homeTeamName, awayTeamName, homeTeamData, awayTeamData){

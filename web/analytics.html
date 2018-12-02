@@ -22,16 +22,15 @@
 		</div>
 
 		<!-- Page Content -->
-		<div style="margin-left:15%">
+		<div style="margin-left:15%"/>
 
 		<div class="w3-container w3-blue">
 		  <h1>ANALYTICS</h1>
 		</div>
 		
-		<div class="w3-container">
+		<div class="w3-container"/>
 
-    <body>
-    <br>
+
         <script>
             function loadResource()
             {
@@ -46,14 +45,13 @@
                 xhttp.send();
             }
         </script>
-    <br>
-
     <!-- Include jQuery -->
     <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 
     <!-- Import dropdown javascript logic -->
     <script type="text/javascript" src="js/resources.js"></script>
 
+        <div id="Dropdown">
         <form method = "GET">
             <fieldset>
                 <legend>Pick a Sport</legend>
@@ -111,7 +109,7 @@
                     </select>
                 </p>
             </fieldset>  
-<!
+
             <fieldset>
                 <legend>Choose Chart Type</legend>
                 <p>
@@ -131,20 +129,23 @@
 
     <!-- Create Submit Button, link to showData() function -->
     <button onclick="plotChart()" id="SUBMIT">SUBMIT</button>
+    </div>
+    <div id="Charts" style="display:none">
 
+    <br><button onclick="backToDropdown()" id="BACK">BACK</button>
     <!-- Display Stats in a list -->
-    <div style="display: none;" id="hiddenText">Results: </div>
+    <br><div style="display: none;" id="hiddenText">Results: </div>
     <p><span id = 'chosenSport'> </span></p>
     <p><span id = 'chosenLeague'> </span></p>
     <p><span id = 'chosenTeam'> </span></p>
     <p><span id = 'chosenSeason'> </span></p>
-    <p><span id = 'chosenGame'> </span></p> 
+    <p><span id = 'chosenGame'> </span></p>
     
     <div>
     <canvas id="myChart" width="400" height="400"></canvas>
     </div>
 
     <br>
-
+    </div>
     </body>
 </html>

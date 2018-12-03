@@ -66,7 +66,20 @@ public class BasketballController extends DatabaseController {
 		List<String> gamesString = new ArrayList<String>();
 
 		for (Basketball_Game b : gamesList){
-//			gamesString.add(b.getHost() + " vs " + b.getGuest() + " (" + b.getHomeTeamScore() + " : " + b.getAwayTeamScore() + " )");
+			String homeName = "UNKNOWN";
+			String guestName = "UNKNOWN";
+			for(Basketball_Team t : teamList)
+			{
+				if(t.getTeam_id().equals(Integer.toString(b.getHomeTID())))
+				{
+					homeName = t.getName();
+				}
+				if(t.getTeam_id().equals(Integer.toString(b.getVisitorTID())))
+				{
+					guestName = t.getName();
+				}
+			}
+			gamesString.add(homeName + " vs " + guestName + " (" + b.getHomeScore() + " : " + b.getGuestScore() + " )");
 		}
 
 		return gamesString;
@@ -123,10 +136,32 @@ public class BasketballController extends DatabaseController {
 				bg.setTimeplayed(rs.getString("TIMEPLAYED"));
 				bg.setAttendance(rs.getInt("ATTENDANCE"));
 				bg.setDate(rs.getString("DATEMMDD"), rs.getString("DATEYYYY"));
-				
+
+				PreparedStatement aps =DBAccess.getConn().prepareStatement("SELECT BASKETBALL.SCORE_GAME.POINTS FROM BASKETBALL.SCORE_GAME JOIN BASKETBALL.GAME ON BASKETBALL.GAME.GID = BASKETBALL.SCORE_GAME.GAME_ID WHERE BASKETBALL.SCORE_GAME.GAME_ID =? AND BASKETBALL.SCORE_GAME.TEAM_ID =?");
+				aps.setInt(1, bg.getGID());
+				aps.setInt(2, bg.getHomeTID());
+				ResultSet ars = aps.executeQuery();
+				if(ars.next())
+				{
+					bg.setHomeScore(ars.getInt("POINTS"));
+				}
+				ars.close();
+				aps.setInt(1, bg.getGID());
+				aps.setInt(2, bg.getVisitorTID());
+				ars = aps.executeQuery();
+				if(ars.next())
+				{
+					bg.setGuestScore(ars.getInt("POINTS"));
+				}
+
+				ars.close();
+
+				aps.close();
+
 				gList.add(bg);
 				
 			}
+
 			
 			
 			

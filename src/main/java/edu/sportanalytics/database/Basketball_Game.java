@@ -8,10 +8,25 @@ public class Basketball_Game {
     private String League_name, status, tvbroadcast, timeplayed, date;
     private int Season;
     private String host, guest; // gastgeber = host, gast = guest
+	private int homeScore, guestScore;
 
-  
+	public int getHomeScore() {
+		return homeScore;
+	}
 
-    public int getGID() {
+	public void setHomeScore(int homeScore) {
+		this.homeScore = homeScore;
+	}
+
+	public int getGuestScore() {
+		return guestScore;
+	}
+
+	public void setGuestScore(int guestScore) {
+		this.guestScore = guestScore;
+	}
+
+	public int getGID() {
 		return GID;
 	}
 

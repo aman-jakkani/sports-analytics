@@ -103,7 +103,7 @@ public class SoccerController extends DatabaseController
 		rs = null;
 		try {
 			ps = DBAccess.getConn().prepareStatement(
-					"select ((HOMEREDCNT)+(HOMERED2CNT)) AS SUM_RED_HOME, ((AWAYREDCNT)+(AWAYRED2CNT))SUM_RED_AWAY FROM SOCCER02.MATCHRELDIMMART WHERE Match_ID=?");
+					"select (HOMEREDCNT) AS SUM_RED_HOME, (AWAYREDCNT)SUM_RED_AWAY FROM SOCCER02.MATCHRELDIMMART WHERE Match_ID=?");
 			ps.setString(1, matchid);
 			rs = ps.executeQuery();
 			if (rs.next()) {

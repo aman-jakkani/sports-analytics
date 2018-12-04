@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import javax.ws.rs.GET;
+import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
@@ -15,6 +16,7 @@ import edu.sportanalytics.database.DBAccess;
 import edu.sportanalytics.database.SoccerController;
 import edu.sportanalytics.database.SportsEnum;
 
+@Path("RedCardsStatResource")
 public class RedCardsStatResource {
 
 	private static final Logger log = Logger.getLogger(RedCardsStatResource.class.getName());

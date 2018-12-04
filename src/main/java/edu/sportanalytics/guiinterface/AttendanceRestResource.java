@@ -28,6 +28,11 @@ public class AttendanceRestResource {
 	public String getData(@QueryParam("token") int token) {
 		Token tk = Token.getToken(token);
 
+		if(tk.getSports() == SportsEnum.SOCCER)
+		{
+			return "null";
+		}
+
 		BasketballController bc = (BasketballController)  DBAccess.getInstance().getController(SportsEnum.BASKETBALL);
 		
 		List<String> attendance = new ArrayList<>();

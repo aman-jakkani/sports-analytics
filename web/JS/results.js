@@ -1,3 +1,5 @@
+var globalCharts = new Array();
+
 function plotChart() {
         document.getElementById('hiddenText').style.display="block";
 
@@ -19,21 +21,71 @@ function plotChart() {
         var teams = getRestResource("HomeAndAwayTeamListResource", [["token", token["token"]],]);
         console.log("Teams: " + teams["homeAndAwayTeam"]);
 
+
+        var homeTeamData = [];
+        var awayTeamData = [];
+        var availableStats = [];
+
+
+        var score = getRestResource("ScoreRestResource", [["token", token["token"]],]);
+        if(score != null){
+            console.log("Score: " + score["score"][0] + ":" + score["score"][1] );
+            homeTeamData.push(score["score"][0]);
+            awayTeamData.push(score["score"][1]);
+            availableStats.push("Score");
+        }
+
         var ballPossession = getRestResource("BallPossessionStatResource", [["token", token["token"]],]);
-        console.log("Ball Possession: " + ballPossession["possession"]);
+        if(ballPossession != null){
+            console.log("Ball Possession: " + ballPossession["possession"]);
+            homeTeamData.push(ballPossession["possession"][0]);
+            awayTeamData.push(ballPossession["possession"][1]);
+            availableStats.push("Ball Possession");
+        }
 
         var yellowCards = getRestResource("YellowCardsStatResource", [["token", token["token"]],]);
-        console.log("Yellow Cards: " + yellowCards["yellowCards"]);
+        if(yellowCards != null){
+            console.log("Yellow Cards: " + yellowCards["yellowCards"]);
+            homeTeamData.push(yellowCards["yellowCards"][0]);
+            awayTeamData.push(yellowCards["yellowCards"][1]);
+            availableStats.push("Yellow Cards");
+        }
+
+        var redCards = getRestResource("RedCardsStatResource", [["token", token["token"]],]);
+        if(redCards != null){
+            console.log("Red Cards: " + redCards["redCards"]);
+            homeTeamData.push(redCards["redCards"][0]);
+            awayTeamData.push(redCards["redCards"][1]);
+            availableStats.push("Red Cards");
+        }
 
         var cornerStats = getRestResource("CornerStatRestResource", [["token", token["token"]],]);
-        console.log("Corner Stats: " + cornerStats["corners"]);
+        if(cornerStats != null){
+            console.log("Corner Stats: " + cornerStats["corners"]);
+            homeTeamData.push(cornerStats["corners"][0]);
+            awayTeamData.push(cornerStats["corners"][1]);
+            availableStats.push("Corners");
+        }
 
         var foulStats = getRestResource("FoulsStatResource", [["token", token["token"]],]);
-        console.log("Foul Stats: " + foulStats["fouls"]);
+        if(foulStats != null){
+            console.log("Foul Stats: " + foulStats["fouls"]);
+            homeTeamData.push(foulStats["fouls"][0]);
+            awayTeamData.push(foulStats["fouls"][1]);
+            availableStats.push("Fouls");
+        }
 
-        var homeTeamData = [ballPossession["possession"][0], yellowCards["yellowCards"][0], cornerStats["corners"][0], foulStats["fouls"][0]];
-        var awayTeamData = [ballPossession["possession"][1], yellowCards["yellowCards"][1], cornerStats["corners"][1], foulStats["fouls"][1]];
+        var attendance = getRestResource("AttendanceRestResource", [["token", token["token"]],]);
+        if(attendance != null)
+        {
+            console.log("Attendance: " + attendance["attendance"]);
+            document.getElementById("attendance").innerHTML="Attendance: " + attendance["attendance"];
+        }
 
+        // [ballPossession["possession"][0], yellowCards["yellowCards"][0], cornerStats["corners"][0], foulStats["fouls"][0]];
+        // [ballPossession["possession"][1], yellowCards["yellowCards"][1], cornerStats["corners"][1], foulStats["fouls"][1]];
+
+        console.log(homeTeamData[1]);
         console.log(homeTeamData);
         console.log(awayTeamData);
         var homeTeamName = teams["homeAndAwayTeam"][0];
@@ -41,7 +93,10 @@ function plotChart() {
 
         var chartType = document.getElementById("chartType").value;
 
-        plotDefault(chartType, homeTeamName, awayTeamName, homeTeamData, awayTeamData);
+        homeTeamData.forEach(function(element, index){
+            plotDefault(chartType, homeTeamName, awayTeamName, homeTeamData[index], awayTeamData[index], index, availableStats[index]);
+        });
+
 
         document.getElementById("Charts").style.display = "block";
         document.getElementById("Dropdown").style.display = "none";
@@ -50,10 +105,16 @@ function plotChart() {
 function backToDropdown(){
     document.getElementById("Charts").style.display = "none";
     document.getElementById("Dropdown").style.display = "block";
+    while(globalCharts.length > 0){
+        globalCharts[globalCharts.length-1].destroy();
+        globalCharts.pop();
+    }
 }
 
-function plotDefault(chartType, homeTeamName, awayTeamName, homeTeamData, awayTeamData){
-        var canvas = document.getElementById("myChart");
+function plotDefault(chartType, homeTeamName, awayTeamName, homeTeamDataParam, awayTeamDataParam, num, label){
+        num+=1;
+        var canvasId = "myChart" + num;
+        var canvas = document.getElementById(canvasId);
 
         if (window.bar != undefined){
                 window.bar.destroy();
@@ -61,7 +122,7 @@ function plotDefault(chartType, homeTeamName, awayTeamName, homeTeamData, awayTe
 
         var homeTeamData = {
                 label: homeTeamName,
-                data: homeTeamData,
+                data: [homeTeamDataParam,"0"],
                 backgroundColor: 'rgba(148, 28, 47, 0.6)',
                 borderWidth: 0,
                 yAxisID: "y-axis"
@@ -69,14 +130,14 @@ function plotDefault(chartType, homeTeamName, awayTeamName, homeTeamData, awayTe
 
         var awayTeamData = {
                 label: awayTeamName,
-                data: awayTeamData,
+                data: [awayTeamDataParam,"0"],
                 backgroundColor: 'rgba(32, 164, 243, 0.6)',
                 borderWidth: 0,
                 yAxisID: "y-axis"
         };
 
         var gameData = {
-                labels: ["Ball Possession", "Yellow Cards", "Corners", "Fouls"],
+                labels: [label],
                 datasets: [homeTeamData, awayTeamData]
         };
 
@@ -98,7 +159,7 @@ function plotDefault(chartType, homeTeamName, awayTeamName, homeTeamData, awayTe
                 options: chartOptions
         };
 
-        window.bar = new Chart(canvas, config);	
+        globalCharts.push(new Chart(canvas, config));
 }
 
 

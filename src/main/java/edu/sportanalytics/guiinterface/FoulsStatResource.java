@@ -1,5 +1,6 @@
 package edu.sportanalytics.guiinterface;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -12,6 +13,7 @@ import javax.ws.rs.core.MediaType;
 import org.json.JSONObject;
 
 import edu.sportanalytics.database.DBAccess;
+import edu.sportanalytics.database.SoccerController;
 import edu.sportanalytics.database.SportsEnum;
 
 @Path("FoulsStatResource")
@@ -23,9 +25,16 @@ public class FoulsStatResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public String getData(@QueryParam("token") int token) {
 		Token tk = Token.getToken(token);
-		SportsEnum type = Token.getToken(token).getSports();
+		SoccerController sc = (SoccerController) DBAccess.getInstance().getController(SportsEnum.SOCCER);
+		List<String> foulsList = new ArrayList<>();
+		if (tk.getSeason().equals("null")) {
+			foulsList.add(sc.getStatAccumulated(tk.getTeam(), tk.getLeague(), "foul"));
+		} else if (tk.getMatch().equals("null")) {
 
-		List<String> foulsList = DBAccess.getInstance().getController(type).getFouls(tk.getMatchID());
+			foulsList.add(sc.getFoulsSeasonAccumulated(tk.getTeam(), tk.getSeason()));
+		} else {
+			foulsList = sc.getFoulsMatch(tk.getMatchID());
+		}
 
 		JSONObject jo = new JSONObject();
 		jo.put("fouls", foulsList);

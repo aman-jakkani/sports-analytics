@@ -1,5 +1,6 @@
 package edu.sportanalytics.guiinterface;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -12,6 +13,7 @@ import javax.ws.rs.core.MediaType;
 import org.json.JSONObject;
 
 import edu.sportanalytics.database.DBAccess;
+import edu.sportanalytics.database.SoccerController;
 import edu.sportanalytics.database.SportsEnum;
 
 @Path("BallPossessionStatResource")
@@ -24,11 +26,18 @@ public class BallPossessionStatResource {
 	public String getData(@QueryParam("token") int token) {
 		Token tk = Token.getToken(token);
 		SportsEnum type = Token.getToken(token).getSports();
+		SoccerController sc = (SoccerController) DBAccess.getInstance().getController(SportsEnum.SOCCER);
+		List<String> possessionList = new ArrayList<>();
+		if (tk.getSeason().equals("null")) {
 
-		List<String> possession = DBAccess.getInstance().getController(type).getBallPossession(tk.getMatchID());
+		} else if (tk.getMatch().equals("null")) {
+
+		} else {
+			possessionList = sc.getBallPossessionMatch(tk.getMatchID());
+		}
 
 		JSONObject jo = new JSONObject();
-		jo.put("possession", possession);
+		jo.put("possession", possessionList);
 
 		String returnString = jo.toString();
 

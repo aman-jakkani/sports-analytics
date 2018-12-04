@@ -9,8 +9,7 @@ public abstract class DatabaseController {
 
 	}
 
-	public void setDB(DBAccess dba)
-	{
+	public void setDB(DBAccess dba) {
 		db = dba;
 	}
 
@@ -25,11 +24,12 @@ public abstract class DatabaseController {
 	public abstract List<String> getSeason(String league, String team);
 
 	public abstract List<String> getGame(String season, String team);
-	
-	public List<String> getBallPossession(String matchid){
+
+	public List<String> getBallPossession(String matchid) {
 		return null;
 	}
-	public List<String> getFouls(String matchid){
+
+	public List<String> getFouls(String matchid) {
 		return null;
 	}
 
@@ -47,23 +47,9 @@ public abstract class DatabaseController {
 		// TODO
 		return null;
 	}
-	
-	public List<String> getHomeAndAwayTeam(String matchid){
+
+	public List<String> getHomeAndAwayTeam(String matchid) {
 		return null;
 	}
 
-	/*
-	 * The following is only needed for the SoccerController
-	 */
-	public List<String> getYellowCards(String matchid) {
-		return null;
-	}
-
-	public List<String> getRedCards(String matchid) {
-		return null;
-	}
-
-	public List<String> getCornerCnt(String matchid) {
-		return null;
-	}
 }

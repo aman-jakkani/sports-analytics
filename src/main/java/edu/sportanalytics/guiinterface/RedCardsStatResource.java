@@ -1,5 +1,6 @@
 package edu.sportanalytics.guiinterface;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -22,9 +23,17 @@ public class RedCardsStatResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public String getData(@QueryParam("token") int token) {
 		Token tk = Token.getToken(token);
-		
-		SoccerController sc = (SoccerController)DBAccess.getInstance().getController(SportsEnum.SOCCER);
+
+		SoccerController sc = (SoccerController) DBAccess.getInstance().getController(SportsEnum.SOCCER);
 		List<String> redCardList = sc.getRedCards(tk.getMatchID());
+		if (tk.getSeason().equals("null")) {
+			redCardList.add(sc.getRedCardsAccumulated(tk.getTeam(), tk.getLeague()));
+		} else if (tk.getMatch().equals("null")) {
+
+			redCardList.add(sc.getRedCardsSeasonAccumulated(tk.getTeam(), tk.getSeason()));
+		} else {
+			redCardList = sc.getRedCardsMatch(tk.getMatchID());
+		}
 
 		JSONObject jo = new JSONObject();
 		jo.put("redCards", redCardList);

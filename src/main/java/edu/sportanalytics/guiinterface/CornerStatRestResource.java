@@ -1,5 +1,6 @@
 package edu.sportanalytics.guiinterface;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -20,23 +21,29 @@ public class CornerStatRestResource {
 
 	private static final Logger log = Logger.getLogger(CornerStatRestResource.class.getName());
 
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public String getData(@QueryParam("token") int token) {
+		Token tk = Token.getToken(token);
+		SoccerController sc = (SoccerController) DBAccess.getInstance().getController(SportsEnum.SOCCER);
+		List<String> corners = new ArrayList<>();
+		if (tk.getSeason().equals("null")) {
+			corners.add(sc.getStatAccumulated(tk.getTeam(), tk.getLeague(), "corner"));
+		} else if (tk.getMatch().equals("null")) {
 
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public String getData(@QueryParam("token")int token)
-    {
-    	Token tk = Token.getToken(token); 
-        SoccerController sc = (SoccerController)DBAccess.getInstance().getController(SportsEnum.SOCCER);
-        List<String> corners = sc.getCornerCnt(tk.getMatchID());
-        
-        JSONObject jo = new JSONObject();
-        jo.put("corners", corners);
+			corners.add(sc.getCornersSeasonAccumulated(tk.getTeam(), tk.getSeason()));
+		} else {
+			corners = sc.getCornersMatch(tk.getMatchID());
+		}
 
-        String returnString = jo.toString();
+		JSONObject jo = new JSONObject();
+		jo.put("corners", corners);
 
-        log.info("JSON String created: " + returnString);
+		String returnString = jo.toString();
 
-        return returnString;
-    }
+		log.info("JSON String created: " + returnString);
+
+		return returnString;
+	}
 
 }

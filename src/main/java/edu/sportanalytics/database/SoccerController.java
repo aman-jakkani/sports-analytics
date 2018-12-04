@@ -472,6 +472,34 @@ public class SoccerController extends DatabaseController
 	public List<Soccer_Team> getTeamList() {
 		return teamList;
 	}
+	
+	public List <String> getScore(String id){
+		List <String> s = new ArrayList<>();
+		ps = null;
+		rs = null;
+		
+		
+		try {
+			ps = DBAccess.getConn().prepareStatement("SELECT HOME_TEAM_GOAL, AWAY_TEAM_GOAL FROM Match WHERE MATCH_ID = ?");
+			ps.setString(1, id);
+			rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				  s.add(rs.getString("HOME_TEAM_GOAL"));
+				  s.add(rs.getString("AWAY_TEAM_GOAL"));
+				
+				
+			}
+		}	catch (SQLException e) {
+		
+			log.severe(e.getMessage());
+		}
+		
+		tryClose();
+		
+		
+		return s;
+	}
 
 	public void tryClose() {
 		try {

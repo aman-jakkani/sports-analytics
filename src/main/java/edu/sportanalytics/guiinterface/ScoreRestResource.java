@@ -14,6 +14,7 @@ import org.json.JSONObject;
 
 import edu.sportanalytics.database.BasketballController;
 import edu.sportanalytics.database.DBAccess;
+import edu.sportanalytics.database.SoccerController;
 import edu.sportanalytics.database.SportsEnum;
 
 @Path("ScoreRestResource")
@@ -27,22 +28,52 @@ public class ScoreRestResource {
 	public String getData(@QueryParam("token") int token) {
 		Token tk = Token.getToken(token);
 
-		BasketballController bc = (BasketballController)  DBAccess.getInstance().getController(SportsEnum.BASKETBALL);
+		if(tk.getSports() == SportsEnum.BASKETBALL) {
+			BasketballController bc = (BasketballController)  DBAccess.getInstance().getController(SportsEnum.BASKETBALL);
 		
-		List<String> score = new ArrayList<>();
+			List<String> score = new ArrayList<>();
 		
-		score.add(bc.HomeScoreById(tk.getMatchID()));
-		score.add(bc.GuestScoreById(tk.getMatchID()));
-		
-		JSONObject jo = new JSONObject();
-		jo.put("score", score);
-		
-		String returnString = jo.toString();
+			score.add(bc.HomeScoreById(tk.getMatchID()));
+			score.add(bc.GuestScoreById(tk.getMatchID()));
+			
+			
+			JSONObject jo = new JSONObject();
+			jo.put("score", score);
+			String returnString = jo.toString();
 
-		log.info("JSON String created: " + returnString);
+			log.info("JSON String created: " + returnString);
 
-		return returnString;
+			return returnString;
+		
+		
+	
+		}else if(tk.getSports() == SportsEnum.SOCCER) {
+		
+			SoccerController sc = (SoccerController) DBAccess.getInstance().getController(SportsEnum.SOCCER);
+			
+			List<String> score = new ArrayList<>();
+			
+			score = sc.getScore(tk.getMatchID());
+
+			JSONObject jo = new JSONObject();
+			jo.put("score", score);
+			String returnString = jo.toString();
+
+			log.info("JSON String created: " + returnString);
+
+			return returnString;
+		
+		
+		}
+		
+		else {
+			
+			return null;
+		}
+
+
+
+		
 	}
-
 
 }

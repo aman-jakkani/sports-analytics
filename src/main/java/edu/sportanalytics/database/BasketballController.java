@@ -79,7 +79,7 @@ public class BasketballController extends DatabaseController {
 					guestName = t.getName();
 				}
 			}
-			gamesString.add(homeName + " vs " + guestName + " (" + b.getHomeScore() + " : " + b.getGuestScore() + " )");
+			gamesString.add(homeName + " vs " + guestName + " (" + b.getHomeScore() + " : " + b.getGuestScore() + " ) MATCH_ID:" + b.getGID());
 		}
 
 		return gamesString;

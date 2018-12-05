@@ -25,6 +25,10 @@ public class YellowCardsStatResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public String getData(@QueryParam("token") int token) {
 		Token tk = Token.getToken(token);
+		if(tk.getSports() == SportsEnum.BASKETBALL)
+		{
+			return "null";
+		}
 
 		SoccerController sc = (SoccerController) DBAccess.getInstance().getController(SportsEnum.SOCCER);
 

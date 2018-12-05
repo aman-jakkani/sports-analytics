@@ -429,6 +429,10 @@ public class SoccerController extends DatabaseController
 		List<String> foulsList = new ArrayList<>();
 		foulsList.add(Integer.toString(getStatTeam("foul", "home", matchid)));
 		foulsList.add(Integer.toString(getStatTeam("foul", "away", matchid)));
+		if(foulsList.get(0).equals("-1") && foulsList.get(1).equals("-1"))
+		{
+			return null;
+		}
 		return foulsList;
 	}
 
@@ -436,6 +440,10 @@ public class SoccerController extends DatabaseController
 		List<String> cornersList = new ArrayList<>();
 		cornersList.add(Integer.toString(getStatTeam("corner", "home", matchid)));
 		cornersList.add(Integer.toString(getStatTeam("corner", "away", matchid)));
+		if(cornersList.get(0).equals("-1") && cornersList.get(1).equals("-1"))
+		{
+			return null;
+		}
 		return cornersList;
 	}
 
@@ -443,13 +451,17 @@ public class SoccerController extends DatabaseController
 		List<String> ballPoessessionList = new ArrayList<>();
 		ballPoessessionList.add(Integer.toString(getStatTeam("possession", "home", matchid)));
 		ballPoessessionList.add(Integer.toString(getStatTeam("possession", "away", matchid)));
+		if(ballPoessessionList.get(0).equals("-1") && ballPoessessionList.get(1).equals("-1"))
+		{
+			return null;
+		}
 		return ballPoessessionList;
 	}
 
 	// returns a stat of the home or away team of a match (currently Fouls and
 	// Corners)
 	public int getStatTeam(String stat, String homeoraway, String matchid) {
-		int statResult = 0;
+		int statResult = -1;
 		stmt = null;
 		rs = null;
 		try {
@@ -470,6 +482,10 @@ public class SoccerController extends DatabaseController
 			}
 			while (rs.next()) {
 				statResult = rs.getInt("STATS");
+				if(rs.wasNull())
+				{
+					statResult = -1;
+				}
 			}
 		} catch (SQLException e) {
 			log.severe(e.getMessage());

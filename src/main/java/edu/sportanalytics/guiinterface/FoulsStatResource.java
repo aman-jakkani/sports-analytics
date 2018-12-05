@@ -25,6 +25,10 @@ public class FoulsStatResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public String getData(@QueryParam("token") int token) {
 		Token tk = Token.getToken(token);
+		if(tk.getSports() == SportsEnum.BASKETBALL)
+		{
+			return "null";
+		}
 		SoccerController sc = (SoccerController) DBAccess.getInstance().getController(SportsEnum.SOCCER);
 		List<String> foulsList = new ArrayList<>();
 		if (tk.getSeason().equals("null")) {
@@ -34,6 +38,11 @@ public class FoulsStatResource {
 			foulsList.add(sc.getFoulsSeasonAccumulated(tk.getTeam(), tk.getSeason()));
 		} else {
 			foulsList = sc.getFoulsMatch(tk.getMatchID());
+		}
+
+		if(foulsList == null)
+		{
+			return "null";
 		}
 
 		JSONObject jo = new JSONObject();

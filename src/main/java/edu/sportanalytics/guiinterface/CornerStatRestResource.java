@@ -25,15 +25,22 @@ public class CornerStatRestResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public String getData(@QueryParam("token") int token) {
 		Token tk = Token.getToken(token);
+		if(tk.getSports() == SportsEnum.BASKETBALL)
+		{
+			return "null";
+		}
 		SoccerController sc = (SoccerController) DBAccess.getInstance().getController(SportsEnum.SOCCER);
 		List<String> corners = new ArrayList<>();
 		if (tk.getSeason().equals("null")) {
 			corners.add(sc.getStatAccumulated(tk.getTeam(), tk.getLeague(), "corner"));
 		} else if (tk.getMatch().equals("null")) {
-
 			corners.add(sc.getCornersSeasonAccumulated(tk.getTeam(), tk.getSeason()));
 		} else {
 			corners = sc.getCornersMatch(tk.getMatchID());
+		}
+		if(corners == null)
+		{
+			return "null";
 		}
 
 		JSONObject jo = new JSONObject();

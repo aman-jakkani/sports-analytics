@@ -25,17 +25,26 @@ public class BallPossessionStatResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public String getData(@QueryParam("token") int token) {
 		Token tk = Token.getToken(token);
+		if(tk.getSports() == SportsEnum.BASKETBALL)
+		{
+			return "null";
+		}
+
 		SportsEnum type = Token.getToken(token).getSports();
 		SoccerController sc = (SoccerController) DBAccess.getInstance().getController(SportsEnum.SOCCER);
 		List<String> possessionList = new ArrayList<>();
 		if (tk.getSeason().equals("null")) {
-
+			return "null";
 		} else if (tk.getMatch().equals("null")) {
-
+			return "null";
 		} else {
 			possessionList = sc.getBallPossessionMatch(tk.getMatchID());
 		}
 
+		if(possessionList == null)
+		{
+			return "null";
+		}
 		JSONObject jo = new JSONObject();
 		jo.put("possession", possessionList);
 

@@ -16,7 +16,13 @@ function getRestResource(resourceName, parameterPairs) {
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             console.log("Answer received")
-            jsonAnswer = JSON.parse(xhttp.responseText);
+            var answer = xhttp.responseText;
+            if(answer != "null"){
+                jsonAnswer = JSON.parse(answer);
+            }else {
+                jsonAnswer = null;
+            }
+
         }
     };
 

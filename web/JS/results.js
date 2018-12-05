@@ -81,6 +81,10 @@ function plotChart() {
             console.log("Attendance: " + attendance["attendance"]);
             document.getElementById("attendance").innerHTML="Attendance: " + attendance["attendance"];
         }
+        else
+        {
+            document.getElementById("attendance").innerHTML="";
+        }
 
         // [ballPossession["possession"][0], yellowCards["yellowCards"][0], cornerStats["corners"][0], foulStats["fouls"][0]];
         // [ballPossession["possession"][1], yellowCards["yellowCards"][1], cornerStats["corners"][1], foulStats["fouls"][1]];
@@ -90,6 +94,9 @@ function plotChart() {
         console.log(awayTeamData);
         var homeTeamName = teams["homeAndAwayTeam"][0];
         var awayTeamName = teams["homeAndAwayTeam"][1];
+
+        console.log(homeTeamName);
+        console.log(typeof(homeTeamName));
 
         var chartType = document.getElementById("chartType").value;
 
@@ -115,6 +122,11 @@ function plotDefault(chartType, homeTeamName, awayTeamName, homeTeamDataParam, a
         num+=1;
         var canvasId = "myChart" + num;
         var canvas = document.getElementById(canvasId);
+        var showLabel = true;
+        if(homeTeamName == undefined && awayTeamName == undefined)
+        {
+            showLabel = false;
+        }
 
         if (window.bar != undefined){
                 window.bar.destroy();
@@ -150,6 +162,9 @@ function plotDefault(chartType, homeTeamName, awayTeamName, homeTeamDataParam, a
                         yAxes: [{
                                 id: "y-axis"
                         }]
+                },
+                legend: {
+                    display: showLabel
                 }
         };
 

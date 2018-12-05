@@ -38,7 +38,7 @@ public class BallPossessionStatResource {
 		} else if (tk.getMatch().equals("null")) {
 			return "null";
 		} else {
-			possessionList = sc.getBallPossessionMatch(tk.getMatchID());
+			possessionList = sc.getStatMatch(tk.getMatchID(),"possession");
 		}
 
 		if(possessionList == null)

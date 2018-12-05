@@ -34,9 +34,9 @@ public class CornerStatRestResource {
 		if (tk.getSeason().equals("null")) {
 			corners.add(sc.getStatAccumulated(tk.getTeam(), tk.getLeague(), "corner"));
 		} else if (tk.getMatch().equals("null")) {
-			corners.add(sc.getCornersSeasonAccumulated(tk.getTeam(), tk.getSeason()));
+			corners.add(sc.getStatSeasonAccumulated(tk.getTeam(),tk.getSeason(), "corner"));
 		} else {
-			corners = sc.getCornersMatch(tk.getMatchID());
+			corners = sc.getStatMatch(tk.getMatchID(),"corner");
 		}
 		if(corners == null)
 		{

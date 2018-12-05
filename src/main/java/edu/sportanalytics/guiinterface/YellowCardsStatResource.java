@@ -34,12 +34,11 @@ public class YellowCardsStatResource {
 
 		List<String> yellowCards = new ArrayList<>();
 		if (tk.getSeason().equals("null")) {
-			yellowCards.add(sc.getYellowCardsAccumulated(tk.getTeam(), tk.getLeague()));
+			yellowCards.add(sc.getStatAccumulated(tk.getTeam(), tk.getLeague(),"yellow"));
 		} else if (tk.getMatch().equals("null")) {
-
-			yellowCards.add(sc.getYellowCardsSeasonAccumulated(tk.getTeam(), tk.getSeason()));
+			yellowCards.add(sc.getStatSeasonAccumulated(tk.getTeam(), tk.getSeason(),"yellow"));
 		} else {
-			yellowCards = sc.getYellowCardsMatch(tk.getMatchID());
+			yellowCards = sc.getStatMatch(tk.getMatchID(), "yellow");
 		}
 		JSONObject jo = new JSONObject();
 		jo.put("yellowCards", yellowCards);

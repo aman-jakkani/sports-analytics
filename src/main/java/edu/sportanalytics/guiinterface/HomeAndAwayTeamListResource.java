@@ -1,5 +1,6 @@
 package edu.sportanalytics.guiinterface;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -23,8 +24,10 @@ public class HomeAndAwayTeamListResource {
 	public String getData(@QueryParam("token") int token) {
 		Token tk = Token.getToken(token);
 		SportsEnum type = Token.getToken(token).getSports();
-
-		List<String> homeAndAwayTeam = DBAccess.getInstance().getController(type).getHomeAndAwayTeam(tk.getMatchID());
+		List<String> homeAndAwayTeam = new ArrayList<>();
+		if (!tk.getMatch().equals("null")) {
+			homeAndAwayTeam = DBAccess.getInstance().getController(type).getHomeAndAwayTeam(tk.getMatchID());
+		}
 
 		JSONObject jo = new JSONObject();
 		jo.put("homeAndAwayTeam", homeAndAwayTeam);

@@ -35,9 +35,9 @@ public class FoulsStatResource {
 			foulsList.add(sc.getStatAccumulated(tk.getTeam(), tk.getLeague(), "foul"));
 		} else if (tk.getMatch().equals("null")) {
 
-			foulsList.add(sc.getFoulsSeasonAccumulated(tk.getTeam(), tk.getSeason()));
+			foulsList.add(sc.getStatSeasonAccumulated(tk.getTeam(),tk.getSeason(), "foul"));
 		} else {
-			foulsList = sc.getFoulsMatch(tk.getMatchID());
+			foulsList = sc.getStatMatch(tk.getMatchID(),"foul");
 		}
 
 		if(foulsList == null)

@@ -94,29 +94,6 @@ public class SoccerController extends DatabaseController
 		return teamList;
 	}
 
-	// returns a List containing the sum of red Cards for both half-times for
-	// the
-	// home- and away-team at a game
-	public List<String> getRedCards(String matchid) {
-		List<String> redList = new ArrayList<String>();
-		ps = null;
-		rs = null;
-		try {
-			ps = DBAccess.getConn().prepareStatement(
-					"select (HOMEREDCNT) AS SUM_RED_HOME, (AWAYREDCNT)SUM_RED_AWAY FROM SOCCER02.MATCHRELDIMMART WHERE Match_ID=?");
-			ps.setString(1, matchid);
-			rs = ps.executeQuery();
-			if (rs.next()) {
-				redList.add(Integer.toString(rs.getInt("SUM_RED_HOME")));
-				redList.add(Integer.toString(rs.getInt("SUM_YELLOW_AWAY")));
-			}
-		} catch (SQLException e) {
-			log.severe(e.getMessage());
-		}
-		tryClose();
-		return redList;
-	}
-
 	// returns a List of every Match of a Team in a Season
 	public List<Soccer_Match> findMatches(String team, String season) {
 		List<Soccer_Match> tempList = new ArrayList<Soccer_Match>();
@@ -142,7 +119,6 @@ public class SoccerController extends DatabaseController
 			log.severe(e.getMessage());
 		}
 		tryClose();
-
 		return tempList;
 	}
 
@@ -166,7 +142,6 @@ public class SoccerController extends DatabaseController
 			log.severe(e.getMessage());
 		}
 		tryClose();
-
 		return tempList;
 	}
 
@@ -216,282 +191,8 @@ public class SoccerController extends DatabaseController
 			log.severe(e.getMessage());
 		}
 		tryClose();
-
 		return tempList;
 
-	}
-
-	// returns a List containing the sum of yellow Cards for both half-times for
-	// the
-	// home- and away-team at a game
-	public List<String> getYellowCardsMatch(String matchid) {
-		List<String> yellowList = new ArrayList<>();
-		yellowList.add(Integer.toString(getCardHome(matchid, "yellow")));
-		yellowList.add(Integer.toString(getCardAway(matchid, "yellow")));
-		return yellowList;
-	}
-
-	public List<String> getRedCardsMatch(String matchid) {
-		List<String> redList = new ArrayList<>();
-		redList.add(Integer.toString(getCardHome(matchid, "red")));
-		redList.add(Integer.toString(getCardAway(matchid, "red")));
-		return redList;
-	}
-
-	public String getYellowCardsAccumulated(String team, String league) {
-		return getCardsAccumulated(team, league, "yellow");
-	}
-
-	public String getRedCardsAccumulated(String team, String league) {
-		return getCardsAccumulated(team, league, "red");
-	}
-
-	// returns the yellow or red cards for all Seasons of a Team
-	public String getCardsAccumulated(String team, String league, String cardType) {
-		int CardsInASeason = 0;
-		stmt = null;
-		rs = null;
-		String query;
-		try {
-			if (cardType.equals("yellow")) {
-				query = "SELECT (m.away" + cardType + "CNT" + "+m.away" + cardType + "2CNT) "
-						+ "AS AWAY FROM SOCCER02.TEAM t join SOCCER02.MATCHRELDIMMART m on(t.TEAM_ID = m.team_awayteam_id)join SOCCER02.SEASONSTAGE s on(m.SEASONSTAGE_SEASONSTAGE_ID=s.SEASONSTAGE_ID) WHERE t.long_name='"
-						+ team + "'";
-			} else {
-				query = "SELECT m.away" + cardType
-						+ "CNT AS AWAY FROM SOCCER02.TEAM t join SOCCER02.MATCHRELDIMMART m on(t.TEAM_ID = m.team_awayteam_id)join SOCCER02.SEASONSTAGE s on(m.SEASONSTAGE_SEASONSTAGE_ID=s.SEASONSTAGE_ID) WHERE t.long_name='"
-						+ team + "'";
-			}
-			stmt = DBAccess.getConn().createStatement();
-			rs = stmt.executeQuery(query);
-
-			while (rs.next()) {
-				CardsInASeason += rs.getInt("AWAY");
-			}
-			stmt = DBAccess.getConn().createStatement();
-			if (cardType.equals("yellow")) {
-				query = "SELECT (m.home" + cardType + "CNT" + "+m.home" + cardType + "2CNT) "
-						+ "AS HOME FROM SOCCER02.TEAM t join SOCCER02.MATCHRELDIMMART m on(t.TEAM_ID = m.team_hometeam_id)join SOCCER02.SEASONSTAGE s on(m.SEASONSTAGE_SEASONSTAGE_ID=s.SEASONSTAGE_ID) WHERE t.long_name='"
-						+ team + "'";
-			} else {
-				query = "SELECT m.home" + cardType
-						+ "CNT AS HOME FROM SOCCER02.TEAM t join SOCCER02.MATCHRELDIMMART m on(t.TEAM_ID = m.team_hometeam_id)join SOCCER02.SEASONSTAGE s on(m.SEASONSTAGE_SEASONSTAGE_ID=s.SEASONSTAGE_ID) WHERE t.long_name='"
-						+ team + "'";
-			}
-			rs = stmt.executeQuery(query);
-			while (rs.next()) {
-				CardsInASeason += rs.getInt("HOME");
-			}
-		} catch (SQLException e) {
-			log.severe(e.getMessage());
-		}
-		tryClose();
-
-		return Integer.toString(CardsInASeason);
-
-	}
-
-	// returns the yellow cards in a season of a team
-	public String getYellowCardsSeasonAccumulated(String team, String season) {
-		int yellowInASeason = 0;
-		List<Soccer_Match> matches = findMatches(team, season);
-		for (Soccer_Match m : matches) {
-			if (m.getGast().equals(team)) {
-				yellowInASeason += getCardAway(Integer.toString(m.getMatch_ID()), "yellow");
-			} else if (m.getGastgeber().equals(team)) {
-				yellowInASeason += getCardHome(Integer.toString(m.getMatch_ID()), "yellow");
-			}
-		}
-		return Integer.toString(yellowInASeason);
-	}
-
-	public String getRedCardsSeasonAccumulated(String team, String season) {
-		int redInASeason = 0;
-		List<Soccer_Match> matches = findMatches(team, season);
-		for (Soccer_Match m : matches) {
-			if (m.getGast().equals(team)) {
-				redInASeason += getCardAway(Integer.toString(m.getMatch_ID()), "red");
-			} else if (m.getGastgeber().equals(team)) {
-				redInASeason += getCardHome(Integer.toString(m.getMatch_ID()), "red");
-			}
-		}
-		return Integer.toString(redInASeason);
-	}
-
-	public int getCardHome(String matchid, String cardType) {
-		int homeCards = 0;
-		ps = null;
-		rs = null;
-		try {
-			if (cardType.equals("yellow")) {
-				ps = DBAccess.getConn().prepareStatement(
-						"select ((HOMEYELLOWCNT)+(HOMEYELLOW2CNT)) AS SUM_HOME FROM SOCCER02.MATCHRELDIMMART WHERE Match_ID=?");
-			} else if (cardType.equals("red")) {
-				ps = DBAccess.getConn().prepareStatement(
-						"select HOMEREDCNT AS SUM_HOME FROM SOCCER02.MATCHRELDIMMART WHERE Match_ID=?");
-			}
-			ps.setString(1, matchid);
-			rs = ps.executeQuery();
-			if (rs.next()) {
-				homeCards = rs.getInt("SUM_HOME");
-			}
-		} catch (SQLException e) {
-			log.severe(e.getMessage());
-		}
-		tryClose();
-		return homeCards;
-	}
-
-	public int getCardAway(String matchid, String cardType) {
-		int awayCards = 0;
-		ps = null;
-		rs = null;
-		try {
-			if (cardType.equals("yellow")) {
-				ps = DBAccess.getConn().prepareStatement(
-						"select ((AWAYYELLOWCNT)+(AWAYYELLOW2CNT)) AS SUM_AWAY FROM SOCCER02.MATCHRELDIMMART WHERE Match_ID=?");
-			} else if (cardType.equals("red")) {
-				ps = DBAccess.getConn().prepareStatement(
-						"select AWAYREDCNT AS SUM_AWAY FROM SOCCER02.MATCHRELDIMMART WHERE Match_ID=?");
-			}
-			ps.setString(1, matchid);
-			rs = ps.executeQuery();
-			if (rs.next()) {
-				awayCards = rs.getInt("SUM_AWAY");
-			}
-		} catch (SQLException e) {
-			log.severe(e.getMessage());
-		}
-		tryClose();
-		return awayCards;
-	}
-
-	public String getStatAccumulated(String team, String league, String stat) {
-		int statInASeason = 0;
-		stmt = null;
-		rs = null;
-		try {
-
-			String query = "SELECT away" + stat
-					+ "CNT AS AWAY FROM SOCCER02.TEAM t join SOCCER02.MATCHRELDIMMART m on(t.TEAM_ID = m.team_awayteam_id)join SOCCER02.SEASONSTAGE s on(m.SEASONSTAGE_SEASONSTAGE_ID=s.SEASONSTAGE_ID) WHERE t.long_name='"
-					+ team + "'";
-
-			stmt = DBAccess.getConn().createStatement();
-			rs = stmt.executeQuery(query);
-
-			while (rs.next()) {
-				statInASeason += rs.getInt("AWAY");
-			}
-			stmt = DBAccess.getConn().createStatement();
-			query = "SELECT home" + stat
-					+ "CNT AS HOME FROM SOCCER02.TEAM t join SOCCER02.MATCHRELDIMMART m on(t.TEAM_ID = m.team_hometeam_id)join SOCCER02.SEASONSTAGE s on(m.SEASONSTAGE_SEASONSTAGE_ID=s.SEASONSTAGE_ID) WHERE t.long_name='"
-					+ team + "'";
-			rs = stmt.executeQuery(query);
-			while (rs.next()) {
-				statInASeason += rs.getInt("HOME");
-			}
-		} catch (SQLException e) {
-			log.severe(e.getMessage());
-		}
-		tryClose();
-
-		return Integer.toString(statInASeason);
-
-	}
-
-	public String getFoulsSeasonAccumulated(String team, String season) {
-		int foulsInASeason = 0;
-		List<Soccer_Match> matches = findMatches(team, season);
-		for (Soccer_Match m : matches) {
-			if (m.getGast().equals(team)) {
-				foulsInASeason += (getStatTeam("foul", "away", Integer.toString(m.getMatch_ID())));
-			} else if (m.getGastgeber().equals(team)) {
-				foulsInASeason += (getStatTeam("foul", "home", Integer.toString(m.getMatch_ID())));
-			}
-		}
-		return Integer.toString(foulsInASeason);
-	}
-
-	public String getCornersSeasonAccumulated(String team, String season) {
-		int cornersInASeason = 0;
-		List<Soccer_Match> matches = findMatches(team, season);
-		for (Soccer_Match m : matches) {
-			if (m.getGast().equals(team)) {
-				cornersInASeason += (getStatTeam("corner", "away", Integer.toString(m.getMatch_ID())));
-			} else if (m.getGastgeber().equals(team)) {
-				cornersInASeason += (getStatTeam("corner", "home", Integer.toString(m.getMatch_ID())));
-			}
-		}
-		return Integer.toString(cornersInASeason);
-	}
-
-	public List<String> getFoulsMatch(String matchid) {
-		List<String> foulsList = new ArrayList<>();
-		foulsList.add(Integer.toString(getStatTeam("foul", "home", matchid)));
-		foulsList.add(Integer.toString(getStatTeam("foul", "away", matchid)));
-		if(foulsList.get(0).equals("-1") && foulsList.get(1).equals("-1"))
-		{
-			return null;
-		}
-		return foulsList;
-	}
-
-	public List<String> getCornersMatch(String matchid) {
-		List<String> cornersList = new ArrayList<>();
-		cornersList.add(Integer.toString(getStatTeam("corner", "home", matchid)));
-		cornersList.add(Integer.toString(getStatTeam("corner", "away", matchid)));
-		if(cornersList.get(0).equals("-1") && cornersList.get(1).equals("-1"))
-		{
-			return null;
-		}
-		return cornersList;
-	}
-
-	public List<String> getBallPossessionMatch(String matchid) {
-		List<String> ballPoessessionList = new ArrayList<>();
-		ballPoessessionList.add(Integer.toString(getStatTeam("possession", "home", matchid)));
-		ballPoessessionList.add(Integer.toString(getStatTeam("possession", "away", matchid)));
-		if(ballPoessessionList.get(0).equals("-1") && ballPoessessionList.get(1).equals("-1"))
-		{
-			return null;
-		}
-		return ballPoessessionList;
-	}
-
-	// returns a stat of the home or away team of a match (currently Fouls and
-	// Corners)
-	public int getStatTeam(String stat, String homeoraway, String matchid) {
-		int statResult = -1;
-		stmt = null;
-		rs = null;
-		try {
-			stmt = DBAccess.getConn().createStatement();
-			if (stat.equals("foul") || stat.equals("corner")) {
-				rs = stmt.executeQuery("SELECT " + homeoraway + stat
-						+ "CNT AS STATS FROM SOCCER02.MATCHRELDIMMART WHERE Match_ID='" + matchid + "'");
-			} else if (stat.equals("possession")) {
-				if (homeoraway.equals("home")) {
-					rs = stmt.executeQuery(
-							"SELECT ((HOMEPOS_FSTHALF + HOMEPOS_SCNDHALF)/2) AS STATS FROM SOCCER02.MATCHRELDIMMART WHERE MATCH_ID ="
-									+ matchid);
-				} else {
-					rs = stmt.executeQuery(
-							"SELECT ((AWAYPOS_FSTHALF + AWAYPOS_SCNDHALF)/2) AS STATS FROM SOCCER02.MATCHRELDIMMART WHERE MATCH_ID ="
-									+ matchid);
-				}
-			}
-			while (rs.next()) {
-				statResult = rs.getInt("STATS");
-				if(rs.wasNull())
-				{
-					statResult = -1;
-				}
-			}
-		} catch (SQLException e) {
-			log.severe(e.getMessage());
-		}
-		tryClose();
-		return statResult;
 	}
 
 	public List<Soccer_League> getLeaguesList() {
@@ -502,30 +203,174 @@ public class SoccerController extends DatabaseController
 		return teamList;
 	}
 
-	public List<String> getScore(String id) {
-		List<String> s = new ArrayList<>();
-		ps = null;
+	// This method returns a piece of data for the home- and away-team for a
+	// statistic stat
+	public List<String> getStatMatch(String matchid, String stat) {
+		List<String> list = new ArrayList<>();
+		stmt = null;
 		rs = null;
-
-		try {
-			ps = DBAccess.getConn()
-					.prepareStatement("SELECT HOME_TEAM_GOAL, AWAY_TEAM_GOAL FROM Match WHERE MATCH_ID = ?");
-			ps.setString(1, id);
-			rs = ps.executeQuery();
-
-			while (rs.next()) {
-				s.add(rs.getString("HOME_TEAM_GOAL"));
-				s.add(rs.getString("AWAY_TEAM_GOAL"));
-
-			}
-		} catch (SQLException e) {
-
-			log.severe(e.getMessage());
+		String query = "";
+		switch (stat) {
+		case "possession":
+			query = "SELECT (homepos_fsthalf+homepos_scndhalf)/2 as HOME, (awaypos_fsthalf+awaypos_scndhalf)/2 as AWAY FROM SOCCER02.MATCHRELDIMMART WHERE match_id="
+					+ matchid;
+			break;
+		case "foul":
+			query = "SELECT homefoulcnt as HOME, awayfoulcnt as AWAY FROM SOCCER02.MATCHRELDIMMART WHERE match_id="
+					+ matchid;
+			break;
+		case "goal":
+			break;
+		case "corner":
+			query = "SELECT homecornercnt as HOME, awaycornercnt as AWAY FROM SOCCER02.MATCHRELDIMMART WHERE match_id="
+					+ matchid;
+			break;
+		case "red":
+			query = "SELECT homeredcnt as HOME, awayredcnt as AWAY FROM SOCCER02.MATCHRELDIMMART WHERE match_id="
+					+ matchid;
+			break;
+		case "yellow":
+			query = "SELECT (homeyellowcnt+homeyellow2cnt) as HOME, (awayyellowcnt+awayyellow2cnt) as AWAY FROM SOCCER02.MATCHRELDIMMART WHERE match_id="
+					+ matchid;
+			break;
+		case "score":
+			query = "SELECT HOME_TEAM_GOAL AS HOME, AWAY_TEAM_GOAL AS AWAY FROM SOCCER02.Match WHERE MATCH_ID ="
+					+ matchid;
+			break;
 		}
 
-		tryClose();
+		try {
+			stmt = DBAccess.getConn().createStatement();
+			rs = stmt.executeQuery(query);
+			while (rs.next()) {
+				list.add(Integer.toString(rs.getInt("HOME")));
+				list.add(Integer.toString(rs.getInt("AWAY")));
+			}
 
-		return s;
+		} catch (SQLException e) {
+			log.severe("g" + "    " + e.getMessage());
+		}
+		tryClose();
+		return list;
+	}
+
+	// This method returns a cummulative value for a statistic stat for a team in a
+	// season
+	public String getStatSeasonAccumulated(String team, String season, String stat) {
+		int statResult = 0;
+		stmt = null;
+		rs = null;
+		String queryHome = "";
+		String queryAway = "";
+		switch (stat) {
+		case "foul":
+			queryHome = "SELECT homefoulcnt AS HOME FROM SOCCER02.TEAM t join SOCCER02.MATCHRELDIMMART m on(t.TEAM_ID = m.team_hometeam_id)join SOCCER02.SEASONSTAGE s on(m.SEASONSTAGE_SEASONSTAGE_ID=s.SEASONSTAGE_ID) WHERE t.long_name='"
+					+ team + "' and s.name='" + season + "'";
+			queryAway = "SELECT awayfoulcnt AS AWAY FROM SOCCER02.TEAM t join SOCCER02.MATCHRELDIMMART m on(t.TEAM_ID = m.team_awayteam_id)join SOCCER02.SEASONSTAGE s on(m.SEASONSTAGE_SEASONSTAGE_ID=s.SEASONSTAGE_ID) WHERE t.long_name='"
+					+ team + "' and s.name='" + season + "'";
+			break;
+		case "goal":
+			break;
+		case "corner":
+			queryHome = "SELECT homecornercnt AS HOME FROM SOCCER02.TEAM t join SOCCER02.MATCHRELDIMMART m on(t.TEAM_ID = m.team_hometeam_id)join SOCCER02.SEASONSTAGE s on(m.SEASONSTAGE_SEASONSTAGE_ID=s.SEASONSTAGE_ID) WHERE t.long_name='"
+					+ team + "' and s.name='" + season + "'";
+			queryAway = "SELECT awaycornercnt AS AWAY FROM SOCCER02.TEAM t join SOCCER02.MATCHRELDIMMART m on(t.TEAM_ID = m.team_awayteam_id)join SOCCER02.SEASONSTAGE s on(m.SEASONSTAGE_SEASONSTAGE_ID=s.SEASONSTAGE_ID) WHERE t.long_name='"
+					+ team + "' and s.name='" + season + "'";
+			break;
+		case "red":
+			queryHome = "SELECT homeredcnt AS HOME FROM SOCCER02.TEAM t join SOCCER02.MATCHRELDIMMART m on(t.TEAM_ID = m.team_hometeam_id)join SOCCER02.SEASONSTAGE s on(m.SEASONSTAGE_SEASONSTAGE_ID=s.SEASONSTAGE_ID) WHERE t.long_name='"
+					+ team + "' and s.name='" + season + "'";
+			queryAway = "SELECT awayredcnt AS AWAY FROM SOCCER02.TEAM t join SOCCER02.MATCHRELDIMMART m on(t.TEAM_ID = m.team_awayteam_id)join SOCCER02.SEASONSTAGE s on(m.SEASONSTAGE_SEASONSTAGE_ID=s.SEASONSTAGE_ID) WHERE t.long_name='"
+					+ team + "' and s.name='" + season + "'";
+			break;
+		case "yellow":
+			queryHome = "SELECT (homeyellowcnt+homeyellow2cnt) AS HOME FROM SOCCER02.TEAM t join SOCCER02.MATCHRELDIMMART m on(t.TEAM_ID = m.team_hometeam_id)join SOCCER02.SEASONSTAGE s on(m.SEASONSTAGE_SEASONSTAGE_ID=s.SEASONSTAGE_ID) WHERE t.long_name='"
+					+ team + "' and s.name='" + season + "'";
+			queryAway = "SELECT (awayyellowcnt+awayyellow2cnt) AS AWAY FROM SOCCER02.TEAM t join SOCCER02.MATCHRELDIMMART m on(t.TEAM_ID = m.team_awayteam_id)join SOCCER02.SEASONSTAGE s on(m.SEASONSTAGE_SEASONSTAGE_ID=s.SEASONSTAGE_ID) WHERE t.long_name='"
+					+ team + "' and s.name='" + season + "'";
+			break;
+		case "score":
+			queryHome = "SELECT HOME_TEAM_GOAL AS HOME FROM SOCCER02.TEAM t join SOCCER02.MATCH m on(t.TEAM_ID = m.team_hometeam_id)join SOCCER02.SEASONSTAGE s on(m.SEASONSTAGE_SEASONSTAGE_ID=s.SEASONSTAGE_ID) WHERE t.long_name='"
+					+ team + "' and s.name='" + season + "'";
+			queryAway = "SELECT AWAY_TEAM_GOAL AS AWAY FROM SOCCER02.TEAM t join SOCCER02.MATCH m on(t.TEAM_ID = m.team_awayteam_id)join SOCCER02.SEASONSTAGE s on(m.SEASONSTAGE_SEASONSTAGE_ID=s.SEASONSTAGE_ID) WHERE t.long_name='"
+					+ team + "' and s.name='" + season + "'";
+			break;
+		}
+		try {
+			stmt = DBAccess.getConn().createStatement();
+			rs = stmt.executeQuery(queryHome);
+			while (rs.next()) {
+				statResult += rs.getInt("HOME");
+			}
+			rs = stmt.executeQuery(queryAway);
+			while (rs.next()) {
+				statResult += rs.getInt("AWAY");
+			}
+		} catch (SQLException e) {
+			log.severe(e.getMessage());
+		}
+		tryClose();
+		return Integer.toString(statResult);
+	}
+
+	// This method returns a cummulative value for a statistic stat for a team in
+	// all seasons
+	public String getStatAccumulated(String team, String league, String stat) {
+		int statResult = 0;
+		stmt = null;
+		rs = null;
+		String queryHome = "";
+		String queryAway = "";
+		switch (stat) {
+		case "foul":
+			queryHome = "SELECT homefoulcnt AS HOME FROM SOCCER02.TEAM t join SOCCER02.MATCHRELDIMMART m on(t.TEAM_ID = m.team_hometeam_id)join SOCCER02.SEASONSTAGE s on(m.SEASONSTAGE_SEASONSTAGE_ID=s.SEASONSTAGE_ID) WHERE t.long_name='"
+					+ team + "'";
+			queryAway = "SELECT awayfoulcnt AS AWAY FROM SOCCER02.TEAM t join SOCCER02.MATCHRELDIMMART m on(t.TEAM_ID = m.team_awayteam_id)join SOCCER02.SEASONSTAGE s on(m.SEASONSTAGE_SEASONSTAGE_ID=s.SEASONSTAGE_ID) WHERE t.long_name='"
+					+ team + "'";
+			break;
+		case "goal":
+			break;
+		case "corner":
+			queryHome = "SELECT homecornercnt AS HOME FROM SOCCER02.TEAM t join SOCCER02.MATCHRELDIMMART m on(t.TEAM_ID = m.team_hometeam_id)join SOCCER02.SEASONSTAGE s on(m.SEASONSTAGE_SEASONSTAGE_ID=s.SEASONSTAGE_ID) WHERE t.long_name='"
+					+ team + "'";
+			queryAway = "SELECT awaycornercnt AS AWAY FROM SOCCER02.TEAM t join SOCCER02.MATCHRELDIMMART m on(t.TEAM_ID = m.team_awayteam_id)join SOCCER02.SEASONSTAGE s on(m.SEASONSTAGE_SEASONSTAGE_ID=s.SEASONSTAGE_ID) WHERE t.long_name='"
+					+ team + "'";
+			break;
+		case "red":
+			queryHome = "SELECT homeredcnt AS HOME FROM SOCCER02.TEAM t join SOCCER02.MATCHRELDIMMART m on(t.TEAM_ID = m.team_hometeam_id)join SOCCER02.SEASONSTAGE s on(m.SEASONSTAGE_SEASONSTAGE_ID=s.SEASONSTAGE_ID) WHERE t.long_name='"
+					+ team + "'";
+			queryAway = "SELECT awayredcnt AS AWAY FROM SOCCER02.TEAM t join SOCCER02.MATCHRELDIMMART m on(t.TEAM_ID = m.team_awayteam_id)join SOCCER02.SEASONSTAGE s on(m.SEASONSTAGE_SEASONSTAGE_ID=s.SEASONSTAGE_ID) WHERE t.long_name='"
+					+ team + "'";
+			break;
+		case "yellow":
+			queryHome = "SELECT (homeyellowcnt+homeyellow2cnt) AS HOME FROM SOCCER02.TEAM t join SOCCER02.MATCHRELDIMMART m on(t.TEAM_ID = m.team_hometeam_id)join SOCCER02.SEASONSTAGE s on(m.SEASONSTAGE_SEASONSTAGE_ID=s.SEASONSTAGE_ID) WHERE t.long_name='"
+					+ team + "'";
+			queryAway = "SELECT (awayyellowcnt+awayyellow2cnt) AS AWAY FROM SOCCER02.TEAM t join SOCCER02.MATCHRELDIMMART m on(t.TEAM_ID = m.team_awayteam_id)join SOCCER02.SEASONSTAGE s on(m.SEASONSTAGE_SEASONSTAGE_ID=s.SEASONSTAGE_ID) WHERE t.long_name='"
+					+ team + "'";
+			break;
+		case "score":
+			queryHome = "SELECT HOME_TEAM_GOAL AS HOME FROM SOCCER02.TEAM t join SOCCER02.MATCH m on(t.TEAM_ID = m.team_hometeam_id)join SOCCER02.SEASONSTAGE s on(m.SEASONSTAGE_SEASONSTAGE_ID=s.SEASONSTAGE_ID) WHERE t.long_name='"
+					+ team + "'";
+			queryAway = "SELECT AWAY_TEAM_GOAL AS AWAY FROM SOCCER02.TEAM t join SOCCER02.MATCH m on(t.TEAM_ID = m.team_awayteam_id)join SOCCER02.SEASONSTAGE s on(m.SEASONSTAGE_SEASONSTAGE_ID=s.SEASONSTAGE_ID) WHERE t.long_name='"
+					+ team + "'";
+			break;
+		}
+		try {
+			stmt = DBAccess.getConn().createStatement();
+			rs = stmt.executeQuery(queryHome);
+			while (rs.next()) {
+				statResult += rs.getInt("HOME");
+			}
+			rs = stmt.executeQuery(queryAway);
+			while (rs.next()) {
+				statResult += rs.getInt("AWAY");
+			}
+		} catch (SQLException e) {
+			log.severe(e.getMessage());
+		}
+		tryClose();
+		return Integer.toString(statResult);
+
 	}
 
 	public void tryClose() {

@@ -25,20 +25,18 @@ public class RedCardsStatResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public String getData(@QueryParam("token") int token) {
 		Token tk = Token.getToken(token);
-        if(tk.getSports() == SportsEnum.BASKETBALL)
-        {
-            return "null";
-        }
+		if (tk.getSports() == SportsEnum.BASKETBALL) {
+			return "null";
+		}
 
 		SoccerController sc = (SoccerController) DBAccess.getInstance().getController(SportsEnum.SOCCER);
-		List<String> redCardList = sc.getRedCards(tk.getMatchID());
+		List<String> redCardList = new ArrayList<>();
 		if (tk.getSeason().equals("null")) {
-			redCardList.add(sc.getRedCardsAccumulated(tk.getTeam(), tk.getLeague()));
+			redCardList.add(sc.getStatAccumulated(tk.getTeam(), tk.getLeague(), "red"));
 		} else if (tk.getMatch().equals("null")) {
-
-			redCardList.add(sc.getRedCardsSeasonAccumulated(tk.getTeam(), tk.getSeason()));
+			redCardList.add(sc.getStatSeasonAccumulated(tk.getTeam(), tk.getSeason(), "red"));
 		} else {
-			redCardList = sc.getRedCardsMatch(tk.getMatchID());
+			redCardList = sc.getStatMatch(tk.getMatchID(), "red");
 		}
 
 		JSONObject jo = new JSONObject();

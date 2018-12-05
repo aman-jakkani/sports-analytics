@@ -86,6 +86,38 @@ public class BasketballController extends DatabaseController {
 	}
 
 
+    @Override
+    public List<String> getHomeAndAwayTeam(String matchid) {
+        List<String> teamList = new ArrayList<String>();
+        ps = null;
+        rs = null;
+        try {
+            ps = DBAccess.getConn().prepareStatement(
+                    "SELECT NAME FROM BASKETBALL.GAME JOIN BASKETBALL.TEAM ON GAME.HOMETID = BASKETBALL.TEAM.TEAM_ID WHERE GID = ?");
+
+            ps.setString(1, matchid);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                teamList.add(rs.getString("NAME"));
+            }
+            ps.close();
+            ps = DBAccess.getConn().prepareStatement(
+                    "SELECT NAME FROM BASKETBALL.GAME JOIN BASKETBALL.TEAM ON GAME.VISITORTID = BASKETBALL.TEAM.TEAM_ID WHERE GID = ?");
+
+            ps.setString(1, matchid);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                teamList.add(rs.getString("NAME"));
+            }
+
+
+        } catch (SQLException e) {
+            log.severe(e.getMessage());
+        }
+        tryClose();
+        return teamList;
+    }
+
 	// Returns Name and ID of all Basketball.Leagues
 	private List<Basketball_League> findAllLeagues(){
 		List<Basketball_League> blList = new ArrayList<Basketball_League>();

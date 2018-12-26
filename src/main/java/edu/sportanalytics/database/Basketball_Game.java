@@ -5,14 +5,28 @@ import java.util.Date;
 public class Basketball_Game {
 
     private int GID, HomeTID, VisitorTID, result,sequence, season , Attendance;
-    private String League_name, status, tvbroadcast, timeplayed;
+    private String League_name, status, tvbroadcast, timeplayed, date;
     private int Season;
-    private Date date;
     private String host, guest; // gastgeber = host, gast = guest
+	private int homeScore, guestScore;
 
-  
+	public int getHomeScore() {
+		return homeScore;
+	}
 
-    public int getGID() {
+	public void setHomeScore(int homeScore) {
+		this.homeScore = homeScore;
+	}
+
+	public int getGuestScore() {
+		return guestScore;
+	}
+
+	public void setGuestScore(int guestScore) {
+		this.guestScore = guestScore;
+	}
+
+	public int getGID() {
 		return GID;
 	}
 
@@ -45,14 +59,6 @@ public class Basketball_Game {
         this.result = result;
     }
 
-    // java can't resolve date to a variable
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
 
     public String getHost() {
         return host;
@@ -66,7 +72,15 @@ public class Basketball_Game {
         return guest;
     }
 
-    public void setGuest(String guest) {
+    public String getDate() {
+		return date;
+	}
+
+	public void setDate(String month, String year) {
+		this.date = month + " " + year;
+	}
+
+	public void setGuest(String guest) {
         this.guest = guest;
     }
 

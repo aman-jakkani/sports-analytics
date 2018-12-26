@@ -19,8 +19,8 @@ public class BasketballController extends DatabaseController {
 	private List<Basketball_Season> seasonList;
 	private static final Logger log = Logger.getLogger(BasketballController.class.getName());
 
-	public BasketballController(){
-		super();
+	public BasketballController(DBAccess dba){
+		super(dba);
 	}
 
 	@Override
@@ -40,7 +40,7 @@ public class BasketballController extends DatabaseController {
 		List<String> longNameLeagues = new ArrayList<String>();
 
 		for (Basketball_Team b : teamList){
-			longNameLeagues.add(b.getLong_name());
+			longNameLeagues.add(b.getName());
 		}
 		System.out.println(leaguesList);
 
@@ -53,7 +53,7 @@ public class BasketballController extends DatabaseController {
 		List<String> seasonNames = new ArrayList<String>();
 
 		for (Basketball_Season s : seasonList){
-			seasonNames.add(s.getName());
+			seasonNames.add(s.getSeasonYear());
 		}
 
 		return seasonNames;
@@ -66,12 +66,57 @@ public class BasketballController extends DatabaseController {
 		List<String> gamesString = new ArrayList<String>();
 
 		for (Basketball_Game b : gamesList){
-//			gamesString.add(b.getHost() + " vs " + b.getGuest() + " (" + b.getHomeTeamScore() + " : " + b.getAwayTeamScore() + " )");
+			String homeName = "UNKNOWN";
+			String guestName = "UNKNOWN";
+			for(Basketball_Team t : teamList)
+			{
+				if(t.getTeam_id().equals(Integer.toString(b.getHomeTID())))
+				{
+					homeName = t.getName();
+				}
+				if(t.getTeam_id().equals(Integer.toString(b.getVisitorTID())))
+				{
+					guestName = t.getName();
+				}
+			}
+			gamesString.add(homeName + " vs " + guestName + " (" + b.getHomeScore() + " : " + b.getGuestScore() + " ) MATCH_ID:" + b.getGID());
 		}
 
 		return gamesString;
 	}
 
+
+    @Override
+    public List<String> getHomeAndAwayTeam(String matchid) {
+        List<String> teamList = new ArrayList<String>();
+        ps = null;
+        rs = null;
+        try {
+            ps = DBAccess.getConn().prepareStatement(
+                    "SELECT NAME FROM BASKETBALL.GAME JOIN BASKETBALL.TEAM ON GAME.HOMETID = BASKETBALL.TEAM.TEAM_ID WHERE GID = ?");
+
+            ps.setString(1, matchid);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                teamList.add(rs.getString("NAME"));
+            }
+            ps.close();
+            ps = DBAccess.getConn().prepareStatement(
+                    "SELECT NAME FROM BASKETBALL.GAME JOIN BASKETBALL.TEAM ON GAME.VISITORTID = BASKETBALL.TEAM.TEAM_ID WHERE GID = ?");
+
+            ps.setString(1, matchid);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                teamList.add(rs.getString("NAME"));
+            }
+
+
+        } catch (SQLException e) {
+            log.severe(e.getMessage());
+        }
+        tryClose();
+        return teamList;
+    }
 
 	// Returns Name and ID of all Basketball.Leagues
 	private List<Basketball_League> findAllLeagues(){
@@ -81,9 +126,7 @@ public class BasketballController extends DatabaseController {
 		try {
 			stmt = DBAccess.getConn().createStatement();
 			rs = stmt.executeQuery("SELECT NAME ,LEAGUE_ID  from BASKETBALL.LEAGUE ");
-			
-			
-			
+	
 			while(rs.next()) {
 				Basketball_League bl = new Basketball_League();
 				bl.setName(rs.getString("NAME"));
@@ -104,25 +147,49 @@ public class BasketballController extends DatabaseController {
 	// finds games + info from team/season
 	private List<Basketball_Game> findGames(String team, String season){
 		List<Basketball_Game> gList = new ArrayList<Basketball_Game>();
-		//yet to come: seq, status , tvbroadcast,timeplayed,attendance
+		ps = null;
+		rs = null;
 		
 		try {
-			Statement stmt = DBAccess.getConn().createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT GID,SEQUENCE,STATUS,HOMETID,VISTORTID,SEASON,TVBROADCAST,DATEMMDD,DATEYYYY,TIMEPLAYED,ATTENDANCE FROM BASKETBALL.GAME;;");
-			
+			ps = DBAccess.getConn().prepareStatement("SELECT GID,SEQUENCE,STATUS,HOMETID,VISITORTID,TVBROADCAST,"
+					+ "DATEMMDD,DATEYYYY,TIMEPLAYED,ATTENDANCE FROM BASKETBALL.GAME join BASKETBALL.TEAM "
+					+ "on  (VISITORTID = team_id ) OR (HOMETID = team_id) WHERE NAME LIKE ? and SEASON = ? ");
+			ps.setString(1, team);
+			ps.setString(2, season);
+			rs = ps.executeQuery();
 			while(rs.next()) {
 				Basketball_Game bg = new Basketball_Game();
 				bg.setGID(rs.getInt("GID"));
 				bg.setSequence(rs.getInt("SEQUENCE"));
 				bg.setStatus(rs.getString("STATUS"));
+				bg.setHomeTID(rs.getInt("HOMETID"));
 				bg.setVisitorTID(rs.getInt("VISITORTID"));
-				bg.setHomeTID(rs.getInt("HOMETUID"));
-				bg.setSeason(rs.getInt("STATUS"));
 				bg.setTvbroadcast(rs.getString("TVBROADCAST"));
 				bg.setTimeplayed(rs.getString("TIMEPLAYED"));
 				bg.setAttendance(rs.getInt("ATTENDANCE"));
-				//bg.setDate(rs.getDate("GAME_DATE"));
-				
+				bg.setDate(rs.getString("DATEMMDD"), rs.getString("DATEYYYY"));
+
+				PreparedStatement aps = DBAccess.getConn().prepareStatement("SELECT BASKETBALL.SCORE_GAME.POINTS FROM BASKETBALL.SCORE_GAME JOIN BASKETBALL.GAME ON BASKETBALL.GAME.GID = BASKETBALL.SCORE_GAME.GAME_ID WHERE BASKETBALL.SCORE_GAME.GAME_ID =? AND BASKETBALL.SCORE_GAME.TEAM_ID =?");
+				aps.setInt(1, bg.getGID());
+				aps.setInt(2,bg.getHomeTID());
+
+				ResultSet ars = aps.executeQuery();
+				if(ars.next())
+				{
+					bg.setHomeScore(ars.getInt("POINTS"));
+				}
+				ars.close();
+
+				aps.setInt(1, bg.getGID());
+				aps.setInt(2, bg.getVisitorTID());
+				ars = aps.executeQuery();
+				if(ars.next())
+				{
+					bg.setGuestScore(ars.getInt("POINTS"));
+				}
+				ars.close();
+				aps.close();
+
 				gList.add(bg);
 				
 			}
@@ -134,20 +201,24 @@ public class BasketballController extends DatabaseController {
 		}
 		
 		
-		
+		tryClose();
 		return gList;
 	}
 
 	// Finds Season from league/team
 	private List<Basketball_Season> findSeason(String league, String team){
 		List<Basketball_Season> bsList = new ArrayList<Basketball_Season>();
-
+		ps = null;
+		rs = null;
+		
 		try {
-			Statement stmt = DBAccess.getConn().createStatement();
-			ResultSet rs = stmt.executeQuery("");
-			
+			ps = DBAccess.getConn().prepareStatement("SELECT distinct SEASON from BASKETBALL.GAME  join BASKETBALL.TEAM "
+					+ "on  (VISITORTID = team_id ) OR (HOMETID = team_id) WHERE NAME LIKE ? ");
+			ps.setString(1, team);
+			rs = ps.executeQuery();
 			while(rs.next()) {
 				Basketball_Season bs = new Basketball_Season();
+				bs.setSeasonYear(rs.getString("SEASON"));
 				bsList.add(bs);
 			}
 			
@@ -156,6 +227,7 @@ public class BasketballController extends DatabaseController {
 			log.severe(e.getMessage());;
 		}
 		
+		tryClose();
 		return bsList;
 	}
 
@@ -163,17 +235,22 @@ public class BasketballController extends DatabaseController {
 	private List<Basketball_Team> findTeams(String league){
 		List<Basketball_Team> teamList = new ArrayList<Basketball_Team>();
 		
+		ps = null;
+		rs= null;
+		
 		try {
-			Statement stmt = DBAccess.getConn().createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT NAME , ABBREVIATION, LOCATION , NICKNAME  from BASKETBALL.TEAM ;");
-			
+			ps = DBAccess.getConn().prepareStatement("SELECT TEAM_ID, NAME , ABBREVIATION, CITY , Code, W, L, PCT  from BASKETBALL.TEAM");
+			rs = ps.executeQuery();
 			while(rs.next()) {
 				Basketball_Team bt = new Basketball_Team();
-				bt.setLong_name(rs.getString("NAME"));
-				//No ID yet
+				bt.setTeam_id(rs.getString("TEAM_ID"));
+				bt.setName(rs.getString("NAME"));
 				bt.setAbrevation(rs.getString("ABBREVIATION"));
-				bt.setLocation(rs.getString("LOCATION"));
-				bt.setShort_name(rs.getString("NICKNAME"));
+				bt.setCity(rs.getString("City"));
+				bt.setCode(rs.getString("CODE"));
+				bt.setWins(rs.getInt("W"));
+				bt.setLoses(rs.getInt("L"));
+				bt.setPct(Float.toString(rs.getFloat("PCT")));
 				
 				teamList.add(bt);
 			}
@@ -183,9 +260,84 @@ public class BasketballController extends DatabaseController {
 			log.severe(e.getMessage());
 		}
 		
+		tryClose();
 		
 		return teamList;
 	}
+	
+	//Retrieves The Score of HomeTeam by MatchID
+	public String HomeScoreById(String id) {
+		ps = null;
+		rs = null;
+		
+		try {
+			ps = DBAccess.getConn().prepareStatement("SELECT POINTS From BASKETBALL.GAME "
+					+ "join BASKETBALL.SCORE_GAME on ( HOMETID = Team_id) and (GID = GAME_ID) WHERE GID = ?");
+			ps.setString(1, id);
+			rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				id = rs.getString("POINTS");
+				
+			}
+		}	catch (SQLException e) {
+		
+			log.severe(e.getMessage());
+		}
+		
+		tryClose();
+		
+		return id;
+		
+	}
+	
+	//Retrieves The Score of GuestTeam by MatchID
+	public String GuestScoreById(String id) {
+		ps = null;
+		rs = null;
+		
+		try {
+			ps = DBAccess.getConn().prepareStatement("SELECT POINTS From BASKETBALL.GAME "
+					+ "join BASKETBALL.SCORE_GAME on ( VISITORTID = Team_id) and (GID = GAME_ID) WHERE GID = ?");
+			ps.setString(1, id);
+			rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				id = rs.getString("POINTS");
+				
+			}
+		}catch (SQLException e) {
+		
+			log.severe(e.getMessage());
+		}
+		
+		tryClose();
+		return id;
+		
+	}
+	
+	public String GetAttendanceByGame(String gid) {
+		ps = null;
+		rs = null;
+		
+		try {
+			ps = DBAccess.getConn().prepareStatement("SELECT ATTENDANCE From BASKETBALL.GAME WHERE GID = ?");
+			ps.setString(1, gid);
+			rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				gid = rs.getString("ATTENDANCE");
+			}
+		}catch (SQLException e) {
+		
+			log.severe(e.getMessage());
+		}
+		
+		tryClose();
+		return gid;
+		
+	}
+	
 
 	public List<Basketball_League> getLeaguesList() {
 		return leaguesList;
@@ -194,6 +346,8 @@ public class BasketballController extends DatabaseController {
 	public List<Basketball_Team> getTeamList() {
 		return teamList;
 	}
+	
+	
 	
 	
 	public void tryClose(){

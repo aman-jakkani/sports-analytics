@@ -5,9 +5,12 @@ import java.util.List;
 public abstract class DatabaseController {
 	private DBAccess db;
 
-	public DatabaseController() {
-		db = DBAccess.getInstance();
+	public DatabaseController(DBAccess dba) {
 
+	}
+
+	public void setDB(DBAccess dba) {
+		db = dba;
 	}
 
 	public DBAccess getDb() {
@@ -21,11 +24,14 @@ public abstract class DatabaseController {
 	public abstract List<String> getSeason(String league, String team);
 
 	public abstract List<String> getGame(String season, String team);
-	
-	public List<String> getBallPossession(String matchid){
+
+	public abstract List<String> getHomeAndAwayTeam(String matchid);
+
+	public List<String> getBallPossession(String matchid) {
 		return null;
 	}
-	public List<String> getFouls(String matchid){
+
+	public List<String> getFouls(String matchid) {
 		return null;
 	}
 
@@ -43,23 +49,7 @@ public abstract class DatabaseController {
 		// TODO
 		return null;
 	}
-	
-	public List<String> getHomeAndAwayTeam(String matchid){
-		return null;
-	}
 
-	/*
-	 * The following is only needed for the SoccerController
-	 */
-	public List<String> getYellowCards(String matchid) {
-		return null;
-	}
 
-	public List<String> getRedCards(String matchid) {
-		return null;
-	}
 
-	public List<String> getCornerCnt(String matchid) {
-		return null;
-	}
 }

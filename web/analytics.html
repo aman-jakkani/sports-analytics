@@ -3,6 +3,7 @@
 <html>
 
 	<title>Sports Analytics</title>
+	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
     <script src = "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
         <!-- RestCaller.js retrieves REST Resources -->
@@ -22,16 +23,15 @@
 		</div>
 
 		<!-- Page Content -->
-		<div style="margin-left:15%">
+		<div style="margin-left:15%"/>
 
 		<div class="w3-container w3-blue">
 		  <h1>ANALYTICS</h1>
 		</div>
 		
-		<div class="w3-container">
+		<div class="w3-container"/>
 
-    <body>
-    <br>
+
         <script>
             function loadResource()
             {
@@ -46,14 +46,13 @@
                 xhttp.send();
             }
         </script>
-    <br>
-
     <!-- Include jQuery -->
     <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 
     <!-- Import dropdown javascript logic -->
     <script type="text/javascript" src="js/resources.js"></script>
 
+        <div id="Dropdown">
         <form method = "GET">
             <fieldset>
                 <legend>Pick a Sport</legend>
@@ -63,6 +62,7 @@
                         <option value = "null">--Make a Choice--</option>
                         <!-- <option value = "Basketball">Basketball</option> -->
                         <option value = "Soccer">Soccer</option>
+                        <option value = "Basketball">Basketball</option>
                     </select>
                 </p>
             </fieldset>
@@ -110,7 +110,7 @@
                     </select>
                 </p>
             </fieldset>  
-<!
+
             <fieldset>
                 <legend>Choose Chart Type</legend>
                 <p>
@@ -130,20 +130,57 @@
 
     <!-- Create Submit Button, link to showData() function -->
     <button onclick="plotChart()" id="SUBMIT">SUBMIT</button>
+    </div>
+    <div id="Charts" style="display:none">
 
+    <br><button onclick="backToDropdown()" id="BACK">BACK</button>
     <!-- Display Stats in a list -->
-    <div style="display: none;" id="hiddenText">Results: </div>
+    <br><div style="display: none;" id="hiddenText">Results: </div>
     <p><span id = 'chosenSport'> </span></p>
     <p><span id = 'chosenLeague'> </span></p>
     <p><span id = 'chosenTeam'> </span></p>
     <p><span id = 'chosenSeason'> </span></p>
-    <p><span id = 'chosenGame'> </span></p> 
+    <p><span id = 'chosenGame'> </span></p>
+    <p><span id = 'attendance'> </span></p>
     
-    <div>
-    <canvas id="myChart" width="400" height="400"></canvas>
-    </div>
+        <div style="width: 50%; float: left">
+            <div>
+                <canvas id="myChart1" width="300" height="300"></canvas>
+            </div>
+            <div>
+                <canvas id="myChart3" width="300" height="300"></canvas>
+            </div>
+
+            <div>
+                <canvas id="myChart5" width="300" height="300"></canvas>
+            </div>
+            <div>
+                <canvas id="myChart7" width="300" height="300"></canvas>
+            </div>
+            <div>
+                <canvas id="myChart9" width="300" height="300"></canvas>
+            </div>
+        </div>
+        <div style="width: 50%; float: right">
+            <div>
+                <canvas id="myChart2" width="300" height="300"></canvas>
+            </div>
+            <div>
+                <canvas id="myChart4" width="300" height="300"></canvas>
+            </div>
+            <div>
+                <canvas id="myChart6" width="300" height="300"></canvas>
+            </div>
+            <div>
+                <canvas id="myChart8" width="300" height="300"></canvas>
+            </div>
+            <div>
+                <canvas id="myChart10" width="300" height="300"></canvas>
+            </div>
+        </div>
+
 
     <br>
-
+    </div>
     </body>
 </html>

@@ -41,10 +41,10 @@ function plotChart() {
 
         var chartType = document.getElementById("chartType").value;
 
-        plotDefault(chartType, homeTeamName, awayTeamName, homeTeamData, awayTeamData);
+        plot(chartType, homeTeamName, awayTeamName, homeTeamData, awayTeamData);
 }
 
-function plotDefault(chartType, homeTeamName, awayTeamName, homeTeamData, awayTeamData){
+function plot(chartType, homeTeamName, awayTeamName, homeTeamData, awayTeamData){
         var canvas = document.getElementById("myChart");
 
         if (window.bar != undefined){
@@ -91,48 +91,4 @@ function plotDefault(chartType, homeTeamName, awayTeamName, homeTeamData, awayTe
         };
 
         window.bar = new Chart(canvas, config);	
-}
-
-
-function barChart(chartData, teamNames, chartLabels){
-        // don't plot anything if a chart type isn't selected
-        if (document.getElementById("chartType").value == "null") {
-                console.log("No chart selected. Chart plotting skipped");
-                return;
-        }
-
-        var homeTeam = teamNames[0];
-        var homeTeamData = chartData[0];
-
-        var awayTeam = teamNames[1];
-
-
-
-        var config = {
-                type: 'bar',
-                data: {
-                        label: teamNames,
-                        labels: ["Rockets", "Mavericks", "Lakers", "Celtics", "Kings", "Thunder"],
-                        datasets: [{
-                                data: chartData,
-                                borderWidth: 1
-                        }]
-                },
-                options: {
-                        scales: {
-                        xAxes: [{ ticks: {beginAtZero:true} }],
-                        yAxes: [{ ticks: {beginAtZero:true} }] }
-                }
-        }
-
-
-        // Create chart
-        var canvas = document.getElementById("myChart");
-
-        // prevent chart from showing old data when mouse is scrolled over it
-        if (window.bar != undefined) {
-                window.bar.destroy();
-        }
-
-        window.bar = new Chart(canvas, config); 
 }

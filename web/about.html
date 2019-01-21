@@ -12,8 +12,8 @@
 		  <h3 class="w3-bar-item">MENU</h3>
 		  <a href="index.html" class="w3-bar-item w3-button">HOME</a>
 		  <a href="analytics.html" class="w3-bar-item w3-button">ANALYTICS</a>
-		  <a href="about.html" class="w3-bar-item w3-button">MOCK PLOT</a>
-		  <a href="contact.html" class="w3-bar-item w3-button">DEMO</a>
+		  <a href="about.html" class="w3-bar-item w3-button">ABOUT</a>
+		  <a href="contact.html" class="w3-bar-item w3-button">CONTACT</a>
 		</div>
 
 		<!-- Page Content -->
@@ -23,56 +23,7 @@
 		  <h1>ABOUT</h1>
 		</div>
   
-    <script src = "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
-		<canvas id="densityChart" width="600" height="400"></canvas>
-		<script>
-			var densityCanvas = document.getElementById("densityChart");
-
-			var densityData = {
-				label: 'Home Team',
-				data: [5427, 5243, 5514, 3933, 1326, 687, 1271, 1638],
-				backgroundColor: 'rgba(0, 99, 132, 0.6)',
-				borderWidth: 0,
-				yAxisID: "y-axis-density"
-			};
-
-			var gravityData = {
-				label: 'Away Team',
-				data: [3.7, 8.9, 9.8, 3.7, 23.1, 9.0, 8.7, 11.0],
-				backgroundColor: 'rgba(99, 132, 0, 0.6)',
-				borderWidth: 0,
-				yAxisID: "y-axis-gravity"
-			};
-
-			var planetData = {
-				labels: ["Ball Possession", "Yellow Cards", "Corners", "Fouls"],
-				datasets: [densityData, gravityData]
-			};
-
-			var chartOptions = {
-				scales: {
-					xAxes: [{
-						barPercentage: 1,
-						categoryPercentage: 0.6
-					}],
-					yAxes: [{
-						id: "y-axis-density"
-					}, {
-						id: "y-axis-gravity"
-					}]
-				}
-			};
-
-			var config = {
-				type: 'line',
-				data: planetData,
-				options: chartOptions
-			};
-
-			var barChart = new Chart(densityCanvas, config);	
-		
-		
-		</script>		
+  
 			
 		</div>  
 	</body>

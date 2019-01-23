@@ -112,11 +112,70 @@
             </fieldset>  
 
             <fieldset>
+                <legend>Choose Aggregation Function</legend>
+                <p>
+                    <label>Aggregation Function</label>
+                    <select id = "aggregationFunction">
+                        <option value = "null">--Make a choice--</option>
+                        <option value = "1">Sum</option>
+               			<option value = "2">Average</option>
+               			<option value = "3">Count</option>
+               			<option value = "4">Max</option>
+               			<option value = "5">Min</option>
+               			<option value = "6">Standard Deviation</option>
+               			<option value = "7">Variance</option>
+                    </select>
+                </p>
+            </fieldset>
+            
+            <fieldset>
+                <legend>Choose Aggregation Style</legend>
+                <p>
+                    <label>Aggregation Style</label>
+                    <select id = "aggregationStyle">
+                        <option value = "null">--Make a choice--</option>
+                        <option value = "1">Simple Query</option>
+               			<option value = "2">Rollup</option>
+               			<option value = "3">Cube</option>
+                    </select>
+                </p>
+            </fieldset>
+            
+             <fieldset>
+                <legend>Fact Attribute</legend>
+                <p>
+                    <select multiple id = "factAttribute">
+                        <option value = "null">--Make a choice--</option>
+                        <option value = "1">Points</option>
+               			<option value = "2">Assists</option>
+               			<option value = "3">Rebounds</option>
+               			<option value = "4">Blocks</option>
+               			<option value = "5">Steals</option>  
+                    </select>
+                </p>
+            </fieldset>
+            
+            <fieldset>
+                <legend>Choose Dimensions</legend>
+                <p>
+                    <select multiple id = "dimensions">
+                        <option value = "null">--Make a choice--</option>
+                        <option value = "1">Point Guard</option>
+               			<option value = "2">Small Forward</option>
+               			<option value = "3">Shooting Guard</option>
+               			<option value = "4">Power Forward</option>
+               			<option value = "5">Center</option>  
+                    </select>
+                </p>
+            </fieldset>
+            
+            <fieldset>
                 <legend>Choose Chart Type</legend>
                 <p>
                     <label>Chart</label>
                     <select id = "chartType">
                         <option value = "null">--Make a choice--</option>
+                        <option value = "1">Bar</option>
                     </select>
                 </p>
             </fieldset>

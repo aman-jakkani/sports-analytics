@@ -28,7 +28,7 @@ var dropdown = {
         $("#stat1").html(defaultString);        
         // $("#chartType").html(defaultString); 
         $("axes").html(defaultString);
-      } 
+        
 
       else if ($(this).attr('id') == 'league') {
         league = $("#league").val();

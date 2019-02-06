@@ -28,6 +28,8 @@ var dropdown = {
         $("#stat1").html(defaultString);        
         // $("#chartType").html(defaultString); 
         $("axes").html(defaultString);
+        $("#factAttribute").html(getFactAttribute(sport));
+        $("#dimensions").html(getDimensions(sport));
         }
 
       else if ($(this).attr('id') == 'league') {
@@ -101,6 +103,44 @@ function getLeagues(sport) {
 
   return htmlLeagueString; 
 };
+
+function getFactAttribute(sport) {
+
+	var parameters = [["sports", sport], ];
+	var htmlFactAttribute = "<option value = \"null\" >--Make a choice--</option>";
+
+    if (sport == "null") return htmlFactAttribute;
+	
+	if (sport == "Basketball") {
+		var htmlFactAttribute = "<option value='0'>--Make a choice--</option><option value='1'>Points</option><option value='2'>Assists</option><option value='3'>Rebounds</option><option value='4'>Steals</option><option value='5'>Blocks</option>";
+
+	}
+	
+	else if (sport == "Soccer"){
+		var htmlFactAttribute =  "<option value='0'>--Make a choice--</option><option value='1'>Goals</option><option value='2'>Assists</option><option value='3'>Possession Time</option><option value='4'>Fouls</option><option value='5'>Yellow Cards</option><option value='6'>Red Cards</option>";
+	
+	}
+	return htmlFactAttribute;
+}
+
+function getDimensions(sport) {
+
+	var parameters = [["sports", sport], ];
+	var htmlDimensions = "<option value = \"null\" >--Make a choice--</option>";
+
+    if (sport == "null") return htmlDimensions;
+	
+	if (sport == "Basketball") {
+		var htmlDimensions = "<option value='0'>--Make a choice--</option><option value='1'>Point Guard</option><option value='2'>Shooting Guard</option><option value='3'>Small Forward</option><option value='4'>Power Forward</option><option value='5'>Center</option>";
+
+	}
+	
+	else if (sport == "Soccer"){
+		var htmlDimensions =  "<option value='0'>--Make a choice--</option><option value='1'>Goalkeeper</option><option value='2'>Fullback</option><option value='3'>Center Back</option><option value='4'>Midfielder</option><option value='5'>Striker</option>";
+	
+	}
+	return htmlDimensions;
+}
 
 
 // return string of all teams based on sport/league

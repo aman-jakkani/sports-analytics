@@ -295,49 +295,47 @@ public class BasketballController extends DatabaseController {
 	public String GuestScoreById(String id) {
 		ps = null;
 		rs = null;
-		
+
 		try {
 			ps = DBAccess.getConn().prepareStatement("SELECT POINTS From BASKETBALL.GAME "
 					+ "join BASKETBALL.SCORE_GAME on ( VISITORTID = Team_id) and (GID = GAME_ID) WHERE GID = ?");
 			ps.setString(1, id);
 			rs = ps.executeQuery();
-			
+
 			while(rs.next()) {
 				id = rs.getString("POINTS");
-				
+
 			}
 		}catch (SQLException e) {
-		
+
 			log.severe(e.getMessage());
 		}
-		
+
 		tryClose();
 		return id;
-		
+
 	}
-	
 	public String GetAttendanceByGame(String gid) {
 		ps = null;
 		rs = null;
-		
-		try {
-			ps = DBAccess.getConn().prepareStatement("SELECT ATTENDANCE From BASKETBALL.GAME WHERE GID = ?");
-			ps.setString(1, gid);
-			rs = ps.executeQuery();
-			
-			while(rs.next()) {
-				gid = rs.getString("ATTENDANCE");
-			}
-		}catch (SQLException e) {
-		
-			log.severe(e.getMessage());
+
+	try {
+		ps = DBAccess.getConn().prepareStatement("SELECT ATTENDANCE From BASKETBALL.GAME WHERE GID = ?");
+		ps.setString(1, gid);
+		rs = ps.executeQuery();
+
+		while(rs.next()) {
+			gid = rs.getString("ATTENDANCE");
 		}
-		
-		tryClose();
-		return gid;
-		
+	}catch (SQLException e) {
+
+		log.severe(e.getMessage());
 	}
-	
+
+	tryClose();
+		return gid;
+	}
+
 
 	public List<Basketball_League> getLeaguesList() {
 		return leaguesList;
@@ -346,8 +344,29 @@ public class BasketballController extends DatabaseController {
 	public List<Basketball_Team> getTeamList() {
 		return teamList;
 	}
-	
-	
+
+	public String getRollupStats(String factatt, String aggregfunc, String aggregstyle, String dimension){
+		ps = null;
+		rs = null;
+		try {
+			//ps = DBAccess.getConn().prepareStatement("SELECT ? From BASKETBALL.PLAYER_STATS WHERE GID = ?");
+			ps.setString(1, factatt);
+			ps.setString(2, aggregfunc);
+			ps.setString(3, aggregstyle);
+			ps.setString(4, dimension);
+			rs = ps.executeQuery();
+
+			while(rs.next()) {
+				factatt = rs.getString("ATTENDANCE");
+			}
+		}catch (SQLException e) {
+
+			log.severe(e.getMessage());
+		}
+
+		tryClose();
+		return factatt;
+	}
 	
 	
 	public void tryClose(){

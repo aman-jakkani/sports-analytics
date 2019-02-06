@@ -7,16 +7,19 @@ function plotChart() {
         var league = document.getElementById('chosenLeague').innerHTML = document.getElementById("league").value;
         var team = document.getElementById('chosenTeam').innerHTML = document.getElementById("team").value;
         var season = document.getElementById('chosenSeason').innerHTML = document.getElementById("season").value;
-        var match = document.getElementById('chosenGame').innerHTML = document.getElementById("game").value;
-
-
-
-        var parameters = [["sports", sport], ["league", league], ["team", team], ["season", season], ["match", match]];
+        var factatt = document.getElementById("factAttribute").value;
+        var aggregfunc = document.getElementById("aggregationFunction").value;
+    var aggregstyle = document.getElementById("aggregationStyle").value;
+    var dimension  = document.getElementById("dimensions").value;
+    
+        var parameters = [["sports", sport], ["league", league], ["team", team], ["season", season], ["factatt", factatt], ["aggregfunc", aggregfunc], ["aggregstyle", aggregstyle], ["dimension", dimension]];
         console.log(parameters);
 
-        var token = getRestResource("TokenResource", parameters);
-        console.log("Token: " + token["token"]);
+        //var token = getRestResource("TokenResource", parameters);
+        //console.log("Token: " + token["token"]);
 
+        var token = getRestResource("RollupTokenResource", parameters);
+        console.log("Token: " + token["token"]);
 
         var teams = getRestResource("HomeAndAwayTeamListResource", [["token", token["token"]],]);
         console.log("Teams: " + teams["homeAndAwayTeam"]);

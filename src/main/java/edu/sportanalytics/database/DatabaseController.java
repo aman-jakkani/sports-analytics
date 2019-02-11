@@ -26,6 +26,14 @@ public abstract class DatabaseController {
 	public abstract List<String> getGame(String season, String team);
 
 	public abstract List<String> getHomeAndAwayTeam(String matchid);
+	
+	public abstract List<String> getAwayTeamPlayerID(String matchid);
+	
+	public abstract List<String> getHomeTeamPlayerID(String matchid);
+
+	public abstract List<String> getAwayPlayerList(String matchid);
+
+	public abstract List<String> getHomePlayerList(String matchid);
 
 	public List<String> getBallPossession(String matchid) {
 		return null;

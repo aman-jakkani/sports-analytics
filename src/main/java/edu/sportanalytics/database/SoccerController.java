@@ -397,16 +397,14 @@ public class SoccerController extends DatabaseController
 		rs = null;
 		ps = null;
 		try{
-		ps = DBAccess.getConn().prepareStatement("SELECT PLAYER_PLAYER_ID1, PLAYER_PLAYER_ID2, PLAYER_PLAYER_ID3, PLAYER_PLAYER_ID4, PLAYER_PLAYER_ID5, PLAYER_PLAYER_ID6, PLAYER_PLAYER_ID7, PLAYER_PLAYER_ID8, PLAYER_PLAYER_ID9, PLAYER_PLAYER_ID10, PLAYER_PLAYER_ID11"
-				+"FROM SOCCER02.MATCHLINEUP l"
-				+"JOIN SOCCER02.MATCH m on(l.matchlineup_id = m.matchlineup_awaymatchlineup_id)"
-				+"WHERE m.match_id = ?");
-		ps.setString(1, matchid);
-		rs = ps.executeQuery();
-		String columnName = "PLAYER_PLAYER_ID";
-		for(int i = 1; i<12;i++){
-			playerAwayList.add(Integer.toString(rs.getInt(columnName+i)));
-		}
+			ps = DBAccess.getConn().prepareStatement("SELECT PLAYER_PLAYER_ID1, PLAYER_PLAYER_ID2, PLAYER_PLAYER_ID3, PLAYER_PLAYER_ID4, PLAYER_PLAYER_ID5, PLAYER_PLAYER_ID6, PLAYER_PLAYER_ID7, PLAYER_PLAYER_ID8, PLAYER_PLAYER_ID9, PLAYER_PLAYER_ID10, PLAYER_PLAYER_ID11 FROM SOCCER02.MATCHLINEUP l JOIN SOCCER02.MATCH m on(l.matchlineup_id = m.matchlineup_awaymatchlineup_id) WHERE m.match_id = ?");
+			ps.setString(1, matchid);
+			String columnName = "PLAYER_PLAYER_ID";
+			rs = ps.executeQuery();
+			rs.next();
+			for(int i = 1; i<12; i++){
+				playerAwayList.add(Integer.toString(rs.getInt(columnName+Integer.toString(i))));
+			}
 		
 		}catch(SQLException e){
 			log.severe(e.getMessage());
@@ -422,17 +420,15 @@ public class SoccerController extends DatabaseController
 		rs = null;
 		ps = null;
 		try{
-		ps = DBAccess.getConn().prepareStatement("SELECT PLAYER_PLAYER_ID1, PLAYER_PLAYER_ID2, PLAYER_PLAYER_ID3, PLAYER_PLAYER_ID4, PLAYER_PLAYER_ID5, PLAYER_PLAYER_ID6, PLAYER_PLAYER_ID7, PLAYER_PLAYER_ID8, PLAYER_PLAYER_ID9, PLAYER_PLAYER_ID10, PLAYER_PLAYER_ID11"
-				+"FROM SOCCER02.MATCHLINEUP l"
-				+"JOIN SOCCER02.MATCH m on(l.matchlineup_id = m.matchlineup_homematchlineup_id)"
-				+"WHERE m.match_id = ?");
-		ps.setString(1, matchid);
-		rs = ps.executeQuery();
-		String columnName = "PLAYER_PLAYER_ID";
-		for(int i = 1; i<12;i++){
-			playerHomeList.add(Integer.toString(rs.getInt(columnName+i)));
-		}
-		
+			ps = DBAccess.getConn().prepareStatement("SELECT PLAYER_PLAYER_ID1, PLAYER_PLAYER_ID2, PLAYER_PLAYER_ID3, PLAYER_PLAYER_ID4, PLAYER_PLAYER_ID5, PLAYER_PLAYER_ID6, PLAYER_PLAYER_ID7, PLAYER_PLAYER_ID8, PLAYER_PLAYER_ID9, PLAYER_PLAYER_ID10, PLAYER_PLAYER_ID11 FROM SOCCER02.MATCHLINEUP l JOIN SOCCER02.MATCH m on(l.matchlineup_id = m.matchlineup_homematchlineup_id) WHERE m.match_id = ?");
+			ps.setString(1, matchid);
+			String columnName = "PLAYER_PLAYER_ID";
+			rs = ps.executeQuery();
+			rs.next();
+			for(int i = 1; i<12; i++){
+				playerHomeList.add(Integer.toString(rs.getInt(columnName+Integer.toString(i))));
+			}
+			
 		}catch(SQLException e){
 			log.severe(e.getMessage());
 		}
@@ -445,9 +441,6 @@ public class SoccerController extends DatabaseController
 	public List<String> getAwayPlayerList(String matchid) {
 		List<String> tempPlayerIDList = getAwayTeamPlayerID(matchid);
 		ArrayList<String> awayPlayerList = new ArrayList<>();
-		if(tempPlayerIDList.size()!=11){
-			log.severe("Team Size Error: "+tempPlayerIDList.size());
-		}
 		ps = null;
 		rs = null;
 		try{
@@ -471,9 +464,6 @@ public class SoccerController extends DatabaseController
 	public List<String> getHomePlayerList(String matchid) {
 		List<String> tempPlayerIDList = getHomeTeamPlayerID(matchid);
 		ArrayList<String> homePlayerList = new ArrayList<>();
-		if(tempPlayerIDList.size()!=11){
-			log.severe("Team Size Error: "+tempPlayerIDList.size());
-		}
 		ps = null;
 		rs = null;
 		try{

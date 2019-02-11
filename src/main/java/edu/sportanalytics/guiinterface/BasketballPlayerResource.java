@@ -6,13 +6,13 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import java.util.logging.Logger;
 
-public class PlayerResource {
+public class BasketballPlayerResource {
 
-    private static final Logger log = Logger.getLogger(PlayerResource.class.getName());
+    private static final Logger log = Logger.getLogger(BasketballPlayerResource.class.getName());
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public String getPlayerData(@QueryParam("player") String player)
+    public String getData(@QueryParam("player") String player)
     {
         //TO-DO
         return null;

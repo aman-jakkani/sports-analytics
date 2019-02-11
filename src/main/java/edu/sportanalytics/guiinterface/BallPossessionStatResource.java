@@ -30,7 +30,6 @@ public class BallPossessionStatResource {
 			return "null";
 		}
 
-		SportsEnum type = Token.getToken(token).getSports();
 		SoccerController sc = (SoccerController) DBAccess.getInstance().getController(SportsEnum.SOCCER);
 		List<String> possessionList = new ArrayList<>();
 		if (tk.getSeason().equals("null")) {

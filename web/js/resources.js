@@ -65,6 +65,7 @@ var dropdown = {
       else if ($(this).attr('id') == "game"){
         game = $("#game").val();
         $("#stat1").html(getStats(sport, league, team, season)); 
+       // $("#player").html(getPlayerList(sport, league, team, season));
 
         // token = getToken(sport, league, team, season, game);
 
@@ -259,6 +260,30 @@ function getStats(sport, league, team, game){
 
   return htmlStatString;
 }
+
+/*function getPlayerList(sport, league, team, game){
+  var htmlPlayerString = "<option value = \"null\" >--Make a choice--</option>";
+
+  // place conditionals to get allow passing null values when other values are present (pass in all teams)
+  if (sport == "null" || league == "null" || team == "null" || season == "null") return htmlPlayerString;
+
+  console.log("Players found: ".concat(json.player.length));
+
+   var json = getRestResource("PlayerListResource", parameters);
+   
+   for (i = 0; i < json.homePlayers.length; ++i){
+    htmlPlayerString = htmlPlayerString.concat("<option value = \"" + json.homePlayers[i] + "\">" + json.homePlayers[i] + "</option>") //change teams to homePlayers and guestPlayers
+  }
+  
+    for (i = 0; i < json.guestPlayers.length; ++i){
+    htmlPlayerString = htmlPlayerString.concat("<option value = \"" + json.guestPlayers[i + json.homePlayers.length] + "\">" + json.guestPlayers[i + json.homePlayers.length] + "</option>") //change teams to homePlayers and guestPlayers
+  }
+  
+
+  document.getElementById("player").innerHTML = htmlPlayerString;
+
+  return htmlPlayerString;
+}*/
 
 
 function getSoccerStats(htmlTokenString){

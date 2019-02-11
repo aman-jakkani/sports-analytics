@@ -345,6 +345,7 @@ public class BasketballController extends DatabaseController {
 		return teamList;
 	}
 
+	//To-Do
 	public String getRollupStats(String factatt, String aggregfunc, String aggregstyle, String dimension){
 		ps = null;
 		rs = null;
@@ -367,7 +368,53 @@ public class BasketballController extends DatabaseController {
 		tryClose();
 		return factatt;
 	}
-	
+	public List<String> getHomeTeamPlayerID(String matchid){
+		List<String> home_playerlist = new ArrayList<>();
+		ps = null;
+		rs = null;
+
+		try {
+			ps = DBAccess.getConn().prepareStatement("SELECT PLAYER_ID1,PLAYER_ID2,PLAYER_ID3,PLAYER_ID4,PLAYER_ID5,PLAYER_ID6,PLAYER_ID7,PLAYER_ID8,PLAYER_ID9,PLAYER_ID10,PLAYER_ID11,PLAYER_ID12,PLAYER_ID13 From BASKETBALL.GAMELINUP JOIN BASKETBALL.GAME ON BASKETBALL.GAME.HOMETID = BASKETBALL.GAMELINUP.TEAM_ID WHERE GAME_ID = ?");
+			ps.setString(1, matchid);
+			rs = ps.executeQuery();
+
+			while(rs.next()) {
+				for(int i = 0; i < 13; i++) {
+					home_playerlist.add(rs.getString(i));
+				}
+			}
+		}catch (SQLException e) {
+
+			log.severe(e.getMessage());
+		}
+
+		tryClose();
+		return home_playerlist;
+	}
+
+	public List<String> getAwayTeamPlayerID(String matchid){
+		List<String> playerlist = new ArrayList<>();
+		ps = null;
+		rs = null;
+
+		try {
+			ps = DBAccess.getConn().prepareStatement("SELECT PLAYER_ID1,PLAYER_ID2,PLAYER_ID3,PLAYER_ID4,PLAYER_ID5,PLAYER_ID6,PLAYER_ID7,PLAYER_ID8,PLAYER_ID9,PLAYER_ID10,PLAYER_ID11,PLAYER_ID12,PLAYER_ID13 From BASKETBALL.GAMELINUP JOIN BASKETBALL.GAME ON BASKETBALL.GAME.AWAYTID = BASKETBALL.GAMELINUP.TEAM_ID WHERE GAME_ID = ?");
+			ps.setString(1, matchid);
+			rs = ps.executeQuery();
+
+			while(rs.next()) {
+				for(int i = 0; i < 13; i++) {
+					playerlist.add(rs.getString(i));
+				}
+			}
+		}catch (SQLException e) {
+
+			log.severe(e.getMessage());
+		}
+
+		tryClose();
+		return playerlist;
+	}
 	
 	public void tryClose(){
 		try {

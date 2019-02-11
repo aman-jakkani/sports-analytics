@@ -24,6 +24,7 @@ public class SoccerController extends DatabaseController
 		super(dba);
 	}
 
+	
 	// returns an ArrayList with Name-Attributes of the Leagues-Objects
 	@Override
 	public List<String> getLeagues() {
@@ -387,6 +388,98 @@ public class SoccerController extends DatabaseController
 		} catch (SQLException e) {
 			log.severe("tryClose: " + e.getMessage());
 		}
+	}
+
+
+	@Override
+	public List<String> getAwayTeamPlayerID(String matchid) {
+		ArrayList<String> playerAwayList = new ArrayList<>();
+		rs = null;
+		ps = null;
+		try{
+			ps = DBAccess.getConn().prepareStatement("SELECT PLAYER_PLAYER_ID1, PLAYER_PLAYER_ID2, PLAYER_PLAYER_ID3, PLAYER_PLAYER_ID4, PLAYER_PLAYER_ID5, PLAYER_PLAYER_ID6, PLAYER_PLAYER_ID7, PLAYER_PLAYER_ID8, PLAYER_PLAYER_ID9, PLAYER_PLAYER_ID10, PLAYER_PLAYER_ID11 FROM SOCCER02.MATCHLINEUP l JOIN SOCCER02.MATCH m on(l.matchlineup_id = m.matchlineup_awaymatchlineup_id) WHERE m.match_id = ?");
+			ps.setString(1, matchid);
+			String columnName = "PLAYER_PLAYER_ID";
+			rs = ps.executeQuery();
+			rs.next();
+			for(int i = 1; i<12; i++){
+				playerAwayList.add(Integer.toString(rs.getInt(columnName+Integer.toString(i))));
+			}
+		
+		}catch(SQLException e){
+			log.severe(e.getMessage());
+		}
+		tryClose();
+		return playerAwayList;
+	}
+
+
+	@Override
+	public List<String> getHomeTeamPlayerID(String matchid) {
+		ArrayList<String> playerHomeList = new ArrayList<>();
+		rs = null;
+		ps = null;
+		try{
+			ps = DBAccess.getConn().prepareStatement("SELECT PLAYER_PLAYER_ID1, PLAYER_PLAYER_ID2, PLAYER_PLAYER_ID3, PLAYER_PLAYER_ID4, PLAYER_PLAYER_ID5, PLAYER_PLAYER_ID6, PLAYER_PLAYER_ID7, PLAYER_PLAYER_ID8, PLAYER_PLAYER_ID9, PLAYER_PLAYER_ID10, PLAYER_PLAYER_ID11 FROM SOCCER02.MATCHLINEUP l JOIN SOCCER02.MATCH m on(l.matchlineup_id = m.matchlineup_homematchlineup_id) WHERE m.match_id = ?");
+			ps.setString(1, matchid);
+			String columnName = "PLAYER_PLAYER_ID";
+			rs = ps.executeQuery();
+			rs.next();
+			for(int i = 1; i<12; i++){
+				playerHomeList.add(Integer.toString(rs.getInt(columnName+Integer.toString(i))));
+			}
+			
+		}catch(SQLException e){
+			log.severe(e.getMessage());
+		}
+		tryClose();
+		return playerHomeList;
+	}
+
+
+	@Override
+	public List<String> getAwayPlayerList(String matchid) {
+		List<String> tempPlayerIDList = getAwayTeamPlayerID(matchid);
+		ArrayList<String> awayPlayerList = new ArrayList<>();
+		ps = null;
+		rs = null;
+		try{
+			ps = DBAccess.getConn().prepareStatement("SELECT name FROM SOCCER02.PLAYER WHERE id = ? OR id = ? OR id = ? OR id = ? OR id = ? OR id = ? OR id = ? OR id = ? OR id = ? OR id = ? OR id = ?");
+			for(int i = 0;i < tempPlayerIDList.size(); i++){
+				ps.setString(i+1, tempPlayerIDList.get(i));
+			}
+			rs = ps.executeQuery();
+			while(rs.next()){
+				awayPlayerList.add(rs.getString("name"));
+			}
+		}catch(SQLException e){
+			log.severe(e.getMessage());
+		}
+		tryClose();
+		return awayPlayerList;
+	}
+
+
+	@Override
+	public List<String> getHomePlayerList(String matchid) {
+		List<String> tempPlayerIDList = getHomeTeamPlayerID(matchid);
+		ArrayList<String> homePlayerList = new ArrayList<>();
+		ps = null;
+		rs = null;
+		try{
+			ps = DBAccess.getConn().prepareStatement("SELECT name FROM SOCCER02.PLAYER WHERE id = ? OR id = ? OR id = ? OR id = ? OR id = ? OR id = ? OR id = ? OR id = ? OR id = ? OR id = ? OR id = ?");
+			for(int i = 0;i < tempPlayerIDList.size(); i++){
+				ps.setString(i+1, tempPlayerIDList.get(i));
+			}
+			rs = ps.executeQuery();
+			while(rs.next()){
+				homePlayerList.add(rs.getString("name"));
+			}
+		}catch(SQLException e){
+			log.severe(e.getMessage());
+		}
+		tryClose();
+		return homePlayerList;
 	}
 
 }

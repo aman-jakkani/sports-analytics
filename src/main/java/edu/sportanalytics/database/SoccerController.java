@@ -24,6 +24,7 @@ public class SoccerController extends DatabaseController
 		super(dba);
 	}
 
+	
 	// returns an ArrayList with Name-Attributes of the Leagues-Objects
 	@Override
 	public List<String> getLeagues() {
@@ -387,6 +388,31 @@ public class SoccerController extends DatabaseController
 		} catch (SQLException e) {
 			log.severe("tryClose: " + e.getMessage());
 		}
+	}
+
+
+	@Override
+	public List<String> getAwayTeamPlayerID() {
+		ArrayList<String> playerAwayList = new ArrayList<>();
+		rs = null;
+		ps = null;
+		try{
+		ps = DBAccess.getConn().prepareStatement("SELECT PLAYER_PLAYER_ID1, PLAYER_PLAYER_ID2, PLAYER_PLAYER_ID3, PLAYER_PLAYER_ID4, PLAYER_PLAYER_ID5, PLAYER_PLAYER_ID6, PLAYER_PLAYER_ID7, PLAYER_PLAYER_ID8, PLAYER_PLAYER_ID9, PLAYER_PLAYER_ID10, PLAYER_PLAYER_ID11"
+				+"FROM SOCCER02.MATCHLINEUP l"
+				+"JOIN SOCCER02.MATCH m on(l.matchlineup_id = m.matchlineup_awaymatchlineup_id)"
+				+"WHERE m.match_id = 7800;");
+		rs = ps.executeQuery();
+		}catch(SQLException e){
+			log.severe(e.getMessage());
+		}
+		return null;
+	}
+
+
+	@Override
+	public List<String> getHomeTeamPlayerID() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

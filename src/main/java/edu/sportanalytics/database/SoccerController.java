@@ -444,7 +444,7 @@ public class SoccerController extends DatabaseController
 		ps = null;
 		rs = null;
 		try{
-			ps = DBAccess.getConn().prepareStatement("SELECT name FROM SOCCER02.PLAYER WHERE id = ? OR id = ? OR id = ? OR id = ? OR id = ? OR id = ? OR id = ? OR id = ? OR id = ? OR id = ? OR id = ?");
+			ps = DBAccess.getConn().prepareStatement("SELECT name FROM SOCCER02.PLAYER WHERE player_api_id = ? OR player_api_id = ? OR player_api_id = ? OR player_api_id = ? OR player_api_id = ? OR player_api_id = ? OR player_api_id = ? OR player_api_id = ? OR player_api_id = ? OR player_api_id = ? OR player_api_id = ?");
 			for(int i = 0;i < tempPlayerIDList.size(); i++){
 				ps.setString(i+1, tempPlayerIDList.get(i));
 			}
@@ -467,7 +467,7 @@ public class SoccerController extends DatabaseController
 		ps = null;
 		rs = null;
 		try{
-			ps = DBAccess.getConn().prepareStatement("SELECT name FROM SOCCER02.PLAYER WHERE id = ? OR id = ? OR id = ? OR id = ? OR id = ? OR id = ? OR id = ? OR id = ? OR id = ? OR id = ? OR id = ?");
+			ps = DBAccess.getConn().prepareStatement("SELECT name FROM SOCCER02.PLAYER WHERE player_api_id = ? OR player_api_id = ? OR player_api_id = ? OR player_api_id = ? OR player_api_id = ? OR player_api_id = ? OR player_api_id = ? OR player_api_id = ? OR player_api_id = ? OR player_api_id = ? OR player_api_id = ?");
 			for(int i = 0;i < tempPlayerIDList.size(); i++){
 				ps.setString(i+1, tempPlayerIDList.get(i));
 			}

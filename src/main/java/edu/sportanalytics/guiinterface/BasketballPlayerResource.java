@@ -17,9 +17,8 @@ public class BasketballPlayerResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public String getData(@QueryParam("player") String player)
+    public String getData(@QueryParam("player") int playerid)
     {
-        //TO-DO
         BasketballController bc = (BasketballController) DBAccess.getInstance().getController(SportsEnum.BASKETBALL);
 
         JSONObject jo = new JSONObject();

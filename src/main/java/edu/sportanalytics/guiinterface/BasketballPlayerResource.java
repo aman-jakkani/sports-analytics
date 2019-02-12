@@ -3,6 +3,7 @@ package edu.sportanalytics.guiinterface;
 import edu.sportanalytics.database.DBAccess;
 import edu.sportanalytics.database.BasketballController;
 import edu.sportanalytics.database.Player;
+import edu.sportanalytics.database.Basketball_Player;
 import edu.sportanalytics.database.SportsEnum;
 import org.json.JSONObject;
 
@@ -33,11 +34,15 @@ public class BasketballPlayerResource {
             return null;
         }
         else {
-            BasketballController bc = (BasketballController) DBAccess.getInstance().getController(SportsEnum.BASKETBALL);
-            Player player = DBAccess.getInstance().getController(type).getPlayer(Integer.toString(playerID));
-            //To-Do
+            BasketballController bc = (BasketballController) DBAccess.getInstance().getController(type);
+            Basketball_Player player = bc.getBBPlayer(Integer.toString(playerID));
             JSONObject jo = new JSONObject();
-
+            jo.put("points", player.getPoints());
+            jo.put("rebounds", player.getTotalRebounds());
+            jo.put("assists", player.getAssists());
+            jo.put("steals", player.getSteals());
+            jo.put("turnovers", player.getTurnovers());
+            jo.put("games", player.getGamesPlayed());
             String returnString = jo.toString();
 
             log.info("JSON String created: " + returnString);

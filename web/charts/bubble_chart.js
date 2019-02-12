@@ -18,6 +18,20 @@
  * 
  */
 
+function plot_bubble(json){
+    console.log(json)
+    d3.json(json, function(error,data) {
+      if (error){
+        console.error('Error getting or parsing the data')
+        throw error;
+      }
+      // selection.datum() returns the bound datum for the first element in the selection and 
+      // doesn't join the specified array of data with the selected elements
+      var chart = bubbleChart().width(600).height(400);
+      d3.select('#chart').datum(data).call(chart);
+    });
+}
+
 function bubbleChart() {
     var width = 960,
         height = 960,
@@ -43,7 +57,6 @@ function bubbleChart() {
             .style("font-family", "monospace")
             .style("width", "400px")
             .text("");
-
 
         var simulation = d3.forceSimulation(data)
             .force("charge", d3.forceManyBody().strength([-50]))

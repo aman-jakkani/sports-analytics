@@ -351,6 +351,11 @@ public class BasketballController extends DatabaseController {
 	}
 
 	@Override
+	public Player getPlayer(String playerID) {
+		return null;
+	}
+
+	@Override
 	public List<String> getAwayPlayerList (String matchid) {
 		return new ArrayList<String>();
 	}

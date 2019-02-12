@@ -1,6 +1,8 @@
 package edu.sportanalytics.guiinterface;
 
+import edu.sportanalytics.database.Player;
 import edu.sportanalytics.database.SoccerController;
+import edu.sportanalytics.database.Soccer_Player;
 import edu.sportanalytics.database.DBAccess;
 import edu.sportanalytics.database.SportsEnum;
 import org.json.JSONObject;
@@ -17,17 +19,36 @@ public class SoccerPlayerResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public String getData(@QueryParam("player") String player)
+    public String getData(@QueryParam("token") int token, @QueryParam("playerID") int playerID)
     {
         //TO-DO
-        SoccerController sc = (SoccerController) DBAccess.getInstance().getController(SportsEnum.SOCCER);
+        Token tk = Token.getToken(token);
+        log.info("Player info for " + playerID + " requested");
+        SportsEnum type = tk.getSports();
+        if (type == SportsEnum.UNKNOWN) {
+            log.severe("Unknown sports parameter");
+            return null;
+        }
+        else if(type == SportsEnum.BASKETBALL) {
+            log.severe("Wrong sports parameter");
+            return null;
+        }
+        else {
+            SoccerController sc = (SoccerController) DBAccess.getInstance().getController(SportsEnum.SOCCER);
+            Soccer_Player player = (Soccer_Player)DBAccess.getInstance().getController(type).getPlayer(Integer.toString(playerID));
+            
+            JSONObject jo = new JSONObject();
+            
+            jo.put("preferredFoot", player.getPreferredFoot());
+            jo.put("strength", player.getStrength());
+            jo.put("overallRating", player.getOverallRating());
+            jo.put("shotower", player.getShotPower());
 
-        JSONObject jo = new JSONObject();
+            String returnString = jo.toString();
 
-        String returnString = jo.toString();
+            log.info("JSON String created: " + returnString);
 
-        log.info("JSON String created: " + returnString);
-
-        return returnString;
+            return returnString;
+        }
     }
 }

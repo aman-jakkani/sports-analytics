@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -409,7 +410,36 @@ public class BasketballController extends DatabaseController {
 
     @Override
     public Player getPlayer(String playerID) {
-        return null;
+        Player player = null;
+
+		ps = null;
+		rs = null;
+		try{
+			ps = DBAccess.getConn().prepareStatement("SELECT FIRST_NAME, LAST_NAME, BIRTHDATE, HEIGHT, WEIGHT " +
+					"FROM BASEKETBALL.PLAYER WHERE PERSON_ID=?");
+			ps.setString(1, playerID);
+			rs = ps.executeQuery();
+			int id = Integer.parseInt(playerID);
+			String name = "";
+			Date birthday = null;
+			int height = 0;
+			int weight = 0;
+
+			while(rs.next()){
+				String firstname = rs.getString(1);
+				String lastname = rs.getString(2);
+				name = firstname + lastname;
+				birthday = rs.getDate(3);
+				height = rs.getInt(4);
+				weight = rs.getInt(5);
+			}
+
+			player = new Basketball_Player(id, name, birthday, height, weight);
+		}catch(SQLException e){
+			log.severe(e.getMessage());
+		}
+		tryClose();
+		return player;
     }
 
 	//To-Do

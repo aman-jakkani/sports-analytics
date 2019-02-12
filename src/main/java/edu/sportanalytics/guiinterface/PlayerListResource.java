@@ -24,18 +24,9 @@ public class PlayerListResource {
     {
         Token tk = Token.getToken(token);
         log.info("Player list for match "+ tk.getMatchID());
-        SportsEnum type;
-        if(tk.getSports().equals("Soccer"))
+        SportsEnum type = tk.getSports();
+        if(type == SportsEnum.UNKNOWN)
         {
-            type = SportsEnum.SOCCER;
-        }
-        else if(tk.getSports().equals("Basketball"))
-        {
-            type = SportsEnum.BASKETBALL;
-        }
-        else
-        {
-            type = SportsEnum.UNKNOWN;
             log.severe("Unknown sports parameter");
         }
 

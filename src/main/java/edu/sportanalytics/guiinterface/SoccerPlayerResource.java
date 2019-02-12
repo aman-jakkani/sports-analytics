@@ -35,6 +35,7 @@ public class SoccerPlayerResource {
         else {
             SoccerController sc = (SoccerController) DBAccess.getInstance().getController(SportsEnum.SOCCER);
             Player player = DBAccess.getInstance().getController(type).getPlayer(Integer.toString(playerID));
+            //To-Do
             JSONObject jo = new JSONObject();
 
             String returnString = jo.toString();

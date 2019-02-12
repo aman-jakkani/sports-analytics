@@ -347,18 +347,70 @@ public class BasketballController extends DatabaseController {
 
 	@Override
 	public List<String> getHomePlayerList (String matchid) {
-		return new ArrayList<String>();
-	}
+		List<String> playerList = new ArrayList<>();
 
-	@Override
-	public Player getPlayer(String playerID) {
-		return null;
+		List<String> idList = getHomeTeamPlayerID(matchid);
+
+		for(String id : idList)
+		{
+			ps = null;
+			rs = null;
+			try {
+				ps = DBAccess.getConn().prepareStatement("SELECT FIRST_NAME, LAST_NAME FROM BASKETBALL.PLAYER WHERE PERSON_ID=?");
+				ps.setString(1, id);
+				rs = ps.executeQuery();
+
+				while(rs.next())
+				{
+					String fullname = rs.getString(1) + " " +rs.getString(2);
+					playerList.add(fullname);
+				}
+			}catch (SQLException e) {
+
+				log.severe(e.getMessage());
+			}
+
+			tryClose();
+		}
+
+		return playerList;
 	}
 
 	@Override
 	public List<String> getAwayPlayerList (String matchid) {
-		return new ArrayList<String>();
+		List<String> playerList = new ArrayList<>();
+
+		List<String> idList = getAwayTeamPlayerID(matchid);
+
+		for(String id : idList)
+		{
+			ps = null;
+			rs = null;
+			try {
+				ps = DBAccess.getConn().prepareStatement("SELECT FIRST_NAME, LAST_NAME FROM BASKETBALL.PLAYER WHERE PERSON_ID=?");
+				ps.setString(1, id);
+				rs = ps.executeQuery();
+
+				while(rs.next())
+				{
+					String fullname = rs.getString(1) + " " +rs.getString(2);
+					playerList.add(fullname);
+				}
+			}catch (SQLException e) {
+
+				log.severe(e.getMessage());
+			}
+
+			tryClose();
+		}
+
+		return playerList;
 	}
+
+    @Override
+    public Player getPlayer(String playerID) {
+        return null;
+    }
 
 	//To-Do
 	public String getRollupStats(String factatt, String aggregfunc, String aggregstyle, String dimension){
@@ -389,12 +441,15 @@ public class BasketballController extends DatabaseController {
 		rs = null;
 
 		try {
-			ps = DBAccess.getConn().prepareStatement("SELECT PLAYER_ID1,PLAYER_ID2,PLAYER_ID3,PLAYER_ID4,PLAYER_ID5,PLAYER_ID6,PLAYER_ID7,PLAYER_ID8,PLAYER_ID9,PLAYER_ID10,PLAYER_ID11,PLAYER_ID12,PLAYER_ID13 From BASKETBALL.GAMELINUP JOIN BASKETBALL.GAME ON BASKETBALL.GAME.HOMETID = BASKETBALL.GAMELINUP.TEAM_ID WHERE GAME_ID = ?");
+			ps = DBAccess.getConn().prepareStatement("SELECT PLAYER_ID1,PLAYER_ID2,PLAYER_ID3,PLAYER_ID4,PLAYER_ID5,PLAYER_ID6,PLAYER_ID7,PLAYER_ID8,PLAYER_ID9,PLAYER_ID10,PLAYER_ID11,PLAYER_ID12,PLAYER_ID13 " +
+					"From BASKETBALL.GAMELINUP " +
+					"JOIN BASKETBALL.GAME ON BASKETBALL.GAME.HOMETID = BASKETBALL.GAMELINUP.TEAM_ID " +
+					"WHERE GAME_ID = ?");
 			ps.setString(1, matchid);
 			rs = ps.executeQuery();
 
 			while(rs.next()) {
-				for(int i = 0; i < 13; i++) {
+				for(int i = 3; i < 16; i++) {
 					home_playerlist.add(rs.getString(i));
 				}
 			}
@@ -413,12 +468,15 @@ public class BasketballController extends DatabaseController {
 		rs = null;
 
 		try {
-			ps = DBAccess.getConn().prepareStatement("SELECT PLAYER_ID1,PLAYER_ID2,PLAYER_ID3,PLAYER_ID4,PLAYER_ID5,PLAYER_ID6,PLAYER_ID7,PLAYER_ID8,PLAYER_ID9,PLAYER_ID10,PLAYER_ID11,PLAYER_ID12,PLAYER_ID13 From BASKETBALL.GAMELINUP JOIN BASKETBALL.GAME ON BASKETBALL.GAME.AWAYTID = BASKETBALL.GAMELINUP.TEAM_ID WHERE GAME_ID = ?");
+			ps = DBAccess.getConn().prepareStatement("SELECT PLAYER_ID1,PLAYER_ID2,PLAYER_ID3,PLAYER_ID4,PLAYER_ID5,PLAYER_ID6,PLAYER_ID7,PLAYER_ID8,PLAYER_ID9,PLAYER_ID10,PLAYER_ID11,PLAYER_ID12,PLAYER_ID13" +
+					" From BASKETBALL.GAMELINUP " +
+					"JOIN BASKETBALL.GAME ON BASKETBALL.GAME.AWAYTID = BASKETBALL.GAMELINUP.TEAM_ID " +
+					"WHERE GAME_ID = ?");
 			ps.setString(1, matchid);
 			rs = ps.executeQuery();
 
 			while(rs.next()) {
-				for(int i = 0; i < 13; i++) {
+				for(int i = 3; i < 16; i++) {
 					playerlist.add(rs.getString(i));
 				}
 			}

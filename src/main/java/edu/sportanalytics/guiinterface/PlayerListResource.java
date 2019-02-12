@@ -19,7 +19,7 @@ public class PlayerListResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public String getMatchList(
+    public String getPlayerList(
             @QueryParam("token") int token)
     {
         Token tk = Token.getToken(token);

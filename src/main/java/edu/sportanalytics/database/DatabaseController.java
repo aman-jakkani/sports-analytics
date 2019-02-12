@@ -35,6 +35,8 @@ public abstract class DatabaseController {
 
 	public abstract List<String> getHomePlayerList(String matchid);
 
+	public abstract Player getPlayer(String playerID);
+
 	public List<String> getBallPossession(String matchid) {
 		return null;
 	}

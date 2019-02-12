@@ -168,7 +168,6 @@
                     </select>
                 </p>
             </fieldset>
-    
         </form>
 
     <!-- Import dropdown javascript logic -->
@@ -191,21 +190,20 @@
     <p><span id = 'chosenGame'> </span></p>
     <p><span id = 'attendance'> </span></p>
     
-    	<div style="width: 50%; float: left">
-    		<div>
+    		<div class = "row">
+    		<div class ="column">
     		 <fieldset>
                 <legend>Players</legend>
                 <p>
-                    <select multiple id = "homePlayer">
+                    <select multiple id = "player">
                         <option value = "null">--Make a choice--</option>
                     </select>
                 </p>
-             </fieldset>
-            </div>
-    	</div>
-    	<div style="width: 50%; float: right">
-    	<div>
-    		<a href="playerStats.html" class="w3-bar-item w3-button" id = "playerStats">Player Statistics</a>
+             </fieldset> 
+             </div>
+             <div class = "column">
+    		<br>
+    		<a href="playerStats.html" class="w3-bar-item w3-button" id = "playerStats">Get Player Statistics</a>
             </div>
             </div>
     
@@ -248,5 +246,4 @@
 
     <br>
     </div>
-    </body>
 </html>

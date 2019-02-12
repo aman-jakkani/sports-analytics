@@ -62,6 +62,27 @@ function plotChart() {
             awayTeamData.push(redCards["redCards"][1]);
             availableStats.push("Red Cards");
         }
+        
+  
+   		var playerList = getRestResource("PlayerListResource", [["token", token["token"]],]);
+    
+   		if (playerList != null) {
+   		console.log("Players found: " + playerList["homePlayers"]);
+   		homeTeamData.push(playerList["homePlayers"][0]);
+        awayTeamData.push(playerList["guestPlayers"][1]);
+        availableStats.push("Players");
+        var htmlPlayerString = "<option value = \"null\" >--Make a choice--</option>";
+   		console.log("Players found: ".concat(playerList.homePlayers.length + playerList.guestPlayers.length));
+   		for (i = 0; i < playerList.homePlayers.length; ++i){
+   		htmlPlayerString = htmlPlayerString.concat("<option value = \"" + playerList.homePlayers[i] + "\">" + playerList.homePlayers[i] + "</option>") //change teams to homePlayers and guestPlayers
+  		}
+  
+    	for (i = 0; i < playerList.guestPlayers.length; ++i){
+   	 	htmlPlayerString = htmlPlayerString.concat("<option value = \"" + playerList.guestPlayers[i] + "\">" + playerList.guestPlayers[i] + "</option>") //change teams to homePlayers and guestPlayers
+ 	 	}
+  		document.getElementById("player").innerHTML = htmlPlayerString;
+
+		}
 
         var cornerStats = getRestResource("CornerStatRestResource", [["token", token["token"]],]);
         if(cornerStats != null){
@@ -164,7 +185,10 @@ function plotDefault(chartType, homeTeamName, awayTeamName, homeTeamDataParam, a
                                 categoryPercentage: 0.6
                         }],
                         yAxes: [{
-                                id: "y-axis"
+                                id: "y-axis",
+                                ticks: {
+                					beginAtZero: true
+            					}
                         }]
                 },
                 legend: {
@@ -179,48 +203,4 @@ function plotDefault(chartType, homeTeamName, awayTeamName, homeTeamDataParam, a
         };
 
         globalCharts.push(new Chart(canvas, config));
-}
-
-
-function barChart(chartData, teamNames, chartLabels){
-        // don't plot anything if a chart type isn't selected
-        if (document.getElementById("chartType").value == "null") {
-                console.log("No chart selected. Chart plotting skipped");
-                return;
-        }
-
-        var homeTeam = teamNames[0];
-        var homeTeamData = chartData[0];
-
-        var awayTeam = teamNames[1];
-
-
-
-        var config = {
-                type: 'bar',
-                data: {
-                        label: teamNames,
-                        labels: ["Rockets", "Mavericks", "Lakers", "Celtics", "Kings", "Thunder"],
-                        datasets: [{
-                                data: chartData,
-                                borderWidth: 1
-                        }]
-                },
-                options: {
-                        scales: {
-                        xAxes: [{ ticks: {beginAtZero:true} }],
-                        yAxes: [{ ticks: {beginAtZero:true} }] }
-                }
-        }
-
-
-        // Create chart
-        var canvas = document.getElementById("myChart");
-
-        // prevent chart from showing old data when mouse is scrolled over it
-        if (window.bar != undefined) {
-                window.bar.destroy();
-        }
-
-        window.bar = new Chart(canvas, config); 
 }

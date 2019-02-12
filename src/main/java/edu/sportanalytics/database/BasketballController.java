@@ -345,6 +345,16 @@ public class BasketballController extends DatabaseController {
 		return teamList;
 	}
 
+	@Override
+	public List<String> getHomePlayerList (String matchid) {
+		return new ArrayList<String>();
+	}
+
+	@Override
+	public List<String> getAwayPlayerList (String matchid) {
+		return new ArrayList<String>();
+	}
+
 	//To-Do
 	public String getRollupStats(String factatt, String aggregfunc, String aggregstyle, String dimension){
 		ps = null;

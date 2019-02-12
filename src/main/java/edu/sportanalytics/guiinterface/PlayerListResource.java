@@ -25,11 +25,11 @@ public class PlayerListResource {
         Token tk = Token.getToken(token);
         log.info("Player list for match "+ tk.getMatchID());
         SportsEnum type;
-        if(tk.getSports().equals("Soccer"))
+        if(tk.getSports()==SportsEnum.SOCCER)
         {
             type = SportsEnum.SOCCER;
         }
-        else if(tk.getSports().equals("Basketball"))
+        else if(tk.getSports()==SportsEnum.BASKETBALL)
         {
             type = SportsEnum.BASKETBALL;
         }

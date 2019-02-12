@@ -13,7 +13,7 @@ var dropdown = {
   run: $(document).ready(function() {
     var defaultString = "<option value = \"null\" >--Make a choice--</option>";
 
-    $("#sport, #league, #team, #season").change(function() {
+    $("#sport, #league, #team, #season, #game").change(function() {
 
       if ($(this).attr('id') == 'sport') {
         sport = $(this).val();
@@ -64,8 +64,8 @@ var dropdown = {
 
       else if ($(this).attr('id') == "game"){
         game = $("#game").val();
-        $("#stat1").html(getStats(sport, league, team, season)); 
-       // $("#player").html(getPlayerList(sport, league, team, season));
+        //$("#stat1").html(getStats(sport, league, team, season)); 
+        //$("#player").html(getPlayerList(sport, league, team, season, game));
 
         // token = getToken(sport, league, team, season, game);
 
@@ -265,11 +265,13 @@ function getStats(sport, league, team, game){
   var htmlPlayerString = "<option value = \"null\" >--Make a choice--</option>";
 
   // place conditionals to get allow passing null values when other values are present (pass in all teams)
-  if (sport == "null" || league == "null" || team == "null" || season == "null") return htmlPlayerString;
-
-  console.log("Players found: ".concat(json.player.length));
+   if (sport == "null" || league == "null" || team == "null" || season == "null" || game == "null") return htmlPlayerString;
+  
+   var parameters = [["sports", sport], ["league", league], ["team", team], ["season", season], ["match", game]];
 
    var json = getRestResource("PlayerListResource", parameters);
+   
+   console.log("Players found: ".concat(json.homePlayers.length + json.guestPlayers.length));
    
    for (i = 0; i < json.homePlayers.length; ++i){
     htmlPlayerString = htmlPlayerString.concat("<option value = \"" + json.homePlayers[i] + "\">" + json.homePlayers[i] + "</option>") //change teams to homePlayers and guestPlayers

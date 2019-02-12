@@ -5,6 +5,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -249,7 +251,7 @@ public class SoccerController extends DatabaseController
 			}
 
 		} catch (SQLException e) {
-			log.severe("g" + "    " + e.getMessage());
+			log.severe(e.getMessage());
 		}
 		tryClose();
 		return list;
@@ -480,6 +482,43 @@ public class SoccerController extends DatabaseController
 		}
 		tryClose();
 		return homePlayerList;
+	}
+	
+	public List<String> getPlayerStats(String player_api_id){
+		return null;
+	}
+
+
+	@Override
+	public Player getPlayer(String playerID) {
+		Soccer_Player player = null;
+		ps = null;
+		rs = null;
+		try{
+			ps = DBAccess.getConn().prepareStatement("SELECT p.player_name, p.birthday, p. height, p.weight FROM SOCCER02.PLAYER_2 p JOIN SOCCER02.PLAYER2_ATTRIBUTES a on(p.id = a.id) WHERE  p.id = ?");
+			ps.setString(1, playerID);
+			rs = ps.executeQuery();
+			int id = Integer.parseInt(playerID);
+			String name = "";
+			Date birthday = null;
+			int height = 0;
+			int weight = 0;
+			
+			while(rs.next()){
+				name = rs.getString("player_name");
+				birthday = rs.getDate("birthday");
+				height = rs.getInt("height");
+				weight = rs.getInt("weight");
+			}
+			String tempHeight = Integer.toString(height);
+			height = Integer.parseInt(tempHeight.substring(0,3));
+		
+			player = new Soccer_Player(id, name, birthday, height, weight);
+		}catch(SQLException e){
+			log.severe(e.getMessage());
+		}
+		tryClose();
+		return player;
 	}
 
 }

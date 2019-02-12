@@ -11,6 +11,7 @@ import org.json.JSONObject;
 import edu.sportanalytics.database.DBAccess;
 import edu.sportanalytics.database.SportsEnum;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -43,6 +44,7 @@ public class SeasonListResource
         }
         
         List<String> season = DBAccess.getInstance().getController(type).getSeason(league, team);
+        Collections.sort(season);
         //Query for getting list of different Teams in given league
         //Wrap in in JSON String
 

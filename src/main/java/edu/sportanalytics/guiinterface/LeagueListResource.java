@@ -9,6 +9,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
+
+import java.util.Collections;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -39,6 +41,7 @@ public class LeagueListResource
             log.severe("Unknown sports parameter: " + sports);
         }
         List<String> leagues = DBAccess.getInstance().getController(type).getLeagues();
+        Collections.sort(leagues);
         //Here call query to receive all leagues for this particular sports
         //Wrap it in JSON String
         JSONObject jo = new JSONObject();

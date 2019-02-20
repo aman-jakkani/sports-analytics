@@ -9,23 +9,22 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import java.util.logging.Logger;
-@Path("RollupTokenResource")
-//class to retrieve a Rollup Token
-public class RollupTokenResource
+@Path("CubeTokenResource")
+public class CubeTokenResource
 {
-
     private static final Logger log = Logger.getLogger(edu.sportanalytics.guiinterface.RollupTokenResource.class.getName());
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public String getToken(
-        @QueryParam("aggregfunc") String aggregfunc,
-        @QueryParam("factatt") String factatt,
-        @QueryParam("dimension") String dimension,
-        @QueryParam("season") String season,
-        @QueryParam("team") String team,
-        @QueryParam("league") String league,
-        @QueryParam("sports") String sports)
+            @QueryParam("aggregfunc") String aggregfunc,
+            @QueryParam("aggregval") String aggregval,
+            @QueryParam("dimension1") String dimension1,
+            @QueryParam("dimension2") String dimension2,
+            @QueryParam("season") String season,
+            @QueryParam("team") String team,
+            @QueryParam("league") String league,
+            @QueryParam("sports") String sports)
     {
         log.info("Token Requested for Game: ");
         SportsEnum type;
@@ -38,8 +37,8 @@ public class RollupTokenResource
             log.severe("Unknown sports parameter: " + sports);
         }
 
-        int token = RollupToken.getCurrentCnt();
-        new RollupToken(type,league, team, season, factatt, aggregfunc, dimension);
+        int token = CubeToken.getCurrentCnt();
+        new CubeToken(type,league, team, season, aggregval, aggregfunc, dimension1, dimension2);
         // Query for getting list of different Teams in given league
         // Wrap in in JSON String
 

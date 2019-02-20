@@ -17,6 +17,7 @@ import edu.sportanalytics.database.DBAccess;
 import edu.sportanalytics.database.SportsEnum;
 
 @Path("RollupResource")
+//Class to retrieve Rollup Statistics
 public class RollupResource {
     private static final Logger log = Logger.getLogger(RollupResource.class.getName());
 

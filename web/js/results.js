@@ -82,6 +82,7 @@ function plotChart() {
  	 	}
   		document.getElementById("player").innerHTML = htmlPlayerString;
 
+		
 		}
 
         var cornerStats = getRestResource("CornerStatRestResource", [["token", token["token"]],]);
@@ -110,6 +111,7 @@ function plotChart() {
         {
             document.getElementById("attendance").innerHTML="";
         }
+        
 
         // [ballPossession["possession"][0], yellowCards["yellowCards"][0], cornerStats["corners"][0], foulStats["fouls"][0]];
         // [ballPossession["possession"][1], yellowCards["yellowCards"][1], cornerStats["corners"][1], foulStats["fouls"][1]];
@@ -141,12 +143,9 @@ function stats(){
      var team = document.getElementById('chosenTeam').innerHTML = document.getElementById("team").value;
      var season = document.getElementById('chosenSeason').innerHTML = document.getElementById("season").value;
      var match = document.getElementById('chosenGame').innerHTML = document.getElementById("game").value;
-     var factatt = document.getElementById("factAttribute").value;
-     var aggregfunc = document.getElementById("aggregationFunction").value;
-     var aggregstyle = document.getElementById("aggregationStyle").value;
-     var dimension  = document.getElementById("dimensions").value;
+     var player = document.getElementById('chosenPlayer').innerHTML = document.getElementById("player").value;
 	
-	var parameters = [["sports", sport], ["league", league], ["team", team], ["season", season], ["match", match], ["factatt", factatt], ["aggregfunc", aggregfunc], ["aggregstyle", aggregstyle], ["dimension", dimension]];
+	var parameters = [["sports", sport], ["league", league], ["team", team], ["season", season], ["match", match], ["player", player]];
         console.log(parameters);
 
 	var token = getRestResource("TokenResource", parameters);
@@ -156,33 +155,15 @@ function stats(){
     var awayTeamData = [];
     var availableStats = [];
     
-    var playerList = getRestResource("PlayerListResource", [["token", token["token"]],]);
     
-   		if (playerList != null) {
-   		console.log("Players found: " + playerList["homePlayers"]);
-   		homeTeamData.push(playerList["homePlayers"][0]);
-        awayTeamData.push(playerList["guestPlayers"][1]);
-        availableStats.push("Players");
-        var htmlPlayerString = "<option value = \"null\" >--Make a choice--</option>";
-   		console.log("Players found: ".concat(playerList.homePlayers.length + playerList.guestPlayers.length));
-   		for (i = 0; i < playerList.homePlayers.length; ++i){
-   		htmlPlayerString = htmlPlayerString.concat("<option value = \"" + playerList.homePlayers[i] + "\">" + playerList.homePlayers[i] + "</option>") //change teams to homePlayers and guestPlayers
-  		}
-  
-    	for (i = 0; i < playerList.guestPlayers.length; ++i){
-   	 	htmlPlayerString = htmlPlayerString.concat("<option value = \"" + playerList.guestPlayers[i] + "\">" + playerList.guestPlayers[i] + "</option>") //change teams to homePlayers and guestPlayers
- 	 	}
-  		document.getElementById("player").innerHTML = htmlPlayerString;
-
-		}
         
-	/*var birthday = getRestResource("PlayerResource", [["token", token["token"]],]);
+	var birthday = getRestResource("PlayerResource", [["token", token["token"]],]);
         if(name != null){
             console.log("Birthday: " + birthday["birthday"]);
             homeTeamData.push(birthday["birthday"][0]);
             awayTeamData.push(birthday["birthday"][1]);
             availableStats.push("Birthday");
-        }*/
+        }
 
 }
 
@@ -239,7 +220,8 @@ function plotDefault(chartType, homeTeamName, awayTeamName, homeTeamDataParam, a
                         yAxes: [{
                                 id: "y-axis",
                                 ticks: {
-                					beginAtZero: true
+                					beginAtZero: true,
+                					callback: function (value) { if (Number.isInteger(value)) { return value; } }
             					}
                         }]
                 },

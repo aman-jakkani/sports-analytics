@@ -44,7 +44,7 @@ public class CubeResource
 
             List<String> cubevals = new ArrayList<>();
 
-            cubevals.add(bc.getCubeStats(tk.getAggregationValue(), tk.getAggregationFunction(), tk.getAggregationStyle(), tk.getDimension1(), tk.getDimension2()));
+            cubevals.add(bc.getCubeStats(tk.getAggregationValue(), tk.getAggregationFunction(), tk.getDimension1(), tk.getDimension2()));
 
             JSONObject jo = new JSONObject();
             jo.put("cubevals", cubevals);

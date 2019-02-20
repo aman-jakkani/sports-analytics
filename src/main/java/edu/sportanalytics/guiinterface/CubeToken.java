@@ -14,7 +14,6 @@ public class CubeToken {
     private String season;
     private String aggregval;
     private String aggregfunc;
-    private String aggregstyle;
     private String dimension1;
     private String dimension2;
 
@@ -38,10 +37,6 @@ public class CubeToken {
         return aggregfunc;
     }
 
-    public String getAggregationStyle() {
-        return aggregstyle;
-    }
-
     public String getAggregationValue() {
         return aggregval;
     }
@@ -50,13 +45,12 @@ public class CubeToken {
 
     public String getDimension2() { return dimension2; }
 
-    public CubeToken(SportsEnum type, String league, String team, String season, String aggregval, String aggregfunc, String aggregstyle, String dimension1, String dimension2) {
+    public CubeToken(SportsEnum type, String league, String team, String season, String aggregval, String aggregfunc, String dimension1, String dimension2) {
         this.type = type;
         this.league = league;
         this.team = team;
         this.season = season;
         this.aggregfunc = aggregfunc;
-        this.aggregstyle = aggregstyle;
         this.aggregval = aggregval;
         this.dimension1 = dimension1;
         this.dimension2 = dimension2;
@@ -77,7 +71,7 @@ public class CubeToken {
 
     @Override
     public int hashCode() {
-        return java.util.Objects.hash(type, league, team, season, aggregval, aggregfunc, aggregstyle, dimension1, dimension2);
+        return java.util.Objects.hash(type, league, team, season, aggregval, aggregfunc, dimension1, dimension2);
     }
 
     private static final int MAX_MAPSIZE = 1000000; //Should be enough for starting

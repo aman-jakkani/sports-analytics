@@ -478,15 +478,14 @@ public class BasketballController extends DatabaseController {
 	}
 
 	//To-Do
-	public String getRollupStats(String factatt, String aggregfunc, String aggregstyle, String dimension){
+	public String getRollupStats(String factatt, String aggregfunc, String dimension){
 		ps = null;
 		rs = null;
 		try {
 			//ps = DBAccess.getConn().prepareStatement("SELECT ? From BASKETBALL.PLAYER_STATS WHERE GID = ?");
 			ps.setString(1, factatt);
 			ps.setString(2, aggregfunc);
-			ps.setString(3, aggregstyle);
-			ps.setString(4, dimension);
+			ps.setString(3, dimension);
 			rs = ps.executeQuery();
 
 			while(rs.next()) {
@@ -502,20 +501,19 @@ public class BasketballController extends DatabaseController {
 	}
 
 	//To-Do
-	public String getCubeStats(String aggregval, String aggregfunc, String aggregstyle, String dimension1, String dimension2){
+	public String getCubeStats(String aggregval, String aggregfunc, String dimension1, String dimension2){
 		ps = null;
 		rs = null;
 		try {
 			//ps = DBAccess.getConn().prepareStatement("SELECT ? From BASKETBALL.PLAYER_STATS WHERE GID = ?");
 			ps.setString(1, aggregval);
 			ps.setString(2, aggregfunc);
-			ps.setString(3, aggregstyle);
-			ps.setString(4, dimension1);
-			//ps.setString(5, dimension2);
+			ps.setString(3, dimension1);
+			ps.setString(4, dimension2);
 			rs = ps.executeQuery();
 
 			while(rs.next()) {
-				aggregval = rs.getString("ATTENDANCE");
+				//aggregval = rs.getString("ATTENDANCE");
 			}
 		}catch (SQLException e) {
 

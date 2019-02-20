@@ -14,7 +14,6 @@ public class RollupToken {
     private String season;
     private String factatt;
     private String aggregfunc;
-    private String aggregstyle;
     private String dimension;
 
     public SportsEnum getSports() {
@@ -37,10 +36,6 @@ public class RollupToken {
         return aggregfunc;
     }
 
-    public String getAggregationStyle() {
-        return aggregstyle;
-    }
-
     public String getFactAttribute() {
         return factatt;
     }
@@ -49,13 +44,12 @@ public class RollupToken {
         return dimension;
     }
 
-    public RollupToken(SportsEnum type, String league, String team, String season, String factatt, String aggregfunc, String aggregstyle, String dimension) {
+    public RollupToken(SportsEnum type, String league, String team, String season, String factatt, String aggregfunc, String dimension) {
         this.type = type;
         this.league = league;
         this.team = team;
         this.season = season;
         this.aggregfunc = aggregfunc;
-        this.aggregstyle = aggregstyle;
         this.factatt = factatt;
         this.dimension = dimension;
 
@@ -75,7 +69,7 @@ public class RollupToken {
 
     @Override
     public int hashCode() {
-        return java.util.Objects.hash(type, league, team, season, factatt, aggregfunc, aggregstyle, dimension);
+        return java.util.Objects.hash(type, league, team, season, factatt, aggregfunc, dimension);
     }
 
     private static final int MAX_MAPSIZE = 1000000; //Should be enough for starting

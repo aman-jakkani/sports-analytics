@@ -30,7 +30,7 @@ public class RollupResource {
 
             List<String> rollupvals = new ArrayList<>();
 
-            rollupvals.add(bc.getRollupStats(tk.getFactAttribute(), tk.getAggregationFunction(), tk.getAggregationStyle(), tk.getDimension()));
+            rollupvals.add(bc.getRollupStats(tk.getFactAttribute(), tk.getAggregationFunction(), tk.getDimension()));
 
             JSONObject jo = new JSONObject();
             jo.put("rollupvals", rollupvals);

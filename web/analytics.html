@@ -174,11 +174,15 @@
     <script type = "text/javascript" src = "js/results.js"></script>
     <br>
 
-
+	<script src="js/Chart.HeatMap/dst/Chart.HeatMap.S.js"></script>
+	<button onclick="plotHeatMap()" id="map">Heat Map</button>
+	<canvas id="heatmap" width="800" height="400"></canvas>
+	
     <!-- Create Submit Button, link to showData() function -->
     <button onclick="plotChart()" id="SUBMIT">SUBMIT</button>
     </div>
     <div id="Charts" style="display:none">
+    
 
     <br><button onclick="backToDropdown()" id="BACK">BACK</button>
     <!-- Display Stats in a list -->

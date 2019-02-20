@@ -86,6 +86,7 @@ function plotChart() {
             
             document.getElementById("player").innerHTML = htmlPlayerString;
 
+		
 		}
 
         var cornerStats = getRestResource("CornerStatRestResource", [["token", token["token"]],]);
@@ -112,6 +113,7 @@ function plotChart() {
         else {
             document.getElementById("attendance").innerHTML="";
         }
+        
 
         // [ballPossession["possession"][0], yellowCards["yellowCards"][0], cornerStats["corners"][0], foulStats["fouls"][0]];
         // [ballPossession["possession"][1], yellowCards["yellowCards"][1], cornerStats["corners"][1], foulStats["fouls"][1]];
@@ -191,7 +193,8 @@ function plotDefault(chartType, homeTeamName, awayTeamName, homeTeamDataParam, a
                         yAxes: [{
                                 id: "y-axis",
                                 ticks: {
-                					beginAtZero: true
+                					beginAtZero: true,
+                					callback: function (value) { if (Number.isInteger(value)) { return value; } }
             					}
                         }]
                 },

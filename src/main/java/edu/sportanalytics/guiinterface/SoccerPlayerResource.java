@@ -2,6 +2,7 @@ package edu.sportanalytics.guiinterface;
 
 import edu.sportanalytics.database.Player;
 import edu.sportanalytics.database.SoccerController;
+import edu.sportanalytics.database.Soccer_Player;
 import edu.sportanalytics.database.DBAccess;
 import edu.sportanalytics.database.SportsEnum;
 import org.json.JSONObject;

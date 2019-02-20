@@ -1,5 +1,6 @@
 package edu.sportanalytics.guiinterface;
 
+import edu.sportanalytics.database.Player;
 import edu.sportanalytics.database.SoccerController;
 import edu.sportanalytics.database.DBAccess;
 import edu.sportanalytics.database.SportsEnum;
@@ -17,17 +18,31 @@ public class SoccerPlayerResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public String getData(@QueryParam("player") String player)
+    public String getData(@QueryParam("token") int token, @QueryParam("playerID") int playerID)
     {
         //TO-DO
-        SoccerController sc = (SoccerController) DBAccess.getInstance().getController(SportsEnum.SOCCER);
+        Token tk = Token.getToken(token);
+        log.info("Player info for " + playerID + " requested");
+        SportsEnum type = tk.getSports();
+        if (type == SportsEnum.UNKNOWN) {
+            log.severe("Unknown sports parameter");
+            return null;
+        }
+        else if(type == SportsEnum.BASKETBALL) {
+            log.severe("Wrong sports parameter");
+            return null;
+        }
+        else {
+            SoccerController sc = (SoccerController) DBAccess.getInstance().getController(SportsEnum.SOCCER);
+            Player player = DBAccess.getInstance().getController(type).getPlayer(Integer.toString(playerID));
+            //To-Do
+            JSONObject jo = new JSONObject();
 
-        JSONObject jo = new JSONObject();
+            String returnString = jo.toString();
 
-        String returnString = jo.toString();
+            log.info("JSON String created: " + returnString);
 
-        log.info("JSON String created: " + returnString);
-
-        return returnString;
+            return returnString;
+        }
     }
 }

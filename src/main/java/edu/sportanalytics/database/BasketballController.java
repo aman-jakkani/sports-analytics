@@ -442,6 +442,41 @@ public class BasketballController extends DatabaseController {
 		return player;
     }
 
+	public Basketball_Player getBBPlayer(String playerID) {
+		Basketball_Player player = null;
+
+		ps = null;
+		rs = null;
+		try{
+			//need to change query to also get points, rebounds, etc.
+			ps = DBAccess.getConn().prepareStatement("SELECT FIRST_NAME, LAST_NAME, BIRTHDATE, HEIGHT, WEIGHT " +
+					"FROM BASEKETBALL.PLAYER WHERE PERSON_ID=?");
+			ps.setString(1, playerID);
+			rs = ps.executeQuery();
+			int id = Integer.parseInt(playerID);
+			String name = "";
+			Date birthday = null;
+			int height = 0;
+			int weight = 0;
+
+			while(rs.next()){
+				String firstname = rs.getString(1);
+				String lastname = rs.getString(2);
+				name = firstname + lastname;
+				birthday = rs.getDate(3);
+				height = rs.getInt(4);
+				weight = rs.getInt(5);
+			}
+
+			player = new Basketball_Player(id, name, birthday, height, weight);
+			//player.setPoints, player.setRebounds, etc.
+		}catch(SQLException e){
+			log.severe(e.getMessage());
+		}
+		tryClose();
+		return player;
+	}
+
 	//To-Do
 	public String getRollupStats(String factatt, String aggregfunc, String aggregstyle, String dimension){
 		ps = null;

@@ -136,62 +136,7 @@ function plotChart() {
         document.getElementById("Dropdown").style.display = "none";
 }
 
-<<<<<<< HEAD
 // Button to return back to previous dropdown page
-=======
-function stats(){
-
-	 var sport = document.getElementById('chosenSport').innerHTML = document.getElementById("sport").value;
-     var league = document.getElementById('chosenLeague').innerHTML = document.getElementById("league").value;
-     var team = document.getElementById('chosenTeam').innerHTML = document.getElementById("team").value;
-     var season = document.getElementById('chosenSeason').innerHTML = document.getElementById("season").value;
-     var match = document.getElementById('chosenGame').innerHTML = document.getElementById("game").value;
-     var factatt = document.getElementById("factAttribute").value;
-     var aggregfunc = document.getElementById("aggregationFunction").value;
-     var aggregstyle = document.getElementById("aggregationStyle").value;
-     var dimension  = document.getElementById("dimensions").value;
-	
-	var parameters = [["sports", sport], ["league", league], ["team", team], ["season", season], ["match", match], ["factatt", factatt], ["aggregfunc", aggregfunc], ["aggregstyle", aggregstyle], ["dimension", dimension]];
-        console.log(parameters);
-
-	var token = getRestResource("TokenResource", parameters);
-        console.log("Token: " + token["token"]);
-
-	var homeTeamData = [];
-    var awayTeamData = [];
-    var availableStats = [];
-    
-    var playerList = getRestResource("PlayerListResource", [["token", token["token"]],]);
-    
-   		if (playerList != null) {
-   		console.log("Players found: " + playerList["homePlayers"]);
-   		homeTeamData.push(playerList["homePlayers"][0]);
-        awayTeamData.push(playerList["guestPlayers"][1]);
-        availableStats.push("Players");
-        var htmlPlayerString = "<option value = \"null\" >--Make a choice--</option>";
-   		console.log("Players found: ".concat(playerList.homePlayers.length + playerList.guestPlayers.length));
-   		for (i = 0; i < playerList.homePlayers.length; ++i){
-   		htmlPlayerString = htmlPlayerString.concat("<option value = \"" + playerList.homePlayers[i] + "\">" + playerList.homePlayers[i] + "</option>") //change teams to homePlayers and guestPlayers
-  		}
-  
-    	for (i = 0; i < playerList.guestPlayers.length; ++i){
-   	 	htmlPlayerString = htmlPlayerString.concat("<option value = \"" + playerList.guestPlayers[i] + "\">" + playerList.guestPlayers[i] + "</option>") //change teams to homePlayers and guestPlayers
- 	 	}
-  		document.getElementById("player").innerHTML = htmlPlayerString;
-
-		}
-        
-	/*var birthday = getRestResource("PlayerResource", [["token", token["token"]],]);
-        if(name != null){
-            console.log("Birthday: " + birthday["birthday"]);
-            homeTeamData.push(birthday["birthday"][0]);
-            awayTeamData.push(birthday["birthday"][1]);
-            availableStats.push("Birthday");
-        }*/
-
-}
-
->>>>>>> 69af87260acefccb7f6ed319a077fda722c84979
 function backToDropdown(){
     document.getElementById("Charts").style.display = "none";
     document.getElementById("Dropdown").style.display = "block";

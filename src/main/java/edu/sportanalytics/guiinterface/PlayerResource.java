@@ -29,7 +29,6 @@ public class PlayerResource
         SportsEnum type = tk.getSports();
         if (type == SportsEnum.UNKNOWN) {
             log.severe("Unknown sports parameter");
-            return null;
         }
 
         Player player = DBAccess.getInstance().getController(type).getPlayer(Integer.toString(playerID));

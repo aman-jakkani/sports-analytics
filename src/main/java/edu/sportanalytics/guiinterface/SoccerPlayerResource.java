@@ -2,6 +2,7 @@ package edu.sportanalytics.guiinterface;
 
 import edu.sportanalytics.database.Player;
 import edu.sportanalytics.database.SoccerController;
+import edu.sportanalytics.database.Soccer_Player;
 import edu.sportanalytics.database.DBAccess;
 import edu.sportanalytics.database.SportsEnum;
 import org.json.JSONObject;
@@ -34,9 +35,14 @@ public class SoccerPlayerResource {
         }
         else {
             SoccerController sc = (SoccerController) DBAccess.getInstance().getController(SportsEnum.SOCCER);
-            Player player = DBAccess.getInstance().getController(type).getPlayer(Integer.toString(playerID));
-            //To-Do
+            Soccer_Player player = (Soccer_Player)DBAccess.getInstance().getController(type).getPlayer(Integer.toString(playerID));
+            
             JSONObject jo = new JSONObject();
+            
+            jo.put("preferredFoot", player.getPreferredFoot());
+            jo.put("strength", player.getStrength());
+            jo.put("overallRating", player.getOverallRating());
+            jo.put("shotower", player.getShotPower());
 
             String returnString = jo.toString();
 

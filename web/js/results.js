@@ -31,7 +31,8 @@ function plotChart() {
         var availableStats = [];
 
 
-        var score = getRestResource("ScoreRestResource", [["token", token["token"]],]);
+        // [["token", token["token"]], ]) is an array of dict values
+        var score = getRestResource("ScoreRestResource", [["token", token["token"]], ]);
         if(score != null){
             console.log("Score: " + score["score"][0] + ":" + score["score"][1] );
             homeTeamData.push(score["score"][0]);
@@ -39,7 +40,7 @@ function plotChart() {
             availableStats.push("Score");
         }
 
-        var ballPossession = getRestResource("BallPossessionStatResource", [["token", token["token"]],]);
+        var ballPossession = getRestResource("BallPossessionStatResource", [["token", token["token"]], ]);
         if(ballPossession != null){
             console.log("Ball Possession: " + ballPossession["possession"]);
             homeTeamData.push(ballPossession["possession"][0]);
@@ -47,7 +48,7 @@ function plotChart() {
             availableStats.push("Ball Possession");
         }
 
-        var yellowCards = getRestResource("YellowCardsStatResource", [["token", token["token"]],]);
+        var yellowCards = getRestResource("YellowCardsStatResource", [["token", token["token"]], ]);
         if(yellowCards != null){
             console.log("Yellow Cards: " + yellowCards["yellowCards"]);
             homeTeamData.push(yellowCards["yellowCards"][0]);
@@ -55,7 +56,7 @@ function plotChart() {
             availableStats.push("Yellow Cards");
         }
 
-        var redCards = getRestResource("RedCardsStatResource", [["token", token["token"]],]);
+        var redCards = getRestResource("RedCardsStatResource", [["token", token["token"]], ]);
         if(redCards != null){
             console.log("Red Cards: " + redCards["redCards"]);
             homeTeamData.push(redCards["redCards"][0]);
@@ -64,23 +65,26 @@ function plotChart() {
         }
         
   
-   		var playerList = getRestResource("PlayerListResource", [["token", token["token"]],]);
+   		var playerList = getRestResource("PlayerListResource", [["token", token["token"]], ]);
     
    		if (playerList != null) {
-   		console.log("Players found: " + playerList["homePlayers"]);
-   		homeTeamData.push(playerList["homePlayers"][0]);
-        awayTeamData.push(playerList["guestPlayers"][1]);
-        availableStats.push("Players");
-        var htmlPlayerString = "<option value = \"null\" >--Make a choice--</option>";
-   		console.log("Players found: ".concat(playerList.homePlayers.length + playerList.guestPlayers.length));
-   		for (i = 0; i < playerList.homePlayers.length; ++i){
-   		htmlPlayerString = htmlPlayerString.concat("<option value = \"" + playerList.homePlayers[i] + "\">" + playerList.homePlayers[i] + "</option>") //change teams to homePlayers and guestPlayers
-  		}
-  
-    	for (i = 0; i < playerList.guestPlayers.length; ++i){
-   	 	htmlPlayerString = htmlPlayerString.concat("<option value = \"" + playerList.guestPlayers[i] + "\">" + playerList.guestPlayers[i] + "</option>") //change teams to homePlayers and guestPlayers
- 	 	}
-  		document.getElementById("player").innerHTML = htmlPlayerString;
+            console.log("Players found: " + playerList["homePlayers"]);
+            homeTeamData.push(playerList["homePlayers"][0]);
+            awayTeamData.push(playerList["guestPlayers"][1]);
+            availableStats.push("Players");
+
+            var htmlPlayerString = "<option value = \"null\" >--Make a choice--</option>";
+            console.log("Players found: ".concat(playerList.homePlayers.length + playerList.guestPlayers.length));
+            
+            for (i = 0; i < playerList.homePlayers.length; ++i) {
+                htmlPlayerString = htmlPlayerString.concat("<option value = \"" + playerList.homePlayers[i] + "\">" + playerList.homePlayers[i] + "</option>") //change teams to homePlayers and guestPlayers
+            }
+    
+            for (i = 0; i < playerList.guestPlayers.length; ++i) {
+                htmlPlayerString = htmlPlayerString.concat("<option value = \"" + playerList.guestPlayers[i] + "\">" + playerList.guestPlayers[i] + "</option>") //change teams to homePlayers and guestPlayers
+            }
+            
+            document.getElementById("player").innerHTML = htmlPlayerString;
 
 		
 		}
@@ -102,13 +106,11 @@ function plotChart() {
         }
 
         var attendance = getRestResource("AttendanceRestResource", [["token", token["token"]],]);
-        if(attendance != null)
-        {
+        if(attendance != null) {
             console.log("Attendance: " + attendance["attendance"]);
             document.getElementById("attendance").innerHTML="Attendance: " + attendance["attendance"];
         }
-        else
-        {
+        else {
             document.getElementById("attendance").innerHTML="";
         }
         
@@ -136,6 +138,9 @@ function plotChart() {
         document.getElementById("Dropdown").style.display = "none";
 }
 
+<<<<<<< HEAD
+// Button to return back to previous dropdown page
+=======
 function stats(){
 
 	 var sport = document.getElementById('chosenSport').innerHTML = document.getElementById("sport").value;
@@ -167,6 +172,7 @@ function stats(){
 
 }
 
+>>>>>>> 69af87260acefccb7f6ed319a077fda722c84979
 function backToDropdown(){
     document.getElementById("Charts").style.display = "none";
     document.getElementById("Dropdown").style.display = "block";
@@ -176,6 +182,7 @@ function backToDropdown(){
     }
 }
 
+// Default plot will plot only a single plot
 function plotDefault(chartType, homeTeamName, awayTeamName, homeTeamDataParam, awayTeamDataParam, num, label){
         num+=1;
         var canvasId = "myChart" + num;

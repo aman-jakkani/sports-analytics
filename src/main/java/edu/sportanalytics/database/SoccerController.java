@@ -495,7 +495,7 @@ public class SoccerController extends DatabaseController
 		ps = null;
 		rs = null;
 		try{
-			ps = DBAccess.getConn().prepareStatement("SELECT p.player_name, p.birthday, p. height, p.weight FROM SOCCER02.PLAYER_2 p JOIN SOCCER02.PLAYER2_ATTRIBUTES a on(p.id = a.id) WHERE  p.id = ?");
+			ps = DBAccess.getConn().prepareStatement("SELECT p.player_name, p.birthday, p.height, p.weight, a.preferred_foot, a.overall_rating, a.strength, a.shot_power FROM SOCCER02.PLAYER_2 p JOIN SOCCER02.PLAYER2_ATTRIBUTES a on(p.id = a.id) WHERE  p.id = ?");
 			ps.setString(1, playerID);
 			rs = ps.executeQuery();
 			int id = Integer.parseInt(playerID);
@@ -504,16 +504,30 @@ public class SoccerController extends DatabaseController
 			int height = 0;
 			int weight = 0;
 			
+			int overallRating = 0;
+			String preferredFoot = "";
+			int strength = 0;
+			int shotPower = 0;
+			
 			while(rs.next()){
 				name = rs.getString("player_name");
 				birthday = rs.getDate("birthday");
 				height = rs.getInt("height");
 				weight = rs.getInt("weight");
+				overallRating = rs.getInt("Overall_Rating");
+				preferredFoot = rs.getString("preferred_foot");
+				strength = rs.getInt("strength");
+				shotPower = rs.getInt("shot_power");
 			}
 			String tempHeight = Integer.toString(height);
 			height = Integer.parseInt(tempHeight.substring(0,3));
 		
 			player = new Soccer_Player(id, name, birthday, height, weight);
+			player.setOverallRating(overallRating);
+			player.setPreferredFoot(preferredFoot);
+			player.setStrength(strength);
+			player.setShotPower(shotPower);
+			
 		}catch(SQLException e){
 			log.severe(e.getMessage());
 		}

@@ -500,6 +500,31 @@ public class BasketballController extends DatabaseController {
 		tryClose();
 		return factatt;
 	}
+
+	//To-Do
+	public String getCubeStats(String aggregval, String aggregfunc, String aggregstyle, String dimension1, String dimension2){
+		ps = null;
+		rs = null;
+		try {
+			//ps = DBAccess.getConn().prepareStatement("SELECT ? From BASKETBALL.PLAYER_STATS WHERE GID = ?");
+			ps.setString(1, aggregval);
+			ps.setString(2, aggregfunc);
+			ps.setString(3, aggregstyle);
+			ps.setString(4, dimension1);
+			//ps.setString(5, dimension2);
+			rs = ps.executeQuery();
+
+			while(rs.next()) {
+				aggregval = rs.getString("ATTENDANCE");
+			}
+		}catch (SQLException e) {
+
+			log.severe(e.getMessage());
+		}
+
+		tryClose();
+		return aggregval;
+	}
 	public List<String> getHomeTeamPlayerID(String matchid){
 		List<String> home_playerlist = new ArrayList<>();
 		ps = null;

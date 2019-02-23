@@ -12,6 +12,7 @@ function plotChart() {
         var aggregfunc = document.getElementById("aggregationFunction").value;
         var aggregstyle = document.getElementById("aggregationStyle").value;
         var dimension  = document.getElementById("dimensions").value;
+        
     
         var parameters = [["sports", sport], ["league", league], ["team", team], ["season", season], ["match", match], ["factatt", factatt], ["aggregfunc", aggregfunc], ["aggregstyle", aggregstyle], ["dimension", dimension]];
         console.log(parameters);
@@ -130,7 +131,18 @@ function plotChart() {
         var chartType = document.getElementById("chartType").value;
 
         homeTeamData.forEach(function(element, index){
-            plotDefault(chartType, homeTeamName, awayTeamName, homeTeamData[index], awayTeamData[index], index, availableStats[index]);
+        
+        	if (chartType == "heatmap"){
+        	
+        		plotHeatMap(chartType);
+        	
+        	}
+        	
+        	else {
+            	
+            	plotDefault(chartType, homeTeamName, awayTeamName, homeTeamData[index], awayTeamData[index], index, availableStats[index]);
+            	
+            }
         });
 
 
@@ -148,184 +160,186 @@ function backToDropdown(){
     }
 }
 
-function plotHeatMap() {
-<<<<<<< HEAD
+function plotHeatMap(chartType){
 
-=======
->>>>>>> 1ec39ff3ce99a7b89315ba27b68024b22eb7f875
-
-	var data = {
-        labels: ['0h','1h','2h','3h','4h','5h','6h','7h','8h','9h','10h','11h'],
-        datasets: [
-            {
-            label: 'Monday',
-            data: [8, 6, 5, 7, 9, 8, 1, 6, 3, 3, 8, 7]
-            },
-            {
-            label: 'Tuesday',
-            data: [6, 8, 5, 6, 5, 5, 7, 0, 0, 3, 0, 7]
-            },
-            {
-            label: 'Wednesday',
-            data: [8, 5, 6, 4, 2, 2, 3, 0, 2, 0, 10, 8]
-            },
-            {
-            label: 'Thursday',
-            data: [4, 0, 7, 4, 6, 3, 2, 4, 2, 10, 8, 2]
-            },
-            {
-            label: 'Friday',
-            data: [1, 0, 0, 7, 0, 4, 1, 3, 4, 5, 1, 10]
-            }
-        ]
-    };
+	var canvasId = "myChart1";
+	var canvas = document.getElementById(canvasId);
+	var gameData = {
+  labels: ['0h','1h','2h','3h','4h','5h','6h','7h','8h','9h','10h','11h'],
+  datasets: [
+    {
+      label: 'Monday',
+      data: [8, 6, 5, 7, 9, 8, 1, 6, 3, 3, 8, 7]
+    },
+    {
+      label: 'Tuesday',
+      data: [6, 8, 5, 6, 5, 5, 7, 0, 0, 3, 0, 7]
+    },
+    {
+      label: 'Wednesday',
+      data: [8, 5, 6, 4, 2, 2, 3, 0, 2, 0, 10, 8]
+    },
+    {
+      label: 'Thursday',
+      data: [4, 0, 7, 4, 6, 3, 2, 4, 2, 10, 8, 2]
+    },
+    {
+      label: 'Friday',
+      data: [1, 0, 0, 7, 0, 4, 1, 3, 4, 5, 1, 10]
+    }
+  ]
+};
   
 
-	var options = {
-        // String - background color for graph
-        backgroundColor: '#fff',
 
-        // Boolean - whether each box in the dataset is outlined
-        stroke: false,
+	var chartOptions = {
+	
+	// String - background color for graph
+backgroundColor: '#fff',
 
-        // Number - width of the outline stroke.
-        strokePerc: 0.05,
+// Boolean - whether each box in the dataset is outlined
+stroke: false,
 
-        // String - the outline stroke color.
-        strokeColor: "rgb(128,128,128)",
+// Number - width of the outline stroke.
+strokePerc: 0.05,
 
-        // String - the outline stroke highlight color.
-        highlightStrokeColor: "rgb(192,192,192)",
+// String - the outline stroke color.
+strokeColor: "rgb(128,128,128)",
 
-        // Boolean - whether to draw the heat map boxes with rounded corners
-        rounded: true,
+// String - the outline stroke highlight color.
+highlightStrokeColor: "rgb(192,192,192)",
 
-        // Number - the radius (as a percentage of size) of the rounded corners
-        roundedRadius: 0.1,
+// Boolean - whether to draw the heat map boxes with rounded corners
+rounded: true,
 
-        // Number - padding between heat map boxes (as a percentage of box size)
-        paddingScale: 0.05,
+// Number - the radius (as a percentage of size) of the rounded corners
+roundedRadius: 0.1,
 
-        // String - "gradient", "palette"
-        colorInterpolation: "gradient",
+// Number - padding between heat map boxes (as a percentage of box size)
+paddingScale: 0.05,
 
-        // Array[String] - the colors used for the active color scheme.
-        // Any number of colors is allowed.
-        colors: [ "rgba(220,220,220,0.9)", "rgba(151,187,205,0.9)"],
+// String - "gradient", "palette"
+colorInterpolation: "gradient",
 
-        // Boolean - whether boxes change color on hover.
-        colorHighlight: true, 
+// Array[String] - the colors used for the active color scheme.
+// Any number of colors is allowed.
+colors: [ "rgba(220,220,220,0.9)", "rgba(151,187,205,0.9)"],
 
-        // Number - a floating point value which specifies how much lighter or
-        // darker a color becomes when hovered, where 1 is no change, 
-        // 0.9 is slightly darker, and 1.1 is slightly lighter.
-        colorHighlightMultiplier: 0.92,
+// Boolean - whether boxes change color on hover.
+colorHighlight: true, 
 
-        // Boolean - Whether to draw labels on the boxes
-        showLabels: true, 
+// Number - a floating point value which specifies how much lighter or
+// darker a color becomes when hovered, where 1 is no change, 
+// 0.9 is slightly darker, and 1.1 is slightly lighter.
+colorHighlightMultiplier: 0.92,
 
-        // Number - the font size of the label as percentage of box height
-        labelScale: 0.2,
+// Boolean - Whether to draw labels on the boxes
+showLabels: true, 
 
-        // String - label font family
-        labelFontFamily: '"HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif',
+// Number - the font size of the label as percentage of box height
+labelScale: 0.2,
 
-        // String - label font style
-        labelFontStyle: "normal",
+// String - label font family
+labelFontFamily: '"HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif',
 
-        // String - label font color
-        labelFontColor: "rgba(0,0,0,0.5)",
+// String - label font style
+labelFontStyle: "normal",
 
-        // String - tooltipTemplate
-        tooltipTemplate: "<%= xLabel %> | <%= yLabel %> : <%= value %>",
+// String - label font color
+labelFontColor: "rgba(0,0,0,0.5)",
 
-        // String - template for legend generation
-        legendTemplate : '<div class="<%= name.toLowerCase() %>-legend">'+
-            '<span class="<%= name.toLowerCase() %>-legend-text">'+
-            '<%= min %>'+
-            '</span>'+
-            '<% for (var i = min; i <= max; i += (max-min)/6){ %>'+ // change 6 to number of divisions required
-            '<span class="<%= name.toLowerCase() %>-legend-box" style="background-color: <%= colorManager.getColor(i).color %>;">  </span>'+
-            '<% } %>'+
-            '<span class="<%= name.toLowerCase() %>-legend-text">'+
-            '<%= max %>'+
-            '</span>'+
-            '</div>'
+// String - tooltipTemplate
+tooltipTemplate: "<%= xLabel %> | <%= yLabel %> : <%= value %>",
+
+// String - template for legend generation
+legendTemplate : '<div class="<%= name.toLowerCase() %>-legend">'+
+        '<span class="<%= name.toLowerCase() %>-legend-text">'+
+        '<%= min %>'+
+        '</span>'+
+        '<% for (var i = min; i <= max; i += (max-min)/6){ %>'+ // change 6 to number of divisions required
+        '<span class="<%= name.toLowerCase() %>-legend-box" style="background-color: <%= colorManager.getColor(i).color %>;">  </span>'+
+        '<% } %>'+
+        '<span class="<%= name.toLowerCase() %>-legend-text">'+
+        '<%= max %>'+
+        '</span>'+
+        '</div>'
+	
 	}
 	
-	var ctx = document.getElementById('heatmap').getContext('2d');
-	var newChart = new Chart(ctx).HeatMap(data, options);
-}
+	var config = {
+                type: chartType,
+                data: gameData,
+                options: chartOptions
+        };
+        
+    globalCharts.push(new Chart(canvas, config));
+	
+	//var ctx = document.getElementById('heatmap').getContext('2d');
+	//var newChart = new Chart(ctx).HeatMap(data);
+	//var newChart = new Chart(ctx).HeatMap(data, options);
 
-<<<<<<< HEAD
 }
-=======
->>>>>>> 1ec39ff3ce99a7b89315ba27b68024b22eb7f875
 
 // Default plot will plot only a single plot
 function plotDefault(chartType, homeTeamName, awayTeamName, homeTeamDataParam, awayTeamDataParam, num, label){
-    num += 1;
-    var canvasId = "myChart" + num;
-    var canvas = document.getElementById(canvasId);
-    var showLabel = true;
-    if(homeTeamName == undefined && awayTeamName == undefined) {
-        showLabel = false;
-    }
+        num+=1;
+        var canvasId = "myChart" + num;
+        var canvas = document.getElementById(canvasId);
+        var showLabel = true;
+        if(homeTeamName == undefined && awayTeamName == undefined)
+        {
+            showLabel = false;
+        }
 
-    if (window.bar != undefined){
-            window.bar.destroy();
-    }
+        if (window.bar != undefined){
+                window.bar.destroy();
+        }
 
-    var homeTeamData = {
-            label: homeTeamName,
-            data: [homeTeamDataParam, "0"],
-            backgroundColor: 'rgba(148, 28, 47, 0.6)',
-            borderWidth: 0,
-            yAxisID: "y-axis"
-    };
+        var homeTeamData = {
+                label: homeTeamName,
+                data: [homeTeamDataParam,"0"],
+                backgroundColor: 'rgba(148, 28, 47, 0.6)',
+                borderWidth: 0,
+                yAxisID: "y-axis"
+        };
 
-    var awayTeamData = {
-            label: awayTeamName,
-            data: [awayTeamDataParam, "0"],
-            backgroundColor: 'rgba(32, 164, 243, 0.6)',
-            borderWidth: 0,
-            yAxisID: "y-axis"
-    };
+        var awayTeamData = {
+                label: awayTeamName,
+                data: [awayTeamDataParam,"0"],
+                backgroundColor: 'rgba(32, 164, 243, 0.6)',
+                borderWidth: 0,
+                yAxisID: "y-axis"
+        };
 
-    var gameData = {
-            labels: [label],
-            datasets: [homeTeamData, awayTeamData]
-    };
+        var gameData = {
+                labels: [label],
+                datasets: [homeTeamData, awayTeamData]
+        };
 
-    var chartOptions = {
-            scales: {
-                    xAxes: [{
-                            barPercentage: 1,
-                            categoryPercentage: 0.6
-                    }],
+        var chartOptions = {
+                scales: {
+                        xAxes: [{
+                                barPercentage: 1,
+                                categoryPercentage: 0.6
+                        }],
+                        yAxes: [{
+                                id: "y-axis",
+                                ticks: {
+                					beginAtZero: true,
+                					callback: function (value) { if (Number.isInteger(value)) { return value; } }
+            					}
+                        }]
+                },
+                legend: {
+                    display: showLabel
+                }
+        };
 
-                    yAxes: [{
-                            id: "y-axis",
-                            ticks: {
-                                beginAtZero: true,
-                                callback: function (value) { 
-                                    if (Number.isInteger(value)) { 
-                                        return value; 
-                                    } 
-                                }
-                            }
-                    }]
-            },
-            legend: {
-                display: showLabel
-            }
-    };
+        var config = {
+                type: chartType,
+                data: gameData,
+                options: chartOptions
+        };
 
-    var config = {
-            type: chartType,
-            data: gameData,
-            options: chartOptions
-    };
-
-    globalCharts.push(new Chart(canvas, config));
+        globalCharts.push(new Chart(canvas, config));
 }

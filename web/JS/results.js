@@ -129,22 +129,21 @@ function plotChart() {
         console.log(typeof(homeTeamName));
 
         var chartType = document.getElementById("chartType").value;
-
-        homeTeamData.forEach(function(element, index){
         
-        	if (chartType == "heatmap"){
+        		homeTeamData.forEach(function(element, index){
+        
+        if (chartType == "heatmap"){
+        		
+        		plotHeatMap();
         	
-        		plotHeatMap(chartType);
-        	
-        	}
-        	
-        	else {
-            	
+        }
+        
+        else {    	
             	plotDefault(chartType, homeTeamName, awayTeamName, homeTeamData[index], awayTeamData[index], index, availableStats[index]);
-            	
-            }
-        });
 
+		}
+        });
+		
 
         document.getElementById("Charts").style.display = "block";
         document.getElementById("Dropdown").style.display = "none";
@@ -160,10 +159,9 @@ function backToDropdown(){
     }
 }
 
-function plotHeatMap(chartType){
+function plotHeatMap(){
 
 	var canvasId = "myChart1";
-	var canvas = document.getElementById(canvasId);
 	var gameData = {
   labels: ['0h','1h','2h','3h','4h','5h','6h','7h','8h','9h','10h','11h'],
   datasets: [
@@ -266,17 +264,18 @@ legendTemplate : '<div class="<%= name.toLowerCase() %>-legend">'+
 	
 	}
 	
-	var config = {
+	/*var config = {
                 type: chartType,
                 data: gameData,
                 options: chartOptions
-        };
+        };*/
         
-    globalCharts.push(new Chart(canvas, config));
+    //globalCharts.push(new Chart(canvas, config));
 	
-	//var ctx = document.getElementById('heatmap').getContext('2d');
+	var ctx = document.getElementById('myChart1').getContext('2d');
 	//var newChart = new Chart(ctx).HeatMap(data);
-	//var newChart = new Chart(ctx).HeatMap(data, options);
+	//var canvas = document.getElementById(canvasId);
+	var newChart = new Chart(ctx).HeatMap(gameData, chartOptions);
 
 }
 

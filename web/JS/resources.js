@@ -7,19 +7,20 @@ var dropdown = {
   team: "null",
   season: "null",
   game: "null",
+  aggregationStyle: "null",
   chartType: "null",
   token: "null",
 
   run: $(document).ready(function() {
     var defaultString = "<option value = \"null\" >--Make a choice--</option>";
 
-    $("#sport, #league, #team, #season, #game").change(function() {
+    $("#sport, #league, #team, #season, #game, #aggregationStyle").change(function() {
 
       if ($(this).attr('id') == 'sport') {
         sport = $(this).val();
         $("#league").html(getLeagues(sport));
 
-        $("#chartType").html(getCharts());
+        //$("#chartType").html(getCharts());
 
         // Reset options below league
         $("#team").html(defaultString);
@@ -70,7 +71,15 @@ var dropdown = {
         // token = getToken(sport, league, team, season, game);
 
         // Reset chart type and axes
-        $("#chartType").html(getCharts()); 
+        //$("#chartType").html(getCharts()); 
+      }
+      
+      else if ($(this).attr('id') == 'aggregationStyle') {
+        aggregationStyle = $("#aggregationStyle").val();
+        $("#chartType").html(getCharts(aggregationStyle));
+
+        // Reset games
+        //$("#game").html(defaultString);
       }
 
       else if ($(this).attr('id') == "chartType"){
@@ -211,7 +220,7 @@ function getGames(sport, league, team, season){
 }
 
 
-function getCharts(){
+function getCharts(aggregationStyle){
   var htmlChartString = "<option value = \"null\" >--Make a choice--</option>";
 
   /*
@@ -219,13 +228,28 @@ function getCharts(){
                 ['pie', 'Pie Chart'], ['doughnut', 'Doughnut Chart'], ['radar','Radar Chart'], 
                 ['polarArea', 'Polar Area Chart']];
   */
-
- var charts = [['bar', 'Bar Chart'], ['line','Line Chart'], ['radar','Radar Chart']];
   
-  console.log("Number of charts: ".concat(charts.length));
+  if (aggregationStyle == "Cube"){
+  
+  	var charts = [['heatmap', 'Heat Map']];
+  
+  	console.log("Number of charts: ".concat(charts.length));
  
-  for (i = 0; i < charts.length; ++i){
-    htmlChartString = htmlChartString.concat("<option value = \"" + charts[i][0] + "\" >" + charts[i][1] + "</option>");
+  	for (i = 0; i < charts.length; ++i){
+    	htmlChartString = htmlChartString.concat("<option value = \"" + charts[i][0] + "\" >" + charts[i][1] + "</option>");
+  	}
+  
+  }
+
+
+  else {
+	var charts = [['bar', 'Bar Chart'], ['line','Line Chart'], ['radar','Radar Chart']];
+  
+  	console.log("Number of charts: ".concat(charts.length));
+ 
+  	for (i = 0; i < charts.length; ++i){
+    	htmlChartString = htmlChartString.concat("<option value = \"" + charts[i][0] + "\" >" + charts[i][1] + "</option>");
+  	}
   }
 
   document.getElementById("chartType").innerHTML = htmlChartString;

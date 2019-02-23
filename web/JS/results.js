@@ -148,7 +148,7 @@ function backToDropdown(){
     }
 }
 
-/*function plotHeatMap() {
+function plotHeatMap() {
 
 
 	var data = {
@@ -257,7 +257,7 @@ legendTemplate : '<div class="<%= name.toLowerCase() %>-legend">'+
 	//var newChart = new Chart(ctx).HeatMap(data);
 	var newChart = new Chart(ctx).HeatMap(data, options);
 
-}*/
+}
 
 // Default plot will plot only a single plot
 function plotDefault(chartType, homeTeamName, awayTeamName, homeTeamDataParam, awayTeamDataParam, num, label){

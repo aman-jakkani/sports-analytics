@@ -1,5 +1,28 @@
 var globalCharts = new Array();
 
+function stats(){
+
+	var sport = document.getElementById('chosenSport').innerHTML = document.getElementById("sport").value;
+    var league = document.getElementById('chosenLeague').innerHTML = document.getElementById("league").value;
+    var team = document.getElementById('chosenTeam').innerHTML = document.getElementById("team").value;
+    var season = document.getElementById('chosenSeason').innerHTML = document.getElementById("season").value;
+    var match = document.getElementById('chosenGame').innerHTML = document.getElementById("game").value;
+        
+    
+    var parameters = [["sports", sport], ["league", league], ["team", team], ["season", season], ["match", match]];
+    console.log(parameters);
+
+	var token = getRestResource("TokenResource", parameters);
+    console.log("Token: " + token["token"]);
+
+	var stats = document.getElementById("player").value;
+	console.log(stats);
+	
+	var playerstatistics = getRestResource("PlayerResource", [["token", token["token"]], ["playerID", stats]]);
+	console.log(playerstatistics);
+	
+}
+
 function plotChart() {
         document.getElementById('hiddenText').style.display="block";
 
@@ -78,11 +101,11 @@ function plotChart() {
             console.log("Players found: ".concat(playerList.homePlayers.length + playerList.guestPlayers.length));
             
             for (i = 0; i < playerList.homePlayers.length; ++i) {
-                htmlPlayerString = htmlPlayerString.concat("<option value = \"" + playerList.homePlayers[i] + "\">" + playerList.homePlayers[i] + "</option>") //change teams to homePlayers and guestPlayers
+                htmlPlayerString = htmlPlayerString.concat("<option value = \"" + playerList.homePlayersID[i] + "\">" + playerList.homePlayers[i] + "</option>") //change teams to homePlayers and guestPlayers
             }
     
             for (i = 0; i < playerList.guestPlayers.length; ++i) {
-                htmlPlayerString = htmlPlayerString.concat("<option value = \"" + playerList.guestPlayers[i] + "\">" + playerList.guestPlayers[i] + "</option>") //change teams to homePlayers and guestPlayers
+                htmlPlayerString = htmlPlayerString.concat("<option value = \"" + playerList.guestPlayersID[i] + "\">" + playerList.guestPlayers[i] + "</option>") //change teams to homePlayers and guestPlayers
             }
             
             document.getElementById("player").innerHTML = htmlPlayerString;

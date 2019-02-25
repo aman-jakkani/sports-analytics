@@ -495,7 +495,7 @@ public class SoccerController extends DatabaseController
 		ps = null;
 		rs = null;
 		try{
-			ps = DBAccess.getConn().prepareStatement("SELECT p.player_name, p.birthday, p.height, p.weight, a.preferred_foot, a.overall_rating, a.strength, a.shot_power FROM SOCCER02.PLAYER_2 p JOIN SOCCER02.PLAYER2_ATTRIBUTES a on(p.id = a.id) WHERE  p.id = ?");
+			ps = DBAccess.getConn().prepareStatement("SELECT p.player_name, p.birthday, p.height, p.weight, a.preferred_foot, a.overall_rating, a.strength, a.shot_power FROM SOCCER02.PLAYER_2 p JOIN SOCCER02.PLAYER2_ATTRIBUTES a on(p.id = a.id) WHERE  p.PLAYER_API_ID = ?");
 			ps.setString(1, playerID);
 			rs = ps.executeQuery();
 			int id = Integer.parseInt(playerID);

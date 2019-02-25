@@ -29,14 +29,19 @@ def is_good_response(resp):
             and content_type.find('html') > -1)
 
 
+
 url = 'https://fbref.com/en/squads/'
 resp = simple_get(url)
 soup = BeautifulSoup(resp, 'html.parser')
 leagues = soup.find_all('td', attrs={'class': 'left', 'data-stat': 'competitions'}) # check this split
 
-links = soup.find_all('a', href=True)
-for link in links:
-    print(link['href'])
+# links = leagues.find_all('a', href=True)
+print(len(leagues))
+for league in leagues:
+    if league.a is None:
+        continue
+    print(league.a)
+    print()
     
 
 ''' Example of England's leagues:

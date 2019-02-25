@@ -414,7 +414,7 @@ public class SoccerController extends DatabaseController
 		tryClose();
 		return playerAwayList;
 	}
-
+ 
 
 	@Override
 	public List<String> getHomeTeamPlayerID(String matchid) {
@@ -446,13 +446,14 @@ public class SoccerController extends DatabaseController
 		ps = null;
 		rs = null;
 		try{
-			ps = DBAccess.getConn().prepareStatement("SELECT name FROM SOCCER02.PLAYER WHERE player_api_id = ? OR player_api_id = ? OR player_api_id = ? OR player_api_id = ? OR player_api_id = ? OR player_api_id = ? OR player_api_id = ? OR player_api_id = ? OR player_api_id = ? OR player_api_id = ? OR player_api_id = ?");
 			for(int i = 0;i < tempPlayerIDList.size(); i++){
-				ps.setString(i+1, tempPlayerIDList.get(i));
-			}
+			ps = DBAccess.getConn().prepareStatement("SELECT name FROM SOCCER02.PLAYER WHERE player_api_id = ? ");
+			ps.setString(1, tempPlayerIDList.get(i));
+		
 			rs = ps.executeQuery();
 			while(rs.next()){
 				awayPlayerList.add(rs.getString("name"));
+			}
 			}
 		}catch(SQLException e){
 			log.severe(e.getMessage());
@@ -461,7 +462,7 @@ public class SoccerController extends DatabaseController
 		return awayPlayerList;
 	}
 
-
+ 
 	@Override
 	public List<String> getHomePlayerList(String matchid) {
 		List<String> tempPlayerIDList = getHomeTeamPlayerID(matchid);
@@ -469,13 +470,14 @@ public class SoccerController extends DatabaseController
 		ps = null;
 		rs = null;
 		try{
-			ps = DBAccess.getConn().prepareStatement("SELECT name FROM SOCCER02.PLAYER WHERE player_api_id = ? OR player_api_id = ? OR player_api_id = ? OR player_api_id = ? OR player_api_id = ? OR player_api_id = ? OR player_api_id = ? OR player_api_id = ? OR player_api_id = ? OR player_api_id = ? OR player_api_id = ?");
 			for(int i = 0;i < tempPlayerIDList.size(); i++){
-				ps.setString(i+1, tempPlayerIDList.get(i));
-			}
-			rs = ps.executeQuery();
-			while(rs.next()){
-				homePlayerList.add(rs.getString("name"));
+				ps = DBAccess.getConn().prepareStatement("SELECT name FROM SOCCER02.PLAYER WHERE player_api_id = ? ");
+				ps.setString(1, tempPlayerIDList.get(i));
+			
+				rs = ps.executeQuery();
+				while(rs.next()){
+					homePlayerList.add(rs.getString("name"));
+				}
 			}
 		}catch(SQLException e){
 			log.severe(e.getMessage());

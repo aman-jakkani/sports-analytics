@@ -93,9 +93,6 @@ function plotChart() {
     
    		if (playerList != null) {
             console.log("Players found: " + playerList["homePlayers"]);
-            homeTeamData.push(playerList["homePlayers"][0]);
-            awayTeamData.push(playerList["guestPlayers"][1]);
-            availableStats.push("Players");
 
             var htmlPlayerString = "<option value = \"null\" >--Make a choice--</option>";
             console.log("Players found: ".concat(playerList.homePlayers.length + playerList.guestPlayers.length));

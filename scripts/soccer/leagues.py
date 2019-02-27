@@ -2,6 +2,7 @@ from requests import get
 from requests.exceptions import RequestException
 from contextlib import closing
 from bs4 import BeautifulSoup
+import sys
 
 
 def simple_get(url):
@@ -33,16 +34,19 @@ def is_good_response(resp):
 url = 'https://fbref.com/en/squads/'
 resp = simple_get(url)
 soup = BeautifulSoup(resp, 'html.parser')
-leagues = soup.find_all('td', attrs={'class': 'left', 'data-stat': 'competitions'}) # check this split
+# check this split
+league_name = soup.find('th')
+leagues = soup.find_all('td', attrs={'class': 'left', 'data-stat': 'competitions'}).find('a', recursive=False)
+
 
 # links = leagues.find_all('a', href=True)
-print(len(leagues))
+# print(len(leagues))
 for league in leagues:
-    if league.a is None:
-        continue
-    print(league.a)
-    print()
-    
+    # if league.a is None:
+    continue
+    # print(league.a)
+    # print()
+
 
 ''' Example of England's leagues:
 <tr>

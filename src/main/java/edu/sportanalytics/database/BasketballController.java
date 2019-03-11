@@ -4,6 +4,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -361,10 +363,14 @@ public class BasketballController extends DatabaseController {
 				ps.setString(1, id);
 				rs = ps.executeQuery();
 
-				while(rs.next())
+				if(rs.next())
 				{
 					String fullname = rs.getString(1) + " " +rs.getString(2);
 					playerList.add(fullname);
+				}
+				else
+				{
+					playerList.add("NotFound");
 				}
 			}catch (SQLException e) {
 
@@ -392,10 +398,14 @@ public class BasketballController extends DatabaseController {
 				ps.setString(1, id);
 				rs = ps.executeQuery();
 
-				while(rs.next())
+				if(rs.next())
 				{
 					String fullname = rs.getString(1) + " " +rs.getString(2);
 					playerList.add(fullname);
+				}
+				else
+				{
+					playerList.add("NotFound");
 				}
 			}catch (SQLException e) {
 
@@ -416,26 +426,28 @@ public class BasketballController extends DatabaseController {
 		rs = null;
 		try{
 			ps = DBAccess.getConn().prepareStatement("SELECT FIRST_NAME, LAST_NAME, BIRTHDATE, HEIGHT, WEIGHT " +
-					"FROM BASEKETBALL.PLAYER WHERE PERSON_ID=?");
+					"FROM BASKETBALL.PLAYER WHERE PERSON_ID=?");
 			ps.setString(1, playerID);
 			rs = ps.executeQuery();
 			int id = Integer.parseInt(playerID);
 			String name = "";
-			Date birthday = null;
+			Date birthday = new Date();
+			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 			int height = 0;
 			int weight = 0;
 
-			while(rs.next()){
+			if(rs.next()){
 				String firstname = rs.getString(1);
 				String lastname = rs.getString(2);
 				name = firstname + lastname;
-				birthday = rs.getDate(3);
-				height = rs.getInt(4);
+				String chopDate = rs.getString(3).substring(0,10);
+				birthday = df.parse(chopDate);
+				//height = rs.getInt(4); Bad Data
 				weight = rs.getInt(5);
 			}
 
 			player = new Basketball_Player(id, name, birthday, height, weight);
-		}catch(SQLException e){
+		}catch(Exception e){
 			log.severe(e.getMessage());
 		}
 		tryClose();
@@ -450,7 +462,7 @@ public class BasketballController extends DatabaseController {
 		try{
 			//need to change query to also get points, rebounds, etc.
 			ps = DBAccess.getConn().prepareStatement("SELECT FIRST_NAME, LAST_NAME, BIRTHDATE, HEIGHT, WEIGHT " +
-					"FROM BASEKETBALL.PLAYER WHERE PERSON_ID=?");
+					"FROM BASKETBALL.PLAYER WHERE PERSON_ID=?");
 			ps.setString(1, playerID);
 			rs = ps.executeQuery();
 			int id = Integer.parseInt(playerID);
@@ -529,15 +541,15 @@ public class BasketballController extends DatabaseController {
 		rs = null;
 
 		try {
-			ps = DBAccess.getConn().prepareStatement("SELECT PLAYER_ID1,PLAYER_ID2,PLAYER_ID3,PLAYER_ID4,PLAYER_ID5,PLAYER_ID6,PLAYER_ID7,PLAYER_ID8,PLAYER_ID9,PLAYER_ID10,PLAYER_ID11,PLAYER_ID12,PLAYER_ID13 " +
-					"From BASKETBALL.GAMELINUP " +
-					"JOIN BASKETBALL.GAME ON BASKETBALL.GAME.HOMETID = BASKETBALL.GAMELINUP.TEAM_ID " +
+			ps = DBAccess.getConn().prepareStatement("SELECT PLAYER1_ID,PLAYER2_ID,PLAYER3_ID,PLAYER4_ID,PLAYER5_ID,PLAYER6_ID,PLAYER7_ID,PLAYER8_ID,PLAYER9_ID,PLAYER10_ID,PLAYER11_ID,PLAYER12_ID,PLAYER13_ID " +
+					"FROM BASKETBALL.GAMELINEUP " +
+					"JOIN BASKETBALL.GAME ON BASKETBALL.GAME.HOMETID = BASKETBALL.GAMELINEUP.TEAM_ID " +
 					"WHERE GAME_ID = ?");
 			ps.setString(1, matchid);
 			rs = ps.executeQuery();
 
-			while(rs.next()) {
-				for(int i = 3; i < 16; i++) {
+			if(rs.next()) {
+				for(int i = 1; i < 14; i++) {
 					home_playerlist.add(rs.getString(i));
 				}
 			}
@@ -556,15 +568,15 @@ public class BasketballController extends DatabaseController {
 		rs = null;
 
 		try {
-			ps = DBAccess.getConn().prepareStatement("SELECT PLAYER_ID1,PLAYER_ID2,PLAYER_ID3,PLAYER_ID4,PLAYER_ID5,PLAYER_ID6,PLAYER_ID7,PLAYER_ID8,PLAYER_ID9,PLAYER_ID10,PLAYER_ID11,PLAYER_ID12,PLAYER_ID13" +
-					" From BASKETBALL.GAMELINUP " +
-					"JOIN BASKETBALL.GAME ON BASKETBALL.GAME.AWAYTID = BASKETBALL.GAMELINUP.TEAM_ID " +
+			ps = DBAccess.getConn().prepareStatement("SELECT PLAYER1_ID,PLAYER2_ID,PLAYER3_ID,PLAYER4_ID,PLAYER5_ID,PLAYER6_ID,PLAYER7_ID,PLAYER8_ID,PLAYER9_ID,PLAYER10_ID,PLAYER11_ID,PLAYER12_ID,PLAYER13_ID " +
+					"FROM BASKETBALL.GAMELINEUP " +
+					"JOIN BASKETBALL.GAME ON BASKETBALL.GAME.VISITORTID = BASKETBALL.GAMELINEUP.TEAM_ID " +
 					"WHERE GAME_ID = ?");
 			ps.setString(1, matchid);
 			rs = ps.executeQuery();
 
-			while(rs.next()) {
-				for(int i = 3; i < 16; i++) {
+			if(rs.next()) {
+				for(int i = 1; i < 14; i++) {
 					playerlist.add(rs.getString(i));
 				}
 			}

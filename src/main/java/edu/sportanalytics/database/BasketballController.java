@@ -588,8 +588,18 @@ public class BasketballController extends DatabaseController {
 		tryClose();
 		return playerlist;
 	}
-	
-	public void tryClose(){
+
+    @Override
+    public CubeRollupData getCube() {
+        return null;
+    }
+
+    @Override
+    public CubeRollupData getRollup() {
+        return null;
+    }
+
+    public void tryClose(){
 		try {
 			if(stmt !=null){
 				stmt.close();

@@ -1,8 +1,6 @@
 package edu.sportanalytics.guiinterface;
 
-import edu.sportanalytics.database.BasketballController;
-import edu.sportanalytics.database.DBAccess;
-import edu.sportanalytics.database.SportsEnum;
+import edu.sportanalytics.database.*;
 import org.json.JSONObject;
 
 import javax.ws.rs.GET;
@@ -32,29 +30,21 @@ public class CubeResource
         WHERE SOCCER02.MATCH.LEAGUE_LEAGUE_ID=7809
         GROUP BY CUBE(SOCCER02.SEASONSTAGE.NAME, SOCCER02.TEAM.LONG_NAME);
          */
-    private static final Logger log = Logger.getLogger(edu.sportanalytics.guiinterface.RollupResource.class.getName());
+    private static final Logger log = Logger.getLogger(edu.sportanalytics.guiinterface.CubeResource.class.getName());
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public String getData(@QueryParam("token") int token) {
-        CubeToken tk = CubeToken.getToken(token);
-        if (tk.getSports() == SportsEnum.BASKETBALL) {
-            BasketballController bc = (BasketballController) DBAccess.getInstance()
-                    .getController(SportsEnum.BASKETBALL);
-
-            List<String> cubevals = new ArrayList<>();
-
-            cubevals.add(bc.getCubeStats(tk.getAggregationValue(), tk.getAggregationFunction(), tk.getDimension1(), tk.getDimension2()));
-
-            JSONObject jo = new JSONObject();
-            jo.put("cubevals", cubevals);
-            String returnString = jo.toString();
+    public String getData() {
+        JSONObject jo = new JSONObject();
+        CubeRollupData data = DBAccess.getInstance().getController(SportsEnum.SOCCER).getCube();
+        jo.put("dim1", data.getDim1());
+        jo.put("dim2", data.getDim2());
+        jo.put("aggie", data.getAggie());
+        String returnString = jo.toString();
 
             log.info("JSON String created: " + returnString);
             return returnString;
-        } else {
-            return null;
-        }
+
     }
 }
 

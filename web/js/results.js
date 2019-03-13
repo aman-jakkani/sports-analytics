@@ -1,15 +1,107 @@
 var globalCharts = new Array();
 
+
+function plotBubble(){
+
+	var canvasId = "myChart1";
+	var canvas = document.getElementById(canvasId);
+	var chartType;
+	var offsetWidth = 0;
+	var gameData = {
+  labels: ['0h','1h','2h','3h','4h','5h','6h','7h','8h','9h','10h','11h'],
+  datasets: [
+    {
+      label: 'Hawks',
+      backgroundColor: "rgba(255,221,50,0.2)",
+      data: [{x: 20,
+            y: 41,
+            r: 45}]
+    },
+    {
+      label: 'Heat',
+      backgroundColor: "rgba(60,186,159,0.2)",
+      data: [{x: 25,
+            y: 38,
+            r: 29}]
+    },
+    {
+      label: 'Lakers',
+      backgroundColor: "rgba(0,0,0,0.2)",
+      data: [{x: 30,
+            y: 34,
+            r: 58}]
+    },
+    {
+      label: 'Rockets',
+      backgroundColor: "rgba(193,46,12,0.2)",
+      data: [{x: 23,
+            y: 45,
+            r: 41}]
+    },
+    {
+      label: 'Warriors',
+      backgroundColor: "rgba(128,0,0,0.2)",
+      data: [{x: 28,
+            y: 47,
+            r: 30}]
+    }
+  ]
+};
+  
+
+
+	var chartOptions = {
+	
+	title: {
+        display: true,
+        text: 'Correlation of Field Goal Percentage and Assists Per Game To Number of Wins'
+      }, scales: {
+        yAxes: [{ 
+          scaleLabel: {
+            display: true,
+            labelString: "Field Goal Percentage"
+          }
+        }],
+        xAxes: [{ 
+          scaleLabel: {
+            display: true,
+            labelString: "Assists Per Game"
+        }
+      }]
+	
+	}
+	}
+	var config = {
+                type: chartType = 'bubble',
+                data: gameData,
+                options: chartOptions
+        };
+        
+    globalCharts.push(new Chart(canvas, config));
+	
+	//var ctx = document.getElementById('myChart1').getContext('2d');
+	//var newChart = new Chart(ctx).HeatMap(gameData);
+	//var canvas = document.getElementById(canvasId);
+	//var newChart = new Chart(ctx).HeatMap(gameData, chartOptions);
+
+}
+
 function stats(){
+	
+	document.getElementById('hiddenText1').style.display="block";
+	document.getElementById('Player').style.display="block";
+	document.getElementById("Charts").style.display = "none";
+	document.getElementById("Dropdown").style.display = "none";
 
 	var sport = document.getElementById('chosenSport').innerHTML = document.getElementById("sport").value;
     var league = document.getElementById('chosenLeague').innerHTML = document.getElementById("league").value;
     var team = document.getElementById('chosenTeam').innerHTML = document.getElementById("team").value;
     var season = document.getElementById('chosenSeason').innerHTML = document.getElementById("season").value;
     var match = document.getElementById('chosenGame').innerHTML = document.getElementById("game").value;
+    var name = document.getElementById('name').innerHTML = document.getElementById("player").options[document.getElementById('player').selectedIndex].text;
         
     
-    var parameters = [["sports", sport], ["league", league], ["team", team], ["season", season], ["match", match]];
+    var parameters = [["sports", sport], ["league", league], ["team", team], ["season", season], ["match", match], ["name", name]];
     console.log(parameters);
 
 	var token = getRestResource("TokenResource", parameters);
@@ -20,8 +112,13 @@ function stats(){
 	
 	var playerstatistics = getRestResource("PlayerResource", [["token", token["token"]], ["playerID", stats]]);
 	console.log(playerstatistics);
+
+	
+	//var soccerplayerstatistics = getRestResource("SoccerPlayerResource", [["token", token["token"]], ["playerID", stats]]);
+	//console.log(soccerplayerstatistics);
 	
 }
+
 
 function plotChart() {
         document.getElementById('hiddenText').style.display="block";
@@ -93,9 +190,9 @@ function plotChart() {
     
    		if (playerList != null) {
             console.log("Players found: " + playerList["homePlayers"]);
-            homeTeamData.push(playerList["homePlayers"][0]);
-            awayTeamData.push(playerList["guestPlayers"][1]);
-            availableStats.push("Players");
+            //homeTeamData.push(playerList["homePlayers"][0]);
+            //awayTeamData.push(playerList["guestPlayers"][1]);
+            //availableStats.push("Players");
 
             var htmlPlayerString = "<option value = \"null\" >--Make a choice--</option>";
             console.log("Players found: ".concat(playerList.homePlayers.length + playerList.guestPlayers.length));
@@ -172,9 +269,16 @@ function plotChart() {
         document.getElementById("Dropdown").style.display = "none";
 }
 
+function backToStats(){
+    document.getElementById("Charts").style.display = "block";
+    document.getElementById('Player').style.display="none";
+    document.getElementById("Dropdown").style.display = "none";
+}
+
 // Button to return back to previous dropdown page
 function backToDropdown(){
     document.getElementById("Charts").style.display = "none";
+    document.getElementById('Player').style.display="none";
     document.getElementById("Dropdown").style.display = "block";
     while(globalCharts.length > 0){
         globalCharts[globalCharts.length-1].destroy();
@@ -185,6 +289,9 @@ function backToDropdown(){
 function plotHeatMap(){
 
 	var canvasId = "myChart1";
+	var canvas = document.getElementById(canvasId);
+	var chartType;
+	var offsetWidth = 0;
 	var gameData = {
   labels: ['0h','1h','2h','3h','4h','5h','6h','7h','8h','9h','10h','11h'],
   datasets: [
@@ -287,23 +394,112 @@ legendTemplate : '<div class="<%= name.toLowerCase() %>-legend">'+
 	
 	}
 	
-	/*var config = {
-                type: chartType,
+	var config = {
+                type: chartType = "heatmap",
                 data: gameData,
                 options: chartOptions
-        };*/
+        };
         
-    //globalCharts.push(new Chart(canvas, config));
+    globalCharts.push(new Chart(canvas, config));
 	
-	var ctx = document.getElementById('myChart1').getContext('2d');
-	//var newChart = new Chart(ctx).HeatMap(data);
+	//var ctx = document.getElementById('myChart1').getContext('2d');
+	//var newChart = new Chart(ctx).HeatMap(gameData);
 	//var canvas = document.getElementById(canvasId);
-	var newChart = new Chart(ctx).HeatMap(gameData, chartOptions);
+	//var newChart = new Chart(ctx).HeatMap(gameData, chartOptions);
 
 }
 
 // Default plot will plot only a single plot
 function plotDefault(chartType, homeTeamName, awayTeamName, homeTeamDataParam, awayTeamDataParam, num, label){
+        
+        if (chartType == 'bubble') {
+        
+        var canvasId = "myChart1";
+	var canvas = document.getElementById(canvasId);
+	var chartType;
+	var offsetWidth = 0;
+	var gameData = {
+  labels: ['0h','1h','2h','3h','4h','5h','6h','7h','8h','9h','10h','11h'],
+  datasets: [
+    {
+      label: 'Hawks',
+      backgroundColor: "rgba(255,221,50,0.2)",
+      data: [{x: 20,
+            y: 41,
+            r: 45}]
+    },
+    {
+      label: 'Heat',
+      backgroundColor: "rgba(60,186,159,0.2)",
+      data: [{x: 25,
+            y: 38,
+            r: 29}]
+    },
+    {
+      label: 'Lakers',
+      backgroundColor: "rgba(0,0,0,0.2)",
+      data: [{x: 30,
+            y: 34,
+            r: 58}]
+    },
+    {
+      label: 'Rockets',
+      backgroundColor: "rgba(193,46,12,0.2)",
+      data: [{x: 23,
+            y: 45,
+            r: 41}]
+    },
+    {
+      label: 'Warriors',
+      backgroundColor: "rgba(128,0,0,0.2)",
+      data: [{x: 28,
+            y: 47,
+            r: 30}]
+    }
+  ]
+};
+  
+
+
+	var chartOptions = {
+	
+	title: {
+        display: true,
+        text: 'Correlation of Field Goal Percentage and Assists Per Game To Number of Wins'
+      }, scales: {
+        yAxes: [{ 
+          scaleLabel: {
+            display: true,
+            labelString: "Field Goal Percentage"
+          }
+        }],
+        xAxes: [{ 
+          scaleLabel: {
+            display: true,
+            labelString: "Assists Per Game"
+        }
+      }]
+	
+	}
+	}
+	var config = {
+                type: chartType = 'bubble',
+                data: gameData,
+                options: chartOptions
+        };
+        
+    globalCharts.push(new Chart(canvas, config));
+	
+	//var ctx = document.getElementById('myChart1').getContext('2d');
+	//var newChart = new Chart(ctx).HeatMap(gameData);
+	//var canvas = document.getElementById(canvasId);
+	//var newChart = new Chart(ctx).HeatMap(gameData, chartOptions);
+
+        
+        }
+        
+        else {
+        
         num+=1;
         var canvasId = "myChart" + num;
         var canvas = document.getElementById(canvasId);
@@ -362,6 +558,9 @@ function plotDefault(chartType, homeTeamName, awayTeamName, homeTeamDataParam, a
                 data: gameData,
                 options: chartOptions
         };
+        
+        console.log(chartType);
 
         globalCharts.push(new Chart(canvas, config));
+        }
 }

@@ -31,6 +31,7 @@ var dropdown = {
         $("axes").html(defaultString);
         $("#factAttribute").html(getFactAttribute(sport));
         $("#dimensions").html(getDimensions(sport));
+        
         }
 
       else if ($(this).attr('id') == 'league') {
@@ -79,7 +80,6 @@ var dropdown = {
         $("#chartType").html(getCharts(aggregationStyle));
 
         // Reset games
-        //$("#game").html(defaultString);
       }
 
       else if ($(this).attr('id') == "chartType"){
@@ -231,7 +231,7 @@ function getCharts(aggregationStyle){
   
   if (aggregationStyle == "Cube"){
   
-  	var charts = [['heatmap', 'Heat Map']];
+  	var charts = [['bubble', 'Bubble']];
   
   	console.log("Number of charts: ".concat(charts.length));
  

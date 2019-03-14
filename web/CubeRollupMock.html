@@ -32,7 +32,9 @@
 
 
 </script>
+ 
         <script>
+         	}
             function loadResource()
             {
                 var xhttp = new XMLHttpRequest();
@@ -46,6 +48,7 @@
                 xhttp.send();
             }
         </script>
+        <canvas id="myChart" width="400" height="400"></canvas>
     <!-- Include jQuery -->
     <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 
@@ -99,7 +102,7 @@
     <br>
 	
     <!-- Create Submit Button, link to showData() function -->
-    <button onclick="staticRollup()" id="SUBMIT">SUBMIT</button>
+    <button onclick="getTestRollup()" id="SUBMIT">SUBMIT</button>
     </div>
     <div id="Charts" style="display:none">
     
@@ -169,7 +172,7 @@
                 <canvas id="myChart10" width="300" height="300"></canvas>
             </div>
         </div>
-
+        
 
     <br>
     </div>

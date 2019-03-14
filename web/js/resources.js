@@ -152,6 +152,10 @@ function getDimensions(sport) {
 	return htmlDimensions;
 }
 
+function getTestRollup(){
+	var json = getRestResource("CubeResource",undefined);
+	showChart(json);
+}
 
 // return string of all teams based on sport/league
 function getTeams(sport, league){

@@ -31,6 +31,7 @@ var dropdown = {
         $("axes").html(defaultString);
         $("#factAttribute").html(getFactAttribute(sport));
         $("#dimensions").html(getDimensions(sport));
+
         }
 
       else if ($(this).attr('id') == 'league') {
@@ -40,8 +41,8 @@ var dropdown = {
         // Reset options below team
         $("#season").html(defaultString);
         $("#game").html(defaultString);
-        $("#stat1").html(defaultString);        
-        // $("#chartType").html(defaultString); 
+        $("#stat1").html(defaultString);
+        // $("#chartType").html(defaultString);
         $("axes").html(defaultString);
       }
 
@@ -58,32 +59,31 @@ var dropdown = {
         $("#game").html(getGames(sport, league, team, season));
 
         // reset options below game
-        $("#stat1").html(defaultString);        
-        // $("#chartType").html(defaultString); 
+        $("#stat1").html(defaultString);
+        // $("#chartType").html(defaultString);
         $("axes").html(defaultString);
       }
 
       else if ($(this).attr('id') == "game"){
         game = $("#game").val();
-        //$("#stat1").html(getStats(sport, league, team, season)); 
+        //$("#stat1").html(getStats(sport, league, team, season));
         //$("#player").html(getPlayerList(sport, league, team, season, game));
 
         // token = getToken(sport, league, team, season, game);
 
         // Reset chart type and axes
-        //$("#chartType").html(getCharts()); 
+        //$("#chartType").html(getCharts());
       }
-      
+
       else if ($(this).attr('id') == 'aggregationStyle') {
         aggregationStyle = $("#aggregationStyle").val();
         $("#chartType").html(getCharts(aggregationStyle));
 
         // Reset games
-        //$("#game").html(defaultString);
       }
 
       else if ($(this).attr('id') == "chartType"){
-        chartType = $("chartType").val(); 
+        chartType = $("chartType").val();
 
       }
     });
@@ -111,7 +111,7 @@ function getLeagues(sport) {
 
   document.getElementById("league").innerHTML = htmlLeagueString;
 
-  return htmlLeagueString; 
+  return htmlLeagueString;
 };
 
 function getFactAttribute(sport) {
@@ -120,15 +120,15 @@ function getFactAttribute(sport) {
 	var htmlFactAttribute = "<option value = \"null\" >--Make a choice--</option>";
 
     if (sport == "null") return htmlFactAttribute;
-	
+
 	if (sport == "Basketball") {
 		var htmlFactAttribute = "<option value='0'>--Make a choice--</option><option value='1'>Points</option><option value='2'>Assists</option><option value='3'>Rebounds</option><option value='4'>Steals</option><option value='5'>Blocks</option>";
 
 	}
-	
+
 	else if (sport == "Soccer"){
 		var htmlFactAttribute =  "<option value='0'>--Make a choice--</option><option value='1'>Goals</option><option value='2'>Assists</option><option value='3'>Possession Time</option><option value='4'>Fouls</option><option value='5'>Yellow Cards</option><option value='6'>Red Cards</option>";
-	
+
 	}
 	return htmlFactAttribute;
 }
@@ -139,26 +139,30 @@ function getDimensions(sport) {
 	var htmlDimensions = "<option value = \"null\" >--Make a choice--</option>";
 
     if (sport == "null") return htmlDimensions;
-	
+
 	if (sport == "Basketball") {
 		var htmlDimensions = "<option value='0'>--Make a choice--</option><option value='1'>Point Guard</option><option value='2'>Shooting Guard</option><option value='3'>Small Forward</option><option value='4'>Power Forward</option><option value='5'>Center</option>";
 
 	}
-	
+
 	else if (sport == "Soccer"){
 		var htmlDimensions =  "<option value='0'>--Make a choice--</option><option value='1'>Goalkeeper</option><option value='2'>Fullback</option><option value='3'>Center Back</option><option value='4'>Midfielder</option><option value='5'>Striker</option>";
-	
+
 	}
 	return htmlDimensions;
 }
 
+function getTestRollup(){
+	var json = getRestResource("CubeResource",undefined);
+	showChart(json);
+}
 
 // return string of all teams based on sport/league
 function getTeams(sport, league){
 
   var parameters = [["sports", sport], ["league", league]];
   var htmlTeamString = "<option value = \"null\" >--Make a choice--</option>";
-  
+
   // place conditionals to get allow passing null values when other values are present (pass in all teams)
   if (sport == "null" || league == "null") return htmlTeamString;
 
@@ -224,14 +228,14 @@ function getCharts(aggregationStyle){
   var htmlChartString = "<option value = \"null\" >--Make a choice--</option>";
 
   /*
-  var charts = [['bar', 'Bar Chart'], ['line','Line Chart'], ['horizontalBar', 'Horizontal Bar Chart'], 
-                ['pie', 'Pie Chart'], ['doughnut', 'Doughnut Chart'], ['radar','Radar Chart'], 
+  var charts = [['bar', 'Bar Chart'], ['line','Line Chart'], ['horizontalBar', 'Horizontal Bar Chart'],
+                ['pie', 'Pie Chart'], ['doughnut', 'Doughnut Chart'], ['radar','Radar Chart'],
                 ['polarArea', 'Polar Area Chart']];
   */
-  
+
   if (aggregationStyle == "Cube"){
-  
-  	var charts = [['heatmap', 'Heat Map']];
+
+  	var charts = [['bubble', 'Bubble']];
   
   	console.log("Number of charts: ".concat(charts.length));
  

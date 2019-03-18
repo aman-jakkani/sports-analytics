@@ -152,7 +152,7 @@ function getDimensions(sport) {
 	return htmlDimensions;
 }
 
-function getTestRollup(){
+function getTestCube(){
 	var json = getRestResource("CubeResource",undefined);
 	showChart(json);
 }

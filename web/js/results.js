@@ -106,9 +106,13 @@ function showChart(json) {
     var ctx = document.getElementById("myChart").getContext('2d');
 
     var dim1Int = new Array();
-    for(var season in dim1)
-    {
-        dim1Int.push(parseInt(season.substr(0,4)));
+   for(var i= 0;i<dim1.length;i++){
+        if(dim1[i]!= null){
+            dim1Int.push(parseInt(dim1[i].substr(0,4)));
+        }else{
+            dim1Int.push(null);
+        }
+        
     }
 
     var datasets = new Array();

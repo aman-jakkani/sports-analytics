@@ -86,58 +86,75 @@ function plotBubble(){
 
 }
 
-function showChart(json){
-	var dim1 = json.dim1;
-	var dim2 = json.dim2;
-	var aggie = json.aggie;
-	alert(dim1.length);
-	alert(dim2.length);
-	alert(aggie.length);
-         		var ctx = document.getElementById("myChart").getContext('2d');
-var myChart = new Chart(ctx, {
-    type: 'bar',
-    data: {
-    	
-        labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-        datasets: [{
-        for(var i = 0; i < 6;i++){
-    		data: 
-    	}
-    	}]
-    	
-    	
-        datasets: [{
-            label: '# of Votes',
-            data: [12, 19, 3, 5, 2, 3],
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)'
-            ],
-            borderColor: [
-                'rgba(255,99,132,1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
-            ],
-            borderWidth: 1
-        }]
-    },
-    options: {
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero:true
-                }
-            }]
-        }
+
+function showChart(json) {
+    var dim1 = json.dim1;
+    var dim2 = json.dim2;
+    var aggie = json.aggie;
+    /*alert(dim1.length);
+    alert(dim2.length);
+    alert(aggie.length);*/
+    var ctx = document.getElementById("myChart").getContext('2d');
+
+    var dim1Int = new Array();
+    for(var season in dim1)
+    {
+        dim1Int.push(parseInt(season.substr(0,4)));
     }
-});
+
+    var datasets = new Array();
+    var teamset = new Array();
+    for (var i=0; i<dim2.length; i++)
+    {
+        if(teamset.includes(dim2[i]) /*|| dim2[i] == null*/)
+        {
+            break;
+        }
+        else
+        {
+            teamset.push(dim2[i]);
+        }
+
+        var seasonData = new Array();
+        for (var j=0; j<dim1Int.length; j++)
+        {
+            if(dim2[j] == dim2[i] && dim1Int[j] != null)
+            {
+                seasonData.push(
+                    {
+                        x: dim1Int[j],
+                        y: aggie[j]
+                    }
+                );
+                //console.log('x: ' + dim1Int[j] + ' (' +typeof dim1Int[j] + ') '+ ' y: ' + aggie[j] );
+            }
+        }
+
+        var teamData =
+            {
+                label: dim2[i],
+                data: seasonData,
+                showLine: true,
+                fill: false
+            };
+
+        datasets.push(teamData);
+    }
+    var scatterChart = new Chart(ctx, {
+        type: 'scatter',
+        data:
+            {
+                datasets: datasets
+            },
+        options: {
+            scales: {
+                xAxes: [{
+                    type: 'linear',
+                    position: 'bottom'
+                }]
+            }
+        }
+    });
 }
 
 

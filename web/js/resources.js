@@ -31,7 +31,6 @@ var dropdown = {
         $("axes").html(defaultString);
         $("#factAttribute").html(getFactAttribute(sport));
         $("#dimensions").html(getDimensions(sport));
-        
         }
 
       else if ($(this).attr('id') == 'league') {
@@ -80,6 +79,7 @@ var dropdown = {
         $("#chartType").html(getCharts(aggregationStyle));
 
         // Reset games
+        //$("#game").html(defaultString);
       }
 
       else if ($(this).attr('id') == "chartType"){
@@ -152,10 +152,6 @@ function getDimensions(sport) {
 	return htmlDimensions;
 }
 
-function getTestRollup(){
-	var json = getRestResource("CubeResource",undefined);
-	showChart(json);
-}
 
 // return string of all teams based on sport/league
 function getTeams(sport, league){
@@ -235,7 +231,7 @@ function getCharts(aggregationStyle){
   
   if (aggregationStyle == "Cube"){
   
-  	var charts = [['bubble', 'Bubble']];
+  	var charts = [['heatmap', 'Heat Map']];
   
   	console.log("Number of charts: ".concat(charts.length));
  

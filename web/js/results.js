@@ -86,6 +86,15 @@ function plotBubble(){
 
 }
 
+function getRandomColor() {
+  var letters = '0123456789ABCDEF';
+  var color = '#';
+  for (var i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
+}
+
 
 function showChart(json) {
     var dim1 = json.dim1;
@@ -129,13 +138,19 @@ function showChart(json) {
                 //console.log('x: ' + dim1Int[j] + ' (' +typeof dim1Int[j] + ') '+ ' y: ' + aggie[j] );
             }
         }
-
+		var col = getRandomColor();
         var teamData =
             {
+            
                 label: dim2[i],
                 data: seasonData,
                 showLine: true,
-                fill: false
+                fill: false,
+       			borderColor: col,
+        		pointBorderColor: col,
+        		backgroundColor: col,
+        		hidden: true
+                
             };
 
         datasets.push(teamData);

@@ -8,11 +8,13 @@ import edu.sportanalytics.database.SportsEnum;
 import org.json.JSONObject;
 
 import javax.ws.rs.GET;
+import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import java.util.logging.Logger;
 
+@Path("SoccerPlayerResource")
 public class SoccerPlayerResource {
 
     private static final Logger log = Logger.getLogger(SoccerPlayerResource.class.getName());
@@ -35,9 +37,14 @@ public class SoccerPlayerResource {
         }
         else {
             SoccerController sc = (SoccerController) DBAccess.getInstance().getController(SportsEnum.SOCCER);
-            Player player = DBAccess.getInstance().getController(type).getPlayer(Integer.toString(playerID));
-            //To-Do
+            Soccer_Player player = (Soccer_Player)DBAccess.getInstance().getController(type).getPlayer(Integer.toString(playerID));
+
             JSONObject jo = new JSONObject();
+
+            jo.put("preferredFoot", player.getPreferredFoot());
+            jo.put("strength", player.getStrength());
+            jo.put("overallRating", player.getOverallRating());
+            jo.put("shotpower", player.getShotPower());
 
             String returnString = jo.toString();
 

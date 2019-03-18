@@ -590,12 +590,12 @@ public class BasketballController extends DatabaseController {
 	}
 
     @Override
-    public CubeRollupData getCube() {
+    public CubeRollupData getCube(AggregationEnum agg) {
         return null;
     }
 
     @Override
-    public CubeRollupData getRollup() {
+    public CubeRollupData getRollup(AggregationEnum agg) {
         return null;
     }
 

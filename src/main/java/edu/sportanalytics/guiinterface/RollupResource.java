@@ -10,12 +10,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
-import edu.sportanalytics.database.CubeRollupData;
+import edu.sportanalytics.database.*;
 import org.json.JSONObject;
-
-import edu.sportanalytics.database.BasketballController;
-import edu.sportanalytics.database.DBAccess;
-import edu.sportanalytics.database.SportsEnum;
 
 @Path("RollupResource")
 //Class to retrieve Rollup Statistics
@@ -24,9 +20,18 @@ public class RollupResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public String getData() {
+    public String getData(@QueryParam("aggregation") String aggregation) {
+        AggregationEnum agg = AggregationEnum.UNKNOWN;
+        for(AggregationEnum i : AggregationEnum.values())
+        {
+            if(i.toString().equals(aggregation))
+            {
+                agg=i;
+            }
+        }
+
         JSONObject jo = new JSONObject();
-        CubeRollupData data = DBAccess.getInstance().getController(SportsEnum.SOCCER).getRollup();
+        CubeRollupData data = DBAccess.getInstance().getController(SportsEnum.SOCCER).getRollup(agg);
         jo.put("dim1", data.getDim1());
         jo.put("dim2", data.getDim2());
         jo.put("aggie", data.getAggie());

@@ -538,13 +538,13 @@ public class SoccerController extends DatabaseController
 	}
 
 	@Override
-	public CubeRollupData getCube() {
+	public CubeRollupData getCube(AggregationEnum agg) {
 		CubeRollupData data = new CubeRollupData();
 		ps = null;
 		rs = null;
 		try{
 			ps = DBAccess.getConn().prepareStatement(
-					"SELECT SOCCER02.SEASONSTAGE.NAME AS SEASON, SOCCER02.TEAM.LONG_NAME AS TEAM, AVG(SOCCER02.MATCH.HOME_TEAM_GOAL) as GOALS " +
+					"SELECT SOCCER02.SEASONSTAGE.NAME AS SEASON, SOCCER02.TEAM.LONG_NAME AS TEAM, " + agg.toString()+ "(SOCCER02.MATCH.HOME_TEAM_GOAL) as GOALS " +
 					"FROM (SOCCER02.SEASONSTAGE JOIN SOCCER02.MATCH ON SOCCER02.SEASONSTAGE.SEASONSTAGE_ID=SOCCER02.MATCH.SEASONSTAGE_SEASONSTAGE_ID) " +
 					"JOIN SOCCER02.TEAM ON SOCCER02.MATCH.HOME_TEAM_API_ID=SOCCER02.TEAM.TEAM_API_ID " +
 					"WHERE SOCCER02.MATCH.LEAGUE_LEAGUE_ID=7809 " +
@@ -566,13 +566,13 @@ public class SoccerController extends DatabaseController
 	}
 
 	@Override
-	public CubeRollupData getRollup() {
+	public CubeRollupData getRollup(AggregationEnum agg) {
 		CubeRollupData data = new CubeRollupData();
 		ps = null;
 		rs = null;
 		try{
 			ps = DBAccess.getConn().prepareStatement(
-					"SELECT SOCCER02.SEASONSTAGE.NAME AS SEASON, SOCCER02.TEAM.LONG_NAME AS TEAM, AVG(SOCCER02.MATCH.HOME_TEAM_GOAL) as GOALS " +
+					"SELECT SOCCER02.SEASONSTAGE.NAME AS SEASON, SOCCER02.TEAM.LONG_NAME AS TEAM, " + agg.toString() + "(SOCCER02.MATCH.HOME_TEAM_GOAL) as GOALS " +
 					"FROM (SOCCER02.SEASONSTAGE JOIN SOCCER02.MATCH ON SOCCER02.SEASONSTAGE.SEASONSTAGE_ID=SOCCER02.MATCH.SEASONSTAGE_SEASONSTAGE_ID) " +
 					"JOIN SOCCER02.TEAM ON SOCCER02.MATCH.HOME_TEAM_API_ID=SOCCER02.TEAM.TEAM_API_ID " +
 					"WHERE SOCCER02.MATCH.LEAGUE_LEAGUE_ID=7809 " +

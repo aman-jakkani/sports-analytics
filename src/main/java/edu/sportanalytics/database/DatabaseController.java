@@ -37,8 +37,8 @@ public abstract class DatabaseController {
 
 	public abstract Player getPlayer(String playerID);
 
-	public abstract CubeRollupData getCube();
-	public abstract CubeRollupData getRollup();
+	public abstract CubeRollupData getCube(AggregationEnum agg);
+	public abstract CubeRollupData getRollup(AggregationEnum agg);
 
 	public List<String> getBallPossession(String matchid) {
 		return null;

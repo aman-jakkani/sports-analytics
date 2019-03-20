@@ -189,7 +189,7 @@ function stats(){
     var team = document.getElementById('chosenTeam').innerHTML = document.getElementById("team").value;
     var season = document.getElementById('chosenSeason').innerHTML = document.getElementById("season").value;
     var match = document.getElementById('chosenGame').innerHTML = document.getElementById("game").value;
-    var name = document.getElementById('name').innerHTML = document.getElementById("player").options[document.getElementById('player').selectedIndex].text;
+    //var name = document.getElementById('name').innerHTML = document.getElementById("player").options[document.getElementById('player').selectedIndex].text;
         
     
     var parameters = [["sports", sport], ["league", league], ["team", team], ["season", season], ["match", match], ["name", name]];
@@ -203,11 +203,84 @@ function stats(){
 	
 	var playerstatistics = getRestResource("PlayerResource", [["token", token["token"]], ["playerID", stats]]);
 	console.log(playerstatistics);
+	var playerInfo = Object.values(playerstatistics);
+	
+	var birthday = playerInfo[0];
+	document.getElementById("birthday").innerHTML = birthday;
+	
+	var name = playerInfo[1];
+	document.getElementById("name").innerHTML = name;
+	
+	var weight = playerInfo[2];
+	document.getElementById("weight").innerHTML = weight;
+	
+	var height = playerInfo[3];
+	document.getElementById("height").innerHTML = height;
 
 	
-	//var soccerplayerstatistics = getRestResource("SoccerPlayerResource", [["token", token["token"]], ["playerID", stats]]);
-	//console.log(soccerplayerstatistics);
+	var soccerplayerstatistics = getRestResource("SoccerPlayerResource", [["token", token["token"]], ["playerID", stats]]);
+	console.log(soccerplayerstatistics);
+	console.log(Object.values(soccerplayerstatistics));
+	var individualStats = Object.values(soccerplayerstatistics);
 	
+	var overallRating = individualStats[0];
+	//document.getElementById("overallRating").innerHTML = overallRating;
+	
+	var strength = individualStats[1];
+	//document.getElementById("strength").innerHTML = strength;
+	
+	var shotPower = individualStats[2];
+	//document.getElementById("shotPower").innerHTML = shotPower;
+	
+	var preferredFoot = individualStats[3];
+	var preferredFootCap = preferredFoot.charAt(0).toUpperCase() + preferredFoot.slice(1)
+	document.getElementById("preferredFoot").innerHTML = preferredFootCap;
+	
+
+	plotRadar(name, overallRating, strength, shotPower);
+	
+}
+
+function plotRadar(name, stat0, stat1, stat2) {
+
+
+	var canvasId = "myRadar";
+	var canvas = document.getElementById(canvasId);
+
+	var radarData = {
+  labels: ["Overall Rating", "Strength", "Shot Power"],
+  datasets: [{
+    label: name,
+    backgroundColor: "rgba(200,0,0,0.2)",
+    data: [stat0, stat1, stat2]
+  }]
+};
+ 
+var chartOptions = {
+  scale: {
+    ticks: {
+      beginAtZero: true,
+      min: 0,
+      max: 100,
+      stepSize: 20
+    },
+    pointLabels: {
+      fontSize: 18
+    }
+  },
+  legend: {
+    position: 'left'
+  }
+};
+
+var config = {
+                type: 'radar',
+                data: radarData,
+                options: chartOptions
+        };
+
+globalCharts.push(new Chart(canvas, config));
+
 }
 
 

@@ -152,8 +152,16 @@ function getDimensions(sport) {
 	return htmlDimensions;
 }
 
-function getTestCube(){
-	var json = getRestResource("CubeResource",undefined);
+function getCubeOrRollup(){
+    var aggieFunc = [["aggregation", document.getElementById("aggregationFunction").value]];
+    var json;
+    switch(document.getElementById("aggregationStyle").value){
+        case "Rollup": json = getRestResource("RollupResource",aggieFunc);
+            break;
+        case "Cube": json = getRestResource("CubeResource",aggieFunc);
+            break;
+        default: console.log("No aggie function chosen")
+    }
 	showChart(json);
 }
 
@@ -235,7 +243,7 @@ function getCharts(aggregationStyle){
 
   if (aggregationStyle == "Cube"){
 
-  	var charts = [['bubble', 'Bubble']];
+  	var charts = [['line','Line']];
   
   	console.log("Number of charts: ".concat(charts.length));
  
@@ -243,10 +251,16 @@ function getCharts(aggregationStyle){
     	htmlChartString = htmlChartString.concat("<option value = \"" + charts[i][0] + "\" >" + charts[i][1] + "</option>");
   	}
   
-  }
+  }else if(aggregationStyle=="Rollup"){
+      var charts = [['line','Line']];
+  
+  	console.log("Number of charts: ".concat(charts.length));
+ 
+  	for (i = 0; i < charts.length; ++i){
+    	htmlChartString = htmlChartString.concat("<option value = \"" + charts[i][0] + "\" >" + charts[i][1] + "</option>");
+  	}
 
-
-  else {
+  }else {
 	var charts = [['bar', 'Bar Chart'], ['line','Line Chart'], ['radar','Radar Chart']];
   
   	console.log("Number of charts: ".concat(charts.length));

@@ -1,7 +1,6 @@
 <!doctype html>
 <!--Front Page-->
 <html>
-
 	<title>Sports Analytics</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -50,6 +49,7 @@
                 xhttp.send();
             }
         </script>
+
     <!-- Include jQuery -->
     <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 
@@ -184,34 +184,25 @@
     
 
     <br><button onclick="backToDropdown()" id="BACK">BACK</button>
-    <!-- Display Stats in a list -->
-    <br><div style="display: none;" id="hiddenText">Results: </div>
-    <p><span id = 'chosenSport'> </span></p>
-    <p><span id = 'chosenLeague'> </span></p>
-    <p><span id = 'chosenTeam'> </span></p>
-    <p><span id = 'chosenSeason'> </span></p>
-    <p><span id = 'chosenGame'> </span></p>
-    <p><span id = 'attendance'> </span></p>
-    
     
 	<!--<button onclick="plotHeatMap()" id="map">Heat Map</button>
 	<canvas id="heatmap" width="800" height="400"></canvas>-->
-    		<div class = "row">
-    		<div class ="column">
-    		 <fieldset>
-                <legend>Players</legend>
-                <p>
-                    <select id = "player">
-                        <option value = "null">--Make a choice--</option>
-                    </select>
-                </p>
-             </fieldset> 
-             </div>
-             <div class = "column">
-    		<br>
-    		<button id = "playerStats" onclick="stats()">Get Player Statistics</button>
+    <div class = "row">
+        <div class ="column">
+            <fieldset>
+            <legend>Players</legend>
+            <p>
+                <select id = "player">
+                    <option value = "null">--Make a choice--</option>
+                </select>
+            </p>
+            </fieldset> 
             </div>
-            </div>
+            <div class = "column">
+        <br>
+        <button id = "playerStats" onclick="stats()">Get Player Statistics</button>
+        </div>
+    </div>
     
         <div style="width: 50%; float: left">
             <div>

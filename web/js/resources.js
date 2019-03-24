@@ -1,5 +1,11 @@
-// This will be called anytime a dropdown menu option is clicked. 
-// Stores previous values of sport, league, team, season, and game
+/* *****************************************************************
+Description:
+  This will be called anytime a dropdown menu option is clicked. 
+  Needed to store previous values of sport, league, team, season, and game
+
+Methods:
+
+******************************************************************* */
 
 var dropdown = { 
   sport: "null",
@@ -152,18 +158,6 @@ function getDimensions(sport) {
 	return htmlDimensions;
 }
 
-function getCubeOrRollup(){
-    var aggieFunc = [["aggregation", document.getElementById("aggregationFunction").value]];
-    var json;
-    switch(document.getElementById("aggregationStyle").value){
-        case "Rollup": json = getRestResource("RollupResource",aggieFunc);
-            break;
-        case "Cube": json = getRestResource("CubeResource",aggieFunc);
-            break;
-        default: console.log("No aggie function chosen")
-    }
-	showChart(json);
-}
 
 // return string of all teams based on sport/league
 function getTeams(sport, league){
@@ -232,36 +226,39 @@ function getGames(sport, league, team, season){
 }
 
 
+// Returns a string in html to populate the chart dropdown
 function getCharts(aggregationStyle){
+
+  // Default value for the string
   var htmlChartString = "<option value = \"null\" >--Make a choice--</option>";
 
   /*
+  // Dictionary of potential charts
   var charts = [['bar', 'Bar Chart'], ['line','Line Chart'], ['horizontalBar', 'Horizontal Bar Chart'],
                 ['pie', 'Pie Chart'], ['doughnut', 'Doughnut Chart'], ['radar','Radar Chart'],
                 ['polarArea', 'Polar Area Chart']];
   */
 
+  var charts = [['line','Line']];
+
+  // Currently only using a line chart for cube
   if (aggregationStyle == "Cube"){
-
-  	var charts = [['line','Line']];
-  
   	console.log("Number of charts: ".concat(charts.length));
  
   	for (i = 0; i < charts.length; ++i){
     	htmlChartString = htmlChartString.concat("<option value = \"" + charts[i][0] + "\" >" + charts[i][1] + "</option>");
   	}
   
-  }else if(aggregationStyle=="Rollup"){
-      var charts = [['line','Line']];
-  
+  // currently only using a line chart for rollup
+  } else if (aggregationStyle=="Rollup"){
   	console.log("Number of charts: ".concat(charts.length));
  
   	for (i = 0; i < charts.length; ++i){
     	htmlChartString = htmlChartString.concat("<option value = \"" + charts[i][0] + "\" >" + charts[i][1] + "</option>");
   	}
 
-  }else {
-	var charts = [['bar', 'Bar Chart'], ['line','Line Chart'], ['radar','Radar Chart']];
+  } else {
+	  var charts = [['bar', 'Bar Chart'], ['line','Line Chart'], ['radar','Radar Chart']];
   
   	console.log("Number of charts: ".concat(charts.length));
  
@@ -330,6 +327,21 @@ function getStats(sport, league, team, game){
 }*/
 
 
+function getGroupBy(){
+  var aggieFunc = [["aggregation", document.getElementById("aggregationFunction").value]];
+  var json;
+  switch(document.getElementById("aggregationStyle").value){
+      case "Rollup": json = getRestResource("RollupResource",aggieFunc);
+          break;
+      case "Cube": json = getRestResource("CubeResource",aggieFunc);
+          break;
+      default: console.log("No aggie function chosen")
+  }
+showChart(json);
+}
+
+
+// why do we need this
 function getSoccerStats(htmlTokenString){
   htmlTokenString = htmlTokenString.concat("<option value = \"teamsInMatch\">Home and Away Teams</option>");
   htmlTokenString = htmlTokenString.concat("<option value = \"ballPossession\">Ball Possession</option>");

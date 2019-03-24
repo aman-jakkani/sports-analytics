@@ -20,9 +20,12 @@ def remove_duplicates(new_player_list, old_player_list):
         pass
 
 
-with open('../csv/player_info.csv','w') as csvfile:
+with open('csv/player_info.csv','w') as csvfile:
+        print('Opened CSV...')
         build_header(csvfile)
-        pl = PlayerList(season=2016, only_current=0)
+        print('Header built...')
+        pl = PlayerList(season=2016, only_current=1)
+        print('Player list generated...')
         sleep(2)
         for player in pl.info():
                 ps = PlayerSummary(player['PERSON_ID'])

@@ -153,9 +153,11 @@ function getDimensions(sport) {
 }
 
 function getCubeOrRollup(){
-    var aggieFunc = [["aggregation", document.getElementById("aggregationFunction").value]];
+    var aggieFunc = [["aggregation", document.getElementById("aggregationFunction").value],["sports", document.getElementById("sport").value],["league", document.getElementById("league").value]];
+    console.log("QueryPairs: "+aggieFunc)
+    var aggieStyle = document.getElementById("aggregationStyle").value;
     var json;
-    switch(document.getElementById("aggregationStyle").value){
+    switch(aggieStyle){
         case "Rollup": json = getRestResource("RollupResource",aggieFunc);
             break;
         case "Cube": json = getRestResource("CubeResource",aggieFunc);

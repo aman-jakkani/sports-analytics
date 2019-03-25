@@ -54,132 +54,79 @@ function displayStats(){
 
 
 /*
-  Description  
-
+  Description:
+    This function should take all the selected attributes and return an array with all the data formatted
   Args:
-    None
-
   Returns:
-
   Raises:
-
   Notes:
-      - [["token", token["token"]], ]) is an array of dict values
-      - [ballPossession["possession"][0], yellowCards["yellowCards"][0], 
-                        cornerStats["corners"][0], foulStats["fouls"][0]];
-      - [ballPossession["possession"][1], yellowCards["yellowCards"][1], 
-                        cornerStats["corners"][1], foulStats["fouls"][1]];
 */
-function plot() {
-    var sport = document.getElementById("sport").value;
-    var league = document.getElementById("league").value;
-    var team =  document.getElementById("team").value;
-    var season =  document.getElementById("season").value;
-    var match =  document.getElementById("game").value;
-    var factatt = document.getElementById("factAttribute").value;
-    var aggregfunc = document.getElementById("aggregationFunction").value;
-    var aggregstyle = document.getElementById("aggregationStyle").value;
-    var dimension  = document.getElementById("dimensions").value;
+function getSoccerAttributeData(attribute, token){
 
-    var parameters = [["sports", sport], ["league", league], ["team", team], ["season", season], ["match", match], ["factatt", factatt], ["aggregfunc", aggregfunc], ["aggregstyle", aggregstyle], ["dimension", dimension]];
-    console.log(parameters);
-
-    var token = getRestResource("TokenResource", parameters);
-    console.log("Token: " + token["token"]);
-
-
-    var teams = getRestResource("HomeAndAwayTeamListResource", [["token", token["token"]],]);
-    console.log("Teams: " + teams["homeAndAwayTeam"]);
-
-
-    var homeTeamData = [];
-    var awayTeamData = [];
-    var availableStats = [];
-
-    var score = getRestResource("ScoreRestResource", [["token", token["token"]], ]);
-    if (score != null) {
-        console.log("Score: " + score["score"][0] + ":" + score["score"][1] );
-        homeTeamData.push(score["score"][0]);
-        awayTeamData.push(score["score"][1]);
-        availableStats.push("Score");
-    }
-
-    var ballPossession = getRestResource("BallPossessionStatResource", [["token", token["token"]], ]);
-    if (ballPossession != null) {
-        console.log("Ball Possession: " + ballPossession["possession"]);
-        homeTeamData.push(ballPossession["possession"][0]);
-        awayTeamData.push(ballPossession["possession"][1]);
-        availableStats.push("Ball Possession");
-    }
-
-    var yellowCards = getRestResource("YellowCardsStatResource", [["token", token["token"]], ]);
-    if (yellowCards != null) {
-        console.log("Yellow Cards: " + yellowCards["yellowCards"]);
-        homeTeamData.push(yellowCards["yellowCards"][0]);
-        awayTeamData.push(yellowCards["yellowCards"][1]);
-        availableStats.push("Yellow Cards");
-    }
-
-    var redCards = getRestResource("RedCardsStatResource", [["token", token["token"]], ]);
-    if (redCards != null) {
-        console.log("Red Cards: " + redCards["redCards"]);
-        homeTeamData.push(redCards["redCards"][0]);
-        awayTeamData.push(redCards["redCards"][1]);
-        availableStats.push("Red Cards");
-    }
+  switch (attribute){
+    case ("score"): break;
+    case ("ballPossession"): break;
+    case ("yellowCards"): break;
+    case ("redCards"): break;
+    case ("cornerStats"): break;
+    case ("fouls"): break;
+    default: break;
+  }
+}
 
 /*
-    var playerList = getRestResource("PlayerListResource", [["token", token["token"]], ]);
-    if (playerList != null) {
-      console.log("Players found: " + playerList["homePlayers"]);
-      // homeTeamData.push(playerList["players"][0]);
-      // awayTeamData.push(playerList["players"][1]);
-      // availableStats.push("Players");
-    }
+  Description:
+    This function should take all the selected attributes and return an array with all the data formatted
+  Args:
+  Returns:
+  Raises:
+  Notes:
 */
-
-    var cornerStats = getRestResource("CornerStatRestResource", [["token", token["token"]],]);
-    if(cornerStats != null){
-        console.log("Corner Stats: " + cornerStats["corners"]);
-        homeTeamData.push(cornerStats["corners"][0]);
-        awayTeamData.push(cornerStats["corners"][1]);
-        availableStats.push("Corners");
+function getBasketballAttributeData(attributeList, token){
+  for (i = 0; i < attributeList.length; ++i){
+    switch (attribute){
+      case ("points"): break;
+      case (""): break;
+      default: break;
     }
-
-    var foulStats = getRestResource("FoulsStatResource", [["token", token["token"]],]);
-    if(foulStats != null){
-        console.log("Foul Stats: " + foulStats["fouls"]);
-        homeTeamData.push(foulStats["fouls"][0]);
-        awayTeamData.push(foulStats["fouls"][1]);
-        availableStats.push("Fouls");
-    }
-/*
-    var attendance = getRestResource("AttendanceRestResource", [["token", token["token"]],]);
-    if(attendance != null) {
-        console.log("Attendance: " + attendance["attendance"]);
-        document.getElementById("attendance").innerHTML="Attendance: " + attendance["attendance"];
-    }
-    
-*/
-
-    console.log(homeTeamData[1]);
-    console.log(homeTeamData);
-    console.log(awayTeamData);
-    var homeTeamName = teams["homeAndAwayTeam"][0];
-    var awayTeamName = teams["homeAndAwayTeam"][1];
-
-    console.log(homeTeamName);
-    console.log(typeof(homeTeamName));
-
-    var chartType = document.getElementById("chartType").value;
-    
-    generateChart(chartType, homeTeamName, awayTeamName, homeTeamData, awayTeamData, availableStats);
+  }
 }
 
 
 /*
+  Description:
+  Args:
+  Returns:
+  Raises:
+  Notes:
+*/
+function plot() {
+  var sport = document.getElementById("sport").value;
+  var league = document.getElementById("league").value;
+  var team =  document.getElementById("team").value;
+  var season =  document.getElementById("season").value;
+  var match =  document.getElementById("game").value;
+  var factatt = document.getElementById("factAttribute").value;
+  var aggregfunc = document.getElementById("aggregationFunction").value;
+  var aggregstyle = document.getElementById("aggregationStyle").value;
+  var dimension  = document.getElementById("dimensions").value;
+
+  var parameters = [["sports", sport], ["league", league], ["team", team], ["season", season], ["match", match], ["factatt", factatt], ["aggregfunc", aggregfunc], ["aggregstyle", aggregstyle], ["dimension", dimension]];
+  console.log(parameters);
+
+  var token = getRestResource("TokenResource", parameters);
+  // console.log("Token: " + token["token"]);
+  
+
+  
+
+}
+
+
+
+/*
   Description
-    This will generate a Chart object and return it to the 
+    This will generate a Chart object and render it on the html canvas
 
   Args:
     chartType (string): the specific chart type that is to be plotted
@@ -189,9 +136,8 @@ function plot() {
     awayTeamData (int/float[]):
 
   Returns:
-
   Raises:
-
+  Notes:
 */
 function generateChart(chartType, homeTeamName, awayTeamName, homeTeamData, awayTeamData){
   var canvas = document.getElementById("mainChart");

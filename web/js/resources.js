@@ -135,6 +135,24 @@ var dropdown = {
 
 /*
 Description:
+  return string of all seasons for a given sport/league/team
+Args:
+Returns:
+Raises:
+Notes:
+*/
+function getToken(sport, league, team, season, game){
+  var parameters = [["sports", sport], ["league", league], ["team", team], ["season", season], ["match", game]];
+
+  var token = getRestResource("TokenResource", parameters);
+  console.log("Token: " + token["token"]);
+
+  return token;
+}
+
+
+/*
+Description:
 Args:
 Returns:
 Raises:
@@ -367,50 +385,6 @@ function getCharts(aggregationStyle){
 }
 
 
-/*
-Description:
-  return string of all seasons for a given sport/league/team
-Args:
-Returns:
-Raises:
-Notes:
-*/
-function getToken(sport, league, team, season, game){
-  var parameters = [["sports", sport], ["league", league], ["team", team], ["season", season], ["match", game]];
-
-  var token = getRestResource("TokenResource", parameters);
-  console.log("Token: " + token["token"]);
-
-  return token;
-}
-
-
-/*
-Description:
- return string of possible stats for a given sport
-Args:
-Returns:
-Raises:
-Notes:
-*/
-function getStats(sport, league, team, game){
-  var htmlStatString = "<option value = \"null\" >--Make a choice--</option>";
-
-  // place conditionals to get allow passing null values when other values are present (pass in all teams)
-  if (sport == "null" || league == "null" || team == "null" || season == "null") return htmlStatString;
-
-  console.log("Sport: " + sport + ", League: " + league + ", Team: " + team + "Game: " + game);
-
-  if (sport == "Soccer"){
-    htmlTokenString = getSoccerStats(htmlTokenString);
-
-  } else if (sport == "Basketball"){
-    htmlTokenString = getBasketballStats(htmlTokenString);
-  }
-
-  return htmlStatString;
-}
-
 
 /*
 Description:
@@ -472,6 +446,33 @@ function getGroupBy(){
           return;
   }
   showChart(json);
+}
+
+
+/*
+Description:
+ return string of possible stats for a given sport
+Args:
+Returns:
+Raises:
+Notes:
+*/
+function getStats(sport, league, team, game){
+  var htmlStatString = "<option value = \"null\" >--Make a choice--</option>";
+
+  // place conditionals to get allow passing null values when other values are present (pass in all teams)
+  if (sport == "null" || league == "null" || team == "null" || season == "null") return htmlStatString;
+
+  console.log("Sport: " + sport + ", League: " + league + ", Team: " + team + "Game: " + game);
+
+  if (sport == "Soccer"){
+    htmlTokenString = getSoccerStats(htmlTokenString);
+
+  } else if (sport == "Basketball"){
+    htmlTokenString = getBasketballStats(htmlTokenString);
+  }
+
+  return htmlStatString;
 }
 
 

@@ -292,14 +292,21 @@ function plotChart() {
         var team = document.getElementById('chosenTeam').innerHTML = document.getElementById("team").value;
         var season = document.getElementById('chosenSeason').innerHTML = document.getElementById("season").value;
         var match = document.getElementById('chosenGame').innerHTML = document.getElementById("game").value;
-        var factatt = document.getElementById("factAttribute").value;
-        var aggregfunc = document.getElementById("aggregationFunction").value;
+        //var factatt = document.getElementById("factAttribute").value; 
+        //var aggregfunc = document.getElementById("aggregationFunction").value;
         var aggregstyle = document.getElementById("aggregationStyle").value;
-        var dimension  = document.getElementById("dimensions").value;
+        //var dimension  = document.getElementById("dimensions").value;
         
+        /****************************************+************
+        *we are displaying cube/rollup-queries in a seperate *
+        *page, no use for dimension, aggregate function etc. *
+        *here                                                *
+        *****************************************************/
     
-        var parameters = [["sports", sport], ["league", league], ["team", team], ["season", season], ["match", match], ["factatt", factatt], ["aggregfunc", aggregfunc], ["aggregstyle", aggregstyle], ["dimension", dimension]];
-        console.log(parameters);
+        //var parameters = [["sports", sport], ["league", league], ["team", team], ["season", season], ["match", match], ["factatt", //factatt], ["aggregfunc", aggregfunc], ["aggregstyle", aggregstyle], ["dimension", dimension]];
+    
+        var parameters = [["sports", sport], ["league", league], ["team", team], ["season", season], ["match", match],["aggregstyle", aggregstyle]];
+            console.log(parameters);
 
         var token = getRestResource("TokenResource", parameters);
         console.log("Token: " + token["token"]);

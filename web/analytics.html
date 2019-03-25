@@ -58,21 +58,29 @@
 
         <div id="Dropdown">
         <form method = "GET">
-            <fieldset>
-                <legend>Pick a Sport</legend>
-                <p> 
+            <table class="w3-table">
+            <tr>
+              <th></th>
+              <th></th>
+              <th></th>
+            </tr>
+                <tr>
+                    <td>
+                        <fieldset>
+                <legend>Choose Sport</legend>
+                <p>
                     <label>Sport</label>
                     <select id = "sport">
-                        <option value = "null">--Make a Choice--</option>
-                        <!-- <option value = "Basketball">Basketball</option> -->
-                        <option value = "Soccer">Soccer</option>
-                        <option value = "Basketball">Basketball</option>
+                        <option>--Make a choice--</option>
+                        <option>Soccer</option>
+                        <option>Basketball</option>
                     </select>
                 </p>
-            </fieldset>
-
-
-            <fieldset>
+            </fieldset>         
+                    </td>
+                    
+                    <td>
+                         <fieldset>
                 <legend>Pick a League</legend>
                 <p>
                     <label>League</label>
@@ -81,9 +89,10 @@
                     </select>
                 </p>
             </fieldset>
-
-
-            <fieldset>
+                    </td>
+                    
+                    <td>
+                         <fieldset>
                 <legend>Pick a Team</legend>
                 <p>
                     <label>Team</label>
@@ -92,9 +101,12 @@
                     </select>
                 </p>
             </fieldset>
-
-
-            <fieldset>
+                    </td>
+                
+                </tr>
+                <tr>
+                    <td>
+                         <fieldset>
                 <legend>Choose a Season</legend>
                 <p>
                     <label>Season</label>
@@ -102,10 +114,8 @@
                         <option value = "null" >--Make a choice--</option>
                     </select>
                 </p>
-            </fieldset>
-
-
-            <fieldset>
+            </fieldset>  </td>
+                    <td><fieldset>
                 <legend>Choose a Game</legend>
                 <p>
                     <label>Game</label>
@@ -113,57 +123,20 @@
                         <option value = "null" >--Make a choice--</option>
                     </select>
                 </p>
-            </fieldset>  
-
-            <fieldset>
-                <legend>Choose Aggregation Function</legend>
-                <p>
-                    <label>Aggregation Function</label>
-                    <select id = "aggregationFunction">
-                        <option value = "null">--Make a choice--</option>
-                        <option value = "1">Sum</option>
-               			<option value = "2">Average</option>
-               			<option value = "3">Count</option>
-               			<option value = "4">Max</option>
-               			<option value = "5">Min</option>
-               			<option value = "6">Standard Deviation</option>
-               			<option value = "7">Variance</option>
-                    </select>
-                </p>
-            </fieldset>
-            
-            <fieldset>
+            </fieldset> </td>
+                    <td><fieldset>
                 <legend>Choose Aggregation Style</legend>
                 <p>
                     <label>Aggregation Style</label>
                     <select id = "aggregationStyle">
                         <option value = "null">--Make a choice--</option>
                         <option value = "Simple">Simple Query</option>
-               			<option value = "Rollup">Rollup</option>
-               			<option value = "Cube">Cube</option>
                     </select>
                 </p>
-            </fieldset>
-            
-             <fieldset>
-                <legend>Fact Attribute</legend>
-                <p>
-                    <select multiple id = "factAttribute">
-                        <option value = "null">--Make a choice--</option>
-                    </select>
-                </p>
-            </fieldset>
-            
-            <fieldset>
-                <legend>Choose Dimensions</legend>
-                <p>
-                    <select multiple id = "dimensions">
-                        <option value = "null">--Make a choice--</option>
-                    </select>
-                </p>
-            </fieldset>
-            
-            <fieldset>
+            </fieldset> </td>
+                </tr>
+                <tr>
+                    <td><fieldset>
                 <legend>Choose Chart Type</legend>
                 <p>
                     <label>Chart</label>
@@ -171,7 +144,9 @@
                         <option value = "null">--Make a choice--</option>
                     </select>
                 </p>
-            </fieldset>
+            </fieldset></td>
+                </tr>
+                </table>        
         </form>
 
     <!-- Import dropdown javascript logic -->

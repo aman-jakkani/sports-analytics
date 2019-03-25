@@ -2,16 +2,17 @@
 Description:
 
 Methods:
-    stats:
-    plotChart:
-    plotDefault:
+    displayStats:
+    plot:
+    generateChart:
 
 ******************************************************************* */
 
 
 /*
   Description
-    Not entirely what the purpose of this function is
+    Displays all relevant statistics within the html page.
+    Need to figure out which stats need to be displayed
 
   Args:
     None
@@ -21,10 +22,8 @@ Methods:
   Raises:
 
 */
-function stats(){
-  
-  // hiddenText1??? what are these four lines doing??
-	document.getElementById('hiddenText1').style.display="block";
+function displayStats(){
+	document.getElementById('Player Stats').style.display="block";
 	document.getElementById('Player').style.display="block";
 	document.getElementById("Charts").style.display = "none";
 	document.getElementById("Dropdown").style.display = "none";
@@ -44,10 +43,12 @@ function stats(){
   console.log("Token: " + token["token"]);
   
   var playerstatistics = getRestResource("PlayerResource", [["token", token["token"]], ["playerID", stats]]);
-  console.log(Object.values(playerstatistics));
+  playerstatistics = Object.values(playerstatistics)
+  console.log(playerstatistics);
 	
 	var soccerplayerstatistics = getRestResource("SoccerPlayerResource", [["token", token["token"]], ["playerID", stats]]);
-	console.log(Object.values(soccerplayerstatistics));
+  soccerplayerstatistics = Object.values(soccerplayerstatistics);
+  console.log(soccerplayerstatistics);
 }
 
 
@@ -62,10 +63,14 @@ function stats(){
 
   Raises:
 
+  Notes:
+      - [["token", token["token"]], ]) is an array of dict values
+      - [ballPossession["possession"][0], yellowCards["yellowCards"][0], 
+                        cornerStats["corners"][0], foulStats["fouls"][0]];
+      - [ballPossession["possession"][1], yellowCards["yellowCards"][1], 
+                        cornerStats["corners"][1], foulStats["fouls"][1]];
 */
-function plotChart() {
-    document.getElementById('hiddenText').style.display="block";
-
+function plot() {
     var sport = document.getElementById("sport").value;
     var league = document.getElementById("league").value;
     var team =  document.getElementById("team").value;
@@ -91,10 +96,8 @@ function plotChart() {
     var awayTeamData = [];
     var availableStats = [];
 
-
-    // [["token", token["token"]], ]) is an array of dict values
     var score = getRestResource("ScoreRestResource", [["token", token["token"]], ]);
-    if(score != null){
+    if (score != null) {
         console.log("Score: " + score["score"][0] + ":" + score["score"][1] );
         homeTeamData.push(score["score"][0]);
         awayTeamData.push(score["score"][1]);
@@ -102,7 +105,7 @@ function plotChart() {
     }
 
     var ballPossession = getRestResource("BallPossessionStatResource", [["token", token["token"]], ]);
-    if(ballPossession != null){
+    if (ballPossession != null) {
         console.log("Ball Possession: " + ballPossession["possession"]);
         homeTeamData.push(ballPossession["possession"][0]);
         awayTeamData.push(ballPossession["possession"][1]);
@@ -110,7 +113,7 @@ function plotChart() {
     }
 
     var yellowCards = getRestResource("YellowCardsStatResource", [["token", token["token"]], ]);
-    if(yellowCards != null){
+    if (yellowCards != null) {
         console.log("Yellow Cards: " + yellowCards["yellowCards"]);
         homeTeamData.push(yellowCards["yellowCards"][0]);
         awayTeamData.push(yellowCards["yellowCards"][1]);
@@ -118,35 +121,22 @@ function plotChart() {
     }
 
     var redCards = getRestResource("RedCardsStatResource", [["token", token["token"]], ]);
-    if(redCards != null){
+    if (redCards != null) {
         console.log("Red Cards: " + redCards["redCards"]);
         homeTeamData.push(redCards["redCards"][0]);
         awayTeamData.push(redCards["redCards"][1]);
         availableStats.push("Red Cards");
     }
-    
 
+/*
     var playerList = getRestResource("PlayerListResource", [["token", token["token"]], ]);
-
     if (playerList != null) {
       console.log("Players found: " + playerList["homePlayers"]);
-      //homeTeamData.push(playerList["homePlayers"][0]);
-      //awayTeamData.push(playerList["guestPlayers"][1]);
-      //availableStats.push("Players");
-
-      var htmlPlayerString = "<option value = \"null\" >--Make a choice--</option>";
-      console.log("Players found: ".concat(playerList.homePlayers.length + playerList.guestPlayers.length));
-      
-      for (i = 0; i < playerList.homePlayers.length; ++i) {
-          htmlPlayerString = htmlPlayerString.concat("<option value = \"" + playerList.homePlayersID[i] + "\">" + playerList.homePlayers[i] + "</option>") //change teams to homePlayers and guestPlayers
-      }
-
-      for (i = 0; i < playerList.guestPlayers.length; ++i) {
-          htmlPlayerString = htmlPlayerString.concat("<option value = \"" + playerList.guestPlayersID[i] + "\">" + playerList.guestPlayers[i] + "</option>") //change teams to homePlayers and guestPlayers
-      }
-      
-      document.getElementById("player").innerHTML = htmlPlayerString;
+      // homeTeamData.push(playerList["players"][0]);
+      // awayTeamData.push(playerList["players"][1]);
+      // availableStats.push("Players");
     }
+  */
 
     var cornerStats = getRestResource("CornerStatRestResource", [["token", token["token"]],]);
     if(cornerStats != null){
@@ -163,19 +153,14 @@ function plotChart() {
         awayTeamData.push(foulStats["fouls"][1]);
         availableStats.push("Fouls");
     }
-
+/*
     var attendance = getRestResource("AttendanceRestResource", [["token", token["token"]],]);
     if(attendance != null) {
         console.log("Attendance: " + attendance["attendance"]);
         document.getElementById("attendance").innerHTML="Attendance: " + attendance["attendance"];
     }
-    else {
-        document.getElementById("attendance").innerHTML="";
-    }
     
-
-    // [ballPossession["possession"][0], yellowCards["yellowCards"][0], cornerStats["corners"][0], foulStats["fouls"][0]];
-    // [ballPossession["possession"][1], yellowCards["yellowCards"][1], cornerStats["corners"][1], foulStats["fouls"][1]];
+*/
 
     console.log(homeTeamData[1]);
     console.log(homeTeamData);
@@ -188,150 +173,71 @@ function plotChart() {
 
     var chartType = document.getElementById("chartType").value;
     
-        homeTeamData.forEach(function(element, index){
-        
-        plotDefault(chartType, homeTeamName, awayTeamName, homeTeamData[index], awayTeamData[index], index, availableStats[index]);
-    });
-
-    document.getElementById("Charts").style.display = "block";
-    document.getElementById("Dropdown").style.display = "none";
+    generateChart(chartType, homeTeamName, awayTeamName, homeTeamData, awayTeamData, availableStats);
 }
 
 
 /*
   Description
-    Default plot will plot only a single plot
+    This will generate a Chart object and return it to the 
 
   Args:
     chartType (string): the specific chart type that is to be plotted
     homeTeamName (string): 
     awayTeamName (string):
-    homeTeamDataParam (string):
-    awayTeamDataParam (string):
-    num (int): ???
-    label (string): ???
+    homeTeamData (int/float[]):
+    awayTeamData (int/float[]):
 
   Returns:
 
   Raises:
 
 */
-function plotDefault(chartType, homeTeamName, awayTeamName, homeTeamDataParam, awayTeamDataParam, num, label){
- 
-  var chartOptions = {
-    title: {
-      display: true,
-      text: 'Chart Title'
-    },
-    scales: {
-      yAxes: [{
-        scaleLabel: {
-          display: true,
-          labelString: "Y-Axis"
-        }
-      }],
-      xAxes: [{
-        scaleLabel: {
-          display: true,
-          labelString: "X-Axis"
-        }
-      }]
-    }
+function generateChart(chartType, homeTeamName, awayTeamName, homeTeamData, awayTeamData){
+  var canvas = document.getElementById("mainChart");
+
+  if (window.bar != undefined){
+          window.bar.destroy();
   }
-  
-	var config = {
-    type: chartType = chartType,
-    data: gameData,
-    options: chartOptions
+
+  var homeTeamData = {
+          label: homeTeamName,
+          data: homeTeamData,
+          backgroundColor: 'rgba(148, 28, 47, 0.6)',
+          borderWidth: 0,
+          yAxisID: "y-axis"
   };
-        
-	
-	//var ctx = document.getElementById('myChart1').getContext('2d');
-	//var newChart = new Chart(ctx).HeatMap(gameData);
-	//var canvas = document.getElementById(canvasId);
-	//var newChart = new Chart(ctx).HeatMap(gameData, chartOptions);
- 
-    
-    num += 1;
-    var canvasId = "myChart" + num;
-    var canvas = document.getElementById(canvasId);
-    var showLabel = true;
-    if(homeTeamName == undefined && awayTeamName == undefined)
-    {
-        showLabel = false;
-    }
 
-    if (window.bar != undefined){
-            window.bar.destroy();
-    }
+  var awayTeamData = {
+          label: awayTeamName,
+          data: awayTeamData,
+          backgroundColor: 'rgba(32, 164, 243, 0.6)',
+          borderWidth: 0,
+          yAxisID: "y-axis"
+  };
 
-    var homeTeamData = {
-            label: homeTeamName,
-            data: [homeTeamDataParam, "0"],
-            backgroundColor: 'rgba(148, 28, 47, 0.6)',
-            borderWidth: 0,
-            yAxisID: "y-axis"
-    };
+  var gameData = {
+          labels: ["Ball Possession", "Yellow Cards", "Corners", "Fouls"],
+          datasets: [homeTeamData, awayTeamData]
+  };
 
-    var awayTeamData = {
-            label: awayTeamName,
-            data: [awayTeamDataParam, "0"],
-            backgroundColor: 'rgba(32, 164, 243, 0.6)',
-            borderWidth: 0,
-            yAxisID: "y-axis"
-    };
+  var chartOptions = {
+          scales: {
+                  xAxes: [{
+                          barPercentage: 1,
+                          categoryPercentage: 0.6
+                  }],
+                  yAxes: [{
+                          id: "y-axis"
+                  }]
+          }
+  };
 
-    var gameData = {
-            labels: [label],
-            datasets: [homeTeamData, awayTeamData]
-    };
+  var config = {
+          type: chartType,
+          data: gameData,
+          options: chartOptions
+  };
 
-    var chartOptions = {
-            scales: {
-                    xAxes: [{
-                            barPercentage: 1,
-                            categoryPercentage: 0.6
-                    }],
-                    yAxes: [{
-                            id: "y-axis",
-                            ticks: {
-                      beginAtZero: true,
-                      callback: function (value) { if (Number.isInteger(value)) { return value; } }
-                  }
-                    }]
-            },
-            legend: {
-                display: showLabel
-            }
-    };
-
-    var config = {
-            type: chartType,
-            data: gameData,
-            options: chartOptions
-    };
-    
-    console.log(chartType);
-
-    globalCharts.push(new Chart(canvas, config));
+  window.bar = new Chart(canvas, config);	
 }
-
-
-/*
-function backToStats(){
-    document.getElementById("Charts").style.display = "block";
-    document.getElementById('Player').style.display="none";
-    document.getElementById("Dropdown").style.display = "none";
-}
-
-// Button to return back to previous dropdown page
-function backToDropdown(){
-    document.getElementById("Charts").style.display = "none";
-    document.getElementById('Player').style.display="none";
-    document.getElementById("Dropdown").style.display = "block";
-    while(globalCharts.length > 0){
-        globalCharts[globalCharts.length-1].destroy();
-        globalCharts.pop();
-    }
-}
-*/

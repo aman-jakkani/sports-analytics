@@ -1,13 +1,13 @@
-//Quick info
-//
-//parameter:
-//resourceName      -- Name of the resource requested e.g. LeagueListResource
-//parameterPairs    -- 2DArray containing key value pairs for parameters should look like this:
-//                     var array = [["sports", "soccer"],["league", "Bundesliga"], ...]
-//return            -- JSON Object of requested resource
-//demo usage        -- exampleRestClient.html starting at line 28
+/*
+Quick info
 
-
+parameter:
+ resourceName      -- Name of the resource requested e.g. LeagueListResource
+ parameterPairs    -- 2DArray containing key value pairs for parameters should look like this:
+                    var array = [["sports", "soccer"],["league", "Bundesliga"], ...]
+return            -- JSON Object of requested resource
+demo usage        -- exampleRestClient.html starting at line 28
+*/
 function getRestResource(resourceName, parameterPairs) {
 
     var xhttp = new XMLHttpRequest();

@@ -1,11 +1,11 @@
 function showData() {
     document.getElementById('hiddenText').style.display="block";
 
-    var sport_ = document.getElementById('chosenSport').innerHTML = document.getElementById("sport").value;
-    var league_ = document.getElementById('chosenLeague').innerHTML = document.getElementById("league").value;
-    var team_ = document.getElementById('chosenTeam').innerHTML = document.getElementById("team").value;
-    var season_ = document.getElementById('chosenSeason').innerHTML = document.getElementById("season").value;
-    var match_ = document.getElementById('chosenGame').innerHTML = document.getElementById("game").value;
+    var sport_ = document.getElementById("sport").value;
+    var league_  = document.getElementById("league").value;
+    var team_ = document.getElementById("team").value;
+    var season_ = document.getElementById("season").value;
+    var match_ = document.getElementById("game").value;
     // document.getElementById('chosenChart').innerHTML = document.getElementById("chartType").value;
 
         /* 

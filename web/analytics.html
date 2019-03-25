@@ -16,7 +16,6 @@
     <!-- Include jQuery -->
     <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
     
-    <!-- All sports analytics specific javascript-->
     <!-- RestCaller.js retrieves REST Resources -->
     <script type="text/javascript" src="js/RestCaller.js"></script>
     <!-- Functions to display final results of the dropdown-->
@@ -24,7 +23,7 @@
     <!-- Import dropdown javascript logic -->
     <script type="text/javascript" src="js/resources.js"></script>
     <!-- Utility functions -->
-    <!-- <script type="text/javascript" src="js/utils.js"></script> -->
+    <script type="text/javascript" src="js/utils.js"></script>
 
 
 	
@@ -48,20 +47,7 @@
 		
 		<div class="w3-container"/>
 
-        <!-- include this in utils.js later -->
-        <script>
-            function loadResource() {
-                var xhttp = new XMLHttpRequest();
-                var parameter = document.getElementById("parameter").value;
-                xhttp.onreadystatechange = function() {
-                    if (this.readyState == 4 && this.status == 200) {
-                        document.getElementById("response").innerHTML = xhttp.responseText;
-                    }
-                };
-                xhttp.open("GET", "/rest/DemoRestResource?caller=".concat(parameter), true);
-                xhttp.send();
-            }
-        </script>
+        <!-- included loadResource() in utils.js -->
 
         <div id="Dropdown">
         <form method = "GET">
@@ -166,7 +152,6 @@
                 </p>
             </fieldset>
             
-
             <fieldset>
                 <legend>Choose Chart Type</legend>
                 <p>
@@ -175,6 +160,15 @@
                     </select>
                 </p>
             </fieldset>
+
+            <fieldset>
+                    <legend>Choose Player</legend>
+                    <p>
+                        <select id = "players">
+                            <option value = "null">--Make a choice--</option>
+                        </select>
+                    </p>
+                </fieldset>
         </form>
     <br>
 	
@@ -184,7 +178,6 @@
     <!-- Canvas where the chart will be plotted -->
     <canvas id="mainChart" width="800" height="400"></canvas>
 </html>
-
 
 
 

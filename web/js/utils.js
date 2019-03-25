@@ -26,7 +26,7 @@ function backToDropdown(){
   }
 }
 
-/*
+
 function loadResource()
 {
     var xhttp = new XMLHttpRequest();
@@ -40,6 +40,7 @@ function loadResource()
     xhttp.send();
 }
 
+/*
 function generateChart(chartType, homeTeamName, awayTeamName, homeTeamDataParam, awayTeamDataParam, label){
  
   var chartOptions = {

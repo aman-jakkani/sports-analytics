@@ -111,8 +111,11 @@ var dropdown = {
         // token = getToken(sport, league, team, season, game);
 
         // Reset chart type and axes
-        //$("#chartType").html(getCharts());
+        // $("#chartType").html(getCharts());
+        // Populate players once games are selected
+        $("#players").html(getPlayerList(sport, league, team, game));
       }
+
 
       else if ($(this).attr('id') == 'aggregationStyle') {
         aggregationStyle = $("#aggregationStyle").val();
@@ -130,7 +133,13 @@ var dropdown = {
 }
 
 
-
+/*
+Description:
+Args:
+Returns:
+Raises:
+Notes:
+*/
 // get array of leagues based on sport
 function getLeagues(sport) {
 
@@ -153,8 +162,14 @@ function getLeagues(sport) {
   return htmlLeagueString;
 };
 
-
-// return string of all teams based on sport/league
+/*
+Description:
+  return string of all teams based on sport/league
+Args:
+Returns:
+Raises:
+Notes:
+*/
 function getTeams(sport, league){
 
   var parameters = [["sports", sport], ["league", league]];
@@ -176,7 +191,14 @@ function getTeams(sport, league){
 }
 
 
-// return string of all seasons for a given sport/league/team
+/*
+Description:
+  return string of all seasons for a given sport/league/team
+Args:
+Returns:
+Raises:
+Notes:
+*/
 function getSeasons(sport, league, team){
   var parameters = [["sports", sport], ["league", league], ["team", team]];
   var htmlSeasonString = "<option value = \"null\" >--Make a choice--</option>";
@@ -197,6 +219,14 @@ function getSeasons(sport, league, team){
 }
 
 
+/*
+Description:
+  return string of all seasons for a given sport/league/team
+Args:
+Returns:
+Raises:
+Notes:
+*/
 // return string of all games for a given sport/league/team/season
 function getGames(sport, league, team, season){
   var parameters = [["sports", sport], ["league", league], ["team", team], ["season", season]];
@@ -212,11 +242,21 @@ function getGames(sport, league, team, season){
     htmlMatchString = htmlMatchString.concat("<option value = \"" + json.match[i] + " \">" + json.match[i] + "</option>")
   }
 
+  // Sets the dropdown to the list of values
   document.getElementById("game").innerHTML = htmlMatchString;
 
   return htmlMatchString;
 }
 
+
+/*
+Description:
+  return string of all seasons for a given sport/league/team
+Args:
+Returns:
+Raises:
+Notes:
+*/
 // Attributes are currently hard coded in, should be fine for now
 function getFactAttribute(sport) {
 	var htmlFactAttribute = "<option value = \"null\" >--Make a choice--</option>";
@@ -243,6 +283,14 @@ function getFactAttribute(sport) {
 }
 
 
+/*
+Description:
+  return string of all seasons for a given sport/league/team
+Args:
+Returns:
+Raises:
+Notes:
+*/
 function getDimensions(sport) {
 	var htmlDimensions = "<option value = \"null\" >--Make a choice--</option>";
   if (sport == "null") return htmlDimensions;
@@ -267,7 +315,14 @@ function getDimensions(sport) {
 }
 
 
-// Returns a string in html to populate the chart dropdown based on the aggregration function selected
+/*
+Description:
+  Returns a string in html to populate the chart dropdown based on the aggregration function selected
+Args:
+Returns:
+Raises:
+Notes:
+*/
 function getCharts(aggregationStyle){
 
   // Default value for the string
@@ -312,16 +367,32 @@ function getCharts(aggregationStyle){
 }
 
 
+/*
+Description:
+  return string of all seasons for a given sport/league/team
+Args:
+Returns:
+Raises:
+Notes:
+*/
 function getToken(sport, league, team, season, game){
   var parameters = [["sports", sport], ["league", league], ["team", team], ["season", season], ["match", game]];
 
-  var token = getRestResources("TokenResource", parameters);
+  var token = getRestResource("TokenResource", parameters);
   console.log("Token: " + token["token"]);
 
+  return token;
 }
 
 
-// return string of possible stats for a given sport
+/*
+Description:
+ return string of possible stats for a given sport
+Args:
+Returns:
+Raises:
+Notes:
+*/
 function getStats(sport, league, team, game){
   var htmlStatString = "<option value = \"null\" >--Make a choice--</option>";
 
@@ -341,36 +412,51 @@ function getStats(sport, league, team, game){
 }
 
 
-// return string of possible players 
+/*
+Description:
+  return string of possible players 
+Args:
+Returns:
+Raises:
+Notes:
+*/
 function getPlayerList(sport, league, team, game){
   var htmlPlayerString = "<option value = \"null\" >--Make a choice--</option>";
 
   // place conditionals to get allow passing null values when other values are present (pass in all teams)
-   if (sport == "null" || league == "null" || team == "null" || season == "null" || game == "null") return htmlPlayerString;
+  if (sport == "null" || league == "null" || team == "null" || season == "null" || game == "null") return htmlPlayerString;
   
-   var parameters = [["sports", sport], ["league", league], ["team", team], ["season", season], ["match", game]];
-
-   var json = getRestResource("PlayerListResource", parameters);
+  // var parameters = [["sports", sport], ["league", league], ["team", team], ["season", season], ["match", game]];
+  // var token = getRestResource("TokenResource", parameters);
+  var token = getToken(sport, league, team, season, game);
+  var json = getRestResource("PlayerListResource", [["token", token["token"]], ]);
    
-   console.log("Players found: ".concat(json.homePlayers.length + json.guestPlayers.length));
+  console.log("Players found: ".concat(json.homePlayers.length + json.guestPlayers.length));
    
-   // change teams to homePlayers and guestPlayers
-   for (i = 0; i < json.homePlayers.length; ++i){
+  // change teams to homePlayers and guestPlayers
+  for (i = 0; i < json.homePlayers.length; ++i){
     htmlPlayerString = htmlPlayerString.concat("<option value = \"" + json.homePlayers[i] + "\">" + json.homePlayers[i] + "</option>")
   }
   
-    for (i = 0; i < json.guestPlayers.length; ++i){
+  for (i = 0; i < json.guestPlayers.length; ++i){
     htmlPlayerString = htmlPlayerString.concat("<option value = \"" + json.guestPlayers[i + json.homePlayers.length] + "\">" + json.guestPlayers[i + json.homePlayers.length] + "</option>")
   }
 
-  document.getElementById("player").innerHTML = htmlPlayerString;
+  document.getElementById("players").innerHTML = htmlPlayerString;
 
   return htmlPlayerString;
 }
 
 
 
-// Return rollup or cube resource
+/*
+Description:
+  Return rollup or cube resource
+Args:
+Returns:
+Raises:
+Notes:
+*/
 function getGroupBy(){
   var aggieFunc = [["aggregation", document.getElementById("aggregationFunction").value], ];
   var json;
@@ -389,7 +475,13 @@ function getGroupBy(){
 }
 
 
-// what
+/*
+Description:
+Args:
+Returns:
+Raises:
+Notes:
+*/
 function getSoccerStats(htmlTokenString){
   htmlTokenString = htmlTokenString.concat("<option value = \"teamsInMatch\">Home and Away Teams</option>");
   htmlTokenString = htmlTokenString.concat("<option value = \"ballPossession\">Ball Possession</option>");
@@ -400,7 +492,14 @@ function getSoccerStats(htmlTokenString){
   return htmlTokenString;
 }
 
-// nice 
+
+/*
+Description:
+Args:
+Returns:
+Raises:
+Notes:
+*/ 
 function getBasketballStats(htmlTokenString){
   return htmlTokenString;
 }

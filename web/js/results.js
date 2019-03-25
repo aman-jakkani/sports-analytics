@@ -136,7 +136,7 @@ function plot() {
       // awayTeamData.push(playerList["players"][1]);
       // availableStats.push("Players");
     }
-  */
+*/
 
     var cornerStats = getRestResource("CornerStatRestResource", [["token", token["token"]],]);
     if(cornerStats != null){

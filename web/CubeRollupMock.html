@@ -57,6 +57,26 @@
 
         <div id="Dropdown">
         <form method = "GET">
+        <fieldset>
+                <legend>Choose Sport</legend>
+                <p>
+                    <label>Sport</label>
+                    <select id = "sport">
+                        <option>--Make a choice--</option>
+                        <option>Soccer</option>
+                        <option>Basketball</option>
+                    </select>
+                </p>
+            </fieldset>
+        <fieldset>
+                <legend>Choose League</legend>
+                <p>
+                    <label>League</label>
+                    <select id = "league">
+                        <option value = "UNKNOWN">--Make a choice--</option>
+                    </select>
+                </p>
+            </fieldset>
             <fieldset>
                 <legend>Choose Aggregation Function</legend>
                 <p>
@@ -133,44 +153,6 @@
     		<button id = "playerStats" onclick="stats()">Get Player Statistics</button>
             </div>
             </div>
-    
-        <div style="width: 50%; float: left">
-            <div>
-                <canvas id="myChart1" width="300" height="300"></canvas>
-            </div>
-            <div>
-                <canvas id="myChart3" width="300" height="300"></canvas>
-            </div>
-
-            <div>
-                <canvas id="myChart5" width="300" height="300"></canvas>
-            </div>
-            <div>
-                <canvas id="myChart7" width="300" height="300"></canvas>
-            </div>
-            <div>
-                <canvas id="myChart9" width="300" height="300"></canvas>
-            </div>
-        </div>
-        <div style="width: 50%; float: right">
-            <div>
-                <canvas id="myChart2" width="300" height="300"></canvas>
-            </div>
-            <div>
-                <canvas id="myChart4" width="300" height="300"></canvas>
-            </div>
-            <div>
-                <canvas id="myChart6" width="300" height="300"></canvas>
-            </div>
-            <div>
-                <canvas id="myChart8" width="300" height="300"></canvas>
-            </div>
-            <div>
-                <canvas id="myChart10" width="300" height="300"></canvas>
-            </div>
-        </div>
-        
-
     <br>
     </div>
 	</body>

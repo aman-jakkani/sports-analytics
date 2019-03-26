@@ -320,53 +320,86 @@ public class SoccerController extends DatabaseController
 	// all seasons
 	public String getStatAccumulated(String team, String league, String stat) {
 		int statResult = 0;
-		stmt = null;
+		ps = null;
 		rs = null;
 		String queryHome = "";
 		String queryAway = "";
 		switch (stat) {
 		case "foul":
-			queryHome = "SELECT homefoulcnt AS HOME FROM SOCCER02.TEAM t join SOCCER02.MATCHRELDIMMART m on(t.TEAM_ID = m.team_hometeam_id)join SOCCER02.SEASONSTAGE s on(m.SEASONSTAGE_SEASONSTAGE_ID=s.SEASONSTAGE_ID) WHERE t.long_name='"
-					+ team + "'";
-			queryAway = "SELECT awayfoulcnt AS AWAY FROM SOCCER02.TEAM t join SOCCER02.MATCHRELDIMMART m on(t.TEAM_ID = m.team_awayteam_id)join SOCCER02.SEASONSTAGE s on(m.SEASONSTAGE_SEASONSTAGE_ID=s.SEASONSTAGE_ID) WHERE t.long_name='"
-					+ team + "'";
+			queryHome = "Select sum(Home) as HOME FROM( " + 
+					"SELECT SUM(homefoulcnt) AS HOME FROM SOCCER02.TEAM t " + 
+					"join SOCCER02.MATCHRELDIMMART m on(t.TEAM_ID = m.team_hometeam_id) " + 
+					"join SOCCER02.SEASONSTAGE s on(m.SEASONSTAGE_SEASONSTAGE_ID=s.SEASONSTAGE_ID) " + 
+					"WHERE t.long_name= ? " + 
+					"UNION ALL " + 
+					"SELECT Sum(awayfoulcnt) AS home FROM SOCCER02.TEAM t " + 
+					"join SOCCER02.MATCHRELDIMMART m on(t.TEAM_ID = m.team_awayteam_id) " + 
+					"join SOCCER02.SEASONSTAGE s on(m.SEASONSTAGE_SEASONSTAGE_ID=s.SEASONSTAGE_ID) " + 
+					"WHERE t.long_name= ? ) "; 
 			break;
 		case "goal":
 			break;
 		case "corner":
-			queryHome = "SELECT homecornercnt AS HOME FROM SOCCER02.TEAM t join SOCCER02.MATCHRELDIMMART m on(t.TEAM_ID = m.team_hometeam_id)join SOCCER02.SEASONSTAGE s on(m.SEASONSTAGE_SEASONSTAGE_ID=s.SEASONSTAGE_ID) WHERE t.long_name='"
-					+ team + "'";
-			queryAway = "SELECT awaycornercnt AS AWAY FROM SOCCER02.TEAM t join SOCCER02.MATCHRELDIMMART m on(t.TEAM_ID = m.team_awayteam_id)join SOCCER02.SEASONSTAGE s on(m.SEASONSTAGE_SEASONSTAGE_ID=s.SEASONSTAGE_ID) WHERE t.long_name='"
-					+ team + "'";
+			queryHome = "Select sum(Home) as HOME FROM( " + 
+					"SELECT homecornercnt AS HOME FROM SOCCER02.TEAM t " + 
+					"join SOCCER02.MATCHRELDIMMART m on(t.TEAM_ID = m.team_hometeam_id) " + 
+					"join SOCCER02.SEASONSTAGE s on(m.SEASONSTAGE_SEASONSTAGE_ID=s.SEASONSTAGE_ID) " + 
+					"WHERE t.long_name= ? " + 
+					"UNION ALL " + 
+					"SELECT SUM(awaycornercnt) AS home FROM SOCCER02.TEAM t " + 
+					"join SOCCER02.MATCHRELDIMMART m on(t.TEAM_ID = m.team_awayteam_id) " + 
+					"join SOCCER02.SEASONSTAGE s on(m.SEASONSTAGE_SEASONSTAGE_ID=s.SEASONSTAGE_ID) " + 
+					"WHERE t.long_name= ? ) ";
+					
 			break;
 		case "red":
-			queryHome = "SELECT homeredcnt AS HOME FROM SOCCER02.TEAM t join SOCCER02.MATCHRELDIMMART m on(t.TEAM_ID = m.team_hometeam_id)join SOCCER02.SEASONSTAGE s on(m.SEASONSTAGE_SEASONSTAGE_ID=s.SEASONSTAGE_ID) WHERE t.long_name='"
-					+ team + "'";
-			queryAway = "SELECT awayredcnt AS AWAY FROM SOCCER02.TEAM t join SOCCER02.MATCHRELDIMMART m on(t.TEAM_ID = m.team_awayteam_id)join SOCCER02.SEASONSTAGE s on(m.SEASONSTAGE_SEASONSTAGE_ID=s.SEASONSTAGE_ID) WHERE t.long_name='"
-					+ team + "'";
+			queryHome = "Select sum(Home) as HOME FROM( " + 
+					"SELECT SUM(homeredcnt) AS HOME FROM SOCCER02.TEAM t " + 
+					"join SOCCER02.MATCHRELDIMMART m on(t.TEAM_ID = m.team_hometeam_id) " + 
+					"join SOCCER02.SEASONSTAGE s on(m.SEASONSTAGE_SEASONSTAGE_ID=s.SEASONSTAGE_ID) " + 
+					"WHERE t.long_name= ? " + 
+					"UNION ALL " + 
+					"SELECT SUM(awayredcnt) AS home FROM SOCCER02.TEAM t " + 
+					"join SOCCER02.MATCHRELDIMMART m on(t.TEAM_ID = m.team_awayteam_id) " + 
+					"join SOCCER02.SEASONSTAGE s on(m.SEASONSTAGE_SEASONSTAGE_ID=s.SEASONSTAGE_ID) " + 
+					"WHERE t.long_name= ? )";
 			break;
 		case "yellow":
-			queryHome = "SELECT (homeyellowcnt+homeyellow2cnt) AS HOME FROM SOCCER02.TEAM t join SOCCER02.MATCHRELDIMMART m on(t.TEAM_ID = m.team_hometeam_id)join SOCCER02.SEASONSTAGE s on(m.SEASONSTAGE_SEASONSTAGE_ID=s.SEASONSTAGE_ID) WHERE t.long_name='"
-					+ team + "'";
-			queryAway = "SELECT (awayyellowcnt+awayyellow2cnt) AS AWAY FROM SOCCER02.TEAM t join SOCCER02.MATCHRELDIMMART m on(t.TEAM_ID = m.team_awayteam_id)join SOCCER02.SEASONSTAGE s on(m.SEASONSTAGE_SEASONSTAGE_ID=s.SEASONSTAGE_ID) WHERE t.long_name='"
-					+ team + "'";
+			queryHome = "Select sum(Home) as HOME FROM( " + 
+					"SELECT Sum(homeyellowcnt+homeyellow2cnt) AS HOME FROM SOCCER02.TEAM t " + 
+					"join SOCCER02.MATCHRELDIMMART m on(t.TEAM_ID = m.team_hometeam_id) " + 
+					"join SOCCER02.SEASONSTAGE s on(m.SEASONSTAGE_SEASONSTAGE_ID=s.SEASONSTAGE_ID) " + 
+					"WHERE t.long_name= ? " + 
+					"UNION ALL " + 
+					"SELECT SUM(awayyellowcnt+awayyellow2cnt) AS HOME FROM SOCCER02.TEAM t " + 
+					"join SOCCER02.MATCHRELDIMMART m on(t.TEAM_ID = m.team_awayteam_id) " + 
+					"join SOCCER02.SEASONSTAGE s on(m.SEASONSTAGE_SEASONSTAGE_ID=s.SEASONSTAGE_ID) " + 
+					"WHERE t.long_name= ? ) ";
 			break;
 		case "score":
-			queryHome = "SELECT HOME_TEAM_GOAL AS HOME FROM SOCCER02.TEAM t join SOCCER02.MATCH m on(t.TEAM_ID = m.team_hometeam_id)join SOCCER02.SEASONSTAGE s on(m.SEASONSTAGE_SEASONSTAGE_ID=s.SEASONSTAGE_ID) WHERE t.long_name='"
-					+ team + "'";
-			queryAway = "SELECT AWAY_TEAM_GOAL AS AWAY FROM SOCCER02.TEAM t join SOCCER02.MATCH m on(t.TEAM_ID = m.team_awayteam_id)join SOCCER02.SEASONSTAGE s on(m.SEASONSTAGE_SEASONSTAGE_ID=s.SEASONSTAGE_ID) WHERE t.long_name='"
-					+ team + "'";
+			queryHome = "Select sum(totalGoals) AS HOME FROM( " + 
+					"SELECT SUM(HOME_TEAM_GOAL) totalGoals " + 
+					"FROM SOCCER02.TEAM t " + 
+					"join SOCCER02.MATCH m on(t.TEAM_ID = m.team_hometeam_id) " + 
+					"join SOCCER02.SEASONSTAGE s on(m.SEASONSTAGE_SEASONSTAGE_ID=s.SEASONSTAGE_ID) " + 
+					"WHERE t.long_name = ? " + 
+					"UNION ALL " + 
+					"SELECT SUM(AWAY_TEAM_GOAL) totalGoals " + 
+					"FROM SOCCER02.TEAM t " + 
+					"join SOCCER02.MATCH m on(t.TEAM_ID = m.team_awayteam_id) " + 
+					"join SOCCER02.SEASONSTAGE s on(m.SEASONSTAGE_SEASONSTAGE_ID=s.SEASONSTAGE_ID) " + 
+					"WHERE t.long_name = ? ) ";
 			break;
 		}
 		try {
-			stmt = DBAccess.getConn().createStatement();
-			rs = stmt.executeQuery(queryHome);
+			ps = DBAccess.getConn().prepareStatement(queryHome);
+
+				ps.setString(1, team);
+				ps.setString(2,team);
+
+			rs = ps.executeQuery();
 			while (rs.next()) {
 				statResult += rs.getInt("HOME");
-			}
-			rs = stmt.executeQuery(queryAway);
-			while (rs.next()) {
-				statResult += rs.getInt("AWAY");
 			}
 		} catch (SQLException e) {
 			log.severe(e.getMessage());

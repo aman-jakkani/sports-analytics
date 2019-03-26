@@ -41,7 +41,7 @@ function showChart(json, chartType) {
     var datasets = new Array();
     var teamset = new Array();
     for (var i = 0; i < dim2.length; i++) {
-        if (teamset.includes(dim2[i]) /*|| dim2[i] == null*/) {
+        if (teamset.includes(dim2[i])) {
             break;
         }
         else {
@@ -61,16 +61,6 @@ function showChart(json, chartType) {
             }
         }
         
-        /*var xLabels = new Array();
-        	for (var i = 0; i < dimm2.length; i++) {
-        		if (xLabels.includes(dimm2[i])) {
-            		break;
-        		}
-        		else {
-            		xLabels.push(dimm2[i]);
-            		//console.log(dimm2[i]);
-        		}
-        	}*/
 
 		var col = getRandomColor();
         var teamData ={
@@ -89,7 +79,7 @@ function showChart(json, chartType) {
     }
     
     //console.log('30: ' + dim2[30]);
-    console.log(dim2[i]);
+    console.log(i);
     //console.log("xLabels" + xLabels);
 
     var scatterChart = new Chart(ctx, {
@@ -105,10 +95,13 @@ function showChart(json, chartType) {
                     position: 'bottom',
                     ticks: {
                 		display: true,
-                		stepSize: 1,
                         callback: function(value, index, values) {
                             return xLabels[value];
-                	    }
+                	    },
+                	    autoSkip: false,
+                	    min: 0,
+                    	max: i,
+                    	stepSize: 1,
               		}
                 }]
             }
@@ -186,4 +179,12 @@ function showChart(json, chartType) {
         }
     });
     }
+    
+    else {
+
+console.log("Did not read correct chart type");
+
 }
+}
+
+

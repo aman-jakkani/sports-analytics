@@ -70,7 +70,6 @@
                 <p>
                     <select id = "chartType">
                         <option value = "null">--Make a choice--</option>
-                        <option value = "lineChart">Line Chart</option>
                     </select>
                 </p>
             </fieldset>
@@ -78,7 +77,7 @@
 
     <br>
     <!-- Create Submit Button, link to showData() function -->
-    <button onclick="getGroupBy()" id="SUBMIT">SUBMIT</button>
+    <button onclick="getGroupBy(chartType)" id="SUBMIT">SUBMIT</button>
     
     <!-- Display Stats in a list -->
     <br><div style="display: none;" id="hiddenText"> Results: </div>

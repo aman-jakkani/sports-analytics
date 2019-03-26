@@ -355,7 +355,7 @@ function getCharts(aggregationStyle){
 
 
   if (aggregationStyle == "Cube"){
-    var charts = [['line','Line']];
+    var charts = [['bubble','Bubble Chart'], ['scatter','Scatter Plot']];
   	console.log("Number of charts: ".concat(charts.length));
  
   	for (i = 0; i < charts.length; ++i){
@@ -431,7 +431,7 @@ Returns:
 Raises:
 Notes:
 */
-function getGroupBy(){
+function getGroupBy(chartType){
   var aggieFunc = [["aggregation", document.getElementById("aggregationFunction").value], ];
   var json;
 
@@ -445,7 +445,7 @@ function getGroupBy(){
       default: console.log("No aggie function chosen")
           return;
   }
-  showChart(json);
+  showChart(json, chartType);
 }
 
 

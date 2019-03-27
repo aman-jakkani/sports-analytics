@@ -51,6 +51,7 @@ var dropdown = {
   aggregationStyle: "null",
   chartType: "null",
   token: "null",
+  player: "null",
 
   run: $(document).ready(function() {
     var defaultString = "<option value = \"null\" >--Make a choice--</option>";
@@ -67,13 +68,13 @@ var dropdown = {
         $("#team").html(defaultString);
         $("#season").html(defaultString);
         $("#game").html(defaultString);
-        $("#stat1").html(defaultString);        
+        $("#stat1").html(defaultString);    // stat1 doesn't exist anymore, need to update later      
         // $("#chartType").html(defaultString); 
         $("axes").html(defaultString);
         $("#factAttribute").html(getFactAttribute(sport));
         $("#dimensions").html(getDimensions(sport));
 
-        }
+      }
 
       else if ($(this).attr('id') == 'league') {
         league = $("#league").val();
@@ -108,14 +109,13 @@ var dropdown = {
       else if ($(this).attr('id') == "game"){
         game = $("#game").val();
         //$("#stat1").html(getStats(sport, league, team, season));
-        //$("#player").html(getPlayerList(sport, league, team, season, game));
+        $("#players").html(getPlayerList(sport, league, team, game));
 
         // token = getToken(sport, league, team, season, game);
 
         // Reset chart type and axes
         // $("#chartType").html(getCharts());
         // Populate players once games are selected
-        $("#players").html(getPlayerList(sport, league, team, game));
       }
 
 
@@ -136,12 +136,12 @@ var dropdown = {
 
 
 /*
-Description:
-  return string of all seasons for a given sport/league/team
-Args:
-Returns:
-Raises:
-Notes:
+  Description:
+    return string of all seasons for a given sport/league/team
+  Args:
+  Returns:
+  Raises:
+  Notes:
 */
 function getToken(sport, league, team, season, game){
   var parameters = [["sports", sport], ["league", league], ["team", team], ["season", season], ["match", game]];
@@ -154,11 +154,11 @@ function getToken(sport, league, team, season, game){
 
 
 /*
-Description:
-Args:
-Returns:
-Raises:
-Notes:
+  Description:
+  Args:
+  Returns:
+  Raises:
+  Notes:
 */
 // get array of leagues based on sport
 function getLeagues(sport) {
@@ -183,12 +183,12 @@ function getLeagues(sport) {
 };
 
 /*
-Description:
-  return string of all teams based on sport/league
-Args:
-Returns:
-Raises:
-Notes:
+  Description:
+    return string of all teams based on sport/league
+  Args:
+  Returns:
+  Raises:
+  Notes:
 */
 function getTeams(sport, league){
 
@@ -212,12 +212,12 @@ function getTeams(sport, league){
 
 
 /*
-Description:
-  return string of all seasons for a given sport/league/team
-Args:
-Returns:
-Raises:
-Notes:
+  Description:
+    return string of all seasons for a given sport/league/team
+  Args:
+  Returns:
+  Raises:
+  Notes:
 */
 function getSeasons(sport, league, team){
   var parameters = [["sports", sport], ["league", league], ["team", team]];
@@ -240,12 +240,12 @@ function getSeasons(sport, league, team){
 
 
 /*
-Description:
-  return string of all seasons for a given sport/league/team
-Args:
-Returns:
-Raises:
-Notes:
+  Description:
+    return string of all seasons for a given sport/league/team
+  Args:
+  Returns:
+  Raises:
+  Notes:
 */
 // return string of all games for a given sport/league/team/season
 function getGames(sport, league, team, season){
@@ -270,12 +270,12 @@ function getGames(sport, league, team, season){
 
 
 /*
-Description:
-  return string of all seasons for a given sport/league/team
-Args:
-Returns:
-Raises:
-Notes:
+  Description:
+    return string of all seasons for a given sport/league/team
+  Args:
+  Returns:
+  Raises:
+  Notes:
 */
 // Attributes are currently hard coded in, should be fine for now
 function getFactAttribute(sport) {
@@ -304,12 +304,12 @@ function getFactAttribute(sport) {
 
 
 /*
-Description:
-  return string of all seasons for a given sport/league/team
-Args:
-Returns:
-Raises:
-Notes:
+  Description:
+    return string of all seasons for a given sport/league/team
+  Args:
+  Returns:
+  Raises:
+  Notes:
 */
 function getDimensions(sport) {
 	var htmlDimensions = "<option value = \"null\" >--Make a choice--</option>";
@@ -336,12 +336,12 @@ function getDimensions(sport) {
 
 
 /*
-Description:
-  Returns a string in html to populate the chart dropdown based on the aggregration function selected
-Args:
-Returns:
-Raises:
-Notes:
+  Description:
+    Returns a string in html to populate the chart dropdown based on the aggregration function selected
+  Args:
+  Returns:
+  Raises:
+  Notes:
 */
 function getCharts(aggregationStyle){
 
@@ -389,12 +389,12 @@ function getCharts(aggregationStyle){
 
 
 /*
-Description:
-  return string of possible players 
-Args:
-Returns:
-Raises:
-Notes:
+  Description:
+    return string of possible players 
+  Args:
+  Returns:
+  Raises:
+  Notes:
 */
 function getPlayerList(sport, league, team, game){
   var htmlPlayerString = "<option value = \"null\" >--Make a choice--</option>";
@@ -410,12 +410,12 @@ function getPlayerList(sport, league, team, game){
   console.log("Players found: ".concat(json.homePlayers.length + json.guestPlayers.length));
    
   for (i = 0; i < json.homePlayers.length; ++i){
-    htmlPlayerString = htmlPlayerString.concat("<option value = \"" + json.homePlayersID[i] + "\">" + json.homePlayers[i] + "</option>")
+    htmlPlayerString = htmlPlayerString.concat("<option value = \"" + json.homePlayersID[i] + "\">" + json.homePlayers[i] + "</option>");
   }
   
   // json.guestPlayersID[i + json.homePlayers.length]
   for (i = 0; i < json.guestPlayers.length; ++i){
-    htmlPlayerString = htmlPlayerString.concat("<option value = \"" + json.guestPlayersID[i] + "\">" + json.guestPlayers[i] + "</option>")
+    htmlPlayerString = htmlPlayerString.concat("<option value = \"" + json.guestPlayersID[i] + "\">" + json.guestPlayers[i] + "</option>");
   }
 
   console.log(json);
@@ -427,12 +427,12 @@ function getPlayerList(sport, league, team, game){
 
 
 /*
-Description:
-  Return rollup or cube resource
-Args:
-Returns:
-Raises:
-Notes:
+  Description:
+    Return rollup or cube resource
+  Args:
+  Returns:
+  Raises:
+  Notes:
 */
 function getGroupBy(chartType){
   var aggieFunc = [["aggregation", document.getElementById("aggregationFunction").value], ];
@@ -453,12 +453,12 @@ function getGroupBy(chartType){
 
 
 /*
-Description:
- return string of possible stats for a given sport
-Args:
-Returns:
-Raises:
-Notes:
+  Description:
+  return string of possible stats for a given sport
+  Args:
+  Returns:
+  Raises:
+  Notes:
 */
 function getStats(sport, league, team, game){
   var htmlStatString = "<option value = \"null\" >--Make a choice--</option>";
@@ -480,11 +480,11 @@ function getStats(sport, league, team, game){
 
 
 /*
-Description:
-Args:
-Returns:
-Raises:
-Notes:
+  Description:
+  Args:
+  Returns:
+  Raises:
+  Notes:
 */
 function getSoccerStats(htmlTokenString){
   htmlTokenString = htmlTokenString.concat("<option value = \"teamsInMatch\">Home and Away Teams</option>");
@@ -498,11 +498,11 @@ function getSoccerStats(htmlTokenString){
 
 
 /*
-Description:
-Args:
-Returns:
-Raises:
-Notes:
+  Description:
+  Args:
+  Returns:
+  Raises:
+  Notes:
 */ 
 function getBasketballStats(htmlTokenString){
   return htmlTokenString;

@@ -40,7 +40,17 @@ function displayPlayerStats(){
 
   playerData = getPlayerData(token);
   createPlayerTable(playerData);
-  // plotRadar();
+
+  playerID = document.getElementById("players").value;
+  if (playerID == "null"){
+    console.log("No player selected.");
+    return;
+  }
+  var player = getRestResource("PlayerResource", [["token", token["token"]], ["playerID", playerID]]);
+  player = Object.values(player);
+  var soccerplayerstatistics = getRestResource("SoccerPlayerResource", [["token", token["token"]], ["playerID", playerID]]);
+  soccerplayerstatistics = Object.values(soccerplayerstatistics);
+  plotRadar(player[1], soccerplayerstatistics[0], soccerplayerstatistics[1], soccerplayerstatistics[2]);
 }
 
 
@@ -131,6 +141,7 @@ function plot() {
     var data = getBasketballAttributeData(factatt, token);
   }
 
+  console.log("Chart generation is currently not implemented.");
   // generateChart()
 }
 

@@ -41,6 +41,6 @@ function plotRadar(name, stat0, stat1, stat2) {
       options: options
   };
 
-  var ctx = document.getElementById("mainChart");
+  var ctx = document.getElementById("playerChart");
   new Chart(ctx, config);
 }

@@ -51,6 +51,8 @@ function plot() {
     console.log("Invalid sport selection");
     return;
   }
+  
+  var label = document.getElementById("factAttribute").value;
 
   // Plot a specific chart based on the one selected in the 
   switch (chartType) {
@@ -59,7 +61,8 @@ function plot() {
       break;
 
     case ("line"): 
-      plotLineChart(data);
+      //plotLineChart(data);
+      plotDefault('line', 'home', 'away', Array(data[0]), Array(data[1]), label);
       break;
 
     case ("scatter"):
@@ -67,11 +70,13 @@ function plot() {
       break;
 
     case ("bar"):
-      // plotBarChart(data); 
+      // plotBarChart(data);
+      plotDefault('bar', 'home', 'away', Array(data[0]), Array(data[1]), label); 
       break;
 
     case ("radar"):
       // plotRadar(data);
+      plotDefault('radar', 'home', 'away', Array(data[0]), Array(data[1]), label);
       break;
 
     default: break;
@@ -92,7 +97,7 @@ function getSoccerAttributeData(attribute, token){
   switch (attribute){
     case ("goals"): 
       var score = getRestResource("ScoreRestResource", [["token", token["token"]], ]);
-      return score; // add index
+      return score["score"]; // add index
 
     case ("ballPossession"): 
       var ballPossession = getRestResource("BallPossessionStatResource", [["token", token["token"]], ]);
@@ -100,23 +105,23 @@ function getSoccerAttributeData(attribute, token){
 
     case ("yellowCards"): 
       var yellowCards = getRestResource("YellowCardsStatResource", [["token", token["token"]], ]);
-      return yellowCards; // add index
+      return yellowCards["yellowCards"]; // add index
 
     case ("redCards"): 
       var redCards = getRestResource("RedCardsStatResource", [["token", token["token"]], ]);
-      return redCards; // add index
+      return redCards["redCards"]; // add index
 
     case ("cornerStats"): 
       var cornerStats = getRestResource("CornerStatRestResource", [["token", token["token"]], ]);
-      return cornerStats; // add index
+      return cornerStats["corners"]; // add index
 
     case ("fouls"): 
       var fouls = getRestResource("FoulsStatResource", [["token", token["token"]], ]);
-      return fouls; // add index
+      return fouls["fouls"]; // add index
     
     case ("attendance"):
       var attendance = getRestResource("AttendanceRestResource", [["token", token["token"]], ]);
-      return attendance; // add index
+      return attendance["attendance"]; // add index
 
     default: 
       return null;

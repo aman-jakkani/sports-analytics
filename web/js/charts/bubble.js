@@ -57,7 +57,7 @@ function plotBubble(json){
                 seasonData.push({
                 		x: i,
                         y: dim1[j],
-                        r: json.aggie[j]
+                        r: json.aggie[j].toFixed(2)
                     });
             }
         }
@@ -73,19 +73,29 @@ function plotBubble(json){
        			borderColor: col,
         		pointBorderColor: col,
         		backgroundColor: col,
-        		hidden: true   
+        		hidden: false   
             };
             console.log(json.dim2[i]);
 
         datasets.push(teamData);
     }
+    
+    
 
     var config = {
         type: 'bubble',
         data: {datasets: datasets},
         options: {
+        	title: {
+        		display: true,
+      			text: 'Average Number of Goals Scored By Each Team In Bundesliga By Season'
+      		},
             scales: {
                 xAxes: [{
+                	scaleLabel: {
+                	display: true,
+        			labelString: 'Teams'
+        			},
                     type: 'linear',
                     position: 'bottom',
                     ticks: {
@@ -93,8 +103,21 @@ function plotBubble(json){
                 		stepSize: 1,
                         callback: function(value, index, values) {
                             return xLabels[value];
-                	    }
+                	    },
+                	    min: 0,
+                	    max: i,
+                	    autoSkip: false
               		}
+                }],
+                yAxes: [{
+                	scaleLabel: {
+                	display: true,
+        			labelString: 'Seasons',
+        			ticks: {
+                					callback: function (value) { if (Number.isInteger(value)) { return value; } }
+            					},
+            		min: 0
+        			}
                 }]
             }
         }

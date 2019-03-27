@@ -1,41 +1,46 @@
+/*
+Description:
+Args:
+Returns:
+Raises:
+Notes:
+Dependencies:
+  None
+*/
 function plotRadar(name, stat0, stat1, stat2) {
+  temp = ["Overall Rating", "Strength", "Shot Power"];
+	var data = {
+    labels: temp,
+    datasets: [{
+      label: name,
+      backgroundColor: "rgba(200,0,0,0.2)",
+      data: [stat0, stat1, stat2]
+    }]
+  };
 
-
-	var canvasId = "myRadar";
-	var canvas = document.getElementById(canvasId);
-
-	var radarData = {
-  labels: ["Overall Rating", "Strength", "Shot Power"],
-  datasets: [{
-    label: name,
-    backgroundColor: "rgba(200,0,0,0.2)",
-    data: [stat0, stat1, stat2]
-  }]
-};
- 
-var chartOptions = {
-  scale: {
-    ticks: {
-      beginAtZero: true,
-      min: 0,
-      max: 100,
-      stepSize: 20
+  var options = {
+    scale: {
+      ticks: {
+        beginAtZero: true,
+        min: 0,
+        max: 100,
+        stepSize: 20
+      },
+      pointLabels: {
+        fontSize: 18
+      }
     },
-    pointLabels: {
-      fontSize: 18
+    legend: {
+      position: 'left'
     }
-  },
-  legend: {
-    position: 'left'
-  }
-};
+  };
 
-var config = {
-                type: 'radar',
-                data: radarData,
-                options: chartOptions
-        };
+  var config = {
+      type: 'radar',
+      data: data,
+      options: options
+  };
 
-globalCharts.push(new Chart(canvas, config));
-
+  var ctx = document.getElementById("mainChart");
+  new Chart(ctx, config);
 }

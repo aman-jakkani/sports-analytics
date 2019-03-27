@@ -15,16 +15,21 @@
     <!--<script src = "Chart.Core.js"></script>-->
     <!-- Include jQuery -->
     <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-    
-    <!-- RestCaller.js retrieves REST Resources -->
-    <script type="text/javascript" src="js/RestCaller.js"></script>
-    <!-- Functions to display final results of the dropdown-->
-    <script type = "text/javascript" src = "js/results.js"></script>
-    <!-- Import dropdown javascript logic -->
-    <script type="text/javascript" src="js/resources.js"></script>
+
     <!-- Utility functions -->
     <script type="text/javascript" src="js/utils.js"></script>
 
+    <!-- Include charts -->
+    <script type="text/javascript" src="js/charts/bubble.js"></script>
+    <script type="text/javascript" src="js/charts/radar.js"></script>
+    <script type="text/javascript" src="js/charts/scatter.js"></script>
+
+    <!-- RestCaller.js retrieves REST Resources -->
+    <script type="text/javascript" src="js/RestCaller.js"></script>
+    <!-- Import dropdown javascript logic -->
+    <script type="text/javascript" src="js/resources.js"></script>
+    <!-- Functions to display final results of the dropdown-->
+    <script type = "text/javascript" src = "js/results.js"></script>
 
 	
 	<body>
@@ -173,10 +178,17 @@
     <br>
 	
     <!-- Create Submit Button, link to showData() function -->
-    <button onclick="plot()" id="SUBMIT">SUBMIT</button>
+    <button onclick="plot()" id="SUBMIT">PLOT</button>
+
+    <!-- Create Submit Button, link to showData() function -->
+    <button onclick="displayPlayerStats()" id="STATS">GET PLAYER STATS</button>
 
     <!-- Canvas where the chart will be plotted -->
     <canvas id="mainChart" width="800" height="400"></canvas>
+
+    <!-- This forms the table for all player data -->
+    <div id="table"></div>
+
 </html>
 
 

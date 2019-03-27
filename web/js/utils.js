@@ -1,4 +1,11 @@
 
+/*
+  Description:
+  Args:
+  Returns:
+  Raises:
+  Notes:
+*/
 function getRandomColor() {
   var letters = '0123456789ABCDEF';
   var color = '#';
@@ -8,6 +15,14 @@ function getRandomColor() {
   return color;
 }
 
+
+/*
+  Description:
+  Args:
+  Returns:
+  Raises:
+  Notes:
+*/
 function backToStats(){
   document.getElementById("Charts").style.display = "block";
   document.getElementById('Player').style.display="none";
@@ -15,7 +30,14 @@ function backToStats(){
 }
 
 
-// Button to return back to previous dropdown page
+/*
+  Description:
+    Button to return back to previous dropdown page
+  Args:
+  Returns:
+  Raises:
+  Notes:
+*/
 function backToDropdown(){
   document.getElementById("Charts").style.display = "none";
   document.getElementById('Player').style.display="none";
@@ -26,7 +48,13 @@ function backToDropdown(){
   }
 }
 
-
+/*
+  Description:
+  Args:
+  Returns:
+  Raises:
+  Notes:
+*/
 function loadResource()
 {
     var xhttp = new XMLHttpRequest();
@@ -38,6 +66,54 @@ function loadResource()
     };
     xhttp.open("GET", "/rest/DemoRestResource?caller=".concat(parameter), true);
     xhttp.send();
+}
+
+
+/*
+Description:
+  This function generates a dynamic table 
+Args:
+  playerData: this is an array, where each element contains another array 
+              that has all the player info for a single player.
+Returns:
+Raises:
+Notes:
+*/
+function createPlayerTable(data){
+  console.log("Inside table");
+  console.log(data);
+
+  // Create an HTML table element
+  var table = document.createElement("TABLE");
+  table.border = "1";
+
+  var columnCount = data[0].length;
+  console.log('Column count: ' + columnCount);
+
+  // Create a HTML Table element.
+  var table = document.createElement("TABLE");
+  table.border = "1";
+
+  // Add the header row
+  var row = table.insertRow(-1);
+  for (var i = 0; i < columnCount; ++i) {
+      var headerCell = document.createElement("TH");
+      headerCell.innerHTML = data[0][i];
+      row.appendChild(headerCell);
+  }
+
+  // Add the data rows
+  for (var i = 1; i < data.length; ++i) {
+      row = table.insertRow(-1);
+      for (var j = 0; j < columnCount; ++j) {
+          var cell = row.insertCell(-1);
+          cell.innerHTML = data[i][j];
+      }
+  }
+
+  var dvTable = document.getElementById("table");
+  dvTable.innerHTML = "";
+  dvTable.appendChild(table);
 }
 
 

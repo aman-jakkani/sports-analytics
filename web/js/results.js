@@ -6,6 +6,8 @@ Methods:
     plot:
     generateChart:
 
+Dependencies:
+
 ******************************************************************* */
 
 
@@ -22,75 +24,81 @@ Methods:
   Raises:
 
 */
-function displayStats(){
-	document.getElementById('Player Stats').style.display="block";
-	document.getElementById('Player').style.display="block";
-	document.getElementById("Charts").style.display = "none";
-	document.getElementById("Dropdown").style.display = "none";
-
+function displayPlayerStats(){
 	var sport = document.getElementById("sport").value;
   var league = document.getElementById("league").value;
   var team = document.getElementById("team").value;
   var season = document.getElementById("season").value;
   var match = document.getElementById("game").value;
   //var name = document.getElementById('name').innerHTML = document.getElementById("player").options[document.getElementById('player').selectedIndex].text;
-      
   
   var parameters = [["sports", sport], ["league", league], ["team", team], ["season", season], ["match", match], ["name", name]];
   console.log(parameters);
 
   var token = getRestResource("TokenResource", parameters);
   console.log("Token: " + token["token"]);
-  
-  var playerstatistics = getRestResource("PlayerResource", [["token", token["token"]], ["playerID", stats]]);
-  playerstatistics = Object.values(playerstatistics)
-  console.log(playerstatistics);
-	
-	var soccerplayerstatistics = getRestResource("SoccerPlayerResource", [["token", token["token"]], ["playerID", stats]]);
-  soccerplayerstatistics = Object.values(soccerplayerstatistics);
-  console.log(soccerplayerstatistics);
+
+  playerData = getPlayerData(token);
+  createPlayerTable(playerData);
+  // plotRadar();
 }
 
 
-
 /*
-  Description:
-    This function should take all the selected attributes and return an array with all the data formatted
-  Args:
-  Returns:
-  Raises:
-  Notes:
+Description:
+  Returns an array of player data given a token. This data is used to populate the player table.
+Args:
+Returns:
+Raises:
+Notes:
+  Format:
+  [ [a, b, c, d, e], [f, g, h, i, k], [l, m, n, o, p]]
 */
-function getSoccerAttributeData(attribute, token){
+function getPlayerData(token){
+  // Get the list of players with 
+  var playerList = getRestResource("PlayerListResource", [["token", token["token"]], ]);
 
-  switch (attribute){
-    case ("score"): break;
-    case ("ballPossession"): break;
-    case ("yellowCards"): break;
-    case ("redCards"): break;
-    case ("cornerStats"): break;
-    case ("fouls"): break;
-    default: break;
+  // Create list of IDs to get stats for each player
+  var ids = playerList.homePlayersID;
+  for (var i = 0; i < playerList.guestPlayersID.length; ++i){
+    ids.push(playerList.guestPlayersID[i]);
   }
-}
 
-/*
-  Description:
-    This function should take all the selected attributes and return an array with all the data formatted
-  Args:
-  Returns:
-  Raises:
-  Notes:
-*/
-function getBasketballAttributeData(attributeList, token){
-  for (i = 0; i < attributeList.length; ++i){
-    switch (attribute){
-      case ("points"): break;
-      case (""): break;
-      default: break;
+  // Initialize playerData array
+  var playerData = [["Player ID", "Birthday", "Name", "Weight", "Height", "Rating", "Strength", "Shot Power", "Preferred Foot"], ];
+
+  // Let the first element of the array be the player's id
+  var statsList, playerstatistics, soccerplayerstatistics;
+
+  // Populate playerData for all found players
+  for (var i = 0; i < ids.length; ++i){
+    statsList = [ids[i]];
+
+    // Get general player stats and append
+    playerstatistics = getRestResource("PlayerResource", [["token", token["token"]], ["playerID", ids[i]]]);
+    playerstatistics = Object.values(playerstatistics);
+
+    for (var j = 0; j < playerstatistics.length; ++j){
+      statsList.push(playerstatistics[j]);
     }
+
+    // Get soccer player stats and append
+    soccerplayerstatistics = getRestResource("SoccerPlayerResource", [["token", token["token"]], ["playerID", ids[i]]]);
+
+    soccerplayerstatistics = Object.values(soccerplayerstatistics);
+
+
+    for (var j = 0; j < soccerplayerstatistics.length; ++j){
+      statsList.push(soccerplayerstatistics[j]);
+    }
+
+    // Push the stats list for the specific player onto the playerData dictionary
+    playerData.push(statsList);
   }
+
+  return playerData;
 }
+
 
 
 /*
@@ -117,11 +125,69 @@ function plot() {
   var token = getRestResource("TokenResource", parameters);
   // console.log("Token: " + token["token"]);
   
+  if (sport == "Soccer"){
+    var data = getSoccerAttributeData(factatt, token);
+  } else if (sport == "Basketball"){
+    var data = getBasketballAttributeData(factatt, token);
+  }
 
-  
-
+  // generateChart()
 }
 
+/*
+  Description:
+    This function should take all the selected attributes and return an array with all the data formatted
+  Args:
+  Returns:
+  Raises:
+  Notes:
+*/
+function getSoccerAttributeData(attribute, token){
+
+  switch (attribute){
+    case ("score"): 
+      return getRestResource("ScoreRestResource", [["token", token["token"]], ]);
+
+    case ("ballPossession"): 
+      return getRestResource("BallPossessionStatResource", [["token", token["token"]], ]);
+
+    case ("yellowCards"): 
+      return getRestResource("YellowCardsStatResource", [["token", token["token"]], ]);
+
+    case ("redCards"): 
+      return getRestResource("RedCardsStatResource", [["token", token["token"]], ]);
+
+    case ("cornerStats"): 
+      return getRestResource("CornerStatRestResource", [["token", token["token"]],]);
+
+    case ("fouls"): 
+      return getRestResource("FoulsStatResource", [["token", token["token"]],]);
+    
+    case ("attendance"):
+      return getRestResource("AttendanceRestResource", [["token", token["token"]],]);
+
+    default: 
+      break;
+  }
+}
+
+/*
+  Description:
+    This function should take all the selected attributes and return an array with all the data formatted
+  Args:
+  Returns:
+  Raises:
+  Notes:
+*/
+function getBasketballAttributeData(attributeList, token){
+  for (i = 0; i < attributeList.length; ++i){
+    switch (attribute){
+      case ("points"): break;
+      case (""): break;
+      default: break;
+    }
+  }
+}
 
 
 /*
@@ -138,6 +204,7 @@ function plot() {
   Returns:
   Raises:
   Notes:
+    Move this to its own separate js file within charts
 */
 function generateChart(chartType, homeTeamName, awayTeamName, homeTeamData, awayTeamData){
   var canvas = document.getElementById("mainChart");

@@ -29,6 +29,8 @@ Methods:
   getSoccerStats: can't have this hardcoded
   getBasketballStats: pointless but left it there
 
+Dependencies:
+
 ******************************************************************* */
 
 /*
@@ -407,20 +409,21 @@ function getPlayerList(sport, league, team, game){
    
   console.log("Players found: ".concat(json.homePlayers.length + json.guestPlayers.length));
    
-  // change teams to homePlayers and guestPlayers
   for (i = 0; i < json.homePlayers.length; ++i){
-    htmlPlayerString = htmlPlayerString.concat("<option value = \"" + json.homePlayers[i] + "\">" + json.homePlayers[i] + "</option>")
+    htmlPlayerString = htmlPlayerString.concat("<option value = \"" + json.homePlayersID[i] + "\">" + json.homePlayers[i] + "</option>")
   }
   
+  // json.guestPlayersID[i + json.homePlayers.length]
   for (i = 0; i < json.guestPlayers.length; ++i){
-    htmlPlayerString = htmlPlayerString.concat("<option value = \"" + json.guestPlayers[i + json.homePlayers.length] + "\">" + json.guestPlayers[i + json.homePlayers.length] + "</option>")
+    htmlPlayerString = htmlPlayerString.concat("<option value = \"" + json.guestPlayersID[i] + "\">" + json.guestPlayers[i] + "</option>")
   }
+
+  console.log(json);
 
   document.getElementById("players").innerHTML = htmlPlayerString;
 
   return htmlPlayerString;
 }
-
 
 
 /*

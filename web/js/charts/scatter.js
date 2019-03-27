@@ -3,6 +3,10 @@
     Args:
     Returns:
     Raises:
+    Dependencies:
+        These following files need to be included above of this file as this file has dependencies linked to them. 
+        - utils.js
+        - 
     Notes:
 */
 function plotScatter(json){
@@ -33,9 +37,9 @@ function plotScatter(json){
             if (json.dim2[j] == json.dim2[i] && dim1[j] != null) {
                 seasonData.push({
                         x: dim1[j],
-                        y: aggie[j]
+                        y: json.aggie[j]
                     });
-                console.log('x: ' + dim1[j] + ' (' +typeof dim1[j] + ') '+ ' y: ' + aggie[j] );
+                console.log('x: ' + dim1[j] + ' (' +typeof dim1[j] + ') '+ ' y: ' + json.aggie[j] );
             }
         }
 
@@ -54,19 +58,18 @@ function plotScatter(json){
         datasets.push(teamData);
     }
 
-    var scatterChart = new Chart(ctx, {
-        type: 'bubble',
-        data:
-            {
-                datasets: datasets
-            },
-        options: {
-            scales: {
-                xAxes: [{
-                    type: 'linear',
-                    position: 'bottom'
-                }]
-            }
+    var config = {
+        scales: {
+            xAxes: [{
+                type: 'linear',
+                position: 'bottom'
+            }]
         }
+    }
+
+    new Chart(ctx, {
+        type: 'bubble',
+        data: { datasets: datasets },
+        options: config
     });
 }

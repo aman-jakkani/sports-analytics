@@ -284,20 +284,20 @@ function getFactAttribute(sport) {
   if (sport == "null") return htmlFactAttribute;
 
 	if (sport == "Basketball") {
-    htmlFactAttribute += "<option value='Points'>Points</option>"
-                        + "<option value='Assists'>Assists</option>"
-                        + "<option value='Rebounds'>Rebounds</option>"
-                        + "<option value='Steals'>Steals</option>"
-                        + "<option value='Blocks'>Blocks</option>";
+    htmlFactAttribute += "<option value='points'>Points</option>"
+                        + "<option value='assists'>Assists</option>"
+                        + "<option value='rebounds'>Rebounds</option>"
+                        + "<option value='steals'>Steals</option>"
+                        + "<option value='blocks'>Blocks</option>";
 	}
 
 	else if (sport == "Soccer"){
-    htmlFactAttribute += "<option value='Goals'>Goals</option>"
-                        + "<option value='2'>Assists</option>"
-                        + "<option value='3'>Possession Time</option>"
-                        + "<option value='4'>Fouls</option>"
-                        + "<option value='5'>Yellow Cards</option>"
-                        + "<option value='6'>Red Cards</option>";
+    htmlFactAttribute += "<option value='goals'>Goals</option>"
+                        + "<option value='assists'>Assists</option>"
+                        + "<option value='ballPossession'>Ball Possession</option>"
+                        + "<option value='fouls'>Fouls</option>"
+                        + "<option value='yellowCards'>Yellow Cards</option>"
+                        + "<option value='redCards'>Red Cards</option>";
   }
   
 	return htmlFactAttribute;

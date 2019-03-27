@@ -16,15 +16,15 @@
     Move this to its own separate js file within charts
 */
 function plotLineChart(json){
-  // remove previous chart from the canvas and start fresh
+  console.log("Entered line chart");
+  console.log(json);
+  // destroy any old chart already on the canvas
   if (window.bar != undefined){
-          window.bar.destroy();
+        window.bar.destroy();
   }
 
-  temp = ["Overall Rating", "Strength", "Shot Power"];
-  
   var data = {
-    labels: temp,
+    labels: ["Home Team", "Away Team"],
     datasets: [{
       label: name,
       backgroundColor: "rgba(200,0,0,0.2)",
@@ -38,8 +38,7 @@ function plotLineChart(json){
       ticks: {
         beginAtZero: true,
         min: 0,
-        max: 100,
-        stepSize: 20
+        max: 100
       },
       pointLabels: {
         fontSize: 18
@@ -58,6 +57,6 @@ function plotLineChart(json){
 
 
   var ctx = document.getElementById("mainChart");
-  window.bar = new Chart(ctx, config);	
+  new Chart(ctx, config);	
 }
 

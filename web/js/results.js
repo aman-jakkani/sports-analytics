@@ -24,25 +24,58 @@ function plot() {
   var team =  document.getElementById("team").value;
   var season =  document.getElementById("season").value;
   var match =  document.getElementById("game").value;
-  var factatt = document.getElementById("factAttribute").value; // this needs to be passed in
+  var factatt = document.getElementById("factAttribute").value;
+  var chartType = document.getElementById("chartType").value;
+  /*
   var aggregfunc = document.getElementById("aggregationFunction").value;
   var aggregstyle = document.getElementById("aggregationStyle").value;
   var dimension  = document.getElementById("dimensions").value;
+  */
 
   var parameters = [["sports", sport], ["league", league], ["team", team], ["season", season], ["match", match], ["factatt", factatt]];
   console.log(parameters);
 
   var token = getRestResource("TokenResource", parameters);
-  // console.log("Token: " + token["token"]);
+  var data = null;
   
+  // Get the data for the specific attribute selected
   if (sport == "Soccer"){
-    var data = getSoccerAttributeData(factatt, token);
+    data = getSoccerAttributeData(factatt, token);
+    console.log("Got soccer attributes");
+
   } else if (sport == "Basketball"){
-    var data = getBasketballAttributeData(factatt, token);
+    data = getBasketballAttributeData(factatt, token);
+    console.log("Got basketball attributes");
+
+  } else {
+    console.log("Invalid sport selection");
+    return;
   }
 
-  // generalize this to any chart
-  plotLineChart(data)
+  // Plot a specific chart based on the one selected in the 
+  switch (chartType) {
+    case ("bubble"):
+      // plotBubble(data);
+      break;
+
+    case ("line"): 
+      plotLineChart(data);
+      break;
+
+    case ("scatter"):
+      // plotScatter(data); 
+      break;
+
+    case ("bar"):
+      // plotBarChart(data); 
+      break;
+
+    case ("radar"):
+      // plotRadar(data);
+      break;
+
+    default: break;
+  }
 }
 
 /*
@@ -54,30 +87,39 @@ function plot() {
   Notes:
 */
 function getSoccerAttributeData(attribute, token){
+  console.log("Attribute: " + attribute);
 
   switch (attribute){
-    case ("score"): 
-      return getRestResource("ScoreRestResource", [["token", token["token"]], ]);
+    case ("goals"): 
+      var score = getRestResource("ScoreRestResource", [["token", token["token"]], ]);
+      return score; // add index
 
     case ("ballPossession"): 
-      return getRestResource("BallPossessionStatResource", [["token", token["token"]], ]);
+      var ballPossession = getRestResource("BallPossessionStatResource", [["token", token["token"]], ]);
+      return ballPossession["possession"];
 
     case ("yellowCards"): 
-      return getRestResource("YellowCardsStatResource", [["token", token["token"]], ]);
+      var yellowCards = getRestResource("YellowCardsStatResource", [["token", token["token"]], ]);
+      return yellowCards; // add index
 
     case ("redCards"): 
-      return getRestResource("RedCardsStatResource", [["token", token["token"]], ]);
+      var redCards = getRestResource("RedCardsStatResource", [["token", token["token"]], ]);
+      return redCards; // add index
 
     case ("cornerStats"): 
-      return getRestResource("CornerStatRestResource", [["token", token["token"]],]);
+      var cornerStats = getRestResource("CornerStatRestResource", [["token", token["token"]], ]);
+      return cornerStats; // add index
 
     case ("fouls"): 
-      return getRestResource("FoulsStatResource", [["token", token["token"]],]);
+      var fouls = getRestResource("FoulsStatResource", [["token", token["token"]], ]);
+      return fouls; // add index
     
     case ("attendance"):
-      return getRestResource("AttendanceRestResource", [["token", token["token"]],]);
+      var attendance = getRestResource("AttendanceRestResource", [["token", token["token"]], ]);
+      return attendance; // add index
 
     default: 
+      return null;
       break;
   }
 }
@@ -94,7 +136,8 @@ function getBasketballAttributeData(attributeList, token){
   for (i = 0; i < attributeList.length; ++i){
     switch (attribute){
       case ("points"): break;
-      case (""): break;
+      case ("assists"): break;
+      case ("rebounds"): break;
       default: break;
     }
   }
@@ -120,7 +163,7 @@ function displayPlayerStats(){
   var team = document.getElementById("team").value;
   var season = document.getElementById("season").value;
   var match = document.getElementById("game").value;
-  //var name = document.getElementById('name').innerHTML = document.getElementById("player").options[document.getElementById('player').selectedIndex].text;
+  // var name = document.getElementById('name').innerHTML = document.getElementById("player").options[document.getElementById('player').selectedIndex].text;
   
   var parameters = [["sports", sport], ["league", league], ["team", team], ["season", season], ["match", match], ["name", name]];
   console.log(parameters);

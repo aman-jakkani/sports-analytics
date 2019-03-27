@@ -1,7 +1,8 @@
 
 /*
   Description
-    This will generate a Chart object and render it on the html canvas
+    This is the original charting function (plotDefault) which will plot data for two 
+    teams and compare them.
 
   Args:
     chartType (string): the specific chart type that is to be plotted
@@ -15,7 +16,7 @@
   Notes:
     Move this to its own separate js file within charts
 */
-function generateChart(chartType, homeTeamName, awayTeamName, homeTeamData, awayTeamData){
+function plotHead2Head(chartType, homeTeamName, awayTeamName, homeTeamData, awayTeamData){
   var canvas = document.getElementById("mainChart");
 
   if (window.bar != undefined){

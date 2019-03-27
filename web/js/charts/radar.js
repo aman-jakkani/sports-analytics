@@ -8,6 +8,11 @@ Dependencies:
   None
 */
 function plotRadar(name, stat0, stat1, stat2) {
+  
+  if (window.bar != undefined){
+    window.bar.destroy();
+  }
+
   temp = ["Overall Rating", "Strength", "Shot Power"];
 	var data = {
     labels: temp,

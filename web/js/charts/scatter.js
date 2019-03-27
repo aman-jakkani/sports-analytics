@@ -10,6 +10,11 @@
     Notes:
 */
 function plotScatter(json){
+
+    if (window.bar != undefined){
+        window.bar.destroy();
+    }   
+
     var ctx = document.getElementById("mainChart").getContext('2d');
 
     var dim1 = new Array();
@@ -67,7 +72,9 @@ function plotScatter(json){
         }
     }
 
-    new Chart(ctx, {
+    // window.bar just added without testing.
+    // if Cube/rollup not working, remove "window.bar = "
+    window.bar = new Chart(ctx, {
         type: 'bubble',
         data: { datasets: datasets },
         options: config

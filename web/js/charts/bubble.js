@@ -12,6 +12,10 @@
     Notes:
 */
 function plotBubble(json){
+    if (window.bar != undefined){
+        window.bar.destroy();
+    
+    }
     var ctx = document.getElementById("mainChart").getContext('2d');
 
     // Convert all 20XX/20YY to 20XX (assumes the first dimension is always seasons)

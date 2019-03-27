@@ -52,6 +52,7 @@ var dropdown = {
   chartType: "null",
   token: "null",
   player: "null",
+  factatt: "null",
 
   run: $(document).ready(function() {
     var defaultString = "<option value = \"null\" >--Make a choice--</option>";

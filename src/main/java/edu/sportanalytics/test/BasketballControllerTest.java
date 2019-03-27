@@ -4,6 +4,7 @@ import java.util.List;
 import edu.sportanalytics.database.BasketballController;
 import edu.sportanalytics.database.Basketball_League;
 import edu.sportanalytics.database.DBAccess;
+import edu.sportanalytics.database.SportsEnum;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -11,18 +12,13 @@ public class BasketballControllerTest {
 
     @Test
     public void testGetLeagues() {
-        BasketballController bc = new BasketballController(DBAccess.getInstance());
-        List<Basketball_League> leaguesList = bc.findAllLeagues();
-        List<String> leagueNames = new ArrayList<String>();
-        for (Basketball_League b : leaguesList){
-            leagueNames.add(b.getName());
-        }
-        Assert.assertEquals(leagueNames, bc.getLeagues());
+        BasketballController bc = (BasketballController) DBAccess.getInstance().getController(SportsEnum.BASKETBALL);
+        Assert.assertEquals("NBA", bc.getLeagues());
     }
 
     @Test
     public void testGetTeams() {
-        //To-Do
+        /* To Do
         BasketballController bc = new BasketballController(DBAccess.getInstance());
         List<Basketball_League> leaguesList = bc.findTeams(league);
         List<String> leagueNames = new ArrayList<String>();
@@ -30,6 +26,7 @@ public class BasketballControllerTest {
             leagueNames.add(b.getName());
         }
         Assert.assertEquals(teamNames, bc.getTeams());
+        */
     }
 
     @Test

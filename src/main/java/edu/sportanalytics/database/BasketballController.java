@@ -122,7 +122,7 @@ public class BasketballController extends DatabaseController {
     }
 
 	// Returns Name and ID of all Basketball.Leagues
-	public List<Basketball_League> findAllLeagues(){
+	private List<Basketball_League> findAllLeagues(){
 		List<Basketball_League> blList = new ArrayList<Basketball_League>();
 		Statement stmt= null;
 		ResultSet rs = null;

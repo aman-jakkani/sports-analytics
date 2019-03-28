@@ -18,19 +18,13 @@ public class BasketballControllerTest {
 
     @Test
     public void testGetTeams() {
-        /* To Do
-        BasketballController bc = new BasketballController(DBAccess.getInstance());
-        List<Basketball_League> leaguesList = bc.findTeams(league);
-        List<String> leagueNames = new ArrayList<String>();
-        for (Basketball_League b : teamList){
-            leagueNames.add(b.getName());
-        }
-        Assert.assertEquals(teamNames, bc.getTeams());
-        */
+        BasketballController bc = (BasketballController) DBAccess.getInstance().getController(SportsEnum.BASKETBALL);
+        Assert.assertEquals(30, bc.getTeams("NBA").size());
     }
 
     @Test
     public void testGetSeason() {
+
     }
 
     @Test

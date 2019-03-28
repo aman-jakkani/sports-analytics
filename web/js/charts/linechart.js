@@ -22,24 +22,28 @@ function plotLineChart(json){
   if (window.bar != undefined){
         window.bar.destroy();
   }
-
+  
+  var jsonData = new Array();
+  for (var i = 0; i<json.length; ++i){
+  jsonData.push(parseFloat(json[i]));
+  }  
+  
   var data = {
     labels: ["Home Team", "Away Team"],
-    datasets: [{
-      label: name,
-      backgroundColor: "rgba(200,0,0,0.2)",
-      data: json
-    }]
+    datasets: jsonData
   };
 
+console.log(data);
 
   var options = {
-    scale: {
-      ticks: {
-        beginAtZero: true,
+    scales: {
+      xAxes: [{
+      	ticks: {
+                					beginAtZero: true
+        },
         min: 0,
         max: 100
-      },
+      }],
       pointLabels: {
         fontSize: 18
       }
@@ -47,6 +51,10 @@ function plotLineChart(json){
     legend: {
       position: 'left'
     }
+    /*title: {
+      display: true,
+      text: 'World population per region (in millions)'
+    }*/
   };
 
   var config = {

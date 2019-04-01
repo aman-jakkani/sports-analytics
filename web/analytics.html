@@ -8,7 +8,7 @@
     <!-- CSS -->
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-    
+
     <!-- External libraries -->
     <!-- Chart.js source code-->
     <script src = "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
@@ -42,8 +42,8 @@
 		<div class="w3-sidebar w3-dark-gray w3-bar-block" style="width:15%">
 		  <h3 class="w3-bar-item">MENU</h3>
 		  <a href="index.html" class="w3-bar-item w3-button">HOME</a>
-		  <a href="analytics.html" class="w3-bar-item w3-button">ANALYTICS</a>
-		  <a href="CubeRollupMock.html" class="w3-bar-item w3-button">CubeRollupMock</a>
+		  <a href="analytics.html" class="w3-bar-item w3-button">ANALYTICS 1</a>
+		  <a href="CubeRollupMock.html" class="w3-bar-item w3-button">ANALYTICS 2</a>
 		  <a href="about.html" class="w3-bar-item w3-button">ABOUT</a>
 		  <a href="contact.html" class="w3-bar-item w3-button">CONTACT</a>
 		</div>
@@ -52,7 +52,7 @@
 		<div style="margin-left:15%"/>
 
 		<div class="w3-container w3-blue">
-		  <h1>ANALYTICS</h1>
+		  <h1>ANALYTICS 1</h1>
 		</div>
 		
 		<div class="w3-container"/>
@@ -61,78 +61,92 @@
 
         <div id="Dropdown">
         <form method = "GET">
-            <fieldset>
-                <legend>Pick a Sport</legend>
-                <p> 
+            <table class="w3-table">
+            <tr>
+              <th></th>
+              <th></th>
+              <th></th>
+            </tr>
+                <tr>
+                    <td>
+                        <fieldset>
+                <legend>Choose Sport</legend>
+                <p>
+                    <label>Sport</label>
                     <select id = "sport">
-                        <option value = "null">--Make a Choice--</option>
-                        <option value = "Soccer">Soccer</option>
-                        <option value = "Basketball">Basketball</option>
+                        <option>--Make a choice--</option>
+                        <option>Soccer</option>
+                        <option>Basketball</option>
                     </select>
                 </p>
             </fieldset>
+                    </td>
 
-
-            <fieldset>
+                    <td>
+                         <fieldset>
                 <legend>Pick a League</legend>
                 <p>
+                    <label>League</label>
                     <select id = "league">
                         <option value = "null">--Make a Choice--</option>
                     </select>
                 </p>
             </fieldset>
+                    </td>
 
-
-            <fieldset>
+                    <td>
+                         <fieldset>
                 <legend>Pick a Team</legend>
                 <p>
+                    <label>Team</label>
                     <select id = "team">
                         <option value = "null">--Make a choice</option>
                     </select>
                 </p>
             </fieldset>
+                    </td>
 
-
-            <fieldset>
+                </tr>
+                <tr>
+                    <td>
+                         <fieldset>
                 <legend>Choose a Season</legend>
                 <p>
+                    <label>Season</label>
                     <select id = "season">
                         <option value = "null" >--Make a choice--</option>
                     </select>
                 </p>
-            </fieldset>
-
-
-            <fieldset>
+            </fieldset>  </td>
+                    <td><fieldset>
                 <legend>Choose a Game</legend>
                 <p>
+                    <label>Game</label>
                     <select id = "game">
                         <option value = "null" >--Make a choice--</option>
                     </select>
                 </p>
-            </fieldset>  
-
-
+            </fieldset> </td>
             <fieldset>
                 <legend>Choose Aggregation Function</legend>
                 <p>
                     <select id = "aggregationFunction">
                         <option value = "null">--Make a choice--</option>
                         <option value = "Sum">Sum</option>
-               			<option value = "Average">Average</option>
-               			<option value = "Count">Count</option>
-               			<option value = "Max">Max</option>
-               			<option value = "Min">Min</option>
-               			<option value = "Std">Standard Deviation</option>
-               			<option value = "Variance">Variance</option>
+                        <option value = "Average">Average</option>
+                        <option value = "Count">Count</option>
+                        <option value = "Max">Max</option>
+                        <option value = "Min">Min</option>
+                        <option value = "Std">Standard Deviation</option>
+                        <option value = "Variance">Variance</option>
                     </select>
                 </p>
             </fieldset>
-            
 
-            <fieldset>
+            <td><fieldset>
                 <legend>Choose Aggregation Style</legend>
                 <p>
+                    <label>Aggregation Style</label>
                     <select id = "aggregationStyle">
                         <option value = "null">--Make a choice--</option>
                         <option value = "Simple">Simple Query</option>
@@ -140,32 +154,13 @@
                			<option value = "Cube">Cube</option>
                     </select>
                 </p>
-            </fieldset>
-            
-
-             <fieldset>
-                <legend>Fact Attribute</legend>
-                <p>
-                    <select multiple id = "factAttribute">
-                        <option value = "null">--Make a choice--</option>
-                    </select>
-                </p>
-            </fieldset>
-            
-<!-- Add this back later, not used as of now
-            <fieldset>
-                <legend>Choose Dimensions</legend>
-                <p>
-                    <select multiple id = "dimensions">
-                        <option value = "null">--Make a choice--</option>
-                    </select>
-                </p>
-            </fieldset>
-        -->     
-
-            <fieldset>
+            </fieldset> </td>
+                </tr>
+                <tr>
+                    <td><fieldset>
                 <legend>Choose Chart Type</legend>
                 <p>
+                    <label>Chart</label>
                     <select id = "chartType">
                         <option value = "null">--Make a choice--</option>
                     </select>
@@ -180,6 +175,7 @@
                         </select>
                     </p>
                 </fieldset>
+            </table>
         </form>
     <br>
 	
@@ -198,6 +194,8 @@
     <!-- Canvas where the chart will be plotted -->
     <canvas id="playerChart" width="800" height="400"></canvas>
 
+        </div>
+    </body>
 </html>
 
 
@@ -212,7 +210,7 @@
                     <option value = "null">--Make a choice--</option>
                 </select>
             </p>
-            </fieldset> 
+            </fieldset>
             </div>
             <div class = "column">
         <br>
@@ -237,5 +235,13 @@
      </div>
      
      </div>
-    -->
+</html>
+
+
+
+
+
+
+
+
 

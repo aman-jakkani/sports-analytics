@@ -359,7 +359,7 @@ public class BasketballController extends DatabaseController {
 			ps = null;
 			rs = null;
 			try {
-				ps = DBAccess.getConn().prepareStatement("SELECT FIRST_NAME, LAST_NAME FROM BASKETBALL.PLAYER WHERE PERSON_ID=?");
+				ps = DBAccess.getConn().prepareStatement("SELECT FIRST_NAME, LAST_NAME FROM BASKETBALL.PLAYER_NEW WHERE PERSON_ID=?");
 				ps.setString(1, id);
 				rs = ps.executeQuery();
 
@@ -394,7 +394,7 @@ public class BasketballController extends DatabaseController {
 			ps = null;
 			rs = null;
 			try {
-				ps = DBAccess.getConn().prepareStatement("SELECT FIRST_NAME, LAST_NAME FROM BASKETBALL.PLAYER WHERE PERSON_ID=?");
+				ps = DBAccess.getConn().prepareStatement("SELECT FIRST_NAME, LAST_NAME FROM BASKETBALL.PLAYER_NEW WHERE PERSON_ID=?");
 				ps.setString(1, id);
 				rs = ps.executeQuery();
 
@@ -426,7 +426,7 @@ public class BasketballController extends DatabaseController {
 		rs = null;
 		try{
 			ps = DBAccess.getConn().prepareStatement("SELECT FIRST_NAME, LAST_NAME, BIRTHDATE, HEIGHT, WEIGHT " +
-					"FROM BASKETBALL.PLAYER WHERE PERSON_ID=?");
+															"FROM BASKETBALL.PLAYER_NEW WHERE PERSON_ID=?");
 			ps.setString(1, playerID);
 			rs = ps.executeQuery();
 			int id = Integer.parseInt(playerID);
@@ -462,7 +462,7 @@ public class BasketballController extends DatabaseController {
 		try{
 			//need to change query to also get points, rebounds, etc.
 			ps = DBAccess.getConn().prepareStatement("SELECT FIRST_NAME, LAST_NAME, BIRTHDATE, HEIGHT, WEIGHT " +
-					"FROM BASKETBALL.PLAYER WHERE PERSON_ID=?");
+					"FROM BASKETBALL.PLAYER_NEW WHERE PERSON_ID=?");
 			ps.setString(1, playerID);
 			rs = ps.executeQuery();
 			int id = Integer.parseInt(playerID);
@@ -494,7 +494,7 @@ public class BasketballController extends DatabaseController {
 		ps = null;
 		rs = null;
 		try {
-			//ps = DBAccess.getConn().prepareStatement("SELECT ? From BASKETBALL.PLAYER_STATS WHERE GID = ?");
+			//ps = DBAccess.getConn().prepareStatement("SELECT ? From BASKETBALL.PLAYER_NEW_STATS WHERE GID = ?");
 			ps.setString(1, factatt);
 			ps.setString(2, aggregfunc);
 			ps.setString(3, dimension);
@@ -517,7 +517,7 @@ public class BasketballController extends DatabaseController {
 		ps = null;
 		rs = null;
 		try {
-			//ps = DBAccess.getConn().prepareStatement("SELECT ? From BASKETBALL.PLAYER_STATS WHERE GID = ?");
+			//ps = DBAccess.getConn().prepareStatement("SELECT ? From BASKETBALL.PLAYER_NEW_STATS WHERE GID = ?");
 			ps.setString(1, aggregval);
 			ps.setString(2, aggregfunc);
 			ps.setString(3, dimension1);
@@ -590,14 +590,58 @@ public class BasketballController extends DatabaseController {
 	}
 
     @Override
-    public CubeRollupData getCube(AggregationEnum agg) {
-        return null;
+    public CubeRollupData getCube(AggregationEnum agg, String league) {
+		CubeRollupData data = new CubeRollupData();
+		ps = null;
+		rs = null;
+		try{
+			ps = DBAccess.getConn().prepareStatement(
+					"SELECT BASKETBALL.GAME.SEASON AS SEASON, BASKETBALL.TEAM.NAME AS TEAM, AVG(BASKETBALL.SCORE_GAME.POINTS) as GOALS " +
+					"FROM BASKETBALL.GAME JOIN BASKETBALL.TEAM  ON BASKETBALL.TEAM.TEAM_ID=BASKETBALL.GAME.HOMETID " +
+					"JOIN BASKETBALL.SCORE_GAME ON (BASKETBALL.GAME.GID = BASKETBALL.SCORE_GAME.GAME_ID AND BASKETBALL.TEAM.TEAM_ID = BASKETBALL.SCORE_GAME.TEAM_ID) " +
+					"GROUP BY CUBE(BASKETBALL.GAME.SEASON, BASKETBALL.TEAM.NAME)");
+
+			rs = ps.executeQuery();
+
+			while(rs.next())
+			{
+				data.appendDim1(rs.getString(1));
+				data.appendDim2(rs.getString(2));
+				data.appendAggie(rs.getDouble(3));
+			}
+		}catch(SQLException e){
+			log.severe(e.getMessage());
+		}
+		tryClose();
+		return data;
     }
 
     @Override
-    public CubeRollupData getRollup(AggregationEnum agg) {
-        return null;
-    }
+    public CubeRollupData getRollup(AggregationEnum agg, String league) {
+		CubeRollupData data = new CubeRollupData();
+		ps = null;
+		rs = null;
+		try{
+			ps = DBAccess.getConn().prepareStatement(
+					"SELECT BASKETBALL.GAME.SEASON AS SEASON, BASKETBALL.TEAM.NAME AS TEAM, AVG(BASKETBALL.SCORE_GAME.POINTS) as GOALS " +
+							"FROM BASKETBALL.GAME JOIN BASKETBALL.TEAM  ON BASKETBALL.TEAM.TEAM_ID=BASKETBALL.GAME.HOMETID " +
+							"JOIN BASKETBALL.SCORE_GAME ON (BASKETBALL.GAME.GID = BASKETBALL.SCORE_GAME.GAME_ID AND BASKETBALL.TEAM.TEAM_ID = BASKETBALL.SCORE_GAME.TEAM_ID) " +
+							"GROUP BY ROLLUP(BASKETBALL.GAME.SEASON, BASKETBALL.TEAM.NAME)");
+					rs = ps.executeQuery();
+
+			while(rs.next())
+			{
+				data.appendDim1(rs.getString(1));
+				data.appendDim2(rs.getString(2));
+				data.appendAggie(rs.getDouble(3));
+			}
+		}catch(SQLException e){
+			log.severe(e.getMessage());
+		}
+		tryClose();
+		return data;
+
+	}
 
     public void tryClose(){
 		try {

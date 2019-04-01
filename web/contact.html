@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<!--Front page -->
+<html>
+	<title>Sports Analytics Hello</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<script src = "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
+	
+	<body>
+		<!-- Sidebar -->
+		<div class="w3-sidebar w3-dark-gray w3-bar-block" style="width:15%">
+		  <h3 class="w3-bar-item">MENU</h3>
+		  <a href="index.html" class="w3-bar-item w3-button">HOME</a>
+		  <a href="analytics.html" class="w3-bar-item w3-button">ANALYTICS 1</a>
+		  <a href="CubeRollupMock.html" class="w3-bar-item w3-button">ANALYTICS 2</a>
+		  <a href="about.html" class="w3-bar-item w3-button">ABOUT</a>
+		  <a href="contact.html" class="w3-bar-item w3-button">CONTACT</a>
+		</div>
+
+		<!-- Page Content -->
+		<div style="margin-left:15%">
+
+		<div class="w3-container w3-blue">
+		  <h1>CONTACT</h1>
+		</div>
+		
+		<div class="w3-container">
+
+				<body>
+						<br>
+								<script>
+										function loadResource()
+										{
+												var xhttp = new XMLHttpRequest();
+												var parameter = document.getElementById("parameter").value;
+												xhttp.onreadystatechange = function() {
+														if (this.readyState == 4 && this.status == 200) {
+																document.getElementById("response").innerHTML = xhttp.responseText;
+														}
+												};
+												xhttp.open("GET", "/rest/DemoRestResource?caller=".concat(parameter), true);
+												xhttp.send();
+										}
+								</script>
+						<br>
+				
+						<!-- Include jQuery -->
+						<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+				
+						<!-- Using new RestCaller.js -->
+						<script type="text/javascript" src="js/RestCaller.js"></script>
+				
+						<!-- Import dropdown javascript logic -->
+						<script type="text/javascript" src="js/resources.js"></script>
+				
+								<form method = "GET">
+										<fieldset>
+												<legend>Pick a Sport</legend>
+												<p> 
+														<label>Sport</label>
+														<select id = "sport">
+																<option value = "null">--Make a Choice--</option>
+																<option value = "Basketball">Basketball</option>
+																<option value = "Soccer">Soccer</option>
+														</select>
+												</p>
+										</fieldset>
+				
+				
+										<fieldset>
+												<legend>Pick a League</legend>
+												<p>
+														<label>League</label>
+														<select id = "league">
+																<option value = "null">--Make a Choice--</option>
+														</select>
+												</p>
+										</fieldset>
+				
+				
+										<fieldset>
+												<legend>Pick a Team</legend>
+												<p>
+														<label>Team</label>
+														<select id = "team">
+																<option value = "null">--Make a choice</option>
+														</select>
+												</p>
+										</fieldset>
+				
+				
+										<fieldset>
+												<legend>Choose a Season</legend>
+												<p>
+														<label>Season</label>
+														<select id = "season">
+																<option value = "null" >--Make a choice--</option>
+														</select>
+												</p>
+										</fieldset>
+				
+				
+										<fieldset>
+												<legend>Choose a Game</legend>
+												<p>
+														<label>Game</label>
+														<select id = "game">
+																<option value = "null" >--Make a choice--</option>
+														</select>
+												</p>
+										</fieldset>  
+				
+				<!---
+										<fieldset>
+														<legend>Choose Statistic</legend>
+														<p>
+																<label>Statistic</label>
+																<select id = "stat1">
+																		<option value = "null">--Make a choice--</option>
+																</select>
+														</p>
+										</fieldset>           
+				-->
+				
+										<fieldset>
+												<legend>Choose Chart Type</legend>
+												<p>
+														<label>Chart</label>
+														<select id = "chartType">
+																<option value = "null">--Make a choice--</option>
+														</select>
+												</p>
+										</fieldset>
+						
+								</form>
+				
+						<!-- Import dropdown javascript logic -->
+						<script type = "text/javascript" src = "js/demo.js"></script>
+						<br>
+				
+				
+						<!-- Create Submit Button, link to showData() function -->
+						<button onclick="showData()" id="SUBMIT">SUBMIT</button>
+				
+						<!-- Display Stats in a list -->
+						<div style="display: none;" id="hiddenText">Results: </div>
+						<p><span id = 'chosenSport'> </span></p>
+						<p><span id = 'chosenLeague'> </span></p>
+						<p><span id = 'chosenTeam'> </span></p>
+						<p><span id = 'chosenSeason'> </span></p>
+						<p><span id = 'chosenStat1' ></span></p>
+						<p><span id = 'chosenGame'> </span></p> 
+						<p><span id = 'chosenAxes'></span></p>
+						
+						<div>
+						<canvas id="myChart" width="400" height="400"></canvas>
+						</div>
+				
+						<br>
+				
+						</body>
+			
+		</div>  
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+	</body>
+</html>

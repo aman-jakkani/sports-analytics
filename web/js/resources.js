@@ -1,7 +1,7 @@
 /* *****************************************************************
 Description:
   This will be called anytime a dropdown menu option is clicked and will
-  populate each dropdown with the resources retreived from the backend. 
+  populate each dropdown with the resources retreived from the backend.
   Needed to store previous values of sport, league, team, season, and game
 
   Generates all the possible options based on what the user selects in the dropdowns.
@@ -9,7 +9,7 @@ Description:
   and get all the relevant statistics for those specific parameters.
 
 Classes:
-  dropdown: This will store values through page refreshes so that all values are present for 
+  dropdown: This will store values through page refreshes so that all values are present for
             subsequent calls to the api.
             All methods are used inside this class in order to shorten code.
 
@@ -35,14 +35,14 @@ Dependencies:
 
 /*
 Description:
-  This object is intended to store all the values that the user selected while 
+  This object is intended to store all the values that the user selected while
 
 Args:
 Returns:
 Raises:
 Notes:
 */
-var dropdown = { 
+var dropdown = {
   sport: "null",
   league: "null",
   team: "null",
@@ -69,7 +69,7 @@ var dropdown = {
         $("#team").html(defaultString);
         $("#season").html(defaultString);
         $("#game").html(defaultString);
-        $("#stat1").html(defaultString);    // stat1 doesn't exist anymore, need to update later      
+        $("#stat1").html(defaultString);    // stat1 doesn't exist anymore, need to update later
         // $("#chartType").html(defaultString); 
         $("axes").html(defaultString);
         $("#factAttribute").html(getFactAttribute(sport));
@@ -183,14 +183,60 @@ function getLeagues(sport) {
   return htmlLeagueString;
 };
 
-/*
-  Description:
-    return string of all teams based on sport/league
-  Args:
-  Returns:
-  Raises:
-  Notes:
-*/
+function getFactAttribute(sport) {
+
+	var parameters = [["sports", sport], ];
+	var htmlFactAttribute = "<option value = \"null\" >--Make a choice--</option>";
+
+    if (sport == "null") return htmlFactAttribute;
+
+	if (sport == "Basketball") {
+		var htmlFactAttribute = "<option value='0'>--Make a choice--</option><option value='1'>Points</option><option value='2'>Assists</option><option value='3'>Rebounds</option><option value='4'>Steals</option><option value='5'>Blocks</option>";
+
+	}
+
+	else if (sport == "Soccer"){
+		var htmlFactAttribute =  "<option value='0'>--Make a choice--</option><option value='1'>Goals</option><option value='2'>Assists</option><option value='3'>Possession Time</option><option value='4'>Fouls</option><option value='5'>Yellow Cards</option><option value='6'>Red Cards</option>";
+
+	}
+	return htmlFactAttribute;
+}
+
+function getDimensions(sport) {
+
+	var parameters = [["sports", sport], ];
+	var htmlDimensions = "<option value = \"null\" >--Make a choice--</option>";
+
+    if (sport == "null") return htmlDimensions;
+
+	if (sport == "Basketball") {
+		var htmlDimensions = "<option value='0'>--Make a choice--</option><option value='1'>Point Guard</option><option value='2'>Shooting Guard</option><option value='3'>Small Forward</option><option value='4'>Power Forward</option><option value='5'>Center</option>";
+
+	}
+
+	else if (sport == "Soccer"){
+		var htmlDimensions =  "<option value='0'>--Make a choice--</option><option value='1'>Goalkeeper</option><option value='2'>Fullback</option><option value='3'>Center Back</option><option value='4'>Midfielder</option><option value='5'>Striker</option>";
+
+	}
+	return htmlDimensions;
+}
+
+function getCubeOrRollup(){
+    var aggieFunc = [["aggregation", document.getElementById("aggregationFunction").value],["sports", document.getElementById("sport").value],["league", document.getElementById("league").value]];
+    console.log("QueryPairs: "+aggieFunc)
+    var aggieStyle = document.getElementById("aggregationStyle").value;
+    var json;
+    switch(aggieStyle){
+        case "Rollup": json = getRestResource("RollupResource",aggieFunc);
+            break;
+        case "Cube": json = getRestResource("CubeResource",aggieFunc);
+            break;
+        default: console.log("No aggie function chosen")
+    }
+	showChart(json);
+}
+
+// return string of all teams based on sport/league
 function getTeams(sport, league){
 
   var parameters = [["sports", sport], ["league", league]];
@@ -200,6 +246,7 @@ function getTeams(sport, league){
   if (sport == "null" || league == "null") return htmlTeamString;
 
   var json = getRestResource("TeamListResource", parameters);
+
   console.log("Teams found: ".concat(json.teams.length));
 
   for (i = 0; i < json.teams.length; ++i){
@@ -228,6 +275,7 @@ function getSeasons(sport, league, team){
   if (sport == "null" || league == "null" || team == "null") return htmlSeasonString;
 
   var json = getRestResource("SeasonListResource", parameters);
+
   console.log("Seasons found: ".concat(json.seasons.length));
 
   for (i = 0; i < json.seasons.length; ++i){
@@ -257,6 +305,7 @@ function getGames(sport, league, team, season){
   if (sport == "null" || league == "null" || team == "null" || season == "null") return htmlMatchString;
 
   var json = getRestResource("MatchListResource", parameters);
+
   console.log("Matches found: ".concat(json.match.length));
 
   for (i = 0; i < json.match.length; ++i){
@@ -299,7 +348,7 @@ function getFactAttribute(sport) {
                         + "<option value='yellowCards'>Yellow Cards</option>"
                         + "<option value='redCards'>Red Cards</option>";
   }
-  
+
 	return htmlFactAttribute;
 }
 
@@ -331,7 +380,7 @@ function getDimensions(sport) {
                     + "<option value='MF'>Midfielder</option>"
                     + "<option value='ST'>Striker</option>";
   }
-  
+
 	return htmlDimensions;
 }
 
@@ -391,7 +440,7 @@ function getCharts(aggregationStyle){
 
 /*
   Description:
-    return string of possible players 
+    return string of possible players
   Args:
   Returns:
   Raises:
@@ -402,18 +451,18 @@ function getPlayerList(sport, league, team, game){
 
   // place conditionals to get allow passing null values when other values are present (pass in all teams)
   if (sport == "null" || league == "null" || team == "null" || season == "null" || game == "null") return htmlPlayerString;
-  
+
   // var parameters = [["sports", sport], ["league", league], ["team", team], ["season", season], ["match", game]];
   // var token = getRestResource("TokenResource", parameters);
   var token = getToken(sport, league, team, season, game);
   var json = getRestResource("PlayerListResource", [["token", token["token"]], ]);
-   
+
   console.log("Players found: ".concat(json.homePlayers.length + json.guestPlayers.length));
-   
+
   for (i = 0; i < json.homePlayers.length; ++i){
     htmlPlayerString = htmlPlayerString.concat("<option value = \"" + json.homePlayersID[i] + "\">" + json.homePlayers[i] + "</option>");
   }
-  
+
   // json.guestPlayersID[i + json.homePlayers.length]
   for (i = 0; i < json.guestPlayers.length; ++i){
     htmlPlayerString = htmlPlayerString.concat("<option value = \"" + json.guestPlayersID[i] + "\">" + json.guestPlayers[i] + "</option>");
@@ -479,6 +528,8 @@ function getStats(sport, league, team, game){
   return htmlStatString;
 }
 
+/*function getPlayerList(sport, league, team, game){
+  var htmlPlayerString = "<option value = \"null\" >--Make a choice--</option>";
 
 /*
   Description:
@@ -504,8 +555,9 @@ function getSoccerStats(htmlTokenString){
   Returns:
   Raises:
   Notes:
-*/ 
+*/
 function getBasketballStats(htmlTokenString){
+  
   return htmlTokenString;
 }
 

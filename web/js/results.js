@@ -7,37 +7,315 @@ Methods:
     generateChart:
 
 Dependencies:
-
-******************************************************************* */
-
-
-/*
-  Description:
-  Args:
-  Returns:
-  Raises:
-  Notes:
 */
-function plot() {
-  var sport = document.getElementById("sport").value;
-  var league = document.getElementById("league").value;
-  var team =  document.getElementById("team").value;
-  var season =  document.getElementById("season").value;
-  var match =  document.getElementById("game").value;
-  var factatt = document.getElementById("factAttribute").value;
-  var chartType = document.getElementById("chartType").value;
-  /*
-  var aggregfunc = document.getElementById("aggregationFunction").value;
-  var aggregstyle = document.getElementById("aggregationStyle").value;
-  var dimension  = document.getElementById("dimensions").value;
-  */
+	var canvasId = "myChart1";
+	var canvas = document.getElementById(canvasId);
+	var chartType;
+	var offsetWidth = 0;
+	var gameData = {
+  labels: ['0h','1h','2h','3h','4h','5h','6h','7h','8h','9h','10h','11h'],
+  datasets: [
+    {
+      label: 'Hawks',
+      backgroundColor: "rgba(255,221,50,0.2)",
+      data: [{x: 20,
+            y: 41,
+            r: 45}]
+    },
+    {
+      label: 'Heat',
+      backgroundColor: "rgba(60,186,159,0.2)",
+      data: [{x: 25,
+            y: 38,
+            r: 29}]
+    },
+    {
+      label: 'Lakers',
+      backgroundColor: "rgba(0,0,0,0.2)",
+      data: [{x: 30,
+            y: 34,
+            r: 58}]
+    },
+    {
+      label: 'Rockets',
+      backgroundColor: "rgba(193,46,12,0.2)",
+      data: [{x: 23,
+            y: 45,
+            r: 41}]
+    },
+    {
+      label: 'Warriors',
+      backgroundColor: "rgba(128,0,0,0.2)",
+      data: [{x: 28,
+            y: 47,
+            r: 30}]
+    }
+  ]
+};
+  
 
-  var parameters = [["sports", sport], ["league", league], ["team", team], ["season", season], ["match", match], ["factatt", factatt]];
-  console.log(parameters);
+
+	var chartOptions = {
+	
+	title: {
+        display: true,
+        text: 'Correlation of Field Goal Percentage and Assists Per Game To Number of Wins'
+      }, scales: {
+        yAxes: [{ 
+          scaleLabel: {
+            display: true,
+            labelString: "Field Goal Percentage"
+          }
+        }],
+        xAxes: [{ 
+          scaleLabel: {
+            display: true,
+            labelString: "Assists Per Game"
+        }
+      }]
+	
+	}
+	}
+	var config = {
+                type: chartType = 'bubble',
+                data: gameData,
+                options: chartOptions
+        };
+        
+    globalCharts.push(new Chart(canvas, config));
+	
+	//var ctx = document.getElementById('myChart1').getContext('2d');
+	//var newChart = new Chart(ctx).HeatMap(gameData);
+	//var canvas = document.getElementById(canvasId);
+	//var newChart = new Chart(ctx).HeatMap(gameData, chartOptions);
+
+}
+
+function getRandomColor() {
+  var letters = '0123456789ABCDEF';
+  var color = '#';
+  for (var i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
+}
+
+
+function showChart(json) {
+    var dim1 = json.dim1;
+    var dim2 = json.dim2;
+    var aggie = json.aggie;
+    /*alert(dim1.length);
+    alert(dim2.length);
+    alert(aggie.length);*/
+    var ctx = document.getElementById("myChart").getContext('2d');
+
+    var dim1Int = new Array();
+   for(var i= 0;i<dim1.length;i++){
+        if(dim1[i]!= null){
+            dim1Int.push(parseInt(dim1[i].substr(0,4)));
+        }else{
+            dim1Int.push(null);
+        }
+        
+    }
+
+    var datasets = new Array();
+    var teamset = new Array();
+    for (var i=0; i<dim2.length; i++)
+    {
+        if(teamset.includes(dim2[i]) /*|| dim2[i] == null*/)
+        {
+            break;
+        }
+        else
+        {
+            teamset.push(dim2[i]);
+        }
+
+        var seasonData = new Array();
+        for (var j=0; j<dim1Int.length; j++)
+        {
+            if(dim2[j] == dim2[i] && dim1Int[j] != null)
+            {
+                seasonData.push(
+                    {
+                        x: dim1Int[j],
+                        y: aggie[j]
+                    }
+                );
+                //console.log('x: ' + dim1Int[j] + ' (' +typeof dim1Int[j] + ') '+ ' y: ' + aggie[j] );
+            }
+        }
+		var col = getRandomColor();
+        var teamData =
+            {
+            
+                label: dim2[i],
+                data: seasonData,
+                showLine: true,
+                fill: false,
+       			borderColor: col,
+        		pointBorderColor: col,
+        		backgroundColor: col,
+        		hidden: true
+                
+            };
+
+        datasets.push(teamData);
+    }
+    var scatterChart = new Chart(ctx, {
+        type: 'scatter',
+        data:
+            {
+                datasets: datasets
+            },
+        options: {
+            scales: {
+                xAxes: [{
+                    type: 'linear',
+                    position: 'bottom'
+                }]
+            }
+        }
+    });
+}
+
+
+function stats(){
+	
+	document.getElementById('hiddenText1').style.display="block";
+	document.getElementById('Player').style.display="block";
+	document.getElementById("Charts").style.display = "none";
+	document.getElementById("Dropdown").style.display = "none";
+
+	var sport = document.getElementById('chosenSport').innerHTML = document.getElementById("sport").value;
+    var league = document.getElementById('chosenLeague').innerHTML = document.getElementById("league").value;
+    var team = document.getElementById('chosenTeam').innerHTML = document.getElementById("team").value;
+    var season = document.getElementById('chosenSeason').innerHTML = document.getElementById("season").value;
+    var match = document.getElementById('chosenGame').innerHTML = document.getElementById("game").value;
+    //var name = document.getElementById('name').innerHTML = document.getElementById("player").options[document.getElementById('player').selectedIndex].text;
+        
+    
+    var parameters = [["sports", sport], ["league", league], ["team", team], ["season", season], ["match", match], ["name", name]];
+    console.log(parameters);
+
+	var token = getRestResource("TokenResource", parameters);
+    console.log("Token: " + token["token"]);
+
+	var stats = document.getElementById("player").value;
+	console.log(stats);
+	
+	var playerstatistics = getRestResource("PlayerResource", [["token", token["token"]], ["playerID", stats]]);
+	console.log(playerstatistics);
+	var playerInfo = Object.values(playerstatistics);
+	
+	var birthday = playerInfo[0];
+	document.getElementById("birthday").innerHTML = birthday;
+	
+	var name = playerInfo[1];
+	document.getElementById("name").innerHTML = name;
+	
+	var weight = playerInfo[2];
+	document.getElementById("weight").innerHTML = weight;
+	
+	var height = playerInfo[3];
+	document.getElementById("height").innerHTML = height;
+
+	
+	var soccerplayerstatistics = getRestResource("SoccerPlayerResource", [["token", token["token"]], ["playerID", stats]]);
+	console.log(soccerplayerstatistics);
+	console.log(Object.values(soccerplayerstatistics));
+	var individualStats = Object.values(soccerplayerstatistics);
+	
+	var overallRating = individualStats[0];
+	//document.getElementById("overallRating").innerHTML = overallRating;
+	
+	var strength = individualStats[1];
+	//document.getElementById("strength").innerHTML = strength;
+	
+	var shotPower = individualStats[2];
+	//document.getElementById("shotPower").innerHTML = shotPower;
+	
+	var preferredFoot = individualStats[3];
+	var preferredFootCap = preferredFoot.charAt(0).toUpperCase() + preferredFoot.slice(1)
+	document.getElementById("preferredFoot").innerHTML = preferredFootCap;
+	
+
+	plotRadar(name, overallRating, strength, shotPower);
+	
+}
+
+function plotRadar(name, stat0, stat1, stat2) {
+
+
+	var canvasId = "myRadar";
+	var canvas = document.getElementById(canvasId);
+
+	var radarData = {
+  labels: ["Overall Rating", "Strength", "Shot Power"],
+  datasets: [{
+    label: name,
+    backgroundColor: "rgba(200,0,0,0.2)",
+    data: [stat0, stat1, stat2]
+  }]
+};
+ 
+var chartOptions = {
+  scale: {
+    ticks: {
+      beginAtZero: true,
+      min: 0,
+      max: 100,
+      stepSize: 20
+    },
+    pointLabels: {
+      fontSize: 18
+    }
+  },
+  legend: {
+    position: 'left'
+  }
+};
+
+var config = {
+                type: 'radar',
+                data: radarData,
+                options: chartOptions
+        };
+
+globalCharts.push(new Chart(canvas, config));
+
+}
+
+
+function plotChart() {
+        document.getElementById('hiddenText').style.display="block";
+
+        var sport = document.getElementById('chosenSport').innerHTML = document.getElementById("sport").value;
+        var league = document.getElementById('chosenLeague').innerHTML = document.getElementById("league").value;
+        var team = document.getElementById('chosenTeam').innerHTML = document.getElementById("team").value;
+        var season = document.getElementById('chosenSeason').innerHTML = document.getElementById("season").value;
+        var match = document.getElementById('chosenGame').innerHTML = document.getElementById("game").value;
+        //var factatt = document.getElementById("factAttribute").value;
+        //var aggregfunc = document.getElementById("aggregationFunction").value;
+        var aggregstyle = document.getElementById("aggregationStyle").value;
+        //var dimension  = document.getElementById("dimensions").value;
+
+        /****************************************+************
+        *we are displaying cube/rollup-queries in a seperate *
+        *page, no use for dimension, aggregate function etc. *
+        *here                                                *
+        *****************************************************/
+
+        //var parameters = [["sports", sport], ["league", league], ["team", team], ["season", season], ["match", match], ["factatt", //factatt], ["aggregfunc", aggregfunc], ["aggregstyle", aggregstyle], ["dimension", dimension]];
+
+        var parameters = [["sports", sport], ["league", league], ["team", team], ["season", season], ["match", match],["aggregstyle", aggregstyle]];
+            console.log(parameters);
 
   var token = getRestResource("TokenResource", parameters);
   var data = null;
-  
+
   // Get the data for the specific attribute selected
   if (sport == "Soccer"){
     data = getSoccerAttributeData(factatt, token);
@@ -51,27 +329,27 @@ function plot() {
     console.log("Invalid sport selection");
     return;
   }
-  
+
   var label = document.getElementById("factAttribute").value;
 
-  // Plot a specific chart based on the one selected in the 
+  // Plot a specific chart based on the one selected in the
   switch (chartType) {
     case ("bubble"):
       // plotBubble(data);
       break;
 
-    case ("line"): 
+    case ("line"):
       //plotLineChart(data);
       plotDefault('line', 'home', 'away', Array(data[0]), Array(data[1]), label);
       break;
 
     case ("scatter"):
-      // plotScatter(data); 
+      // plotScatter(data);
       break;
 
     case ("bar"):
       // plotBarChart(data);
-      plotDefault('bar', 'home', 'away', Array(data[0]), Array(data[1]), label); 
+      plotDefault('bar', 'home', 'away', Array(data[0]), Array(data[1]), label);
       break;
 
     case ("radar"):
@@ -95,35 +373,35 @@ function getSoccerAttributeData(attribute, token){
   console.log("Attribute: " + attribute);
 
   switch (attribute){
-    case ("goals"): 
+    case ("goals"):
       var score = getRestResource("ScoreRestResource", [["token", token["token"]], ]);
       return score["score"]; // add index
 
-    case ("ballPossession"): 
+    case ("ballPossession"):
       var ballPossession = getRestResource("BallPossessionStatResource", [["token", token["token"]], ]);
       return ballPossession["possession"];
 
-    case ("yellowCards"): 
+    case ("yellowCards"):
       var yellowCards = getRestResource("YellowCardsStatResource", [["token", token["token"]], ]);
       return yellowCards["yellowCards"]; // add index
 
-    case ("redCards"): 
+    case ("redCards"):
       var redCards = getRestResource("RedCardsStatResource", [["token", token["token"]], ]);
       return redCards["redCards"]; // add index
 
-    case ("cornerStats"): 
+    case ("cornerStats"):
       var cornerStats = getRestResource("CornerStatRestResource", [["token", token["token"]], ]);
       return cornerStats["corners"]; // add index
 
-    case ("fouls"): 
+    case ("fouls"):
       var fouls = getRestResource("FoulsStatResource", [["token", token["token"]], ]);
       return fouls["fouls"]; // add index
-    
+
     case ("attendance"):
       var attendance = getRestResource("AttendanceRestResource", [["token", token["token"]], ]);
       return attendance["attendance"]; // add index
 
-    default: 
+    default:
       return null;
       break;
   }
@@ -162,6 +440,7 @@ function getBasketballAttributeData(attributeList, token){
   Raises:
 
 */
+
 function displayPlayerStats(){
 	var sport = document.getElementById("sport").value;
   var league = document.getElementById("league").value;
@@ -169,7 +448,7 @@ function displayPlayerStats(){
   var season = document.getElementById("season").value;
   var match = document.getElementById("game").value;
   // var name = document.getElementById('name').innerHTML = document.getElementById("player").options[document.getElementById('player').selectedIndex].text;
-  
+
   var parameters = [["sports", sport], ["league", league], ["team", team], ["season", season], ["match", match], ["name", name]];
   console.log(parameters);
 
@@ -203,7 +482,7 @@ Notes:
   [ [a, b, c, d, e], [f, g, h, i, k], [l, m, n, o, p]]
 */
 function getPlayerData(token){
-  // Get the list of players with 
+  // Get the list of players with
   var playerList = getRestResource("PlayerListResource", [["token", token["token"]], ]);
 
   // Create list of IDs to get stats for each player

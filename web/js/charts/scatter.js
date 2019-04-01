@@ -75,8 +75,10 @@ function plotScatter(json){
     // window.bar just added without testing.
     // if Cube/rollup not working, remove "window.bar = "
     window.bar = new Chart(ctx, {
-        type: 'bubble',
+        type: 'scatter',
         data: { datasets: datasets },
         options: config
     });
+
+    return window.bar;
 }

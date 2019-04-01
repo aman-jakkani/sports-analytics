@@ -123,5 +123,5 @@ function plotBubble(json){
         }
     }
 
-    new Chart(ctx, config);
+    return new Chart(ctx, config);
 }

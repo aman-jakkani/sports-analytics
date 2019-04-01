@@ -71,7 +71,7 @@ var dropdown = {
         $("#game").html(defaultString);
         $("#stat1").html(defaultString);    // stat1 doesn't exist anymore, need to update later
         // $("#chartType").html(defaultString); 
-        $("axes").html(defaultString);
+        $("#axes").html(defaultString);
         $("#factAttribute").html(getFactAttribute(sport));
         $("#dimensions").html(getDimensions(sport));
 
@@ -86,7 +86,7 @@ var dropdown = {
         $("#game").html(defaultString);
         $("#stat1").html(defaultString);
         // $("#chartType").html(defaultString);
-        $("axes").html(defaultString);
+        $("#axes").html(defaultString);
       }
 
       else if ($(this).attr('id') == 'team') {
@@ -104,7 +104,7 @@ var dropdown = {
         // reset options below game
         $("#stat1").html(defaultString);
         // $("#chartType").html(defaultString);
-        $("axes").html(defaultString);
+        $("#axes").html(defaultString);
       }
 
       else if ($(this).attr('id') == "game"){

@@ -61,19 +61,19 @@ Dependencies:
         display: true,
         text: 'Correlation of Field Goal Percentage and Assists Per Game To Number of Wins'
       }, scales: {
-        yAxes: [{ 
+        yAxes: [{
           scaleLabel: {
             display: true,
             labelString: "Field Goal Percentage"
           }
         }],
-        xAxes: [{ 
+        xAxes: [{
           scaleLabel: {
             display: true,
             labelString: "Assists Per Game"
         }
       }]
-	
+
 	}
 	}
 	var config = {
@@ -81,105 +81,32 @@ Dependencies:
                 data: gameData,
                 options: chartOptions
         };
-        
+
     globalCharts.push(new Chart(canvas, config));
-	
+
 	//var ctx = document.getElementById('myChart1').getContext('2d');
 	//var newChart = new Chart(ctx).HeatMap(gameData);
 	//var canvas = document.getElementById(canvasId);
 	//var newChart = new Chart(ctx).HeatMap(gameData, chartOptions);
 
-}
 
-function getRandomColor() {
-  var letters = '0123456789ABCDEF';
-  var color = '#';
-  for (var i = 0; i < 6; i++) {
-    color += letters[Math.floor(Math.random() * 16)];
-  }
-  return color;
-}
 
 
 function showChart(json) {
-    var dim1 = json.dim1;
-    var dim2 = json.dim2;
-    var aggie = json.aggie;
-    /*alert(dim1.length);
-    alert(dim2.length);
-    alert(aggie.length);*/
-    var ctx = document.getElementById("myChart").getContext('2d');
-
-    var dim1Int = new Array();
-   for(var i= 0;i<dim1.length;i++){
-        if(dim1[i]!= null){
-            dim1Int.push(parseInt(dim1[i].substr(0,4)));
-        }else{
-            dim1Int.push(null);
-        }
-        
-    }
-
-    var datasets = new Array();
-    var teamset = new Array();
-    for (var i=0; i<dim2.length; i++)
-    {
-        if(teamset.includes(dim2[i]) /*|| dim2[i] == null*/)
-        {
+    chartType = document.getElementById("chartType").value;
+    console.log(chartType)
+    switch (chartType){
+        case "bubble": plotBubble(json);
             break;
-        }
-        else
-        {
-            teamset.push(dim2[i]);
-        }
-
-        var seasonData = new Array();
-        for (var j=0; j<dim1Int.length; j++)
-        {
-            if(dim2[j] == dim2[i] && dim1Int[j] != null)
-            {
-                seasonData.push(
-                    {
-                        x: dim1Int[j],
-                        y: aggie[j]
-                    }
-                );
-                //console.log('x: ' + dim1Int[j] + ' (' +typeof dim1Int[j] + ') '+ ' y: ' + aggie[j] );
-            }
-        }
-		var col = getRandomColor();
-        var teamData =
-            {
-            
-                label: dim2[i],
-                data: seasonData,
-                showLine: true,
-                fill: false,
-       			borderColor: col,
-        		pointBorderColor: col,
-        		backgroundColor: col,
-        		hidden: true
-                
-            };
-
-        datasets.push(teamData);
+        case "scatter": plotScatter(json);
+            break;
+        case "line": break; // create plotLine(json) function
+        default:
+            break;
     }
-    var scatterChart = new Chart(ctx, {
-        type: 'scatter',
-        data:
-            {
-                datasets: datasets
-            },
-        options: {
-            scales: {
-                xAxes: [{
-                    type: 'linear',
-                    position: 'bottom'
-                }]
-            }
-        }
-    });
 }
+
+
 
 
 function stats(){
@@ -246,58 +173,16 @@ function stats(){
 	
 }
 
-function plotRadar(name, stat0, stat1, stat2) {
-
-
-	var canvasId = "myRadar";
-	var canvas = document.getElementById(canvasId);
-
-	var radarData = {
-  labels: ["Overall Rating", "Strength", "Shot Power"],
-  datasets: [{
-    label: name,
-    backgroundColor: "rgba(200,0,0,0.2)",
-    data: [stat0, stat1, stat2]
-  }]
-};
- 
-var chartOptions = {
-  scale: {
-    ticks: {
-      beginAtZero: true,
-      min: 0,
-      max: 100,
-      stepSize: 20
-    },
-    pointLabels: {
-      fontSize: 18
-    }
-  },
-  legend: {
-    position: 'left'
-  }
-};
-
-var config = {
-                type: 'radar',
-                data: radarData,
-                options: chartOptions
-        };
-
-globalCharts.push(new Chart(canvas, config));
-
-}
-
 
 function plotChart() {
-        document.getElementById('hiddenText').style.display="block";
+        document.getElementById('mainChart').style.display="block";
 
-        var sport = document.getElementById('chosenSport').innerHTML = document.getElementById("sport").value;
-        var league = document.getElementById('chosenLeague').innerHTML = document.getElementById("league").value;
-        var team = document.getElementById('chosenTeam').innerHTML = document.getElementById("team").value;
-        var season = document.getElementById('chosenSeason').innerHTML = document.getElementById("season").value;
-        var match = document.getElementById('chosenGame').innerHTML = document.getElementById("game").value;
-        //var factatt = document.getElementById("factAttribute").value;
+        var sport /*= document.getElementById('chosenSport').innerHTML */= document.getElementById("sport").value;
+        var league /*= document.getElementById('chosenLeague').innerHTML */= document.getElementById("league").value;
+        var team /*= document.getElementById('chosenTeam').innerHTML */= document.getElementById("team").value;
+        var season /*= document.getElementById('chosenSeason').innerHTML */= document.getElementById("season").value;
+        var match /*= document.getElementById('chosenGame').innerHTML*/ = document.getElementById("game").value;
+        var factatt = document.getElementById("factAttribute").value;
         //var aggregfunc = document.getElementById("aggregationFunction").value;
         var aggregstyle = document.getElementById("aggregationStyle").value;
         //var dimension  = document.getElementById("dimensions").value;
@@ -333,7 +218,8 @@ function plotChart() {
   var label = document.getElementById("factAttribute").value;
 
   // Plot a specific chart based on the one selected in the
-  switch (chartType) {
+    chartType = document.getElementById("chartType").value;
+    switch (chartType) {
     case ("bubble"):
       // plotBubble(data);
       break;
@@ -417,7 +303,7 @@ function getSoccerAttributeData(attribute, token){
 */
 function getBasketballAttributeData(attributeList, token){
   for (i = 0; i < attributeList.length; ++i){
-    switch (attribute){
+      switch (attribute){
       case ("points"): break;
       case ("assists"): break;
       case ("rebounds"): break;

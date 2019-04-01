@@ -127,21 +127,6 @@
                     </select>
                 </p>
             </fieldset> </td>
-            <fieldset>
-                <legend>Choose Aggregation Function</legend>
-                <p>
-                    <select id = "aggregationFunction">
-                        <option value = "null">--Make a choice--</option>
-                        <option value = "Sum">Sum</option>
-                        <option value = "Average">Average</option>
-                        <option value = "Count">Count</option>
-                        <option value = "Max">Max</option>
-                        <option value = "Min">Min</option>
-                        <option value = "Std">Standard Deviation</option>
-                        <option value = "Variance">Variance</option>
-                    </select>
-                </p>
-            </fieldset>
 
             <td><fieldset>
                 <legend>Choose Aggregation Style</legend>
@@ -166,6 +151,14 @@
                     </select>
                 </p>
             </fieldset>
+            <fieldset>
+                <legend>Fact Attribute</legend>
+                <p>
+                    <select multiple id = "factAttribute">
+                        <option value = "null">--Make a choice--</option>
+                    </select>
+                </p>
+            </fieldset>
 
             <fieldset>
                     <legend>Choose Player</legend>
@@ -180,7 +173,7 @@
     <br>
 	
     <!-- Create Submit Button, link to showData() function -->
-    <button onclick="plot()" id="SUBMIT">PLOT</button>
+    <button onclick="plotChart()" id="SUBMIT">PLOT</button>
 
     <!-- Create Submit Button, link to showData() function -->
     <button onclick="displayPlayerStats()" id="STATS">GET PLAYER STATS</button>

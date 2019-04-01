@@ -7,6 +7,9 @@
     <!--<script src = "Chart.Core.js"></script>-->
     <!--<script src="js/chart.heatmap.js/dst/Chart.HeatMap.S.js"></script>-->
     <script type = "text/javascript" src = "js/results.js"></script>
+    <script type = "text/javascript" src = "js/utils.js"></script>
+    <script type = "text/javascript" src = "js/charts/bubble.js"></script>
+    <script type = "text/javascript" src = "js/charts/scatter.js"></script>
     <!-- RestCaller.js retrieves REST Resources -->
     <script type="text/javascript" src="js/RestCaller.js"></script>
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -27,14 +30,12 @@
 		<div class="w3-container w3-blue">
 		  <h1>ANALYTICS 2</h1>
 		</div>
-		
+
 		<div class="w3-container"/>
 
 
-</script>
- 
         <script>
-         	
+
             function loadResource()
             {
                 var xhttp = new XMLHttpRequest();
@@ -48,7 +49,7 @@
                 xhttp.send();
             }
         </script>
-        <canvas id="myChart" width="100" height="50"></canvas>
+        <canvas id="mainChart" width="100" height="50"></canvas>
     <!-- Include jQuery -->
     <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 
@@ -102,7 +103,7 @@
                 </p>
             </fieldset>
     </td>
-    
+
                 </tr>
                 <tr>
                 <td>
@@ -131,17 +132,17 @@
             </fieldset>
     </td>
 </tr>
-</table>     
+</table>
         </form>
 
     <!-- Import dropdown javascript logic -->
     <br>
-	
+
     <!-- Create Submit Button, link to showData() function -->
     <button onclick="getCubeOrRollup()" id="SUBMIT">SUBMIT</button>
     </div>
     <div id="Charts" style="display:none">
-    
+
 
     <br><button onclick="backToDropdown()" id="BACK">BACK</button>
     <!-- Display Stats in a list -->
@@ -152,8 +153,8 @@
     <p><span id = 'chosenSeason'> </span></p>
     <p><span id = 'chosenGame'> </span></p>
     <p><span id = 'attendance'> </span></p>
-    
-    
+
+
 	<!--<button onclick="plotHeatMap()" id="map">Heat Map</button>
 	<canvas id="heatmap" width="800" height="400"></canvas>-->
     		<div class = "row">
@@ -165,7 +166,7 @@
                         <option value = "null">--Make a choice--</option>
                     </select>
                 </p>
-             </fieldset> 
+             </fieldset>
              </div>
              <div class = "column">
     		<br>

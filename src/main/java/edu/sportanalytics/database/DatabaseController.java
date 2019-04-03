@@ -40,28 +40,6 @@ public abstract class DatabaseController {
 	public abstract CubeRollupData getCube(AggregationEnum agg, String league);
 	public abstract CubeRollupData getRollup(AggregationEnum agg, String league);
 
-	public List<String> getBallPossession(String matchid) {
-		return null;
-	}
-
-	public List<String> getFouls(String matchid) {
-		return null;
-	}
-
-	public List<String> getPointsInSeason(String matchid) {
-		// TODO
-		return null;
-	}
-
-	public List<String> getAvgHeigth(String matchid) {
-		// TODO
-		return null;
-	}
-
-	public List<String> getAvgWeight(String matchid) {
-		// TODO
-		return null;
-	}
 
 
 

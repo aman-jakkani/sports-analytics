@@ -8,7 +8,7 @@ Methods:
 
 Dependencies:
 */
-	var canvasId = "myChart1";
+/*	var canvasId = "myChart1";
 	var canvas = document.getElementById(canvasId);
 	var chartType;
 	var offsetWidth = 0;
@@ -87,7 +87,7 @@ Dependencies:
 	//var ctx = document.getElementById('myChart1').getContext('2d');
 	//var newChart = new Chart(ctx).HeatMap(gameData);
 	//var canvas = document.getElementById(canvasId);
-	//var newChart = new Chart(ctx).HeatMap(gameData, chartOptions);
+	//var newChart = new Chart(ctx).HeatMap(gameData, chartOptions);*/
 
 
 
@@ -100,7 +100,8 @@ function showChart(json) {
             break;
         case "scatter": plotScatter(json);
             break;
-        case "line": break; // create plotLine(json) function
+        case "line": plotLineChart(json);
+        	break; // create plotLine(json) function
         default:
             break;
     }

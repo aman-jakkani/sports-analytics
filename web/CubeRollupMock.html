@@ -10,6 +10,7 @@
     <script type = "text/javascript" src = "js/utils.js"></script>
     <script type = "text/javascript" src = "js/charts/bubble.js"></script>
     <script type = "text/javascript" src = "js/charts/scatter.js"></script>
+    <script type = "text/javascript" src = "js/charts/linechart.js"></script>
     <!-- RestCaller.js retrieves REST Resources -->
     <script type="text/javascript" src="js/RestCaller.js"></script>
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -49,7 +50,7 @@
                 xhttp.send();
             }
         </script>
-        <canvas id="mainChart" width="100" height="50"></canvas>
+        <canvas id="mainChart" width="100" height="100"></canvas>
     <!-- Include jQuery -->
     <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 
@@ -95,10 +96,10 @@
                     <label>Aggregation Function</label>
                     <select id = "aggregationFunction">
                         <option value = "UNKNOWN">--Make a choice--</option>
-                        <option value = "SUM">Sum</option>
+                        <!--<option value = "SUM">Sum</option>
                			<option value = "AVG">Average</option>
                			<option value = "MAX">Max</option>
-               			<option value = "MIN">Min</option>
+               			<option value = "MIN">Min</option>-->
                     </select>
                 </p>
             </fieldset>
@@ -113,8 +114,9 @@
                     <label>Aggregation Style</label>
                     <select id = "aggregationStyle">
                         <option value = "null">--Make a choice--</option>
+                        <!--<option value = "Simple">Simple</option>
                			<option value = "Rollup">Rollup</option>
-               			<option value = "Cube">Cube</option>
+               			<option value = "Cube">Cube</option>-->
                     </select>
                 </p>
             </fieldset>
@@ -126,7 +128,6 @@
                     <label>Chart</label>
                     <select id = "chartType">
                         <option value = "null">--Make a choice--</option>
-                        <option value = "lineChart">Line Chart</option>
                     </select>
                 </p>
             </fieldset>

@@ -19,52 +19,88 @@ function plotLineChart(json){
   console.log("Entered line chart");
   console.log(json);
   // destroy any old chart already on the canvas
-  if (window.bar != undefined){
-        window.bar.destroy();
+  //Window.chart is global variable used to destroy previous chart to eliminate flicker
+  if (window.chart != undefined){
+        window.chart.destroy();
+        console.log("window destroy");
   }
   
-  var jsonData = new Array();
-  for (var i = 0; i<json.length; ++i){
-  jsonData.push(parseFloat(json[i]));
-  }  
-  
-  var data = {
-    labels: ["Home Team", "Away Team"],
-    datasets: jsonData
-  };
+  var dim1 = json.dim1;
+  var dim2 = json.dim2;
+  var aggie = json.aggie;
+    /*alert(dim1.length);
+    alert(dim2.length);
+    alert(aggie.length);*/
+  var ctx = document.getElementById("mainChart").getContext('2d');
 
-console.log(data);
-
-  var options = {
-    scales: {
-      xAxes: [{
-      	ticks: {
-                					beginAtZero: true
-        },
-        min: 0,
-        max: 100
-      }],
-      pointLabels: {
-        fontSize: 18
-      }
-    },
-    legend: {
-      position: 'left'
+  var dim1Int = new Array();
+   for(var i= 0;i<dim1.length;i++){
+        if(dim1[i]!= null){
+            dim1Int.push(parseInt(dim1[i].substr(0,4)));
+        }else{
+            dim1Int.push(null);
+        }
+        
     }
-    /*title: {
-      display: true,
-      text: 'World population per region (in millions)'
-    }*/
-  };
 
-  var config = {
-      type: 'line',
-      data: data,
-      options: options
-  };
+    var datasets = new Array();
+    var teamset = new Array();
+    for (var i=0; i<dim2.length; i++)
+    {
+        if(teamset.includes(dim2[i]) /*|| dim2[i] == null*/)
+        {
+            break;
+        }
+        else
+        {
+            teamset.push(dim2[i]);
+        }
 
+        var seasonData = new Array();
+        for (var j=0; j<dim1Int.length; j++)
+        {
+            if(dim2[j] == dim2[i] && dim1Int[j] != null)
+            {
+                seasonData.push(
+                    {
+                        x: dim1Int[j],
+                        y: aggie[j]
+                    }
+                );
+                //console.log('x: ' + dim1Int[j] + ' (' +typeof dim1Int[j] + ') '+ ' y: ' + aggie[j] );
+            }
+        }
+		var col = getRandomColor();
+        var teamData =
+            {
+            
+                label: dim2[i],
+                data: seasonData,
+                showLine: true,
+                fill: false,
+       			borderColor: col,
+        		pointBorderColor: col,
+        		backgroundColor: col,
+        		hidden: true
+                
+            };
 
-  var ctx = document.getElementById("mainChart");
-  new Chart(ctx, config);	
+        datasets.push(teamData);
+    }
+    var chart = new Chart(ctx, {
+        type: 'line',
+        data:
+            {
+                datasets: datasets
+            },
+        options: {
+            scales: {
+                xAxes: [{
+                    type: 'linear',
+                    position: 'bottom'
+                }]
+            }
+        }
+    });	
 }
 

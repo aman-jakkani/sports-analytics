@@ -10,9 +10,10 @@
     Notes:
 */
 function plotScatter(json){
-
-    if (window.bar != undefined){
-        window.bar.destroy();
+	
+	//Window.chart is global variable used to destroy previous chart to eliminate flicker
+    if (window.chart != undefined){
+        window.chart.destroy();
     }   
 
     var ctx = document.getElementById("mainChart").getContext('2d');
@@ -75,10 +76,10 @@ function plotScatter(json){
     // window.bar just added without testing.
     // if Cube/rollup not working, remove "window.bar = "
     window.bar = new Chart(ctx, {
-        type: 'scatter',
+        type: 'bubble',
         data: { datasets: datasets },
         options: config
     });
 
-    return window.bar;
+    return window.chart;
 }

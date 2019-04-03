@@ -12,8 +12,10 @@
     Notes:
 */
 function plotBubble(json){
-    if (window.bar != undefined){
-        window.bar.destroy();
+	//Window.chart is global variable used to destroy previous chart to eliminate flicker
+    if (window.chart != undefined){
+        window.chart.destroy();
+        console.log("window destroy bubble");
     
     }
     var ctx = document.getElementById("mainChart").getContext('2d');
@@ -123,5 +125,6 @@ function plotBubble(json){
         }
     }
 
-    return new Chart(ctx, config);
+    window.chart = new Chart(ctx, config);
+    
 }

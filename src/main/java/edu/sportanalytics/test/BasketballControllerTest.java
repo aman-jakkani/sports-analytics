@@ -10,6 +10,8 @@ import org.junit.Test;
 
 public class BasketballControllerTest {
 
+    DBAccess.establishConnection();
+
     @Test
     public void testGetLeagues() {
         BasketballController bc = (BasketballController) DBAccess.getInstance().getController(SportsEnum.BASKETBALL);

@@ -34,7 +34,7 @@ public class CubeResource
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public String getData(@QueryParam("aggregation") String aggregation, @QueryParam("sports") String sports, @QueryParam("league") String league) {
+    public String getData(@QueryParam("aggregation") String aggregation, @QueryParam("aggregationData") String aggData,@QueryParam("sports") String sports, @QueryParam("league") String league) {
 
         AggregationEnum agg = AggregationEnum.UNKNOWN;
         for(AggregationEnum i : AggregationEnum.values())
@@ -44,19 +44,36 @@ public class CubeResource
                 agg=i;
             }
         }
+        AggregationData aggregationData = BasketballAggregationData.UNKNOWN;
         SportsEnum sport = SportsEnum.UNKNOWN;
         if(sports.equals("Soccer"))
         {
+            aggregationData = SoccerAggregationData.UNKNOWN;
             sport = SportsEnum.SOCCER;
+            for(SoccerAggregationData i : SoccerAggregationData.values())
+            {
+                if(i.name().equals(aggData))
+                {
+                    aggregationData = i;
+                }
+            }
+
         }
         if(sports.equals("Basketball"))
         {
             sport = SportsEnum.BASKETBALL;
+            for(BasketballAggregationData i : BasketballAggregationData.values())
+            {
+                if(i.name().equals(aggData))
+                {
+                    aggregationData = i;
+                }
+            }
         }
 
 
         JSONObject jo = new JSONObject();
-        CubeRollupData data = DBAccess.getInstance().getController(sport).getCube(agg, league);
+        CubeRollupData data = DBAccess.getInstance().getController(sport).getCube(agg, aggregationData, league);
         jo.put("dim1", data.getDim1());
         jo.put("dim2", data.getDim2());
         jo.put("aggie", data.getAggie());

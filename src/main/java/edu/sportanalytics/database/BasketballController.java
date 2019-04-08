@@ -590,7 +590,7 @@ public class BasketballController extends DatabaseController {
 	}
 
     @Override
-    public CubeRollupData getCube(AggregationEnum agg, String league) {
+    public CubeRollupData getCube(AggregationEnum agg, AggregationData aggData, String league) {
 		CubeRollupData data = new CubeRollupData();
 		ps = null;
 		rs = null;
@@ -617,7 +617,7 @@ public class BasketballController extends DatabaseController {
     }
 
     @Override
-    public CubeRollupData getRollup(AggregationEnum agg, String league) {
+    public CubeRollupData getRollup(AggregationEnum agg, AggregationData aggData, String league) {
 		CubeRollupData data = new CubeRollupData();
 		ps = null;
 		rs = null;

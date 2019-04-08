@@ -301,6 +301,7 @@ public class SoccerController extends DatabaseController
 					"join SOCCER02.MATCHRELDIMMART m on(t.TEAM_ID = m.team_awayteam_id) " + 
 					"join SOCCER02.SEASONSTAGE s on(m.SEASONSTAGE_SEASONSTAGE_ID=s.SEASONSTAGE_ID) " + 
 					"WHERE t.long_name= ?   AND s.name = ? )";
+			break;
 		case "yellow":
 			queryHome = "Select sum(Home) as HOME FROM( " + 
 					"SELECT Sum(homeyellowcnt+homeyellow2cnt) AS HOME FROM SOCCER02.TEAM t " + 
@@ -359,12 +360,10 @@ public class SoccerController extends DatabaseController
 			queryHome = "Select sum(Home) as HOME FROM( " + 
 					"SELECT SUM(homefoulcnt) AS HOME FROM SOCCER02.TEAM t " + 
 					"join SOCCER02.MATCHRELDIMMART m on(t.TEAM_ID = m.team_hometeam_id) " + 
-					"join SOCCER02.SEASONSTAGE s on(m.SEASONSTAGE_SEASONSTAGE_ID=s.SEASONSTAGE_ID) " + 
 					"WHERE t.long_name= ? " + 
 					"UNION ALL " + 
 					"SELECT Sum(awayfoulcnt) AS home FROM SOCCER02.TEAM t " + 
 					"join SOCCER02.MATCHRELDIMMART m on(t.TEAM_ID = m.team_awayteam_id) " + 
-					"join SOCCER02.SEASONSTAGE s on(m.SEASONSTAGE_SEASONSTAGE_ID=s.SEASONSTAGE_ID) " + 
 					"WHERE t.long_name= ? ) "; 
 			break;
 		case "goal":
@@ -373,12 +372,10 @@ public class SoccerController extends DatabaseController
 			queryHome = "Select sum(Home) as HOME FROM( " + 
 					"SELECT homecornercnt AS HOME FROM SOCCER02.TEAM t " + 
 					"join SOCCER02.MATCHRELDIMMART m on(t.TEAM_ID = m.team_hometeam_id) " + 
-					"join SOCCER02.SEASONSTAGE s on(m.SEASONSTAGE_SEASONSTAGE_ID=s.SEASONSTAGE_ID) " + 
 					"WHERE t.long_name= ? " + 
 					"UNION ALL " + 
 					"SELECT SUM(awaycornercnt) AS home FROM SOCCER02.TEAM t " + 
 					"join SOCCER02.MATCHRELDIMMART m on(t.TEAM_ID = m.team_awayteam_id) " + 
-					"join SOCCER02.SEASONSTAGE s on(m.SEASONSTAGE_SEASONSTAGE_ID=s.SEASONSTAGE_ID) " + 
 					"WHERE t.long_name= ? ) ";
 					
 			break;
@@ -386,24 +383,20 @@ public class SoccerController extends DatabaseController
 			queryHome = "Select sum(Home) as HOME FROM( " + 
 					"SELECT SUM(homeredcnt) AS HOME FROM SOCCER02.TEAM t " + 
 					"join SOCCER02.MATCHRELDIMMART m on(t.TEAM_ID = m.team_hometeam_id) " + 
-					"join SOCCER02.SEASONSTAGE s on(m.SEASONSTAGE_SEASONSTAGE_ID=s.SEASONSTAGE_ID) " + 
 					"WHERE t.long_name= ? " + 
 					"UNION ALL " + 
 					"SELECT SUM(awayredcnt) AS home FROM SOCCER02.TEAM t " + 
 					"join SOCCER02.MATCHRELDIMMART m on(t.TEAM_ID = m.team_awayteam_id) " + 
-					"join SOCCER02.SEASONSTAGE s on(m.SEASONSTAGE_SEASONSTAGE_ID=s.SEASONSTAGE_ID) " + 
 					"WHERE t.long_name= ? )";
 			break;
 		case "yellow":
 			queryHome = "Select sum(Home) as HOME FROM( " + 
 					"SELECT Sum(homeyellowcnt+homeyellow2cnt) AS HOME FROM SOCCER02.TEAM t " + 
 					"join SOCCER02.MATCHRELDIMMART m on(t.TEAM_ID = m.team_hometeam_id) " + 
-					"join SOCCER02.SEASONSTAGE s on(m.SEASONSTAGE_SEASONSTAGE_ID=s.SEASONSTAGE_ID) " + 
 					"WHERE t.long_name= ? " + 
 					"UNION ALL " + 
 					"SELECT SUM(awayyellowcnt+awayyellow2cnt) AS HOME FROM SOCCER02.TEAM t " + 
 					"join SOCCER02.MATCHRELDIMMART m on(t.TEAM_ID = m.team_awayteam_id) " + 
-					"join SOCCER02.SEASONSTAGE s on(m.SEASONSTAGE_SEASONSTAGE_ID=s.SEASONSTAGE_ID) " + 
 					"WHERE t.long_name= ? ) ";
 			break;
 		case "score":
@@ -411,13 +404,11 @@ public class SoccerController extends DatabaseController
 					"SELECT SUM(HOME_TEAM_GOAL) totalGoals " + 
 					"FROM SOCCER02.TEAM t " + 
 					"join SOCCER02.MATCH m on(t.TEAM_ID = m.team_hometeam_id) " + 
-					"join SOCCER02.SEASONSTAGE s on(m.SEASONSTAGE_SEASONSTAGE_ID=s.SEASONSTAGE_ID) " + 
 					"WHERE t.long_name = ? " + 
 					"UNION ALL " + 
 					"SELECT SUM(AWAY_TEAM_GOAL) totalGoals " + 
 					"FROM SOCCER02.TEAM t " + 
 					"join SOCCER02.MATCH m on(t.TEAM_ID = m.team_awayteam_id) " + 
-					"join SOCCER02.SEASONSTAGE s on(m.SEASONSTAGE_SEASONSTAGE_ID=s.SEASONSTAGE_ID) " + 
 					"WHERE t.long_name = ? ) ";
 			break;
 		}

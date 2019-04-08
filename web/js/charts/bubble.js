@@ -19,7 +19,7 @@ function plotBubble(json, ctx){
     
     }*/
     
-    console.log(json);
+    //console.log(json);
     //var ctx = document.getElementById("mainChart").getContext('2d');
 
     // Convert all 20XX/20YY to 20XX (assumes the first dimension is always seasons)
@@ -58,11 +58,11 @@ function plotBubble(json, ctx){
 		
         var seasonData = new Array();
         for (var j = 0; j < dim1.length; ++j) {
-        	/*if (ctx.canvas.id == "mainChart") {
+        	if (ctx.canvas.id == "mainChart") {
         		if (json.dim1[j] == null || json.dim2[j] == null){
         			continue;
         		}
-        	}*/
+        	}
         	if (json.dim1[j] == null && json.dim2[j] == null) {
         		continue;
         	}
@@ -138,7 +138,8 @@ function plotBubble(json, ctx){
             }
         }
     }
-
+	
+	console.log(json);
     //window.chart = new Chart(ctx, config);
     return new Chart(ctx, config);
 }

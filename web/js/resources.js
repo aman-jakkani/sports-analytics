@@ -259,7 +259,7 @@ function getCubeOrRollup(){
     			}
     		
     		}
-    		for (i = json.dim2.length - 1; i >= 0; --i){
+    		/*for (i = json.dim2.length - 1; i >= 0; --i){
     		
     			if (json.dim2[i] == null) {
     			
@@ -270,7 +270,7 @@ function getCubeOrRollup(){
     				
     			}
     		
-    		}
+    		}*/
     		
     		plotRollup(json, nullValues);
             break;
@@ -302,6 +302,34 @@ function getCubeOrRollup(){
     			}
     		
     		}
+    		/*console.log("before remove");
+    		console.log(json.dim1.length);
+    		for (i = json.dim2.length - 1; i >= 0; --i){
+    		
+    			if (json.dim2[i] == null) {
+    			
+    				//remove null values from old array
+    				json.dim1.splice(i,1);
+    				json.dim2.splice(i,1);
+    				json.aggie.splice(i,1);
+    				
+    			}
+    		
+    		}*/
+    		/*for (i = json.dim1.length - 1; i >= 0; --i){
+    		
+    			if (json.dim1[i] == null) {
+    			
+    				//remove null values from old array
+    				json.dim1.splice(i,1);
+    				json.dim2.splice(i,1);
+    				json.aggie.splice(i,1);
+    				
+    			}
+    		
+    		}*/
+    		console.log("after remove");
+    		console.log(json.dim1.length);
          	plotCube(json, nullValues, nullValues1);
             break;
         default: console.log("No aggie function chosen")

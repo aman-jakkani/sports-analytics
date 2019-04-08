@@ -278,7 +278,7 @@ public class SoccerController extends DatabaseController
 			break;
 		case "goal":
 			break;
-		case "corner":
+		case "corner": 
 			queryHome = "Select sum(Home) as HOME FROM( " + 
 					"SELECT homecornercnt AS HOME FROM SOCCER02.TEAM t " + 
 					"join SOCCER02.MATCHRELDIMMART m on(t.TEAM_ID = m.team_hometeam_id) " + 

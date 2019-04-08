@@ -233,14 +233,80 @@ function getCubeOrRollup(){
     console.log("QueryPairs: "+aggieFunc)
     var aggieStyle = document.getElementById("aggregationStyle").value;
     var json;
+    var nullValues = {
+    	"aggie": [], 
+    	"dim1": [],
+    	"dim2": []
+    };
+    var nullValues1 =  {
+    	"aggie": [], 
+    	"dim1": [],
+    	"dim2": []
+    };
     switch(aggieStyle){
         case "Rollup": json = getRestResource("RollupResource",aggieFunc);
+        	console.log(json);
+    		for (i = 0; i < json.dim2.length; ++i){
+    		
+    			if (json.dim2[i] == null) {
+    			
+    				//add null values to new array
+    				nullValues.dim2.push(json.dim2[i]);
+    				nullValues.dim1.push(json.dim1[i]);
+    				nullValues.aggie.push(json.aggie[i]);
+    				
+    			
+    			}
+    		
+    		}
+    		for (i = json.dim2.length - 1; i >= 0; --i){
+    		
+    			if (json.dim2[i] == null) {
+    			
+    				//remove null values from old array
+    				json.dim1.splice(i,1);
+    				json.dim2.splice(i,1);
+    				json.aggie.splice(i,1);
+    				
+    			}
+    		
+    		}
+    		
+    		plotRollup(json, nullValues);
             break;
         case "Cube": json = getRestResource("CubeResource",aggieFunc);
+        	console.log(json);
+        	for (i = 0; i < json.dim2.length; ++i){
+    		
+    			if (json.dim2[i] == null) {
+    			
+    				//add null values to new array
+    				nullValues.dim2.push(json.dim2[i]);
+    				nullValues.dim1.push(json.dim1[i]);
+    				nullValues.aggie.push(json.aggie[i]);
+    				
+    			
+    			}
+    		
+    		}
+    		for (i = 0; i < json.dim1.length; ++i){
+    		
+    			if (json.dim1[i] == null) {
+    			
+    				//add null values to new array
+    				nullValues1.dim2.push(json.dim2[i]);
+    				nullValues1.dim1.push(json.dim1[i]);
+    				nullValues1.aggie.push(json.aggie[i]);
+    				
+    			
+    			}
+    		
+    		}
+         	plotCube(json, nullValues, nullValues1);
             break;
         default: console.log("No aggie function chosen")
     }
-	showChart(json);
+	
 }
 
 // return string of all teams based on sport/league

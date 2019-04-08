@@ -10,7 +10,7 @@ import org.junit.Test;
 
 public class BasketballControllerTest {
 
-    DBAccess.establishConnection();
+    //DBAccess.establishConnection();
 
     @Test
     public void testGetLeagues() {

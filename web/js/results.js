@@ -92,11 +92,34 @@ Dependencies:
 
 
 
-function showChart(json) {
+function plotRollup(json, nullValues) {
     chartType = document.getElementById("chartType").value;
     console.log(chartType)
+    var mainCanvas = document.getElementById("mainChart").getContext('2d');
+    var secondCanvas = document.getElementById("secondChart").getContext('2d');
     switch (chartType){
-        case "bubble": plotBubble(json);
+        case "bubble": plotBubble(json, mainCanvas);
+        			   plotBubble(nullValues, secondCanvas);
+            break;
+        case "scatter": plotScatter(json);
+            break;
+        case "line": plotLineChart(json);
+        	break; // create plotLine(json) function
+        default:
+            break;
+    }
+}
+
+function plotCube(json, nullValues, nullValues1) {
+    chartType = document.getElementById("chartType").value;
+    console.log(chartType)
+    var mainCanvas = document.getElementById("mainChart").getContext('2d');
+    var secondCanvas = document.getElementById("secondChart").getContext('2d');
+    var thirdCanvas = document.getElementById("thirdChart").getContext('2d');
+    switch (chartType){
+        case "bubble": plotBubble(json, mainCanvas);
+        			   plotBubble(nullValues, secondCanvas);
+        			   plotBubble(nullValues1, thirdCanvas);
             break;
         case "scatter": plotScatter(json);
             break;

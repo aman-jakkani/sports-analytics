@@ -11,14 +11,16 @@
     Raises:
     Notes:
 */
-function plotBubble(json){
+function plotBubble(json, ctx){
 	//Window.chart is global variable used to destroy previous chart to eliminate flicker
-    if (window.chart != undefined){
+    /*if (window.chart != undefined){
         window.chart.destroy();
         console.log("window destroy bubble");
     
-    }
-    var ctx = document.getElementById("mainChart").getContext('2d');
+    }*/
+    
+    console.log(json);
+    //var ctx = document.getElementById("mainChart").getContext('2d');
 
     // Convert all 20XX/20YY to 20XX (assumes the first dimension is always seasons)
     var dim1 = new Array();
@@ -42,6 +44,7 @@ function plotBubble(json){
         }
     }
 
+	console.log(ctx);
     var datasets = new Array();
     var teamset = new Array();
 
@@ -52,10 +55,21 @@ function plotBubble(json){
         else {
             teamset.push(json.dim2[i]);
         }
-
+		
         var seasonData = new Array();
         for (var j = 0; j < dim1.length; ++j) {
-            if (json.dim2[j] == json.dim2[i] && dim1[j] != null) {
+        	/*if (ctx.canvas.id == "mainChart") {
+        		if (json.dim1[j] == null || json.dim2[j] == null){
+        			continue;
+        		}
+        	}*/
+        	if (json.dim1[j] == null && json.dim2[j] == null) {
+        		continue;
+        	}
+            if (json.dim2[j] == json.dim2[i] /*&& dim1[j] != null*/) {
+            	if (dim1[j] == null) {
+            		dim1[j] = 0;
+            	}
                 seasonData.push({
                 		x: i,
                         y: dim1[j],
@@ -125,6 +139,6 @@ function plotBubble(json){
         }
     }
 
-    window.chart = new Chart(ctx, config);
-    
+    //window.chart = new Chart(ctx, config);
+    return new Chart(ctx, config);
 }

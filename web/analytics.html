@@ -41,8 +41,8 @@
 		<!-- Sidebar -->
 		<div class="w3-sidebar w3-dark-gray w3-bar-block" style="width:15%">
 		  <h3 class="w3-bar-item">MENU</h3>
-		  <a href="index.html" class="w3-bar-item w3-button">HOME</a>
-		  <a href="analytics.html" class="w3-bar-item w3-button">ANALYTICS 1</a>
+		  <a href="index.html" class="w3-bar-item w3-button" >HOME</a>
+		  <a href="analytics.html" class="w3-bar-item w3-button" style="background-color: #b3b6b7 ">ANALYTICS 1</a>
 		  <a href="CubeRollupMock.html" class="w3-bar-item w3-button">ANALYTICS 2</a>
 		  <a href="about.html" class="w3-bar-item w3-button">ABOUT</a>
 		  <a href="contact.html" class="w3-bar-item w3-button">CONTACT</a>
@@ -150,7 +150,8 @@
                         <option value = "null">--Make a choice--</option>
                     </select>
                 </p>
-            </fieldset>
+                        </fieldset></td>
+                    <td>
             <fieldset>
                 <legend>Fact Attribute</legend>
                 <p>
@@ -158,8 +159,8 @@
                         <option value = "null">--Make a choice--</option>
                     </select>
                 </p>
-            </fieldset>
-
+            </fieldset></td>
+                    <td>
             <fieldset>
                     <legend>Choose Player</legend>
                     <p>
@@ -167,17 +168,20 @@
                             <option value = "null">--Make a choice--</option>
                         </select>
                     </p>
-                </fieldset>
+                </fieldset></td>
             </table>
         </form>
     <br>
-	
+	<table>
+        <tr>
+            <td>
     <!-- Create Submit Button, link to showData() function -->
-    <button onclick="plotChart()" id="SUBMIT">PLOT</button>
-
+    <button onclick="plotChart()" id="SUBMIT">PLOT</button> </td>
+            <td>
     <!-- Create Submit Button, link to showData() function -->
-    <button onclick="displayPlayerStats()" id="STATS">GET PLAYER STATS</button>
-
+                <button onclick="displayPlayerStats()" id="STATS">GET PLAYER STATS</button> </td>
+            </tr>
+        </table>
     <!-- Canvas where the chart will be plotted -->
     <canvas id="mainChart" width="800" height="400"></canvas>
 

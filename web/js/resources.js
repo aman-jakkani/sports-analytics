@@ -244,7 +244,8 @@ function getCubeOrRollup(){
     	"dim2": []
     };
     switch(aggieStyle){
-        case "Rollup": json = getRestResource("RollupResource",aggieFunc);
+        //case "Rollup": json = getRestResource("RollupResource",aggieFunc);
+        case "Rollup": json = getRestResource("CubeResource",aggieFunc);
         	console.log(json);
     		for (i = 0; i < json.dim2.length; ++i){
     		

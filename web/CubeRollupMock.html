@@ -122,6 +122,17 @@
     </td>
     <td>
          <fieldset>
+                <legend>Choose Aggregation Data</legend>
+                <p>
+                    <label>Aggregation Data</label>
+                    <select id = "aggData">
+                        <option value = "null">--Make a choice--</option>
+                    </select>
+                </p>
+            </fieldset>
+    </td>
+    <td>
+         <fieldset>
                 <legend>Choose Chart Type</legend>
                 <p>
                     <label>Chart</label>
@@ -141,7 +152,7 @@
     <!-- Create Submit Button, link to showData() function -->
     <button onclick="getCubeOrRollup()" id="SUBMIT">SUBMIT</button>
     
-    <canvas id="mainChart" width="100" height="55"></canvas>
+    <canvas id="mainChart" width="100" height="100"></canvas>
     <canvas id="secondChart" width="100" height="55"></canvas>
     <canvas id="thirdChart" width="100" height="55"></canvas>
     

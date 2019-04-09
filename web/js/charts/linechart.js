@@ -15,15 +15,15 @@
   Notes:
     Move this to its own separate js file within charts
 */
-function plotLineChart(json){
+function plotLineChart(json, ctx){
   console.log("Entered line chart");
   console.log(json);
   // destroy any old chart already on the canvas
   //Window.chart is global variable used to destroy previous chart to eliminate flicker
-  if (window.chart != undefined){
+  /*if (window.chart != undefined){
         window.chart.destroy();
         console.log("window destroy");
-  }
+  }*/
   
   var dim1 = json.dim1;
   var dim2 = json.dim2;
@@ -31,7 +31,7 @@ function plotLineChart(json){
     /*alert(dim1.length);
     alert(dim2.length);
     alert(aggie.length);*/
-  var ctx = document.getElementById("mainChart").getContext('2d');
+  //var ctx = document.getElementById("mainChart").getContext('2d');
 
   var dim1Int = new Array();
    for(var i= 0;i<dim1.length;i++){
@@ -57,8 +57,15 @@ function plotLineChart(json){
         }
 
         var seasonData = new Array();
-        for (var j=0; j<dim1Int.length; j++)
-        {
+        for (var j=0; j<dim1Int.length; j++){
+        if (ctx.canvas.id == "mainChart") {
+        		if (json.dim1[j] == null || json.dim2[j] == null){
+        			continue;
+        		}
+        	}
+        	if (json.dim1[j] == null && json.dim2[j] == null) {
+        		continue;
+        	}
             if(dim2[j] == dim2[i] && dim1Int[j] != null)
             {
                 seasonData.push(

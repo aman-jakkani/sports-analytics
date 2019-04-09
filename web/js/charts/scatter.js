@@ -9,14 +9,13 @@
         - 
     Notes:
 */
-function plotScatter(json){
+function plotScatter(json, ctx){
 	
 	//Window.chart is global variable used to destroy previous chart to eliminate flicker
-    if (window.chart != undefined){
+    /*if (window.chart != undefined){
         window.chart.destroy();
-    }   
+    }*/ 
 
-    var ctx = document.getElementById("mainChart").getContext('2d');
 
     var dim1 = new Array();
     for(var i = 0;i < json.dim1.length; ++i){
@@ -40,7 +39,18 @@ function plotScatter(json){
 
         var seasonData = new Array();
         for (var j = 0; j < dim1.length; ++j) {
-            if (json.dim2[j] == json.dim2[i] && dim1[j] != null) {
+        if (ctx.canvas.id == "mainChart") {
+        		if (json.dim1[j] == null || json.dim2[j] == null){
+        			continue;
+        		}
+        	}
+        	if (json.dim1[j] == null && json.dim2[j] == null) {
+        		continue;
+        	}
+            if (json.dim2[j] == json.dim2[i] /*&& dim1[j] != null*/) {
+            	if (dim1[j] == null) {
+            		dim1[j] = 1;
+            	}
                 seasonData.push({
                         x: dim1[j],
                         y: json.aggie[j]
@@ -58,24 +68,29 @@ function plotScatter(json){
        			borderColor: col,
         		pointBorderColor: col,
         		backgroundColor: col,
-        		hidden: true   
+        		hidden: false   
             };
 
         datasets.push(teamData);
     }
+    
+    var axisNumbers = getAxisNumbers(ctx);
 
     var config = {
-        scales: {
-            xAxes: [{
-                type: 'linear',
-                position: 'bottom'
+        	scales: {
+            	xAxes: [{
+            		ticks: {
+                    	display: axisNumbers
+                	},
+                	type: 'linear',
+                	position: 'bottom'
             }]
         }
     }
 
     // window.bar just added without testing.
     // if Cube/rollup not working, remove "window.bar = "
-    window.bar = new Chart(ctx, {
+    new Chart(ctx, {
         type: 'bubble',
         data: { datasets: datasets },
         options: config

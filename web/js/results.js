@@ -101,9 +101,11 @@ function plotRollup(json, nullValues) {
         case "bubble": plotBubble(json, mainCanvas);
         			   plotBubble(nullValues, secondCanvas);
             break;
-        case "scatter": plotScatter(json);
+        case "scatter": plotScatter(json, mainCanvas);
+        				plotScatter(nullValues, secondCanvas);
             break;
-        case "line": plotLineChart(json);
+        case "line": plotLineChart(json, mainCanvas);
+        			 plotLineChart(nullValues, secondCanvas);
         	break; // create plotLine(json) function
         default:
             break;
@@ -121,9 +123,13 @@ function plotCube(json, nullValues, nullValues1) {
         			   plotBubble(nullValues, secondCanvas);
         			   plotBubble(nullValues1, thirdCanvas);
             break;
-        case "scatter": plotScatter(json);
+        case "scatter": plotScatter(json, mainCanvas);
+        				plotScatter(nullValues, secondCanvas);
+        				plotScatter(nullValues1, thirdCanvas);
             break;
-        case "line": plotLineChart(json);
+        case "line": plotLineChart(json, mainCanvas);
+        			 plotLineChart(nullValues, secondCanvas);
+        			 plotLineChart(nullValues1, thirdCanvas);
         	break; // create plotLine(json) function
         default:
             break;

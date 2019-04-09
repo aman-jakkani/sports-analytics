@@ -24,6 +24,17 @@ function getRandomColor() {
   return color;
 }
 
+function getAxisNumbers(ctx) {
+	var display;
+	if (ctx.canvas.id == "thirdChart") {
+		display = false;
+	}
+	else {
+		display = true;
+	}
+	return display;
+	}
+
 
 /*
   Description:

@@ -19,8 +19,6 @@ function plotBubble(json, ctx){
     
     }*/
     
-    //console.log(json);
-    //var ctx = document.getElementById("mainChart").getContext('2d');
 
     // Convert all 20XX/20YY to 20XX (assumes the first dimension is always seasons)
     var dim1 = new Array();
@@ -68,7 +66,7 @@ function plotBubble(json, ctx){
         	}
             if (json.dim2[j] == json.dim2[i] /*&& dim1[j] != null*/) {
             	if (dim1[j] == null) {
-            		dim1[j] = 0;
+            		dim1[j] = 1;
             	}
                 seasonData.push({
                 		x: i,
@@ -96,7 +94,7 @@ function plotBubble(json, ctx){
         datasets.push(teamData);
     }
     
-    
+    var axisNumbers = getAxisNumbers(ctx);
 
     var config = {
         type: 'bubble',
@@ -128,12 +126,13 @@ function plotBubble(json, ctx){
                 yAxes: [{
                 	scaleLabel: {
                 	display: true,
-        			labelString: 'Seasons',
+        			labelString: 'Seasons'
+        			},
         			ticks: {
+                					display: axisNumbers,
                 					callback: function (value) { if (Number.isInteger(value)) { return value; } }
-            					},
+            		},
             		min: 0
-        			}
                 }]
             }
         }

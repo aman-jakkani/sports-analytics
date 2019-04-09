@@ -57,7 +57,7 @@ var dropdown = {
   run: $(document).ready(function() {
     var defaultString = "<option value = \"null\" >--Make a choice--</option>";
 
-    $("#sport, #league, #team, #season, #game, #aggregationFunction, #aggregationStyle").change(function() {
+    $("#sport, #league, #team, #season, #game, #aggregationFunction, #aggregationStyle, #aggData").change(function() {
 
       if ($(this).attr('id') == 'sport') {
         sport = $(this).val();
@@ -129,6 +129,13 @@ var dropdown = {
       
       else if ($(this).attr('id') == 'aggregationStyle') {
         aggregationStyle = $("#aggregationStyle").val();
+        $("#aggData").html(getAggData(sport));
+
+        // Reset games
+      }
+      
+      else if ($(this).attr('id') == 'aggData') {
+        aggData = $("#aggData").val();
         $("#chartType").html(getCharts(aggregationStyle));
 
         // Reset games
@@ -229,9 +236,25 @@ function getDimensions(sport) {
 }
 
 function getCubeOrRollup(){
-    var aggieFunc = [["aggregation", document.getElementById("aggregationFunction").value],["sports", document.getElementById("sport").value],["league", document.getElementById("league").value]];
-    console.log("QueryPairs: "+aggieFunc)
-    var aggieStyle = document.getElementById("aggregationStyle").value;
+	
+	var sport = document.getElementById("sport").value;
+	var league = document.getElementById("league").value;
+	var agFunc = document.getElementById("aggregationFunction").value;
+	var agStyle = document.getElementById("aggregationStyle").value;
+	
+	console.log(sport);
+	console.log(league);
+	console.log(agFunc);
+	console.log(agStyle);
+	console.log(chartType.value);
+
+	if (sport == null || league == null || agFunc == null || agStyle == null || chartType.value == null) {
+	console.log("entered break");
+	return;
+	}
+
+    var aggieFunc = [["aggregation", agFunc],["aggregationData", "CORNERS"], ["sports", sport],["league", league]];
+    console.log("QueryPairs: "+aggieFunc)   
     var json;
     var nullValues = {
     	"aggie": [], 
@@ -243,7 +266,7 @@ function getCubeOrRollup(){
     	"dim1": [],
     	"dim2": []
     };
-    switch(aggieStyle){
+    switch(agStyle){
         //case "Rollup": json = getRestResource("RollupResource",aggieFunc);
         case "Rollup": json = getRestResource("CubeResource",aggieFunc);
         	console.log(json);
@@ -540,6 +563,45 @@ function getAggregationStyle(aggregationFunction){
   	}
   
   }  else {
+	 
+  }
+
+  document.getElementById("chartType").innerHTML = htmlChartString;
+
+  return htmlChartString;
+}
+
+
+function getAggData(sport){
+
+  // Default value for the string
+  var htmlChartString = "<option value = \"null\" >--Make a choice--</option>";
+
+  /*
+  // Dictionary of potential charts
+  var charts = [['bar', 'Bar Chart'], ['line','Line Chart'], ['horizontalBar', 'Horizontal Bar Chart'],
+                ['pie', 'Pie Chart'], ['doughnut', 'Doughnut Chart'], ['radar','Radar Chart'],
+                ['polarArea', 'Polar Area Chart']];
+  */
+
+  if (sport == "Soccer"){
+    var agData = [['GOALS','Goals'], ['RED_CARDS','Red Cards'], ['YELLOW_CARDS','Yellow Cards'], ['FOULS','Fouls'], ['BALL_POSSESSION','Ball Possession'], ['CORNERS','Corners']];
+  	console.log("Number of aggData: ".concat(agData.length));
+ 
+  	for (i = 0; i < agData.length; ++i){
+    	htmlChartString = htmlChartString.concat("<option value = \"" + agData[i][0] + "\" >" + agData[i][1] + "</option>");
+  	}
+  
+  } else if (sport == "Basketball"){
+  
+  	var agData = [['0','No Options Yet']];
+  	console.log("Number of aggData: ".concat(agData.length));
+ 
+  	for (i = 0; i < agData.length; ++i){
+    	htmlChartString = htmlChartString.concat("<option value = \"" + agData[i][0] + "\" >" + agData[i][1] + "</option>");
+  	}
+  
+  } else {
 	 
   }
 

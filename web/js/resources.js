@@ -241,19 +241,21 @@ function getCubeOrRollup(){
 	var league = document.getElementById("league").value;
 	var agFunc = document.getElementById("aggregationFunction").value;
 	var agStyle = document.getElementById("aggregationStyle").value;
+	var agData = document.getElementById("aggData").value;
+	var chart = document.getElementById("chartType").value;
 	
 	console.log(sport);
 	console.log(league);
 	console.log(agFunc);
 	console.log(agStyle);
-	console.log(chartType.value);
+	console.log(chart);
 
-	if (sport == null || league == null || agFunc == null || agStyle == null || chartType.value == null) {
+	if (sport == null || league == null || agFunc == null || agStyle == null || agData == null || chart == null) {
 	console.log("entered break");
 	return;
 	}
 
-    var aggieFunc = [["aggregation", agFunc],["aggregationData", "CORNERS"], ["sports", sport],["league", league]];
+    var aggieFunc = [["aggregation", agFunc],["aggregationData", agData], ["sports", sport],["league", league]];
     console.log("QueryPairs: "+aggieFunc)   
     var json;
     var nullValues = {

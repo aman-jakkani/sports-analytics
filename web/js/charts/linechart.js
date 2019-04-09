@@ -25,6 +25,10 @@ function plotLineChart(json, ctx){
         console.log("window destroy");
   }*/
   
+  var league = document.getElementById("league").value;
+  var agFunc = document.getElementById("aggregationFunction").value;
+  var agData = document.getElementById("aggData").value;
+  
   var dim1 = json.dim1;
   var dim2 = json.dim2;
   var aggie = json.aggie;
@@ -94,6 +98,10 @@ function plotLineChart(json, ctx){
 
         datasets.push(teamData);
     }
+    
+    var axisNumbers = getAxisNumbers(ctx);
+    var title = getTitle(ctx, league, agFunc, agData);
+    
     var chart = new Chart(ctx, {
         type: 'line',
         data:
@@ -101,10 +109,32 @@ function plotLineChart(json, ctx){
                 datasets: datasets
             },
         options: {
+        	title: {
+        		display: true,
+      			text: title
+      		},
             scales: {
                 xAxes: [{
+                	scaleLabel: {
+                	display: true,
+        			labelString: 'Seasons'
+        			},
+        			ticks: {
+        				callback: function (value) { if (Number.isInteger(value)) { return value; } }
+        			},
                     type: 'linear',
                     position: 'bottom'
+                }],
+            	 yAxes: [{
+                	scaleLabel: {
+                	display: true,
+        			labelString: agData
+        			},
+        			ticks: {
+                					display: axisNumbers,
+                					callback: function (value) { if (Number.isInteger(value)) { return value; } }
+            		},
+            		min: 0
                 }]
             }
         }

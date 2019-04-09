@@ -33,8 +33,24 @@ function getAxisNumbers(ctx) {
 		display = true;
 	}
 	return display;
-	}
+}
 
+function getTitle(ctx, league, agFunc, agData){
+	var title;
+	if (ctx.canvas.id == "mainChart") {
+		title = agFunc + ' ' + agData + ' By Each Team In ' + league + ' By Season';
+	}
+	else if (ctx.canvas.id == "secondChart"){
+		title = agFunc + ' ' + agData + ' In ' + league + ' By Season';
+	}
+	else if (ctx.canvas.id == "thirdChart"){
+		title = agFunc + ' ' + agData + ' By Each Team In ' + league + 'Over All Seasons';
+	}
+	else {
+		title = null;
+	}
+	return title;
+}
 
 /*
   Description:

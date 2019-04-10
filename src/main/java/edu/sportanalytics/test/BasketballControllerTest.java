@@ -1,8 +1,6 @@
 package edu.sportanalytics.test;
-import java.util.ArrayList;
-import java.util.List;
+
 import edu.sportanalytics.database.BasketballController;
-import edu.sportanalytics.database.Basketball_League;
 import edu.sportanalytics.database.DBAccess;
 import edu.sportanalytics.database.SportsEnum;
 import org.junit.Assert;
@@ -10,7 +8,19 @@ import org.junit.Test;
 
 public class BasketballControllerTest {
 
-    //DBAccess.establishConnection();
+    @Test
+    public void testDbConnection()
+    {
+        //Default Params
+        String server = DBAccess.getInstance().getServerURL();
+        String port = DBAccess.getInstance().getPort();
+        String sid = DBAccess.getInstance().getSid();
+        String username = DBAccess.getInstance().getUsername();
+        String pw = ""; //Enter db password here before testing but DO NOT push pw to git!!
+        char[] pwArr = pw.toCharArray();
+
+        DBAccess.getInstance().setDBParams(server, port, sid, username, pwArr );
+    }
 
     @Test
     public void testGetLeagues() {

@@ -65,8 +65,9 @@ function getPlayerData(token){
   Raises:
   Notes:
 */
-function getSoccerAttributeData(attribute, token){
+/*function getSoccerAttributeData(attribute, token){
 
+	console.log(attribute);
     switch (attribute){
       case ("score"): 
         return getRestResource("ScoreRestResource", [["token", token["token"]], ]);
@@ -92,7 +93,7 @@ function getSoccerAttributeData(attribute, token){
       default: 
         break;
     }
-  }
+  }*/
   
   /*
     Description:

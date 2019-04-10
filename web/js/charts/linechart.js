@@ -59,7 +59,8 @@ function plotLineChart(json, ctx){
         {
             teamset.push(dim2[i]);
         }
-
+		
+		var label;
         var seasonData = new Array();
         for (var j=0; j<dim1Int.length; j++){
         if (ctx.canvas.id == "mainChart") {
@@ -70,6 +71,18 @@ function plotLineChart(json, ctx){
         	if (json.dim1[j] == null && json.dim2[j] == null) {
         		continue;
         	}
+        	if (i == 0) {
+        		i = 1; 
+        	}
+        	if (json.dim2[i] == null && json.dim1[j] != null) {
+        
+        		label = "All Teams";
+        
+       		} else {
+        
+        		label = json.dim2[i];
+        
+			}
             if(dim2[j] == dim2[i] && dim1Int[j] != null)
             {
                 seasonData.push(
@@ -85,7 +98,7 @@ function plotLineChart(json, ctx){
         var teamData =
             {
             
-                label: dim2[i],
+                label: label, //dim2[i],
                 data: seasonData,
                 showLine: true,
                 fill: false,

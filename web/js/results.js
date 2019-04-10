@@ -97,6 +97,7 @@ function plotRollup(json, nullValues) {
     console.log(chartType)
     var mainCanvas = document.getElementById("mainChart").getContext('2d');
     var secondCanvas = document.getElementById("secondChart").getContext('2d');
+    
     switch (chartType){
         case "bubble": plotBubble(json, mainCanvas);
         			   plotBubble(nullValues, secondCanvas);
@@ -235,6 +236,7 @@ function plotChart() {
   if (sport == "Soccer"){
     data = getSoccerAttributeData(factatt, token);
     console.log("Got soccer attributes");
+    console.log(data);
 
   } else if (sport == "Basketball"){
     data = getBasketballAttributeData(factatt, token);
@@ -293,6 +295,10 @@ function getSoccerAttributeData(attribute, token){
       var score = getRestResource("ScoreRestResource", [["token", token["token"]], ]);
       return score["score"]; // add index
 
+	case ("corners"):
+      var corners = getRestResource("CornerStatRestResource", [["token", token["token"]], ]);
+      return corners["corners"]; // add index
+	
     case ("ballPossession"):
       var ballPossession = getRestResource("BallPossessionStatResource", [["token", token["token"]], ]);
       return ballPossession["possession"];
@@ -358,12 +364,23 @@ function getBasketballAttributeData(attributeList, token){
 */
 
 function displayPlayerStats(){
-	var sport = document.getElementById("sport").value;
+
+
+  var sport = document.getElementById("sport").value;
   var league = document.getElementById("league").value;
   var team = document.getElementById("team").value;
   var season = document.getElementById("season").value;
   var match = document.getElementById("game").value;
   // var name = document.getElementById('name').innerHTML = document.getElementById("player").options[document.getElementById('player').selectedIndex].text;
+
+  console.log(sport);
+  console.log(league);
+  if (sport == "null" || league == "null" || team == "null" || season == "null" || match == "null" ){
+  
+  	console.log("Not enough parameters");
+  	return;
+  
+  }
 
   var parameters = [["sports", sport], ["league", league], ["team", team], ["season", season], ["match", match], ["name", name]];
   console.log(parameters);

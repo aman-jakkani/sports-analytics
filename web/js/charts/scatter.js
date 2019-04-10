@@ -16,6 +16,9 @@ function plotScatter(json, ctx){
         window.chart.destroy();
     }*/ 
 
+	var league = document.getElementById("league").value;
+    var agFunc = document.getElementById("aggregationFunction").value;
+    var agData = document.getElementById("aggData").value;
 
     var dim1 = new Array();
     for(var i = 0;i < json.dim1.length; ++i){
@@ -75,15 +78,37 @@ function plotScatter(json, ctx){
     }
     
     var axisNumbers = getAxisNumbers(ctx);
+    
+    var axisNumbers = getAxisNumbers(ctx);
+    var title = getTitle(ctx, league, agFunc, agData);
 
     var config = {
+    		title: {
+        		display: true,
+      			text: title
+      		},
         	scales: {
             	xAxes: [{
+            		scaleLabel: {
+                	display: true,
+        			labelString: 'Seasons'
+        			},
             		ticks: {
                     	display: axisNumbers
                 	},
                 	type: 'linear',
                 	position: 'bottom'
+            }],
+            yAxes: [{
+                	scaleLabel: {
+                	display: true,
+        			labelString: agData
+        			},
+        			ticks: {
+                					display: axisNumbers,
+                					callback: function (value) { if (Number.isInteger(value)) { return value; } }
+            		},
+            		min: 0
             }]
         }
     }

@@ -48,7 +48,9 @@ var dropdown = {
   team: "null",
   season: "null",
   game: "null",
+  aggregationFunction: "null",
   aggregationStyle: "null",
+  aggData: "null",
   chartType: "null",
   token: "null",
   player: "null",
@@ -74,6 +76,9 @@ var dropdown = {
         $("#axes").html(defaultString);
         $("#factAttribute").html(getFactAttribute(sport));
         $("#dimensions").html(getDimensions(sport));
+        $("#aggregationFunction").html(getAggregationFunction(league));
+        $("#aggregationStyle").html(getAggregationStyle(aggregationFunction));
+        $("#aggData").html(getAggData(sport));
 
       }
 
@@ -85,9 +90,13 @@ var dropdown = {
         // Reset options below team
         $("#season").html(defaultString);
         $("#game").html(defaultString);
-        $("#stat1").html(defaultString);
-        // $("#chartType").html(defaultString);
+        $("#stat1").html(defaultString);    // stat1 doesn't exist anymore, need to update later
+        $("#chartType").html(getCharts(aggregationStyle)); 
         $("#axes").html(defaultString);
+        $("#factAttribute").html(getFactAttribute(sport));
+        $("#dimensions").html(getDimensions(sport));
+        $("#aggregationStyle").html(getAggregationStyle(aggregationFunction));
+        $("#aggData").html(getAggData(sport));
       }
 
       else if ($(this).attr('id') == 'team') {
@@ -125,6 +134,9 @@ var dropdown = {
         $("#aggregationStyle").html(getAggregationStyle(aggregationFunction));
 
         // Reset games
+        $("#aggregationStyle").html(getAggregationStyle(aggregationFunction));
+        $("#aggData").html(getAggData(sport));
+        $("#chartType").html(getCharts(aggregationStyle));
       }
       
       else if ($(this).attr('id') == 'aggregationStyle') {
@@ -132,6 +144,8 @@ var dropdown = {
         $("#aggData").html(getAggData(sport));
 
         // Reset games
+        $("#aggData").html(getAggData(sport));
+        $("#chartType").html(getCharts(aggregationStyle));
       }
       
       else if ($(this).attr('id') == 'aggData') {

@@ -18,6 +18,9 @@ function plotBubble(json, ctx){
         console.log("window destroy bubble");
     
     }*/
+    var league = document.getElementById("league").value;
+    var agFunc = document.getElementById("aggregationFunction").value;
+    var agData = document.getElementById("aggData").value;
     
 
     // Convert all 20XX/20YY to 20XX (assumes the first dimension is always seasons)
@@ -95,6 +98,7 @@ function plotBubble(json, ctx){
     }
     
     var axisNumbers = getAxisNumbers(ctx);
+    var title = getTitle(ctx, league, agFunc, agData);
 
     var config = {
         type: 'bubble',
@@ -102,7 +106,7 @@ function plotBubble(json, ctx){
         options: {
         	title: {
         		display: true,
-      			text: 'Average Number of Goals Scored By Each Team In Bundesliga By Season'
+      			text: title
       		},
             scales: {
                 xAxes: [{

@@ -1,40 +1,35 @@
 package edu.sportanalytics.test;
 
-import edu.sportanalytics.database.BasketballController;
 import edu.sportanalytics.database.DBAccess;
-import org.junit.Assert;
+import edu.sportanalytics.database.SoccerController;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
 
-class BasketballControllerTest {
-    private BasketballController bc;
+class SoccerControllerTest {
+    private SoccerController sc;
 
     @BeforeEach
     void setUp() {
-        this.bc = new BasketballController(DBAccess.getInstance());
+        this.sc = new SoccerController(DBAccess.getInstance());
     }
 
     @AfterEach
     void tearDown() {
-        // Disconnect from db
+        // Disconnect from db?
+        // Release resources?
     }
 
     @Test
     void getLeagues() {
-        // List<String> league = this.bc.getTeams("NBA");
-        // Assert.assertEquals(league, bc.getLeagues());
+
+
     }
 
     @Test
     void getTeams() {
-        List<String> teams = bc.getTeams("NBA");
-        // System.out.println(teams);
     }
 
     @Test
@@ -50,15 +45,19 @@ class BasketballControllerTest {
     }
 
     @Test
-    void homeScoreById() {
+    void findMatches() {
     }
 
     @Test
-    void guestScoreById() {
+    void findSeasonstages() {
     }
 
     @Test
-    void getAttendanceByGame() {
+    void findTeams() {
+    }
+
+    @Test
+    void findAllLeagues() {
     }
 
     @Test
@@ -70,27 +69,23 @@ class BasketballControllerTest {
     }
 
     @Test
-    void getHomePlayerList() {
+    void getStatMatch() {
     }
 
     @Test
-    void getAwayPlayerList() {
+    void getStatSeasonAccumulated() {
     }
 
     @Test
-    void getPlayer() {
+    void getStatAccumulated() {
     }
 
     @Test
-    void getBBPlayer() {
+    void tryClose() {
     }
 
     @Test
-    void getRollupStats() {
-    }
-
-    @Test
-    void getCubeStats() {
+    void getAwayTeamPlayerID() {
     }
 
     @Test
@@ -98,7 +93,19 @@ class BasketballControllerTest {
     }
 
     @Test
-    void getAwayTeamPlayerID() {
+    void getAwayPlayerList() {
+    }
+
+    @Test
+    void getHomePlayerList() {
+    }
+
+    @Test
+    void getPlayerStats() {
+    }
+
+    @Test
+    void getPlayer() {
     }
 
     @Test
@@ -107,10 +114,6 @@ class BasketballControllerTest {
 
     @Test
     void getRollup() {
-    }
-
-    @Test
-    void tryClose() {
     }
 
     @Test

@@ -1,6 +1,5 @@
 package edu.sportanalytics.database;
 
-import org.omg.CORBA.UNKNOWN;
 
 public enum SoccerAggregationData implements AggregationData
 {
@@ -76,7 +75,7 @@ public enum SoccerAggregationData implements AggregationData
 
         }
     },
-    BALL_POSSESION
+    BALL_POSSESSION
     {
         @Override
         public String toString()

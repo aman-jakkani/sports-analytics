@@ -13,11 +13,11 @@
 */
 function plotBubble(json, ctx){
 	//Window.chart is global variable used to destroy previous chart to eliminate flicker
-    /*if (window.chart != undefined){
+    if (window.chart != undefined){
         window.chart.destroy();
         console.log("window destroy bubble");
     
-    }*/
+    }
     var league = document.getElementById("league").value;
     var agFunc = document.getElementById("aggregationFunction").value;
     var agData = document.getElementById("aggData").value;
@@ -56,7 +56,8 @@ function plotBubble(json, ctx){
         else {
             teamset.push(json.dim2[i]);
         }
-		
+    
+		var label;
         var seasonData = new Array();
         for (var j = 0; j < dim1.length; ++j) {
         	if (ctx.canvas.id == "mainChart") {
@@ -67,6 +68,18 @@ function plotBubble(json, ctx){
         	if (json.dim1[j] == null && json.dim2[j] == null) {
         		continue;
         	}
+        	if (i == 0) {
+        		i = 1; 
+        	}
+        	if (json.dim2[i] == null && json.dim1[j] != null) {
+        
+        		label = "All Teams";
+        
+       		} else {
+        
+        		label = json.dim2[i];
+        
+			}
             if (json.dim2[j] == json.dim2[i] /*&& dim1[j] != null*/) {
             	if (dim1[j] == null) {
             		dim1[j] = 1;
@@ -83,7 +96,7 @@ function plotBubble(json, ctx){
         // and needs to be included in the html file in order to work
 		var col = getRandomColor();
         var teamData ={
-                label: json.dim2[i],
+                label: label, //json.dim2[i],
                 data: seasonData,
                 showLine: true,
                 fill: false,

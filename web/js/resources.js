@@ -264,7 +264,7 @@ function getCubeOrRollup(){
 	console.log(agStyle);
 	console.log(chart);
 
-	if (sport == null || league == null || agFunc == null || agStyle == null || agData == null || chart == null) {
+	if (sport == "null" || league == "null" || agFunc == "null" || agStyle == "null" || agData == "null" || chart == "null") {
 	console.log("entered break");
 	return;
 	}
@@ -483,8 +483,8 @@ function getFactAttribute(sport) {
 
 	else if (sport == "Soccer"){
     htmlFactAttribute += "<option value='goals'>Goals</option>"
-                        + "<option value='assists'>Assists</option>"
                         + "<option value='ballPossession'>Ball Possession</option>"
+                        + "<option value='corners'>Corners</option>"
                         + "<option value='fouls'>Fouls</option>"
                         + "<option value='yellowCards'>Yellow Cards</option>"
                         + "<option value='redCards'>Red Cards</option>";

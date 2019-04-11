@@ -40,6 +40,7 @@ function plotScatter(json, ctx){
             teamset.push(json.dim2[i]);
         }
 
+		var label;
         var seasonData = new Array();
         for (var j = 0; j < dim1.length; ++j) {
         if (ctx.canvas.id == "mainChart") {
@@ -47,6 +48,18 @@ function plotScatter(json, ctx){
         			continue;
         		}
         	}
+        	if (i == 0) {
+        		i = 1; 
+        	}
+        	if (json.dim2[i] == null && json.dim1[j] != null) {
+        
+        		label = "All Teams";
+        
+       		} else {
+        
+        		label = json.dim2[i];
+        
+			}
         	if (json.dim1[j] == null && json.dim2[j] == null) {
         		continue;
         	}
@@ -64,7 +77,7 @@ function plotScatter(json, ctx){
 
 		var col = getRandomColor();
         var teamData ={
-                label: json.dim2[i],
+                label: label, //json.dim2[i],
                 data: seasonData,
                 showLine: true,
                 fill: false,

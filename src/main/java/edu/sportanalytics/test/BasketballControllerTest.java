@@ -74,7 +74,17 @@ class BasketballControllerTest {
     }
 
     @Test
-    void getAwayPlayerList() {
+    public void testDbConnection()
+    {
+        //Default Params
+        String server = DBAccess.getInstance().getServerURL();
+        String port = DBAccess.getInstance().getPort();
+        String sid = DBAccess.getInstance().getSid();
+        String username = DBAccess.getInstance().getUsername();
+        String pw = ""; //Enter db password here before testing but DO NOT push pw to git!!
+        char[] pwArr = pw.toCharArray();
+
+        DBAccess.getInstance().setDBParams(server, port, sid, username, pwArr );
     }
 
     @Test

@@ -61,7 +61,7 @@
 
         <div id="Dropdown">
         <form method = "GET">
-            <table class="w3-table">
+            <table class="table table-bordered">
             <tr>
               <th></th>
               <th></th>
@@ -70,24 +70,26 @@
                 <tr>
                     <td>
                         <fieldset>
-                <legend>Choose Sport</legend>
+                
                 <p>
-                    <label>Sport</label>
-                    <select id = "sport">
+                   
+                    <strong>1.</strong> <label>Choose a Sport</label>
+                    <select class = "form-control" id = "sport">
                         <option>--Make a choice--</option>
                         <option>Soccer</option>
                         <option>Basketball</option>
                     </select>
+                       
                 </p>
             </fieldset>
                     </td>
 
                     <td>
                          <fieldset>
-                <legend>Pick a League</legend>
+               
                 <p>
-                    <label>League</label>
-                    <select id = "league">
+                    <strong>2.</strong> <label>Choose a League</label>
+                    <select class = "form-control" id = "league">
                         <option value = "null">--Make a Choice--</option>
                     </select>
                 </p>
@@ -96,10 +98,10 @@
 
                     <td>
                          <fieldset>
-                <legend>Pick a Team</legend>
+                
                 <p>
-                    <label>Team</label>
-                    <select id = "team">
+                    <strong>3.</strong> <label>Choose a Team</label>
+                    <select class = "form-control" id = "team">
                         <option value = "null">--Make a choice</option>
                     </select>
                 </p>
@@ -110,29 +112,29 @@
                 <tr>
                     <td>
                          <fieldset>
-                <legend>Choose a Season</legend>
+                
                 <p>
-                    <label>Season</label>
-                    <select id = "season">
+                    <strong>4.</strong> <label>Choose a Season</label>
+                    <select class = "form-control"id = "season">
                         <option value = "null" >--Make a choice--</option>
                     </select>
                 </p>
             </fieldset>  </td>
                     <td><fieldset>
-                <legend>Choose a Game</legend>
+                
                 <p>
-                    <label>Game</label>
-                    <select id = "game">
+                    <strong>5.</strong> <label>Choose a Game</label>
+                    <select class = "form-control" id = "game">
                         <option value = "null" >--Make a choice--</option>
                     </select>
                 </p>
             </fieldset> </td>
 
             <td><fieldset>
-                <legend>Choose Aggregation Style</legend>
+                
                 <p>
-                    <label>Aggregation Style</label>
-                    <select id = "aggregationStyle">
+                    <strong>6.</strong> <label>Choose an Aggregation Style</label>
+                    <select class = "form-control" id = "aggregationStyle">
                         <option value = "null">--Make a choice--</option>
                         <option value = "Simple">Simple Query</option>
                			<option value = "Rollup">Rollup</option>
@@ -143,28 +145,28 @@
                 </tr>
                 <tr>
                     <td><fieldset>
-                <legend>Choose Chart Type</legend>
+                
                 <p>
-                    <label>Chart</label>
-                    <select id = "chartType">
+                    <strong>7.</strong> <label>Choose a Chart</label>
+                    <select  class = "form-control" id = "chartType">
                         <option value = "null">--Make a choice--</option>
                     </select>
                 </p>
                         </fieldset></td>
                     <td>
             <fieldset>
-                <legend>Fact Attribute</legend>
+                <strong>8.</strong> <label>Choose a Fact</label>
                 <p>
-                    <select multiple id = "factAttribute">
+                    <select class = "form-control" multiple id = "factAttribute">
                         <option value = "null">--Make a choice--</option>
                     </select>
                 </p>
             </fieldset></td>
                     <td>
             <fieldset>
-                    <legend>Choose Player</legend>
+                    <strong>9.</strong> <label>Choose a Player</label>
                     <p>
-                        <select id = "players">
+                        <select class = "form-control" id = "players">
                             <option value = "null">--Make a choice--</option>
                         </select>
                     </p>
@@ -176,10 +178,10 @@
         <tr>
             <td>
     <!-- Create Submit Button, link to showData() function -->
-    <button onclick="plotChart()" id="SUBMIT">PLOT</button> </td>
+    <button class="btn btn-primary" onclick="plotChart()" id="SUBMIT">PLOT</button> </td>
             <td>
     <!-- Create Submit Button, link to showData() function -->
-                <button onclick="displayPlayerStats()" id="STATS">GET PLAYER STATS</button> </td>
+                <button class="btn btn-info" onclick="displayPlayerStats()" id="STATS">GET PLAYER STATS</button> </td>
             </tr>
         </table>
     <!-- Canvas where the chart will be plotted -->

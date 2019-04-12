@@ -58,7 +58,7 @@
 
         <div id="Dropdown">
         <form method = "GET">
-            <table class="w3-table">
+            <table class="table table-bordered">
 <tr>
   <th></th>
   <th></th>
@@ -66,10 +66,10 @@
 </tr>
 <tr>
   <td> <fieldset>
-                <legend>Choose Sport</legend>
+                
                 <p>
-                    <label>Sport</label>
-                    <select id = "sport">
+                    <strong>1.</strong> <label>Choose a Sport</label>
+                    <select class="form-control" id = "sport">
                         <option>--Make a choice--</option>
                         <option>Soccer</option>
                         <option>Basketball</option>
@@ -79,10 +79,10 @@
     </td>
     <td>
           <fieldset>
-                <legend>Choose League</legend>
+                <strong>2.</strong> <label>Choose a League</label>
                 <p>
-                    <label>League</label>
-                    <select id = "league">
+                    
+                    <select class="form-control" id = "league">
                         <option value = "UNKNOWN">--Make a choice--</option>
                     </select>
                 </p>
@@ -90,10 +90,9 @@
     </td>
     <td>
         <fieldset>
-                <legend>Choose Aggregation Function</legend>
                 <p>
-                    <label>Aggregation Function</label>
-                    <select id = "aggregationFunction">
+                    <strong>3.</strong> <label>Choose Aggregation Function</label>
+                    <select class="form-control" id = "aggregationFunction">
                         <option value = "UNKNOWN">--Make a choice--</option>
                         <!--<option value = "SUM">Sum</option>
                			<option value = "AVG">Average</option>
@@ -108,10 +107,9 @@
                 <tr>
                 <td>
          <fieldset>
-                <legend>Choose Aggregation Style</legend>
+                <strong>4.</strong> <label>Choose Aggregation Style</label>
                 <p>
-                    <label>Aggregation Style</label>
-                    <select id = "aggregationStyle">
+                    <select class="form-control" id = "aggregationStyle">
                         <option value = "null">--Make a choice--</option>
                         <!--<option value = "Simple">Simple</option>
                			<option value = "Rollup">Rollup</option>
@@ -122,10 +120,9 @@
     </td>
     <td>
          <fieldset>
-                <legend>Choose Aggregation Data</legend>
+                <strong>5.</strong> <label>Choose Aggregation Data</label>
                 <p>
-                    <label>Aggregation Data</label>
-                    <select id = "aggData">
+                    <select class="form-control" id = "aggData">
                         <option value = "null">--Make a choice--</option>
                     </select>
                 </p>
@@ -133,10 +130,9 @@
     </td>
     <td>
          <fieldset>
-                <legend>Choose Chart Type</legend>
+                <strong>6.</strong> <label>Choose Chart Type</label>
                 <p>
-                    <label>Chart</label>
-                    <select id = "chartType">
+                    <select class="form-control" id = "chartType">
                         <option value = "null">--Make a choice--</option>
                     </select>
                 </p>
@@ -150,7 +146,7 @@
     <br>
 
     <!-- Create Submit Button, link to showData() function -->
-    <button onclick="getCubeOrRollup()" id="SUBMIT">SUBMIT</button>
+    <button class="btn btn-primary" onclick="getCubeOrRollup()" id="SUBMIT">PLOT</button>
     
     <canvas id="mainChart" width="100" height="100"></canvas>
     <canvas id="secondChart" width="100" height="55"></canvas>

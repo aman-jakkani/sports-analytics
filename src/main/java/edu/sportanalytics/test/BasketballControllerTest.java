@@ -1,7 +1,6 @@
 package edu.sportanalytics.test;
 
-import edu.sportanalytics.database.BasketballController;
-import edu.sportanalytics.database.DBAccess;
+import edu.sportanalytics.database.*;
 import org.junit.Assert;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,6 +13,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class BasketballControllerTest {
     private BasketballController bc;
+    private List<Basketball_League> leaguesList;
+    private List<Basketball_Team> teamList;
+    private List<Basketball_Game> gamesList;
+    private List<Basketball_Season> seasonList;
 
     @BeforeEach
     void setUp() {
@@ -27,13 +30,13 @@ class BasketballControllerTest {
 
     @Test
     void getLeagues() {
-        // List<String> league = this.bc.getTeams("NBA");
-        // Assert.assertEquals(league, bc.getLeagues());
+        List<String> league = this.bc.getLeagues();
+        Assert.assertEquals(league, "NBA");
     }
 
     @Test
     void getTeams() {
-        List<String> teams = bc.getTeams("NBA");
+        //List<String> teams = bc.getTeams("NBA");
         // System.out.println(teams);
     }
 

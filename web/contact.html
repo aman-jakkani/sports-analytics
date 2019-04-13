@@ -5,25 +5,32 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <!-- Utility functions -->
+    <script type="text/javascript" src="js/utils.js"></script>
 	<script src = "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
 	
 	<body>
 		<!-- Sidebar -->
-		<div class="w3-sidebar w3-dark-gray w3-bar-block" style="width:15%">
-		  <h3 class="w3-bar-item">MENU</h3>
-		  <a href="index.html" class="w3-bar-item w3-button">HOME</a>
-		  <a href="analytics.html" class="w3-bar-item w3-button">ANALYTICS 1</a>
-		  <a href="CubeRollupMock.html" class="w3-bar-item w3-button">ANALYTICS 2</a>
-		  <a href="about.html" class="w3-bar-item w3-button">ABOUT</a>
-		  <a href="contact.html" class="w3-bar-item w3-button" style="background-color: #b3b6b7">CONTACT</a>
-		</div>
-
+		<div class="w3-sidebar w3-bar-block w3-card w3-animate-left w3-dark-grey" style="display:none" id="mySidebar">
+          <button class="w3-bar-item w3-button w3-large w3-red"
+          onclick="w3_close()">&times;</button>
+          <img src="logo-sidebar.jpg" alt="logo" style="width:100%">
+          <a href="index.html" class="w3-bar-item w3-button w3-padding-16">HOME</a>
+          <a href="analytics.html" class="w3-bar-item w3-button w3-padding-16">ANALYTICS 1</a>
+          <a href="CubeRollupMock.html" class="w3-bar-item w3-button w3-padding-16">ANALYTICS 2</a>
+          <a href="about.html" class="w3-bar-item w3-button w3-padding-16">ABOUT</a>
+          <a href="contact.html" class="w3-bar-item w3-button w3-padding-16 w3-white">CONTACT</a>
+        </div>
+        
 		<!-- Page Content -->
-		<div style="margin-left:15%">
 
-		<div class="w3-container w3-blue">
-		  <h1>CONTACT</h1>
-		</div>
+		<div id="main">
+            <div class="w3-teal">
+          <button id="openNav" class="w3-button w3-teal w3-xlarge" onclick="w3_open()">&#9776;</button>
+          <div class="w3-container">
+            <h1>CONTACT</h1>
+          </div>
+        </div>
 		
 		<div class="w3-container">
 
@@ -162,6 +169,8 @@
 						</body>
 			
 		</div>  
+        </div>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+        
 	</body>
 </html>

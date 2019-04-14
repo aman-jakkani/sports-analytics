@@ -6,6 +6,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import javax.lang.model.type.ArrayType;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,18 +32,21 @@ class BasketballControllerTest {
     @Test
     void getLeagues() {
         List<String> league = this.bc.getLeagues();
-        Assert.assertEquals(league, "NBA");
+        List<String> toComp = new ArrayList<>();
+        toComp.add("NBA");
+        Assert.assertEquals(league, toComp);
     }
 
     @Test
     void getTeams() {
-        //List<String> teams = bc.getTeams("NBA");
-        // System.out.println(teams);
+        List<String> teams = bc.getTeams("NBA");
+        List<String> listOfTeams = new ArrayList<>();
+        listOfTeams.add("Hawks");
+        listOfTeams.add("Celtics");
+        listOfTeams.add("Cavaliers");
+        Assert.assertEquals(teams.subList(0,3), listOfTeams);
     }
 
-    @Test
-    void getSeason() {
-    }
 
     @Test
     void getGame() {

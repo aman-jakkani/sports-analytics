@@ -77,7 +77,9 @@ var dropdown = {
         $("#factAttribute").html(getFactAttribute(sport));
         $("#dimensions").html(getDimensions(sport));
         $("#aggregationFunction").html(getAggregationFunction(league));
-        $("#aggregationStyle").html(getAggregationStyle(aggregationFunction));
+          if(window.location.pathname =="/CubeRollupMock.html"){
+            $("#aggregationStyle").html(getAggregationStyle(aggregationFunction));
+          }
         $("#aggData").html(getAggData(sport));
 
       }
@@ -571,7 +573,7 @@ function getAggregationStyle(aggregationFunction){
   */
 
   if (aggregationFunction != null){
-    var agStyle = [['Simple','Simple'], ['Rollup','Rollup'], ['Cube','Cube']];
+    var agStyle = [['Rollup','Rollup'], ['Cube','Cube']];
   	console.log("Number of charts: ".concat(agStyle.length));
  
   	for (i = 0; i < agStyle.length; ++i){
@@ -610,7 +612,7 @@ function getAggData(sport){
   
   } else if (sport == "Basketball"){
   
-  	var agData = [['0','No Options Yet']];
+  	var agData = [['0','Points']];
   	console.log("Number of aggData: ".concat(agData.length));
  
   	for (i = 0; i < agData.length; ++i){
@@ -704,12 +706,12 @@ function getPlayerList(sport, league, team, game){
   console.log("Players found: ".concat(json.homePlayers.length + json.guestPlayers.length));
 
   for (i = 0; i < json.homePlayers.length; ++i){
-    htmlPlayerString = htmlPlayerString.concat("<option value = \"" + json.homePlayersID[i] + "\">" + json.homePlayers[i] + "</option>");
+    htmlPlayerString = htmlPlayerString.concat("<option class=\"w3-red\" value = \"" + json.homePlayersID[i] + "\">" + json.homePlayers[i] + "</option>");
   }
 
   // json.guestPlayersID[i + json.homePlayers.length]
   for (i = 0; i < json.guestPlayers.length; ++i){
-    htmlPlayerString = htmlPlayerString.concat("<option value = \"" + json.guestPlayersID[i] + "\">" + json.guestPlayers[i] + "</option>");
+    htmlPlayerString = htmlPlayerString.concat("<option class=\"w3-light-blue\" value = \"" + json.guestPlayersID[i] + "\">" + json.guestPlayers[i] + "</option>");
   }
 
   console.log(json);

@@ -450,7 +450,7 @@ function getGames(sport, league, team, season){
   console.log("Matches found: ".concat(json.match.length));
 
   for (i = 0; i < json.match.length; ++i){
-    htmlMatchString = htmlMatchString.concat("<option value = \"" + json.match[i] + " \">" + json.match[i] + "</option>")
+    htmlMatchString = htmlMatchString.concat("<option value = \"" + json.match[i] + " \">" + json.match[i].substr(0, json.match[i].indexOf('(')) + "</option>");
   }
 
   // Sets the dropdown to the list of values

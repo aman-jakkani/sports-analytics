@@ -77,7 +77,7 @@
                 
                 <p>
                    
-                    <strong>1.</strong> <label>Choose a Sport</label>
+                    <strong>1.</strong> <label>Sport</label>
                     <select class = "form-control" id = "sport">
                         <option>--Make a choice--</option>
                         <option>Soccer</option>
@@ -92,7 +92,7 @@
                          <fieldset>
                
                 <p>
-                    <strong>2.</strong> <label>Choose a League</label>
+                    <strong>2.</strong> <label>League</label>
                     <select class = "form-control" id = "league">
                         <option value = "null">--Make a Choice--</option>
                     </select>
@@ -104,7 +104,7 @@
                          <fieldset>
                 
                 <p>
-                    <strong>3.</strong> <label>Choose a Team</label>
+                    <strong>3.</strong> <label>Team</label>
                     <select class = "form-control" id = "team">
                         <option value = "null">--Make a choice</option>
                     </select>
@@ -118,7 +118,7 @@
                          <fieldset>
                 
                 <p>
-                    <strong>4.</strong> <label>Choose a Season</label>
+                    <strong>4.</strong> <label>Season</label>
                     <select class = "form-control"id = "season">
                         <option value = "null" >--Make a choice--</option>
                     </select>
@@ -127,7 +127,7 @@
                     <td><fieldset>
                 
                 <p>
-                    <strong>5.</strong> <label>Choose a Game</label>
+                    <strong>5.</strong> <label>Game</label>
                     <select class = "form-control" id = "game">
                         <option value = "null" >--Make a choice--</option>
                     </select>
@@ -137,7 +137,7 @@
             <td><fieldset>
                 
                 <p>
-                    <strong>6.</strong> <label>Choose an Aggregation Style</label>
+                    <strong>6.</strong> <label>Aggregation Style</label>
                     <select class = "form-control" id = "aggregationStyle">
                         <option value = "Simple">--Make a choice--</option>
                         <option value = "Simple">Simple Query</option>
@@ -149,7 +149,7 @@
                     <td><fieldset>
                 
                 <p>
-                    <strong>7.</strong> <label>Choose a Chart</label>
+                    <strong>7.</strong> <label>Chart</label>
                     <select  class = "form-control" id = "chartType">
                         <option value = "null">--Make a choice--</option>
                     </select>
@@ -157,7 +157,7 @@
                         </fieldset></td>
                     <td>
             <fieldset>
-                <strong>8.</strong> <label>Choose a Fact</label>
+                <strong>8.</strong> <label>Fact Attribute</label>
                 <p>
                     <select class = "form-control" id = "factAttribute">
                         <option value = "null">--Make a choice--</option>
@@ -166,7 +166,7 @@
             </fieldset></td>
                     <td>
             <fieldset>
-                    <strong>9.</strong> <label>Choose a Player</label>
+                    <strong>9.</strong> <label>Player</label>
                     <p>
                         <select class = "form-control" id = "players">
                             <option value = "null">--Make a choice--</option>
@@ -184,8 +184,14 @@
             <td>
     <!-- Create Submit Button, link to showData() function -->
                 <button class="btn btn-info" onclick="displayPlayerStats()" id="STATS">GET PLAYER STATS</button> </td>
+                <td>
+    <!-- Create Submit Button, link to showData() function -->
+                <button class="btn btn-reset" onclick="playerReset()" id="RESET">RESET</button> </td>
             </tr>
         </table>
+            <div>
+   			<font id = "errorMessage" color = "red"></font>
+    		</div>
     <!-- Canvas where the chart will be plotted -->
     <canvas id="mainChart" width="800" height="400"></canvas>
 

@@ -99,14 +99,14 @@ function plotRollup(json, nullValues) {
     var secondCanvas = document.getElementById("secondChart").getContext('2d');
     
     switch (chartType){
-        case "bubble": plotBubble(json, mainCanvas);
-        			   plotBubble(nullValues, secondCanvas);
+        case "bubble": window.chart1 = plotBubble(json, mainCanvas);
+        			   window.chart2 = plotBubble(nullValues, secondCanvas);
             break;
-        case "scatter": plotScatter(json, mainCanvas);
-        				plotScatter(nullValues, secondCanvas);
+        case "scatter": window.chart1 = plotScatter(json, mainCanvas);
+        				window.chart2 = plotScatter(nullValues, secondCanvas);
             break;
-        case "line": plotLineChart(json, mainCanvas);
-        			 plotLineChart(nullValues, secondCanvas);
+        case "line": window.chart1 = plotLineChart(json, mainCanvas);
+        			 window.chart2 = plotLineChart(nullValues, secondCanvas);
         	break; // create plotLine(json) function
         default:
             break;
@@ -120,17 +120,17 @@ function plotCube(json, nullValues, nullValues1) {
     var secondCanvas = document.getElementById("secondChart").getContext('2d');
     var thirdCanvas = document.getElementById("thirdChart").getContext('2d');
     switch (chartType){
-        case "bubble": plotBubble(json, mainCanvas);
-        			   plotBubble(nullValues, secondCanvas);
-        			   plotBubble(nullValues1, thirdCanvas);
+        case "bubble": window.chart1 = plotBubble(json, mainCanvas);
+        			   window.chart2 = plotBubble(nullValues, secondCanvas);
+        			   window.chart3 = plotBubble(nullValues1, thirdCanvas);
             break;
-        case "scatter": plotScatter(json, mainCanvas);
-        				plotScatter(nullValues, secondCanvas);
-        				plotScatter(nullValues1, thirdCanvas);
+        case "scatter": window.chart1 = plotScatter(json, mainCanvas);
+        				window.chart2 = plotScatter(nullValues, secondCanvas);
+        				window.chart3 = plotScatter(nullValues1, thirdCanvas);
             break;
-        case "line": plotLineChart(json, mainCanvas);
-        			 plotLineChart(nullValues, secondCanvas);
-        			 plotLineChart(nullValues1, thirdCanvas);
+        case "line": window.chart1 = plotLineChart(json, mainCanvas);
+        			 window.chart2 = plotLineChart(nullValues, secondCanvas);
+        			 window.chart3 = plotLineChart(nullValues1, thirdCanvas);
         	break; // create plotLine(json) function
         default:
             break;
@@ -231,6 +231,29 @@ function plotChart() {
 
   var token = getRestResource("TokenResource", parameters);
   var data = null;
+  
+  
+  if (sport == "null" || league == "null" || team == "null" || season == "null" || match == "null" || factatt == "null" || aggregstyle == "null") {
+	
+	console.log("entered break");
+	document.getElementById("errorMessage").innerHTML = "Invalid Combination";
+	
+	const context = mainChart.getContext('2d');
+
+	context.clearRect(0, 0, mainChart.width, mainChart.height);
+		
+	const context1 = playerChart.getContext('2d');
+
+	context1.clearRect(0, 0, playerChart.width, secondChart.height);
+	
+	}
+	
+	else {
+	
+	document.getElementById("errorMessage").innerHTML = "";
+	
+	}
+  
 
   // Get the data for the specific attribute selected
   if (sport == "Soccer"){
@@ -258,7 +281,7 @@ function plotChart() {
 
     case ("line"):
       //plotLineChart(data);
-      plotDefault('line', 'home', 'away', Array(data[0]), Array(data[1]), label);
+      window.chart1 = plotDefault('line', 'home', 'away', Array(data[0]), Array(data[1]), label);
       break;
 
     case ("scatter"):
@@ -267,12 +290,12 @@ function plotChart() {
 
     case ("bar"):
       // plotBarChart(data);
-      plotDefault('bar', 'home', 'away', Array(data[0]), Array(data[1]), label);
+      window.chart1 = plotDefault('bar', 'home', 'away', Array(data[0]), Array(data[1]), label);
       break;
 
     case ("radar"):
       // plotRadar(data);
-      plotDefault('radar', 'home', 'away', Array(data[0]), Array(data[1]), label);
+      window.chart1 = plotDefault('radar', 'home', 'away', Array(data[0]), Array(data[1]), label);
       break;
 
     default: break;
@@ -400,7 +423,7 @@ function displayPlayerStats(){
   player = Object.values(player);
   var soccerplayerstatistics = getRestResource("SoccerPlayerResource", [["token", token["token"]], ["playerID", playerID]]);
   soccerplayerstatistics = Object.values(soccerplayerstatistics);
-  plotRadar(player[1], soccerplayerstatistics[0], soccerplayerstatistics[1], soccerplayerstatistics[2]);
+  window.chart1 = plotRadar(player[1], soccerplayerstatistics[0], soccerplayerstatistics[1], soccerplayerstatistics[2]);
 }
 
 

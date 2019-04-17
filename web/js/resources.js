@@ -184,6 +184,66 @@ function getToken(sport, league, team, season, game){
 }
 
 
+function teamReset() {
+
+		var defaultString = "<option value = \"null\" >--Make a choice--</option>";
+		var sportString = defaultString + "<option value = \"Soccer\" >Soccer</option>" + "<option value = \"Basketball\" >Basketball</option>";
+		
+		$("#sport").html(sportString);
+		$("#league").html(defaultString);
+		$("#team").html(defaultString);
+        $("#season").html(defaultString);
+        $("#game").html(defaultString);
+        $("#chartType").html(defaultString); 
+        $("#factAttribute").html(defaultString);
+        $("#dimensions").html(defaultString);
+        $("#aggregationFunction").html(defaultString);
+        $("#aggregationStyle").html(defaultString);
+        $("#aggData").html(defaultString);
+        $("#players").html(defaultString);
+
+		
+		//window.chart.destroy();
+        //console.log("window destroy bubble");
+        document.getElementById("errorMessage").innerHTML = "";
+		
+		window.chart1.destroy();
+		window.chart2.destroy();
+		window.chart3.destroy();
+		
+}
+
+function playerReset() {
+
+		var defaultString = "<option value = \"null\" >--Make a choice--</option>";
+		
+		var sportString = defaultString + "<option value = \"Soccer\" >Soccer</option>" + "<option value = \"Basketball\" >Basketball</option>";
+		
+		$("#sport").html(sportString);
+		$("#league").html(defaultString);
+		$("#team").html(defaultString);
+        $("#season").html(defaultString);
+        $("#game").html(defaultString);
+        $("#chartType").html(defaultString); 
+        $("#factAttribute").html(defaultString);
+        $("#dimensions").html(defaultString);
+        $("#aggregationFunction").html(defaultString);
+        $("#aggregationStyle").html(defaultString);
+        $("#aggData").html(defaultString);
+        $("#players").html(defaultString);
+
+		
+		//window.chart.destroy();
+        //console.log("window destroy bubble");
+        document.getElementById("errorMessage").innerHTML = "";
+		
+		window.chart1.destroy();
+		
+		document.getElementById("table").innerHTML = "";
+		
+}
+
+
 /*
   Description:
   Args:
@@ -267,8 +327,29 @@ function getCubeOrRollup(){
 	console.log(chart);
 
 	if (sport == "null" || league == "null" || agFunc == "null" || agStyle == "null" || agData == "null" || chart == "null") {
+	
 	console.log("entered break");
+	document.getElementById("errorMessage").innerHTML = "Invalid Combination";
+	
+	const context = mainChart.getContext('2d');
+
+	context.clearRect(0, 0, mainChart.width, mainChart.height);
+		
+	const context1 = secondChart.getContext('2d');
+
+	context1.clearRect(0, 0, secondChart.width, secondChart.height);
+		
+	const context2 = thirdChart.getContext('2d');
+
+	context2.clearRect(0, 0, thirdChart.width, thirdChart.height);
+	
 	return;
+	}
+	
+	else {
+	
+	document.getElementById("errorMessage").innerHTML = "";
+	
 	}
 
     var aggieFunc = [["aggregation", agFunc],["aggregationData", agData], ["sports", sport],["league", league]];

@@ -115,7 +115,7 @@ function plotLineChart(json, ctx){
     var axisNumbers = getAxisNumbers(ctx);
     var title = getTitle(ctx, league, agFunc, agData);
     
-    var chart = new Chart(ctx, {
+    return new Chart(ctx, {
         type: 'line',
         data:
             {

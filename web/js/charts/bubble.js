@@ -13,11 +13,11 @@
 */
 function plotBubble(json, ctx){
 	//Window.chart is global variable used to destroy previous chart to eliminate flicker
-    if (window.chart != undefined){
+    /*if (window.chart != undefined){
         window.chart.destroy();
         console.log("window destroy bubble");
     
-    }
+    }*/
     var league = document.getElementById("league").value;
     var agFunc = document.getElementById("aggregationFunction").value;
     var agData = document.getElementById("aggData").value;

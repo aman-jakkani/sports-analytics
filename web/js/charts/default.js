@@ -69,6 +69,6 @@ function plotDefault(chartType, homeTeamName, awayTeamName, homeTeamData, awayTe
           options: chartOptions
   };
 
-  window.bar = new Chart(canvas, config);	
+  return new Chart(canvas, config);	
 }
 

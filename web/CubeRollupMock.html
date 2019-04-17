@@ -72,7 +72,7 @@
   <td> <fieldset>
                 
                 <p>
-                    <strong>1.</strong> <label>Choose a Sport</label>
+                    <strong>1.</strong> <label>Sport</label>
                     <select class="form-control" id = "sport">
                         <option>--Make a choice--</option>
                         <option>Soccer</option>
@@ -83,7 +83,7 @@
     </td>
     <td>
           <fieldset>
-                <strong>2.</strong> <label>Choose a League</label>
+                <strong>2.</strong> <label>League</label>
                 <p>
                     
                     <select class="form-control" id = "league">
@@ -95,7 +95,7 @@
     <td>
         <fieldset>
                 <p>
-                    <strong>3.</strong> <label>Choose Aggregation Function</label>
+                    <strong>3.</strong> <label>Aggregation Function</label>
                     <select class="form-control" id = "aggregationFunction">
                         <option value = "UNKNOWN">--Make a choice--</option>
                         <!--<option value = "SUM">Sum</option>
@@ -111,7 +111,7 @@
                 <tr>
                 <td>
          <fieldset>
-                <strong>4.</strong> <label>Choose Aggregation Style</label>
+                <strong>4.</strong> <label>Aggregation Style</label>
                 <p>
                     <select class="form-control" id = "aggregationStyle">
                         <option value = "null">--Make a choice--</option>
@@ -124,7 +124,7 @@
     </td>
     <td>
          <fieldset>
-                <strong>5.</strong> <label>Choose Aggregation Data</label>
+                <strong>5.</strong> <label>Aggregation Data</label>
                 <p>
                     <select class="form-control" id = "aggData">
                         <option value = "null">--Make a choice--</option>
@@ -134,7 +134,7 @@
     </td>
     <td>
          <fieldset>
-                <strong>6.</strong> <label>Choose Chart Type</label>
+                <strong>6.</strong> <label>Chart Type</label>
                 <p>
                     <select class="form-control" id = "chartType">
                         <option value = "null">--Make a choice--</option>
@@ -151,7 +151,10 @@
 
     <!-- Create Submit Button, link to showData() function -->
     <button class="btn btn-primary" onclick="getCubeOrRollup()" id="SUBMIT">PLOT</button>
-    
+    <button class="btn btn-secondary" onclick="teamReset()" id="SUBMIT">RESET</button>
+    <div>
+    <font id = "errorMessage" color = "red"></font>
+    </div>
     <canvas id="mainChart" width="100" height="100"></canvas>
     <canvas id="secondChart" width="100" height="55"></canvas>
     <canvas id="thirdChart" width="100" height="55"></canvas>

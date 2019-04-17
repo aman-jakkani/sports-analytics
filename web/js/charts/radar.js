@@ -47,5 +47,5 @@ function plotRadar(name, stat0, stat1, stat2) {
   };
 
   var ctx = document.getElementById("playerChart");
-  new Chart(ctx, config);
+  return new Chart(ctx, config);
 }

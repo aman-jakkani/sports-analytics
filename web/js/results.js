@@ -360,15 +360,15 @@ function getSoccerAttributeData(attribute, token){
   Raises:
   Notes:
 */
-function getBasketballAttributeData(attributeList, token){
-  for (i = 0; i < attributeList.length; ++i){
-      switch (attribute){
-      case ("points"): break;
-      case ("assists"): break;
-      case ("rebounds"): break;
-      default: break;
+function getBasketballAttributeData(attribute, token){
+    switch (attribute){
+        case ("points"):
+          var score = getRestResource("ScoreRestResource", [["token", token["token"]], ]);
+          return score["score"]; // add index
+        case ("assists"): break;
+        case ("rebounds"): break;
+        default: break;
     }
-  }
 }
 
 

@@ -165,6 +165,88 @@ function w3_close() {
     document.getElementById("mySidebar").style.display = "none";
     document.getElementById("openNav").style.display = "inline-block";
 }
+
+
+/*
+  Description:
+  Args:
+  Returns:
+  Raises:
+  Notes:
+*/
+function teamReset() {
+  var defaultString = "<option value = \"null\" >--Make a choice--</option>";
+  var sportString = defaultString + "<option value = \"Soccer\" >Soccer</option>" + "<option value = \"Basketball\" >Basketball</option>";
+  
+  $("#sport").html(sportString);
+  $("#league").html(defaultString);
+  $("#team").html(defaultString);
+  $("#season").html(defaultString);
+  $("#game").html(defaultString);
+  $("#chartType").html(defaultString); 
+  $("#factAttribute").html(defaultString);
+  $("#dimensions").html(defaultString);
+  $("#aggregationFunction").html(defaultString);
+  $("#aggregationStyle").html(defaultString);
+  $("#aggData").html(defaultString);
+  $("#players").html(defaultString);
+
+  
+  //window.chart.destroy();
+  document.getElementById("errorMessage").innerHTML = "";
+  
+  // Destroy all three charts
+  try {
+    window.chart1.destroy();
+    window.chart2.destroy();
+    window.chart3.destroy();
+
+  } catch (TypeError){
+    console.log('No charts to destroy or rollup called.');
+  }
+}
+
+
+/*
+  Description:
+  Args:
+  Returns:
+  Raises:
+  Notes:
+*/
+function playerReset() {
+
+  var defaultString = "<option value = \"null\" >--Make a choice--</option>";
+
+  var sportString = defaultString + "<option value = \"Soccer\" >Soccer</option>" + "<option value = \"Basketball\" >Basketball</option>";
+
+  // Set all dropdowns back to 
+  $("#sport").html(sportString);
+  $("#league").html(defaultString);
+  $("#team").html(defaultString);
+  $("#season").html(defaultString);
+  $("#game").html(defaultString);
+  $("#chartType").html(defaultString); 
+  $("#factAttribute").html(defaultString);
+  $("#dimensions").html(defaultString);
+  $("#aggregationFunction").html(defaultString);
+  $("#aggregationStyle").html(defaultString);
+  $("#aggData").html(defaultString);
+  $("#players").html(defaultString);
+
+
+  //window.chart.destroy();
+
+  // Reset error message
+  document.getElementById("errorMessage").innerHTML = "";
+
+  // Destroy chart
+  window.chart1.destroy();
+
+  // Reset table
+  document.getElementById("table").innerHTML = "";
+  
+}
         
 
 

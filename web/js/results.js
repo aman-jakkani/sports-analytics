@@ -7,299 +7,226 @@ Methods:
     generateChart:
 
 Dependencies:
+***************************************************************** */
+
+/*
+Description:
+
+Args:
+Returns:
 */
-/*	var canvasId = "myChart1";
-	var canvas = document.getElementById(canvasId);
-	var chartType;
-	var offsetWidth = 0;
-	var gameData = {
-  labels: ['0h','1h','2h','3h','4h','5h','6h','7h','8h','9h','10h','11h'],
-  datasets: [
-    {
-      label: 'Hawks',
-      backgroundColor: "rgba(255,221,50,0.2)",
-      data: [{x: 20,
-            y: 41,
-            r: 45}]
-    },
-    {
-      label: 'Heat',
-      backgroundColor: "rgba(60,186,159,0.2)",
-      data: [{x: 25,
-            y: 38,
-            r: 29}]
-    },
-    {
-      label: 'Lakers',
-      backgroundColor: "rgba(0,0,0,0.2)",
-      data: [{x: 30,
-            y: 34,
-            r: 58}]
-    },
-    {
-      label: 'Rockets',
-      backgroundColor: "rgba(193,46,12,0.2)",
-      data: [{x: 23,
-            y: 45,
-            r: 41}]
-    },
-    {
-      label: 'Warriors',
-      backgroundColor: "rgba(128,0,0,0.2)",
-      data: [{x: 28,
-            y: 47,
-            r: 30}]
-    }
-  ]
-};
-  
-
-
-	var chartOptions = {
-	
-	title: {
-        display: true,
-        text: 'Correlation of Field Goal Percentage and Assists Per Game To Number of Wins'
-      }, scales: {
-        yAxes: [{
-          scaleLabel: {
-            display: true,
-            labelString: "Field Goal Percentage"
-          }
-        }],
-        xAxes: [{
-          scaleLabel: {
-            display: true,
-            labelString: "Assists Per Game"
-        }
-      }]
-
-	}
-	}
-	var config = {
-                type: chartType = 'bubble',
-                data: gameData,
-                options: chartOptions
-        };
-
-    globalCharts.push(new Chart(canvas, config));
-
-	//var ctx = document.getElementById('myChart1').getContext('2d');
-	//var newChart = new Chart(ctx).HeatMap(gameData);
-	//var canvas = document.getElementById(canvasId);
-	//var newChart = new Chart(ctx).HeatMap(gameData, chartOptions);*/
-
-
-
-
 function plotRollup(json, nullValues) {
-    chartType = document.getElementById("chartType").value;
-    console.log(chartType)
-    var mainCanvas = document.getElementById("mainChart").getContext('2d');
-    var secondCanvas = document.getElementById("secondChart").getContext('2d');
-    
-    switch (chartType){
-        case "bubble": window.chart1 = plotBubble(json, mainCanvas);
-        			   window.chart2 = plotBubble(nullValues, secondCanvas);
-            break;
-        case "scatter": window.chart1 = plotScatter(json, mainCanvas);
-        				window.chart2 = plotScatter(nullValues, secondCanvas);
-            break;
-        case "line": window.chart1 = plotLineChart(json, mainCanvas);
-        			 window.chart2 = plotLineChart(nullValues, secondCanvas);
-        	break; // create plotLine(json) function
-        default:
-            break;
-    }
+   chartType = document.getElementById("chartType").value;
+   console.log(chartType)
+   var mainCanvas = document.getElementById("mainChart").getContext('2d');
+   var secondCanvas = document.getElementById("secondChart").getContext('2d');
+
+   switch (chartType){
+      case "bubble": window.chart1 = plotBubble(json, mainCanvas);
+                  window.chart2 = plotBubble(nullValues, secondCanvas);
+         break;
+      case "scatter": window.chart1 = plotScatter(json, mainCanvas);
+                  window.chart2 = plotScatter(nullValues, secondCanvas);
+         break;
+      case "line": window.chart1 = plotLineChart(json, mainCanvas);
+               window.chart2 = plotLineChart(nullValues, secondCanvas);
+         break; // create plotLine(json) function
+      default:
+         break;
+   }
 }
 
+
+/*
+Description:
+
+Args:
+Returns:
+*/
 function plotCube(json, nullValues, nullValues1) {
-    chartType = document.getElementById("chartType").value;
-    console.log(chartType)
-    var mainCanvas = document.getElementById("mainChart").getContext('2d');
-    var secondCanvas = document.getElementById("secondChart").getContext('2d');
-    var thirdCanvas = document.getElementById("thirdChart").getContext('2d');
-    switch (chartType){
-        case "bubble": window.chart1 = plotBubble(json, mainCanvas);
-        			   window.chart2 = plotBubble(nullValues, secondCanvas);
-        			   window.chart3 = plotBubble(nullValues1, thirdCanvas);
-            break;
-        case "scatter": window.chart1 = plotScatter(json, mainCanvas);
-        				window.chart2 = plotScatter(nullValues, secondCanvas);
-        				window.chart3 = plotScatter(nullValues1, thirdCanvas);
-            break;
-        case "line": window.chart1 = plotLineChart(json, mainCanvas);
-        			 window.chart2 = plotLineChart(nullValues, secondCanvas);
-        			 window.chart3 = plotLineChart(nullValues1, thirdCanvas);
-        	break; // create plotLine(json) function
-        default:
-            break;
-    }
+   chartType = document.getElementById("chartType").value;
+   console.log(chartType)
+   var mainCanvas = document.getElementById("mainChart").getContext('2d');
+   var secondCanvas = document.getElementById("secondChart").getContext('2d');
+   var thirdCanvas = document.getElementById("thirdChart").getContext('2d');
+   switch (chartType){
+      case "bubble": window.chart1 = plotBubble(json, mainCanvas);
+                  window.chart2 = plotBubble(nullValues, secondCanvas);
+                  window.chart3 = plotBubble(nullValues1, thirdCanvas);
+         break;
+      case "scatter": window.chart1 = plotScatter(json, mainCanvas);
+                  window.chart2 = plotScatter(nullValues, secondCanvas);
+                  window.chart3 = plotScatter(nullValues1, thirdCanvas);
+         break;
+      case "line": window.chart1 = plotLineChart(json, mainCanvas);
+               window.chart2 = plotLineChart(nullValues, secondCanvas);
+               window.chart3 = plotLineChart(nullValues1, thirdCanvas);
+         break; // create plotLine(json) function
+      default:
+         break;
+   }
 }
 
 
 
+/* 
+Description:
+   This function will 
+Args:
+Returns:
+*/
+function stats(){ 
+   document.getElementById('hiddenText1').style.display="block";
+   document.getElementById('Player').style.display="block";
+   document.getElementById("Charts").style.display = "none";
+   document.getElementById("Dropdown").style.display = "none";
 
-function stats(){
-	
-	document.getElementById('hiddenText1').style.display="block";
-	document.getElementById('Player').style.display="block";
-	document.getElementById("Charts").style.display = "none";
-	document.getElementById("Dropdown").style.display = "none";
+   var sport = document.getElementById('chosenSport').innerHTML = document.getElementById("sport").value;
+   var league = document.getElementById('chosenLeague').innerHTML = document.getElementById("league").value;
+   var team = document.getElementById('chosenTeam').innerHTML = document.getElementById("team").value;
+   var season = document.getElementById('chosenSeason').innerHTML = document.getElementById("season").value;
+   var match = document.getElementById('chosenGame').innerHTML = document.getElementById("game").value;
+   //var name = document.getElementById('name').innerHTML = document.getElementById("player").options[document.getElementById('player').selectedIndex].text;
+   
+   var parameters = [["sports", sport], ["league", league], ["team", team], ["season", season], ["match", match], ["name", name]];
+   // console.log(parameters);
 
-	var sport = document.getElementById('chosenSport').innerHTML = document.getElementById("sport").value;
-    var league = document.getElementById('chosenLeague').innerHTML = document.getElementById("league").value;
-    var team = document.getElementById('chosenTeam').innerHTML = document.getElementById("team").value;
-    var season = document.getElementById('chosenSeason').innerHTML = document.getElementById("season").value;
-    var match = document.getElementById('chosenGame').innerHTML = document.getElementById("game").value;
-    //var name = document.getElementById('name').innerHTML = document.getElementById("player").options[document.getElementById('player').selectedIndex].text;
-        
-    
-    var parameters = [["sports", sport], ["league", league], ["team", team], ["season", season], ["match", match], ["name", name]];
-    console.log(parameters);
+   var token = getRestResource("TokenResource", parameters);
+   // console.log("Token: " + token["token"]);
 
-	var token = getRestResource("TokenResource", parameters);
-    console.log("Token: " + token["token"]);
+   var stats = document.getElementById("player").value;
+   // console.log(stats);
 
-	var stats = document.getElementById("player").value;
-	console.log(stats);
-	
-	var playerstatistics = getRestResource("PlayerResource", [["token", token["token"]], ["playerID", stats]]);
-	console.log(playerstatistics);
-	var playerInfo = Object.values(playerstatistics);
-	
-	var birthday = playerInfo[0];
-	document.getElementById("birthday").innerHTML = birthday;
-	
-	var name = playerInfo[1];
-	document.getElementById("name").innerHTML = name;
-	
-	var weight = playerInfo[2];
-	document.getElementById("weight").innerHTML = weight;
-	
-	var height = playerInfo[3];
-	document.getElementById("height").innerHTML = height;
+   var playerstatistics = getRestResource("PlayerResource", [["token", token["token"]], ["playerID", stats]]);
+   // console.log(playerstatistics);
 
-	
-	var soccerplayerstatistics = getRestResource("SoccerPlayerResource", [["token", token["token"]], ["playerID", stats]]);
-	console.log(soccerplayerstatistics);
-	console.log(Object.values(soccerplayerstatistics));
-	var individualStats = Object.values(soccerplayerstatistics);
-	
-	var overallRating = individualStats[0];
-	//document.getElementById("overallRating").innerHTML = overallRating;
-	
-	var strength = individualStats[1];
-	//document.getElementById("strength").innerHTML = strength;
-	
-	var shotPower = individualStats[2];
-	//document.getElementById("shotPower").innerHTML = shotPower;
-	
-	var preferredFoot = individualStats[3];
-	var preferredFootCap = preferredFoot.charAt(0).toUpperCase() + preferredFoot.slice(1)
-	document.getElementById("preferredFoot").innerHTML = preferredFootCap;
-	
+   var playerInfo = Object.values(playerstatistics);
 
-	plotRadar(name, overallRating, strength, shotPower);
-	
+   var birthday = playerInfo[0];
+   // document.getElementById("birthday").innerHTML = birthday;
+
+   var name = playerInfo[1];
+   // document.getElementById("name").innerHTML = name;
+
+   var weight = playerInfo[2];
+   // document.getElementById("weight").innerHTML = weight;
+
+   var height = playerInfo[3];
+   // document.getElementById("height").innerHTML = height;
+
+
+   var soccerplayerstatistics = getRestResource("SoccerPlayerResource", [["token", token["token"]], ["playerID", stats]]);
+   // console.log(soccerplayerstatistics);
+   // console.log(Object.values(soccerplayerstatistics));
+
+   var individualStats = Object.values(soccerplayerstatistics);
+
+   var overallRating = individualStats[0];
+   var strength = individualStats[1];
+   var shotPower = individualStats[2];
+
+   // This only temporary. Should have other options
+   plotRadar(name, overallRating, strength, shotPower);
 }
 
 
+
+/* 
+Description:
+   This function will 
+Args:
+Returns:
+*/
 function plotChart() {
-        document.getElementById('mainChart').style.display="block";
+   document.getElementById('mainChart').style.display="block";
 
-        var sport /*= document.getElementById('chosenSport').innerHTML */= document.getElementById("sport").value;
-        var league /*= document.getElementById('chosenLeague').innerHTML */= document.getElementById("league").value;
-        var team /*= document.getElementById('chosenTeam').innerHTML */= document.getElementById("team").value;
-        var season /*= document.getElementById('chosenSeason').innerHTML */= document.getElementById("season").value;
-        var match /*= document.getElementById('chosenGame').innerHTML*/ = document.getElementById("game").value;
-        var factatt = document.getElementById("factAttribute").value;
-        //var aggregfunc = document.getElementById("aggregationFunction").value;
-        var aggregstyle = document.getElementById("aggregationStyle").value;
-        //var dimension  = document.getElementById("dimensions").value;
+   var sport = document.getElementById("sport").value;
+   var league = document.getElementById("league").value;
+   var team = document.getElementById("team").value;
+   var season = document.getElementById("season").value;
+   var match  = document.getElementById("game").value;
+   var factatt = document.getElementById("factAttribute").value;
+   //var aggregfunc = document.getElementById("aggregationFunction").value;
+   var aggregstyle = document.getElementById("aggregationStyle").value;
+   //var dimension  = document.getElementById("dimensions").value;
 
-        /****************************************+************
-        *we are displaying cube/rollup-queries in a seperate *
-        *page, no use for dimension, aggregate function etc. *
-        *here                                                *
-        *****************************************************/
+   /****************************************+************
+    *we are displaying cube/rollup-queries in a seperate *
+   *page, no use for dimension, aggregate function etc. *
+   *here                                                *
+   *****************************************************/
 
-        //var parameters = [["sports", sport], ["league", league], ["team", team], ["season", season], ["match", match], ["factatt", //factatt], ["aggregfunc", aggregfunc], ["aggregstyle", aggregstyle], ["dimension", dimension]];
+   //var parameters = [["sports", sport], ["league", league], ["team", team], ["season", season], ["match", match], ["factatt", //factatt], ["aggregfunc", aggregfunc], ["aggregstyle", aggregstyle], ["dimension", dimension]];
 
-        var parameters = [["sports", sport], ["league", league], ["team", team], ["season", season], ["match", match],["aggregstyle", aggregstyle]];
-            console.log(parameters);
+   var parameters = [["sports", sport], ["league", league], ["team", team], ["season", season], ["match", match],["aggregstyle", aggregstyle]];
+      console.log(parameters);
 
-  var token = getRestResource("TokenResource", parameters);
-  var data = null;
-  
-  
-  if (sport == "null" || league == "null" || team == "null" || season == "null" || match == "null" || factatt == "null" || aggregstyle == "null") {
-	
-	console.log("entered break");
-	document.getElementById("errorMessage").innerHTML = "Invalid Combination";
-	
-	const context = mainChart.getContext('2d');
+   var token = getRestResource("TokenResource", parameters);
+   var data = null;
 
-	context.clearRect(0, 0, mainChart.width, mainChart.height);
-		
-	const context1 = playerChart.getContext('2d');
 
-	context1.clearRect(0, 0, playerChart.width, secondChart.height);
-	
-	}
-	
-	else {
-	
-	document.getElementById("errorMessage").innerHTML = "";
-	
-	}
-  
+   if (sport == "null" || league == "null" || team == "null" || season == "null" || match == "null" || factatt == "null" || aggregstyle == "null") {
 
-  // Get the data for the specific attribute selected
-  if (sport == "Soccer"){
-    data = getSoccerAttributeData(factatt, token);
-    console.log("Got soccer attributes");
-    console.log(data);
+      console.log("entered break");
+      document.getElementById("errorMessage").innerHTML = "Invalid Combination";
 
-  } else if (sport == "Basketball"){
-    data = getBasketballAttributeData(factatt, token);
-    console.log("Got basketball attributes");
+      const context = mainChart.getContext('2d');
+      context.clearRect(0, 0, mainChart.width, mainChart.height);
+         
+      const context1 = playerChart.getContext('2d');
+      context1.clearRect(0, 0, playerChart.width, secondChart.height);
 
-  } else {
-    console.log("Invalid sport selection");
-    return;
-  }
+   } else {
+      document.getElementById("errorMessage").innerHTML = "";
+   }
 
-  var label = document.getElementById("factAttribute").value;
 
-  // Plot a specific chart based on the one selected in the
-    chartType = document.getElementById("chartType").value;
-    switch (chartType) {
-    case ("bubble"):
-      // plotBubble(data);
-      break;
+   // Get the data for the specific attribute selected
+   if (sport == "Soccer"){
+      data = getSoccerAttributeData(factatt, token);
+      console.log("Got soccer attributes");
+      console.log(data);
 
-    case ("line"):
-      //plotLineChart(data);
-      window.chart1 = plotDefault('line', 'home', 'away', Array(data[0]), Array(data[1]), label);
-      break;
+   } else if (sport == "Basketball"){
+      data = getBasketballAttributeData(factatt, token);
+      console.log("Got basketball attributes");
 
-    case ("scatter"):
-      // plotScatter(data);
-      break;
+   } else {
+      console.log("Invalid sport selection");
+      return;
+   }
 
-    case ("bar"):
-      // plotBarChart(data);
-      window.chart1 = plotDefault('bar', 'home', 'away', Array(data[0]), Array(data[1]), label);
-      break;
+   var label = document.getElementById("factAttribute").value;
 
-    case ("radar"):
-      // plotRadar(data);
-      window.chart1 = plotDefault('radar', 'home', 'away', Array(data[0]), Array(data[1]), label);
-      break;
+   // Plot a specific chart based on the one selected in the
+   chartType = document.getElementById("chartType").value;
+   switch (chartType) {
+      case ("bubble"):
+         // plotBubble(data);
+         break;
 
-    default: break;
-  }
+      case ("line"):
+         //plotLineChart(data);
+         window.chart1 = plotDefault('line', 'home', 'away', Array(data[0]), Array(data[1]), label);
+         break;
+
+      case ("scatter"):
+         // plotScatter(data);
+         break;
+
+      case ("bar"):
+         // plotBarChart(data);
+         window.chart1 = plotDefault('bar', 'home', 'away', Array(data[0]), Array(data[1]), label);
+         break;
+
+      case ("radar"):
+         // plotRadar(data);
+         window.chart1 = plotDefault('radar', 'home', 'away', Array(data[0]), Array(data[1]), label);
+         break;
+
+      default: 
+         break;
+   }
 }
 
 /*
@@ -318,10 +245,10 @@ function getSoccerAttributeData(attribute, token){
       var score = getRestResource("ScoreRestResource", [["token", token["token"]], ]);
       return score["score"]; // add index
 
-	case ("corners"):
+   case ("corners"):
       var corners = getRestResource("CornerStatRestResource", [["token", token["token"]], ]);
       return corners["corners"]; // add index
-	
+   
     case ("ballPossession"):
       var ballPossession = getRestResource("BallPossessionStatResource", [["token", token["token"]], ]);
       return ballPossession["possession"];
@@ -400,8 +327,8 @@ function displayPlayerStats(){
   console.log(league);
   if (sport == "null" || league == "null" || team == "null" || season == "null" || match == "null" ){
   
-  	console.log("Not enough parameters");
-  	return;
+     console.log("Not enough parameters");
+     return;
   
   }
 

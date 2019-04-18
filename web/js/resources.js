@@ -5,10 +5,10 @@ Description:
   Needed to store previous values of sport, league, team, season, and game
 
   Generates all the possible options based on what the user selects in the dropdowns.
-  These parameters are passed to plot() in order to generate a token
+  These parameters are passed to plotChart() in order to generate a token
   and get all the relevant statistics for those specific parameters.
 
-Classes:
+Objects:
   dropdown: This will store values through page refreshes so that all values are present for
             subsequent calls to the api.
             All methods are used inside this class in order to shorten code.
@@ -43,204 +43,241 @@ Raises:
 Notes:
 */
 var dropdown = {
-  sport: "null",
-  league: "null",
-  team: "null",
-  season: "null",
-  game: "null",
-  aggregationFunction: "null",
-  aggregationStyle: "null",
-  aggData: "null",
-  chartType: "null",
-  token: "null",
-  player: "null",
-  factatt: "null",
+   sport: "null",
+   league: "null",
+   team: "null",
+   season: "null",
+   game: "null",
+   aggregationFunction: "null",
+   aggregationStyle: "null",
+   aggData: "null",
+   chartType: "null",
+   token: "null",
+   player: "null",
+   factatt: "null",
 
-  run: $(document).ready(function() {
-    var defaultString = "<option value = \"null\" >--Make a choice--</option>";
+   run: $(document).ready(function() {
+      var defaultString = "<option value = \"null\" >--Make a choice--</option>";
 
-    $("#sport, #league, #team, #season, #game, #aggregationFunction, #aggregationStyle, #aggData").change(function() {
+      $("#sport, #league, #team, #season, #game, #aggregationFunction, #aggregationStyle, #aggData").change(function() {
 
       if ($(this).attr('id') == 'sport') {
-        sport = $(this).val();
-        $("#league").html(getLeagues(sport));
+         sport = $(this).val();
+         $("#league").html(getLeagues(sport));
 
-        //$("#chartType").html(getCharts());
+         //$("#chartType").html(getCharts());
 
-        // Reset options below league
-        $("#team").html(defaultString);
-        $("#season").html(defaultString);
-        $("#game").html(defaultString);
-        $("#stat1").html(defaultString);    // stat1 doesn't exist anymore, need to update later
-        $("#chartType").html(getCharts(aggregationStyle)); 
-        $("#axes").html(defaultString);
-        $("#factAttribute").html(getFactAttribute(sport));
-        $("#dimensions").html(getDimensions(sport));
-        $("#aggregationFunction").html(getAggregationFunction(league));
-          if(window.location.pathname =="/CubeRollupMock.html"){
+         // Reset options below league
+         $("#team").html(defaultString);
+         $("#season").html(defaultString);
+         $("#game").html(defaultString);
+         $("#stat1").html(defaultString);    // stat1 doesn't exist anymore, need to update later
+         $("#chartType").html(getCharts(aggregationStyle)); 
+         $("#axes").html(defaultString);
+         $("#factAttribute").html(getFactAttribute(sport));
+         $("#dimensions").html(getDimensions(sport));
+         $("#aggregationFunction").html(getAggregationFunction(league));
+
+         // Not putting aggregration style on player analytics page
+         if (window.location.pathname =="/CubeRollupMock.html") {
             $("#aggregationStyle").html(getAggregationStyle(aggregationFunction));
-          }
-        $("#aggData").html(getAggData(sport));
+         }
+
+         $("#aggData").html(getAggData(sport));
 
       }
 
       else if ($(this).attr('id') == 'league') {
-        league = $("#league").val();
-        $("#team").html(getTeams(sport, league));
-        $("#aggregationFunction").html(getAggregationFunction(league));
+         league = $("#league").val();
+         $("#team").html(getTeams(sport, league));
+         $("#aggregationFunction").html(getAggregationFunction(league));
 
-        // Reset options below team
-        $("#season").html(defaultString);
-        $("#game").html(defaultString);
-        $("#stat1").html(defaultString);    // stat1 doesn't exist anymore, need to update later
-        $("#chartType").html(getCharts(aggregationStyle)); 
-        $("#axes").html(defaultString);
-        $("#factAttribute").html(getFactAttribute(sport));
-        $("#dimensions").html(getDimensions(sport));
-        $("#aggregationStyle").html(getAggregationStyle(aggregationFunction));
-        $("#aggData").html(getAggData(sport));
+         // Reset options below team
+         $("#season").html(defaultString);
+         $("#game").html(defaultString);
+         $("#stat1").html(defaultString);    // stat1 doesn't exist anymore, need to update later
+         $("#chartType").html(getCharts(aggregationStyle)); 
+         $("#axes").html(defaultString);
+         $("#factAttribute").html(getFactAttribute(sport));
+         $("#dimensions").html(getDimensions(sport));
+         $("#aggregationStyle").html(getAggregationStyle(aggregationFunction));
+         $("#aggData").html(getAggData(sport));
       }
 
       else if ($(this).attr('id') == 'team') {
-        team = $("#team").val();
-        $("#season").html(getSeasons(sport, league, team));
+         team = $("#team").val();
+         $("#season").html(getSeasons(sport, league, team));
 
-        // Reset games
-        $("#game").html(defaultString);
+         // Reset games
+         $("#game").html(defaultString);
       }
 
       else if ($(this).attr('id') == 'season') {
-        season = $("#season").val();
-        $("#game").html(getGames(sport, league, team, season));
+         season = $("#season").val();
+         $("#game").html(getGames(sport, league, team, season));
 
-        // reset options below game
-        $("#stat1").html(defaultString);
-        // $("#chartType").html(defaultString);
-        $("#axes").html(defaultString);
+         // reset options below game
+         $("#stat1").html(defaultString);
+         // $("#chartType").html(defaultString);
+         $("#axes").html(defaultString);
       }
 
       else if ($(this).attr('id') == "game"){
-        game = $("#game").val();
-        //$("#stat1").html(getStats(sport, league, team, season));
-        $("#players").html(getPlayerList(sport, league, team, game));
+         game = $("#game").val();
+         //$("#stat1").html(getStats(sport, league, team, season));
+         $("#players").html(getPlayerList(sport, league, team, game));
 
-        // token = getToken(sport, league, team, season, game);
+         // token = getToken(sport, league, team, season, game);
 
-        // Reset chart type and axes
-        // $("#chartType").html(getCharts());
-        // Populate players once games are selected
+         // Reset chart type and axes
+         // $("#chartType").html(getCharts());
+         // Populate players once games are selected
       }
 
-	  else if ($(this).attr('id') == 'aggregationFunction') {
-        aggregationFunction = $("#aggregationFunction").val();
-        $("#aggregationStyle").html(getAggregationStyle(aggregationFunction));
+      else if ($(this).attr('id') == 'aggregationFunction') {
+         aggregationFunction = $("#aggregationFunction").val();
+         $("#aggregationStyle").html(getAggregationStyle(aggregationFunction));
 
-        // Reset games
-        $("#aggregationStyle").html(getAggregationStyle(aggregationFunction));
-        $("#aggData").html(getAggData(sport));
-        $("#chartType").html(getCharts(aggregationStyle));
+         // Reset games
+         $("#aggregationStyle").html(getAggregationStyle(aggregationFunction));
+         $("#aggData").html(getAggData(sport));
+         $("#chartType").html(getCharts(aggregationStyle));
       }
       
       else if ($(this).attr('id') == 'aggregationStyle') {
-        aggregationStyle = $("#aggregationStyle").val();
-        $("#aggData").html(getAggData(sport));
+         aggregationStyle = $("#aggregationStyle").val();
+         $("#aggData").html(getAggData(sport));
 
-        // Reset games
-        $("#aggData").html(getAggData(sport));
-        $("#chartType").html(getCharts(aggregationStyle));
+         // Reset games
+         $("#aggData").html(getAggData(sport));
+         $("#chartType").html(getCharts(aggregationStyle));
       }
       
       else if ($(this).attr('id') == 'aggData') {
-        aggData = $("#aggData").val();
-        $("#chartType").html(getCharts(aggregationStyle));
-
-        // Reset games
+         aggData = $("#aggData").val();
+         $("#chartType").html(getCharts(aggregationStyle));
+         // Reset games
       }
 
       else if ($(this).attr('id') == "chartType"){
-        chartType = $("chartType").val();
-
+         chartType = $("chartType").val();
       }
-    });
-  })
+      });
+   })
 }
 
 
 /*
   Description:
-    return string of all seasons for a given sport/league/team
+   return string of all seasons for a given sport/league/team
   Args:
   Returns:
   Raises:
   Notes:
 */
 function getToken(sport, league, team, season, game){
-  var parameters = [["sports", sport], ["league", league], ["team", team], ["season", season], ["match", game]];
+   var parameters = [["sports", sport], ["league", league], ["team", team], ["season", season], ["match", game]];
 
-  var token = getRestResource("TokenResource", parameters);
-  console.log("Token: " + token["token"]);
+   var token = getRestResource("TokenResource", parameters);
+   console.log("Token: " + token["token"]);
 
-  return token;
+   return token;
 }
 
 
-function teamReset() {
+/*
+  Description:
+   Get array of leagues based on sport
+  Args:
+  Returns:
+  Raises:
+  Notes:
+*/
+function getLeagues(sport) {
+   var parameters = [["sports", sport], ];
+   var htmlLeagueString = "<option value = \"null\" >--Make a choice--</option>";
 
-		var defaultString = "<option value = \"null\" >--Make a choice--</option>";
-		var sportString = defaultString + "<option value = \"Soccer\" >Soccer</option>" + "<option value = \"Basketball\" >Basketball</option>";
-		
-		$("#sport").html(sportString);
-		$("#league").html(defaultString);
-		$("#team").html(defaultString);
-        $("#season").html(defaultString);
-        $("#game").html(defaultString);
-        $("#chartType").html(defaultString); 
-        $("#factAttribute").html(defaultString);
-        $("#dimensions").html(defaultString);
-        $("#aggregationFunction").html(defaultString);
-        $("#aggregationStyle").html(defaultString);
-        $("#aggData").html(defaultString);
-        $("#players").html(defaultString);
+   if (sport == "null") return htmlLeagueString;
 
-		
-		//window.chart.destroy();
-        //console.log("window destroy bubble");
-        document.getElementById("errorMessage").innerHTML = "";
-		
-		window.chart1.destroy();
-		window.chart2.destroy();
-		window.chart3.destroy();
-		
+   var json = getRestResource("LeagueListResource", parameters);
+
+   console.log("Leagues found: ".concat(json.leagues.length));
+
+   // create string for every league
+   for (i = 0; i < json.leagues.length; ++i){
+      htmlLeagueString = htmlLeagueString.concat("<option value = \"" + json.leagues[i] + "\">" + json.leagues[i] + "</option>");
+   }
+
+   document.getElementById("league").innerHTML = htmlLeagueString;
+
+   return htmlLeagueString;
+};
+
+
+
+/*
+  Description:
+  Args:
+  Returns:
+  Raises:
+  Notes:
+*/
+function getFactAttribute(sport) {
+
+   var parameters = [["sports", sport], ];
+   var htmlFactAttribute = "<option value = \"null\" >--Make a choice--</option>";
+
+   if (sport == "null"){
+      return htmlFactAttribute;
+   }
+
+   if (sport == "Basketball") {
+      htmlFactAttribute += "<option value='1'>Points</option>"
+                           + "<option value='2'>Assists</option>"
+                           + "<option value='3'>Rebounds</option>"
+                           + "<option value='4'>Steals</option>"
+                           + "<option value='5'>Blocks</option>";
+   }
+
+   else if (sport == "Soccer"){
+      htmlFactAttribute += "<option value='1'>Goals</option>"
+                           + "<option value='2'>Assists</option>"
+                           + "<option value='3'>Possession Time</option>"
+                           + "<option value='4'>Fouls</option>"
+                           + "<option value='5'>Yellow Cards</option>"
+                           + "<option value='6'>Red Cards</option>";
+   }
+
+   return htmlFactAttribute;
 }
 
-function playerReset() {
 
-		var defaultString = "<option value = \"null\" >--Make a choice--</option>";
-		
-		var sportString = defaultString + "<option value = \"Soccer\" >Soccer</option>" + "<option value = \"Basketball\" >Basketball</option>";
-		
-		$("#sport").html(sportString);
-		$("#league").html(defaultString);
-		$("#team").html(defaultString);
-        $("#season").html(defaultString);
-        $("#game").html(defaultString);
-        $("#chartType").html(defaultString); 
-        $("#factAttribute").html(defaultString);
-        $("#dimensions").html(defaultString);
-        $("#aggregationFunction").html(defaultString);
-        $("#aggregationStyle").html(defaultString);
-        $("#aggData").html(defaultString);
-        $("#players").html(defaultString);
 
-		
-		//window.chart.destroy();
-        //console.log("window destroy bubble");
-        document.getElementById("errorMessage").innerHTML = "";
-		
-		window.chart1.destroy();
-		
-		document.getElementById("table").innerHTML = "";
-		
+/*
+  Description:
+  Args:
+  Returns:
+  Raises:
+  Notes:
+*/
+function getDimensions(sport) {
+
+   var parameters = [["sports", sport], ];
+   var htmlDimensions = "<option value = \"null\" >--Make a choice--</option>";
+
+   if (sport == "null") {
+      return htmlDimensions;
+   }
+
+   if (sport == "Basketball") {
+      var htmlDimensions = "<option value='0'>--Make a choice--</option><option value='1'>Point Guard</option><option value='2'>Shooting Guard</option><option value='3'>Small Forward</option><option value='4'>Power Forward</option><option value='5'>Center</option>";
+   }
+
+   else if (sport == "Soccer"){
+      var htmlDimensions =  "<option value='0'>--Make a choice--</option><option value='1'>Goalkeeper</option><option value='2'>Fullback</option><option value='3'>Center Back</option><option value='4'>Midfielder</option><option value='5'>Striker</option>";
+   }
+
+   return htmlDimensions;
 }
 
 
@@ -251,236 +288,173 @@ function playerReset() {
   Raises:
   Notes:
 */
-// get array of leagues based on sport
-function getLeagues(sport) {
+function getCubeOrRollup(){ 
+   var sport = document.getElementById("sport").value;
+   var league = document.getElementById("league").value;
+   var agFunc = document.getElementById("aggregationFunction").value;
+   var agStyle = document.getElementById("aggregationStyle").value;
+   var agData = document.getElementById("aggData").value;
+   var chart = document.getElementById("chartType").value;
 
-  var parameters = [["sports", sport], ];
-  var htmlLeagueString = "<option value = \"null\" >--Make a choice--</option>";
+   console.log(sport);
+   console.log(league);
+   console.log(agFunc);
+   console.log(agStyle);
+   console.log(chart);
 
-  if (sport == "null") return htmlLeagueString;
+   if (sport == "null" || league == "null" || agFunc == "null" || agStyle == "null" || agData == "null" || chart == "null") {
 
-  var json = getRestResource("LeagueListResource", parameters);
+      console.log("entered break");
+      document.getElementById("errorMessage").innerHTML = "Invalid Combination";
 
-  console.log("Leagues found: ".concat(json.leagues.length));
+      // Need to replace these with window.destroy()
+      const context = mainChart.getContext('2d');
+      context.clearRect(0, 0, mainChart.width, mainChart.height);
+         
+      const context1 = secondChart.getContext('2d');
+      context1.clearRect(0, 0, secondChart.width, secondChart.height);
+         
+      const context2 = thirdChart.getContext('2d');
+      context2.clearRect(0, 0, thirdChart.width, thirdChart.height);
 
-  // create string for every league
-  for (i = 0; i < json.leagues.length; ++i){
-    htmlLeagueString = htmlLeagueString.concat("<option value = \"" + json.leagues[i] + "\">" + json.leagues[i] + "</option>");
-  }
+      return;
 
-  document.getElementById("league").innerHTML = htmlLeagueString;
+   } else {
+      document.getElementById("errorMessage").innerHTML = "";
+   }
 
-  return htmlLeagueString;
-};
+   var aggieFunc = [["aggregation", agFunc],["aggregationData", agData], ["sports", sport],["league", league]];
+   console.log("QueryPairs: "+aggieFunc)   
+   var json;
 
-function getFactAttribute(sport) {
+   var nullValues = {
+      "aggie": [], 
+      "dim1": [],
+      "dim2": []
+   };
 
-	var parameters = [["sports", sport], ];
-	var htmlFactAttribute = "<option value = \"null\" >--Make a choice--</option>";
+   var nullValues1 =  {
+      "aggie": [], 
+      "dim1": [],
+      "dim2": []
+   };
 
-    if (sport == "null") return htmlFactAttribute;
+   switch (agStyle){
+      // Not using Rollup resource because ...
+      case "Rollup": json = getRestResource("CubeResource", aggieFunc);
+         console.log(json);
+         for (i = 0; i < json.dim2.length; ++i){
+         
+            if (json.dim2[i] == null) {
+            
+               //add null values to new array
+               nullValues.dim2.push(json.dim2[i]);
+               nullValues.dim1.push(json.dim1[i]);
+               nullValues.aggie.push(json.aggie[i]);
+               
+            
+            }
+         
+         }
 
-	if (sport == "Basketball") {
-		var htmlFactAttribute = "<option value='0'>--Make a choice--</option><option value='1'>Points</option><option value='2'>Assists</option><option value='3'>Rebounds</option><option value='4'>Steals</option><option value='5'>Blocks</option>";
+         /*for (i = json.dim2.length - 1; i >= 0; --i){
+         
+            if (json.dim2[i] == null) {
+            
+               //remove null values from old array
+               json.dim1.splice(i,1);
+               json.dim2.splice(i,1);
+               json.aggie.splice(i,1);
+               
+            }
+         
+         }*/
+         
+         plotRollup(json, nullValues);
+         break;
 
-	}
+      case "Cube": json = getRestResource("CubeResource",aggieFunc);
+         for (i = 0; i < json.dim2.length; ++i){
+            if (json.dim2[i] == null) {
+               //add null values to new array
+               nullValues.dim2.push(json.dim2[i]);
+               nullValues.dim1.push(json.dim1[i]);
+               nullValues.aggie.push(json.aggie[i]);   
+            }
+         
+         }
+         for (i = 0; i < json.dim1.length; ++i){
+         
+            if (json.dim1[i] == null) {
+            
+               //add null values to new array
+               nullValues1.dim2.push(json.dim2[i]);
+               nullValues1.dim1.push(json.dim1[i]);
+               nullValues1.aggie.push(json.aggie[i]);
+            }
+         
+         }
 
-	else if (sport == "Soccer"){
-		var htmlFactAttribute =  "<option value='0'>--Make a choice--</option><option value='1'>Goals</option><option value='2'>Assists</option><option value='3'>Possession Time</option><option value='4'>Fouls</option><option value='5'>Yellow Cards</option><option value='6'>Red Cards</option>";
+         /*
 
-	}
-	return htmlFactAttribute;
+         for (i = json.dim2.length - 1; i >= 0; --i){
+            if (json.dim2[i] == null) {
+               //remove null values from old array
+               json.dim1.splice(i,1);
+               json.dim2.splice(i,1);
+               json.aggie.splice(i,1);
+            }
+         }
+
+         for (i = json.dim1.length - 1; i >= 0; --i){
+         
+            if (json.dim1[i] == null) {
+            
+               //remove null values from old array
+               json.dim1.splice(i,1);
+               json.dim2.splice(i,1);
+               json.aggie.splice(i,1);
+               
+            }
+      
+         }*/
+         
+         plotCube(json, nullValues, nullValues1);
+         break;
+
+      default: 
+         console.log("No aggregration function chosen")
+   }
 }
 
-function getDimensions(sport) {
 
-	var parameters = [["sports", sport], ];
-	var htmlDimensions = "<option value = \"null\" >--Make a choice--</option>";
-
-    if (sport == "null") return htmlDimensions;
-
-	if (sport == "Basketball") {
-		var htmlDimensions = "<option value='0'>--Make a choice--</option><option value='1'>Point Guard</option><option value='2'>Shooting Guard</option><option value='3'>Small Forward</option><option value='4'>Power Forward</option><option value='5'>Center</option>";
-
-	}
-
-	else if (sport == "Soccer"){
-		var htmlDimensions =  "<option value='0'>--Make a choice--</option><option value='1'>Goalkeeper</option><option value='2'>Fullback</option><option value='3'>Center Back</option><option value='4'>Midfielder</option><option value='5'>Striker</option>";
-
-	}
-	return htmlDimensions;
-}
-
-function getCubeOrRollup(){
-	
-	var sport = document.getElementById("sport").value;
-	var league = document.getElementById("league").value;
-	var agFunc = document.getElementById("aggregationFunction").value;
-	var agStyle = document.getElementById("aggregationStyle").value;
-	var agData = document.getElementById("aggData").value;
-	var chart = document.getElementById("chartType").value;
-	
-	console.log(sport);
-	console.log(league);
-	console.log(agFunc);
-	console.log(agStyle);
-	console.log(chart);
-
-	if (sport == "null" || league == "null" || agFunc == "null" || agStyle == "null" || agData == "null" || chart == "null") {
-	
-	console.log("entered break");
-	document.getElementById("errorMessage").innerHTML = "Invalid Combination";
-	
-	const context = mainChart.getContext('2d');
-
-	context.clearRect(0, 0, mainChart.width, mainChart.height);
-		
-	const context1 = secondChart.getContext('2d');
-
-	context1.clearRect(0, 0, secondChart.width, secondChart.height);
-		
-	const context2 = thirdChart.getContext('2d');
-
-	context2.clearRect(0, 0, thirdChart.width, thirdChart.height);
-	
-	return;
-	}
-	
-	else {
-	
-	document.getElementById("errorMessage").innerHTML = "";
-	
-	}
-
-    var aggieFunc = [["aggregation", agFunc],["aggregationData", agData], ["sports", sport],["league", league]];
-    console.log("QueryPairs: "+aggieFunc)   
-    var json;
-    var nullValues = {
-    	"aggie": [], 
-    	"dim1": [],
-    	"dim2": []
-    };
-    var nullValues1 =  {
-    	"aggie": [], 
-    	"dim1": [],
-    	"dim2": []
-    };
-    switch(agStyle){
-        //case "Rollup": json = getRestResource("RollupResource",aggieFunc);
-        case "Rollup": json = getRestResource("CubeResource",aggieFunc);
-        	console.log(json);
-    		for (i = 0; i < json.dim2.length; ++i){
-    		
-    			if (json.dim2[i] == null) {
-    			
-    				//add null values to new array
-    				nullValues.dim2.push(json.dim2[i]);
-    				nullValues.dim1.push(json.dim1[i]);
-    				nullValues.aggie.push(json.aggie[i]);
-    				
-    			
-    			}
-    		
-    		}
-    		/*for (i = json.dim2.length - 1; i >= 0; --i){
-    		
-    			if (json.dim2[i] == null) {
-    			
-    				//remove null values from old array
-    				json.dim1.splice(i,1);
-    				json.dim2.splice(i,1);
-    				json.aggie.splice(i,1);
-    				
-    			}
-    		
-    		}*/
-    		
-    		plotRollup(json, nullValues);
-            break;
-        case "Cube": json = getRestResource("CubeResource",aggieFunc);
-        	console.log(json);
-        	for (i = 0; i < json.dim2.length; ++i){
-    		
-    			if (json.dim2[i] == null) {
-    			
-    				//add null values to new array
-    				nullValues.dim2.push(json.dim2[i]);
-    				nullValues.dim1.push(json.dim1[i]);
-    				nullValues.aggie.push(json.aggie[i]);
-    				
-    			
-    			}
-    		
-    		}
-    		for (i = 0; i < json.dim1.length; ++i){
-    		
-    			if (json.dim1[i] == null) {
-    			
-    				//add null values to new array
-    				nullValues1.dim2.push(json.dim2[i]);
-    				nullValues1.dim1.push(json.dim1[i]);
-    				nullValues1.aggie.push(json.aggie[i]);
-    				
-    			
-    			}
-    		
-    		}
-    		/*console.log("before remove");
-    		console.log(json.dim1.length);
-    		for (i = json.dim2.length - 1; i >= 0; --i){
-    		
-    			if (json.dim2[i] == null) {
-    			
-    				//remove null values from old array
-    				json.dim1.splice(i,1);
-    				json.dim2.splice(i,1);
-    				json.aggie.splice(i,1);
-    				
-    			}
-    		
-    		}*/
-    		/*for (i = json.dim1.length - 1; i >= 0; --i){
-    		
-    			if (json.dim1[i] == null) {
-    			
-    				//remove null values from old array
-    				json.dim1.splice(i,1);
-    				json.dim2.splice(i,1);
-    				json.aggie.splice(i,1);
-    				
-    			}
-    		
-    		}*/
-    		console.log("after remove");
-    		console.log(json.dim1.length);
-         	plotCube(json, nullValues, nullValues1);
-            break;
-        default: console.log("No aggie function chosen")
-    }
-	
-}
-
-// return string of all teams based on sport/league
+/*
+  Description:
+   Return string of all teams based on sport/league
+  Args:
+  Returns:
+  Raises:
+  Notes:
+*/
 function getTeams(sport, league){
+   var parameters = [["sports", sport], ["league", league]];
+   var htmlTeamString = "<option value = \"null\" >--Make a choice--</option>";
 
-  var parameters = [["sports", sport], ["league", league]];
-  var htmlTeamString = "<option value = \"null\" >--Make a choice--</option>";
+   // place conditionals to get allow passing null values when other values are present (pass in all teams)
+   if (sport == "null" || league == "null") return htmlTeamString;
 
-  // place conditionals to get allow passing null values when other values are present (pass in all teams)
-  if (sport == "null" || league == "null") return htmlTeamString;
+   var json = getRestResource("TeamListResource", parameters);
 
-  var json = getRestResource("TeamListResource", parameters);
+   console.log("Teams found: ".concat(json.teams.length));
 
-  console.log("Teams found: ".concat(json.teams.length));
+   for (i = 0; i < json.teams.length; ++i){
+      htmlTeamString = htmlTeamString.concat("<option value = \"" + json.teams[i] + "\">" + json.teams[i] + "</option>")
+   }
 
-  for (i = 0; i < json.teams.length; ++i){
-    htmlTeamString = htmlTeamString.concat("<option value = \"" + json.teams[i] + "\">" + json.teams[i] + "</option>")
-  }
-
-  //document.getElementById("team").innerHTML = htmlTeamString;
-
-  return htmlTeamString;
+   //document.getElementById("team").innerHTML = htmlTeamString;
+   return htmlTeamString;
 }
+
 
 
 /*
@@ -492,24 +466,25 @@ function getTeams(sport, league){
   Notes:
 */
 function getSeasons(sport, league, team){
-  var parameters = [["sports", sport], ["league", league], ["team", team]];
-  var htmlSeasonString = "<option value = \"null\" >--Make a choice--</option>";
+   var parameters = [["sports", sport], ["league", league], ["team", team]];
+   var htmlSeasonString = "<option value = \"null\" >--Make a choice--</option>";
 
-  // place conditionals to get allow passing null values when other values are present (pass in all teams)
-  if (sport == "null" || league == "null" || team == "null") return htmlSeasonString;
+   // place conditionals to get allow passing null values when other values are present (pass in all teams)
+   if (sport == "null" || league == "null" || team == "null") return htmlSeasonString;
 
-  var json = getRestResource("SeasonListResource", parameters);
+   var json = getRestResource("SeasonListResource", parameters);
 
-  console.log("Seasons found: ".concat(json.seasons.length));
+   console.log("Seasons found: ".concat(json.seasons.length));
 
-  for (i = 0; i < json.seasons.length; ++i){
-    htmlSeasonString = htmlSeasonString.concat("<option value = \"" + json.seasons[i] + "\">" + json.seasons[i] + "</option>")
-  }
+   for (i = 0; i < json.seasons.length; ++i){
+      htmlSeasonString = htmlSeasonString.concat("<option value = \"" + json.seasons[i] + "\">" + json.seasons[i] + "</option>")
+   }
 
-  document.getElementById("season").innerHTML = htmlSeasonString;
+   document.getElementById("season").innerHTML = htmlSeasonString;
 
-  return htmlSeasonString;
+   return htmlSeasonString;
 }
+
 
 
 /*
@@ -553,18 +528,18 @@ function getGames(sport, league, team, season){
 */
 // Attributes are currently hard coded in, should be fine for now
 function getFactAttribute(sport) {
-	var htmlFactAttribute = "<option value = \"null\" >--Make a choice--</option>";
+   var htmlFactAttribute = "<option value = \"null\" >--Make a choice--</option>";
   if (sport == "null") return htmlFactAttribute;
 
-	if (sport == "Basketball") {
+   if (sport == "Basketball") {
     htmlFactAttribute += "<option value='points'>Points</option>"
                         + "<option value='assists'>Assists</option>"
                         + "<option value='rebounds'>Rebounds</option>"
                         + "<option value='steals'>Steals</option>"
                         + "<option value='blocks'>Blocks</option>";
-	}
+   }
 
-	else if (sport == "Soccer"){
+   else if (sport == "Soccer"){
     htmlFactAttribute += "<option value='goals'>Goals</option>"
                         + "<option value='ballPossession'>Ball Possession</option>"
                         + "<option value='corners'>Corners</option>"
@@ -573,31 +548,31 @@ function getFactAttribute(sport) {
                         + "<option value='redCards'>Red Cards</option>";
   }
 
-	return htmlFactAttribute;
+   return htmlFactAttribute;
 }
 
 
 /*
   Description:
-    return string of all seasons for a given sport/league/team
+    I don't think we use this anymore, doesn't seem too useful but keep it just in case.
   Args:
   Returns:
   Raises:
   Notes:
 */
 function getDimensions(sport) {
-	var htmlDimensions = "<option value = \"null\" >--Make a choice--</option>";
+   var htmlDimensions = "<option value = \"null\" >--Make a choice--</option>";
   if (sport == "null") return htmlDimensions;
 
-	if (sport == "Basketball") {
+   if (sport == "Basketball") {
     htmlDimensions += "<option value='PG'>Point Guard</option>"
                     + "<option value='SG'>Shooting Guard</option>"
                     + "<option value='SF'>Small Forward</option>"
                     + "<option value='PF'>Power Forward</option>"
                     + "<option value='C'>Center</option>";
-	}
+   }
 
-	else if (sport == "Soccer"){
+   else if (sport == "Soccer"){
     htmlDimensions += "<option value='GK'>Goalkeeper</option>"
                     + "<option value='FB'>Fullback</option>"
                     + "<option value='CB'>Center Back</option>"
@@ -605,109 +580,109 @@ function getDimensions(sport) {
                     + "<option value='ST'>Striker</option>";
   }
 
-	return htmlDimensions;
+   return htmlDimensions;
 }
 
 
+
+/*
+  Description:
+    I don't think we use this anymore, doesn't seem too useful but keep it just in case.
+  Args:
+  Returns:
+  Raises:
+  Notes:
+*/
 function getAggregationFunction(league){
+   var htmlChartString = "<option value = \"null\" >--Make a choice--</option>";
 
-  // Default value for the string
-  var htmlChartString = "<option value = \"null\" >--Make a choice--</option>";
+   /*
+   // Dictionary of potential charts
+   var charts = [['bar', 'Bar Chart'], ['line','Line Chart'], ['horizontalBar', 'Horizontal Bar Chart'],
+                  ['pie', 'Pie Chart'], ['doughnut', 'Doughnut Chart'], ['radar','Radar Chart'],
+                  ['polarArea', 'Polar Area Chart']];
+   */
+   console.log("made it to agFunc");
+   console.log(league);
 
-  /*
-  // Dictionary of potential charts
-  var charts = [['bar', 'Bar Chart'], ['line','Line Chart'], ['horizontalBar', 'Horizontal Bar Chart'],
-                ['pie', 'Pie Chart'], ['doughnut', 'Doughnut Chart'], ['radar','Radar Chart'],
-                ['polarArea', 'Polar Area Chart']];
-  */
-	console.log("made it to agFunc");
-	console.log(league);
+   if (league != null){
+      var agFunction = [['SUM','Sum'], ['AVG','Average'], ['MAX','Max'], ['MIN','Min']];
+      console.log("Number of charts: ".concat(agFunction.length));
 
-  if (league != null){
-    var agFunction = [['SUM','Sum'], ['AVG','Average'], ['MAX','Max'], ['MIN','Min']];
-  	console.log("Number of charts: ".concat(agFunction.length));
- 
-  	for (i = 0; i < agFunction.length; ++i){
-    	htmlChartString = htmlChartString.concat("<option value = \"" + agFunction[i][0] + "\" >" + agFunction[i][1] + "</option>");
-  	}
-  
-  }  else {
-	 
-  }
+      for (i = 0; i < agFunction.length; ++i){
+         htmlChartString = htmlChartString.concat("<option value = \"" + agFunction[i][0] + "\" >" + agFunction[i][1] + "</option>");
+      }
+   } 
 
-  document.getElementById("chartType").innerHTML = htmlChartString;
-
-  return htmlChartString;
+   document.getElementById("chartType").innerHTML = htmlChartString;
+   return htmlChartString;
 }
 
 
+
+/*
+  Description:
+    I don't think we use this anymore, doesn't seem too useful but keep it just in case.
+  Args:
+  Returns:
+  Raises:
+  Notes:
+*/
 function getAggregationStyle(aggregationFunction){
+   var htmlChartString = "<option value = \"null\" >--Make a choice--</option>";
 
-  // Default value for the string
-  var htmlChartString = "<option value = \"null\" >--Make a choice--</option>";
+   if (aggregationFunction != null){
+      var agStyle = [['Rollup','Rollup'], ['Cube','Cube']];
+      console.log("Number of charts: ".concat(agStyle.length));
 
-  /*
-  // Dictionary of potential charts
-  var charts = [['bar', 'Bar Chart'], ['line','Line Chart'], ['horizontalBar', 'Horizontal Bar Chart'],
-                ['pie', 'Pie Chart'], ['doughnut', 'Doughnut Chart'], ['radar','Radar Chart'],
-                ['polarArea', 'Polar Area Chart']];
-  */
+      for (i = 0; i < agStyle.length; ++i){
+         htmlChartString = htmlChartString.concat("<option value = \"" + agStyle[i][0] + "\" >" + agStyle[i][1] + "</option>");
+      }
+   }
 
-  if (aggregationFunction != null){
-    var agStyle = [['Rollup','Rollup'], ['Cube','Cube']];
-  	console.log("Number of charts: ".concat(agStyle.length));
- 
-  	for (i = 0; i < agStyle.length; ++i){
-    	htmlChartString = htmlChartString.concat("<option value = \"" + agStyle[i][0] + "\" >" + agStyle[i][1] + "</option>");
-  	}
-  
-  }  else {
-	 
-  }
-
-  document.getElementById("chartType").innerHTML = htmlChartString;
-
-  return htmlChartString;
+   document.getElementById("chartType").innerHTML = htmlChartString;
+   return htmlChartString;
 }
 
 
+
+/*
+  Description:
+  Args:
+  Returns:
+  Raises:
+  Notes:
+   Basketball Agg Data?
+*/
 function getAggData(sport){
+   var htmlChartString = "<option value = \"null\" >--Make a choice--</option>";
 
-  // Default value for the string
-  var htmlChartString = "<option value = \"null\" >--Make a choice--</option>";
+   if (sport == "Soccer"){
+      var agData = [['GOALS','Goals'], ['RED_CARDS','Red Cards'], ['YELLOW_CARDS','Yellow Cards'], ['FOULS','Fouls'], ['BALL_POSSESSION','Ball Possession'], ['CORNERS','Corners']];
+      console.log("Number of aggData: ".concat(agData.length));
 
-  /*
-  // Dictionary of potential charts
-  var charts = [['bar', 'Bar Chart'], ['line','Line Chart'], ['horizontalBar', 'Horizontal Bar Chart'],
-                ['pie', 'Pie Chart'], ['doughnut', 'Doughnut Chart'], ['radar','Radar Chart'],
-                ['polarArea', 'Polar Area Chart']];
-  */
+      for (i = 0; i < agData.length; ++i){
+         htmlChartString = htmlChartString.concat("<option value = \"" + agData[i][0] + "\" >" + agData[i][1] + "</option>");
+      }
 
-  if (sport == "Soccer"){
-    var agData = [['GOALS','Goals'], ['RED_CARDS','Red Cards'], ['YELLOW_CARDS','Yellow Cards'], ['FOULS','Fouls'], ['BALL_POSSESSION','Ball Possession'], ['CORNERS','Corners']];
-  	console.log("Number of aggData: ".concat(agData.length));
- 
-  	for (i = 0; i < agData.length; ++i){
-    	htmlChartString = htmlChartString.concat("<option value = \"" + agData[i][0] + "\" >" + agData[i][1] + "</option>");
-  	}
-  
-  } else if (sport == "Basketball"){
-  
-  	var agData = [['0','Points']];
-  	console.log("Number of aggData: ".concat(agData.length));
- 
-  	for (i = 0; i < agData.length; ++i){
-    	htmlChartString = htmlChartString.concat("<option value = \"" + agData[i][0] + "\" >" + agData[i][1] + "</option>");
-  	}
-  
-  } else {
-	 
-  }
+   } else if (sport == "Basketball"){
 
-  document.getElementById("chartType").innerHTML = htmlChartString;
+      var agData = [['0','Points']];
+      console.log("Number of aggData: ".concat(agData.length));
 
-  return htmlChartString;
+      for (i = 0; i < agData.length; ++i){
+         htmlChartString = htmlChartString.concat("<option value = \"" + agData[i][0] + "\" >" + agData[i][1] + "</option>");
+      }
+
+   } else {
+      
+   }
+
+   document.getElementById("chartType").innerHTML = htmlChartString;
+   return htmlChartString;
 }
+
+
 
 /*
   Description:
@@ -719,48 +694,44 @@ function getAggData(sport){
 */
 function getCharts(aggregationStyle){
 
-  // Default value for the string
-  var htmlChartString = "<option value = \"null\" >--Make a choice--</option>";
+   // Default value for the string
+   var htmlChartString = "<option value = \"null\" >--Make a choice--</option>";
 
-  /*
-  // Dictionary of potential charts
-  var charts = [['bar', 'Bar Chart'], ['line','Line Chart'], ['horizontalBar', 'Horizontal Bar Chart'],
-                ['pie', 'Pie Chart'], ['doughnut', 'Doughnut Chart'], ['radar','Radar Chart'],
-                ['polarArea', 'Polar Area Chart']];
-  */
+   /*
+   // Dictionary of potential charts
+   var charts = [['bar', 'Bar Chart'], ['line','Line Chart'], ['horizontalBar', 'Horizontal Bar Chart'],
+                  ['pie', 'Pie Chart'], ['doughnut', 'Doughnut Chart'], ['radar','Radar Chart'],
+                  ['polarArea', 'Polar Area Chart']];
+   */
 
 
-  if (aggregationStyle == "Cube"){
-    var charts = [['bubble','Bubble Chart'], ['line','Line'], ['scatter','Scatter Plot']];
-  	console.log("Number of charts: ".concat(charts.length));
- 
-  	for (i = 0; i < charts.length; ++i){
-    	htmlChartString = htmlChartString.concat("<option value = \"" + charts[i][0] + "\" >" + charts[i][1] + "</option>");
-  	}
-  
-  } else if (aggregationStyle=="Rollup"){
-    var charts = [['bubble','Bubble Chart'], ['line','Line'], ['scatter','Scatter Plot']];
-  	console.log("Number of charts: ".concat(charts.length));
- 
-  	for (i = 0; i < charts.length; ++i){
-    	htmlChartString = htmlChartString.concat("<option value = \"" + charts[i][0] + "\" >" + charts[i][1] + "</option>");
-  	}
+   if (aggregationStyle == "Cube"){
+      var charts = [['bubble','Bubble Chart'], ['line','Line'], ['scatter','Scatter Plot']];
+      console.log("Number of charts: ".concat(charts.length));
 
-  } else if (aggregationStyle=="Simple"){
-    var charts = [['bar', 'Bar Chart'], ['line','Line Chart'], ['radar','Radar Chart']];
-  	console.log("Number of charts: ".concat(charts.length));
- 
-  	for (i = 0; i < charts.length; ++i){
-    	htmlChartString = htmlChartString.concat("<option value = \"" + charts[i][0] + "\" >" + charts[i][1] + "</option>");
-  	}
+      for (i = 0; i < charts.length; ++i){
+         htmlChartString = htmlChartString.concat("<option value = \"" + charts[i][0] + "\" >" + charts[i][1] + "</option>");
+      }
 
-  } else {
-	 
-  }
+   } else if (aggregationStyle=="Rollup"){
+      var charts = [['bubble','Bubble Chart'], ['line','Line'], ['scatter','Scatter Plot']];
+      console.log("Number of charts: ".concat(charts.length));
 
-  document.getElementById("chartType").innerHTML = htmlChartString;
+      for (i = 0; i < charts.length; ++i){
+         htmlChartString = htmlChartString.concat("<option value = \"" + charts[i][0] + "\" >" + charts[i][1] + "</option>");
+      }
 
-  return htmlChartString;
+   } else if (aggregationStyle=="Simple"){
+      var charts = [['bar', 'Bar Chart'], ['line','Line Chart'], ['radar','Radar Chart']];
+      console.log("Number of charts: ".concat(charts.length));
+
+      for (i = 0; i < charts.length; ++i){
+         htmlChartString = htmlChartString.concat("<option value = \"" + charts[i][0] + "\" >" + charts[i][1] + "</option>");
+      }
+   } 
+
+   document.getElementById("chartType").innerHTML = htmlChartString;
+   return htmlChartString;
 }
 
 
@@ -774,32 +745,29 @@ function getCharts(aggregationStyle){
   Notes:
 */
 function getPlayerList(sport, league, team, game){
-  var htmlPlayerString = "<option value = \"null\" >--Make a choice--</option>";
+   var htmlPlayerString = "<option value = \"null\" >--Make a choice--</option>";
 
-  // place conditionals to get allow passing null values when other values are present (pass in all teams)
-  if (sport == "null" || league == "null" || team == "null" || season == "null" || game == "null") return htmlPlayerString;
+   // place conditionals to get allow passing null values when other values are present (pass in all teams)
+   if (sport == "null" || league == "null" || team == "null" || season == "null" || game == "null") return htmlPlayerString;
 
-  // var parameters = [["sports", sport], ["league", league], ["team", team], ["season", season], ["match", game]];
-  // var token = getRestResource("TokenResource", parameters);
-  var token = getToken(sport, league, team, season, game);
-  var json = getRestResource("PlayerListResource", [["token", token["token"]], ]);
+   // var parameters = [["sports", sport], ["league", league], ["team", team], ["season", season], ["match", game]];
+   // var token = getRestResource("TokenResource", parameters);
+   var token = getToken(sport, league, team, season, game);
+   var json = getRestResource("PlayerListResource", [["token", token["token"]], ]);
 
-  console.log("Players found: ".concat(json.homePlayers.length + json.guestPlayers.length));
+   console.log("Players found: ".concat(json.homePlayers.length + json.guestPlayers.length));
 
-  for (i = 0; i < json.homePlayers.length; ++i){
-    htmlPlayerString = htmlPlayerString.concat("<option class=\"w3-red\" value = \"" + json.homePlayersID[i] + "\">" + json.homePlayers[i] + "</option>");
-  }
+   for (i = 0; i < json.homePlayers.length; ++i){
+      htmlPlayerString = htmlPlayerString.concat("<option class=\"w3-red\" value = \"" + json.homePlayersID[i] + "\">" + json.homePlayers[i] + "</option>");
+   }
 
-  // json.guestPlayersID[i + json.homePlayers.length]
-  for (i = 0; i < json.guestPlayers.length; ++i){
-    htmlPlayerString = htmlPlayerString.concat("<option class=\"w3-light-blue\" value = \"" + json.guestPlayersID[i] + "\">" + json.guestPlayers[i] + "</option>");
-  }
+   // json.guestPlayersID[i + json.homePlayers.length]
+   for (i = 0; i < json.guestPlayers.length; ++i){
+      htmlPlayerString = htmlPlayerString.concat("<option class=\"w3-light-blue\" value = \"" + json.guestPlayersID[i] + "\">" + json.guestPlayers[i] + "</option>");
+   }
 
-  console.log(json);
-
-  document.getElementById("players").innerHTML = htmlPlayerString;
-
-  return htmlPlayerString;
+   document.getElementById("players").innerHTML = htmlPlayerString;
+   return htmlPlayerString;
 }
 
 
@@ -884,7 +852,6 @@ function getSoccerStats(htmlTokenString){
   Notes:
 */
 function getBasketballStats(htmlTokenString){
-  
   return htmlTokenString;
 }
 

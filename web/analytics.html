@@ -44,8 +44,8 @@
           onclick="w3_close()">&times;</button>
           <img src="logo-sidebar.jpg" alt="logo" style="width:100%">
           <a href="index.html" class="w3-bar-item w3-button w3-padding-16">HOME</a>
-          <a href="analytics.html" class="w3-bar-item w3-button w3-padding-16 w3-white">ANALYTICS 1</a>
-          <a href="CubeRollupMock.html" class="w3-bar-item w3-button w3-padding-16">ANALYTICS 2</a>
+          <a href="analytics.html" class="w3-bar-item w3-button w3-padding-16 w3-white">PLAYER ANALYTICS</a>
+          <a href="CubeRollupMock.html" class="w3-bar-item w3-button w3-padding-16">TEAM ANALYTICS</a>
           <a href="about.html" class="w3-bar-item w3-button w3-padding-16">ABOUT</a>
           <a href="contact.html" class="w3-bar-item w3-button w3-padding-16">CONTACT</a>
         </div>
@@ -55,7 +55,7 @@
             <div class="w3-teal">
           <button id="openNav" class="w3-button w3-teal w3-xlarge" onclick="w3_open()">&#9776;</button>
           <div class="w3-container">
-            <h1>ANALYTICS 1</h1>
+            <h1>PLAYER ANALYTICS</h1>
           </div>
         </div>
 		
@@ -65,191 +65,146 @@
 
         <div id="Dropdown">
         <form method = "GET">
-            <table class="table table-bordered">
+        <table class="table table-bordered">
             <tr>
               <th></th>
               <th></th>
               <th></th>
             </tr>
-                <tr>
-                    <td>
-                        <fieldset>
-                
-                <p>
-                   
-                    <strong>1.</strong> <label>Sport</label>
-                    <select class = "form-control" id = "sport">
-                        <option>--Make a choice--</option>
-                        <option>Soccer</option>
-                        <option>Basketball</option>
-                    </select>
-                       
-                </p>
-            </fieldset>
-                    </td>
-
-                    <td>
-                         <fieldset>
-               
-                <p>
-                    <strong>2.</strong> <label>League</label>
-                    <select class = "form-control" id = "league">
-                        <option value = "null">--Make a Choice--</option>
-                    </select>
-                </p>
-            </fieldset>
-                    </td>
-
-                    <td>
-                         <fieldset>
-                
-                <p>
-                    <strong>3.</strong> <label>Team</label>
-                    <select class = "form-control" id = "team">
-                        <option value = "null">--Make a choice</option>
-                    </select>
-                </p>
-            </fieldset>
-                    </td>
-
-                </tr>
-                <tr>
-                    <td>
-                         <fieldset>
-                
-                <p>
-                    <strong>4.</strong> <label>Season</label>
-                    <select class = "form-control"id = "season">
-                        <option value = "null" >--Make a choice--</option>
-                    </select>
-                </p>
-            </fieldset>  </td>
-                    <td><fieldset>
-                
-                <p>
-                    <strong>5.</strong> <label>Game</label>
-                    <select class = "form-control" id = "game">
-                        <option value = "null" >--Make a choice--</option>
-                    </select>
-                </p>
-            </fieldset> </td>
-
-            <td><fieldset>
-                
-                <p>
-                    <strong>6.</strong> <label>Aggregation Style</label>
-                    <select class = "form-control" id = "aggregationStyle">
-                        <option value = "Simple">--Make a choice--</option>
-                        <option value = "Simple">Simple Query</option>
-                    </select>
-                </p>
-            </fieldset> </td>
-                </tr>
-                <tr>
-                    <td><fieldset>
-                
-                <p>
-                    <strong>7.</strong> <label>Chart</label>
-                    <select  class = "form-control" id = "chartType">
-                        <option value = "null">--Make a choice--</option>
-                    </select>
-                </p>
-                        </fieldset></td>
-                    <td>
-            <fieldset>
-                <strong>8.</strong> <label>Fact Attribute</label>
-                <p>
-                    <select class = "form-control" id = "factAttribute">
-                        <option value = "null">--Make a choice--</option>
-                    </select>
-                </p>
-            </fieldset></td>
-                    <td>
-            <fieldset>
-                    <strong>9.</strong> <label>Player</label>
+            <!-- First Row: Sport, League, Team -->
+            <tr>
+                <td>
+                    <fieldset>
                     <p>
-                        <select class = "form-control" id = "players">
-                            <option value = "null">--Make a choice--</option>
+                        <strong>1.</strong> <label>Sport</label>
+                        <select class = "form-control" id = "sport">
+                            <option>--Make a choice--</option>
+                            <option>Soccer</option>
+                            <option>Basketball</option>
+                        </select>  
+                    </p>
+                    </fieldset>
+                </td>
+
+                <td>
+                    <fieldset>
+                    <p>
+                        <strong>2.</strong> <label>League</label>
+                        <select class = "form-control" id = "league">
+                            <option value = "null">--Make a Choice--</option>
                         </select>
                     </p>
-                </fieldset></td>
+                    </fieldset>
+                </td>
+
+                <td>
+                    <fieldset>
+                    <p>
+                        <strong>3.</strong> <label>Team</label>
+                        <select class = "form-control" id = "team">
+                            <option value = "null">--Make a choice</option>
+                        </select>
+                    </p>
+                    </fieldset>
+                </td>
+            </tr>
+
+            <!-- 2nd Row: Season, Game, Aggregration Style-->
+            <tr>
+                <td>
+                <fieldset>
+                    <p>
+                        <strong>4.</strong> <label>Season</label>
+                        <select class = "form-control"id = "season">
+                            <option value = "null" >--Make a choice--</option>
+                        </select>
+                    </p>
+                    </fieldset>  
+                </td>
+
+                <td>
+                    <fieldset>
+                        <p>
+                            <strong>5.</strong> <label>Game</label>
+                            <select class = "form-control" id = "game">
+                                <option value = "null" >--Make a choice--</option>
+                            </select>
+                        </p>
+                    </fieldset> 
+                </td>
+
+                <td>
+                    <fieldset>
+                        <strong>7.</strong> <label>Player</label>
+                        <p>
+                            <select class = "form-control" id = "players">
+                                <option value = "null">--Make a choice--</option>
+                            </select>
+                        </p>
+                    </fieldset>
+                </td>
+
+            <!-- 3rd Row: Chart, Fact Attribute, Player -->
+                </tr>
+
+                <tr>
+
+                <td>
+                    <fieldset>
+                        <strong>8.</strong> <label>Fact Attribute</label>
+                        <p>
+                            <select class = "form-control" id = "factAttribute">
+                                <option value = "null">--Make a choice--</option>
+                            </select>
+                        </p>
+                    </fieldset>
+                </td>
+
+                <td>
+                    <fieldset>
+                        <p>
+                            <strong>9.</strong> <label>Chart</label>
+                            <select  class = "form-control" id = "chartType">
+                                <option value = "null">--Make a choice--</option>
+                            </select>
+                        </p>
+                        </fieldset>
+                </td>
+            </tr>
             </table>
         </form>
     <br>
+
 	<table>
+        <!-- Buttons for submitting -->
         <tr>
+            <!-- Create Submit Button, link to showData() function -->
             <td>
-    <!-- Create Submit Button, link to showData() function -->
-    <button class="btn btn-primary" onclick="plotChart()" id="SUBMIT">PLOT</button> </td>
+                <button class="btn btn-primary" onclick="plotChart()" id="SUBMIT">PLOT</button> 
+            </td>
+
+            <!-- Create Submit Button, link to showData() function -->
             <td>
-    <!-- Create Submit Button, link to showData() function -->
-                <button class="btn btn-info" onclick="displayPlayerStats()" id="STATS">GET PLAYER STATS</button> </td>
-                <td>
-    <!-- Create Submit Button, link to showData() function -->
-                <button class="btn btn-reset" onclick="playerReset()" id="RESET">RESET</button> </td>
-            </tr>
-        </table>
-            <div>
-   			<font id = "errorMessage" color = "red"></font>
-    		</div>
+                <button class="btn btn-info" onclick="displayPlayerStats()" id="STATS">GET PLAYER STATS</button> 
+            </td>
+            
+            <!-- Create Submit Button, link to showData() function -->
+            <td>
+                <button class="btn btn-secondary" onclick="playerReset()" id="RESET">RESET</button> 
+            </td>
+        </tr>
+    </table>
+
+    <!-- Div where error message will be printed out if the combination isn't valid -->
+    <div><font id = "errorMessage" color = "red"></font></div>
+
     <!-- Canvas where the chart will be plotted -->
     <canvas id="mainChart" width="800" height="400"></canvas>
 
     <!-- This forms the table for all player data -->
     <div id="table"></div>
 
-    <!-- Canvas where the chart will be plotted -->
-    <canvas id="playerChart" width="800" height="400"></canvas>
-
-        </div>
-        </div>
+    </div> <!-- dropdown div-->
+    </div> <!-- some other div -->
     </body>
 </html>
-
-
-
-    <!--
-    <div class = "row">
-        <div class ="column">
-            <fieldset>
-            <legend>Players</legend>
-            <p>
-                <select id = "player">
-                    <option value = "null">--Make a choice--</option>
-                </select>
-            </p>
-            </fieldset>
-            </div>
-            <div class = "column">
-        <br>
-        <button id = "playerStats" onclick="displayStats()">Get Player Statistics</button>
-        </div>
-    </div>
-
-
-    <br>
-    </div>
-     <div id="Player" style="display:none">
-     
-     <br><div style="display: none;" id="Player Stats">Player Stats: </div>
-     <p>Name: <span id = 'name'> </span></p>
-     <p>Birthday: <span id = 'birthday'> </span></p>
-     <p>Height: <span id = 'height'> </span></p>
-     <p>Weight: <span id = 'weight'> </span></p>
-     <p>Preferred Foot: <span id = 'preferredFoot'> </span></p>
-     <br><button onclick="backToStats()" id="BACK">BACK</button>
-     <div>
-                <canvas id="myRadar" width="300" height="300"></canvas>
-     </div>
-     
-     </div>
-</html>
-
-
-
-
-
-
-
-
-

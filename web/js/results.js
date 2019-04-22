@@ -7,12 +7,20 @@ Methods:
     generateChart:
 
 Dependencies:
+    resources.js
+    RestCaller.js
+    utils.js
+    charts/bubble.js
+    charts/default.js
+
 ***************************************************************** */
 
 /*
 Description:
-
+    Plots the rollup function on the team analytics page
 Args:
+    json:
+    nullValues:
 Returns:
 */
 function plotRollup(json, nullValues) {
@@ -39,28 +47,33 @@ function plotRollup(json, nullValues) {
 
 /*
 Description:
-
+    Plots cube data on team analytics page
 Args:
+    json:
+    nullValues:
+    nullValues1:
 Returns:
 */
 function plotCube(json, nullValues, nullValues1) {
    chartType = document.getElementById("chartType").value;
    console.log(chartType)
+
    var mainCanvas = document.getElementById("mainChart").getContext('2d');
    var secondCanvas = document.getElementById("secondChart").getContext('2d');
    var thirdCanvas = document.getElementById("thirdChart").getContext('2d');
+
    switch (chartType){
       case "bubble": window.chart1 = plotBubble(json, mainCanvas);
-                  window.chart2 = plotBubble(nullValues, secondCanvas);
-                  window.chart3 = plotBubble(nullValues1, thirdCanvas);
+        window.chart2 = plotBubble(nullValues, secondCanvas);
+        window.chart3 = plotBubble(nullValues1, thirdCanvas);
          break;
       case "scatter": window.chart1 = plotScatter(json, mainCanvas);
-                  window.chart2 = plotScatter(nullValues, secondCanvas);
-                  window.chart3 = plotScatter(nullValues1, thirdCanvas);
+        window.chart2 = plotScatter(nullValues, secondCanvas);
+        window.chart3 = plotScatter(nullValues1, thirdCanvas);
          break;
       case "line": window.chart1 = plotLineChart(json, mainCanvas);
-               window.chart2 = plotLineChart(nullValues, secondCanvas);
-               window.chart3 = plotLineChart(nullValues1, thirdCanvas);
+        window.chart2 = plotLineChart(nullValues, secondCanvas);
+        window.chart3 = plotLineChart(nullValues1, thirdCanvas);
          break; // create plotLine(json) function
       default:
          break;
@@ -71,162 +84,87 @@ function plotCube(json, nullValues, nullValues1) {
 
 /* 
 Description:
-   This function will 
-Args:
-Returns:
-*/
-function stats(){ 
-   document.getElementById('hiddenText1').style.display="block";
-   document.getElementById('Player').style.display="block";
-   document.getElementById("Charts").style.display = "none";
-   document.getElementById("Dropdown").style.display = "none";
-
-   var sport = document.getElementById('chosenSport').innerHTML = document.getElementById("sport").value;
-   var league = document.getElementById('chosenLeague').innerHTML = document.getElementById("league").value;
-   var team = document.getElementById('chosenTeam').innerHTML = document.getElementById("team").value;
-   var season = document.getElementById('chosenSeason').innerHTML = document.getElementById("season").value;
-   var match = document.getElementById('chosenGame').innerHTML = document.getElementById("game").value;
-   //var name = document.getElementById('name').innerHTML = document.getElementById("player").options[document.getElementById('player').selectedIndex].text;
-   
-   var parameters = [["sports", sport], ["league", league], ["team", team], ["season", season], ["match", match], ["name", name]];
-   // console.log(parameters);
-
-   var token = getRestResource("TokenResource", parameters);
-   // console.log("Token: " + token["token"]);
-
-   var stats = document.getElementById("player").value;
-   // console.log(stats);
-
-   var playerstatistics = getRestResource("PlayerResource", [["token", token["token"]], ["playerID", stats]]);
-   // console.log(playerstatistics);
-
-   var playerInfo = Object.values(playerstatistics);
-
-   var birthday = playerInfo[0];
-   // document.getElementById("birthday").innerHTML = birthday;
-
-   var name = playerInfo[1];
-   // document.getElementById("name").innerHTML = name;
-
-   var weight = playerInfo[2];
-   // document.getElementById("weight").innerHTML = weight;
-
-   var height = playerInfo[3];
-   // document.getElementById("height").innerHTML = height;
-
-
-   var soccerplayerstatistics = getRestResource("SoccerPlayerResource", [["token", token["token"]], ["playerID", stats]]);
-   // console.log(soccerplayerstatistics);
-   // console.log(Object.values(soccerplayerstatistics));
-
-   var individualStats = Object.values(soccerplayerstatistics);
-
-   var overallRating = individualStats[0];
-   var strength = individualStats[1];
-   var shotPower = individualStats[2];
-
-   // This only temporary. Should have other options
-   plotRadar(name, overallRating, strength, shotPower);
-}
-
-
-
-/* 
-Description:
-   This function will 
+   This function will plot the chart on the player analytics page
 Args:
 Returns:
 */
 function plotChart() {
-   document.getElementById('mainChart').style.display="block";
+    document.getElementById('mainChart').style.display="block";
 
-   var sport = document.getElementById("sport").value;
-   var league = document.getElementById("league").value;
-   var team = document.getElementById("team").value;
-   var season = document.getElementById("season").value;
-   var match  = document.getElementById("game").value;
-   var factatt = document.getElementById("factAttribute").value;
-   //var aggregfunc = document.getElementById("aggregationFunction").value;
-   var aggregstyle = document.getElementById("aggregationStyle").value;
-   //var dimension  = document.getElementById("dimensions").value;
-
-   /****************************************+************
-    *we are displaying cube/rollup-queries in a seperate *
-   *page, no use for dimension, aggregate function etc. *
-   *here                                                *
-   *****************************************************/
-
-   //var parameters = [["sports", sport], ["league", league], ["team", team], ["season", season], ["match", match], ["factatt", //factatt], ["aggregfunc", aggregfunc], ["aggregstyle", aggregstyle], ["dimension", dimension]];
-
-   var parameters = [["sports", sport], ["league", league], ["team", team], ["season", season], ["match", match],["aggregstyle", aggregstyle]];
-      console.log(parameters);
-
-   var token = getRestResource("TokenResource", parameters);
-   var data = null;
+    var sport = document.getElementById("sport").value;
+    var league = document.getElementById("league").value;
+    var team = document.getElementById("team").value;
+    var season = document.getElementById("season").value;
+    var match  = document.getElementById("game").value;
+    var factatt = document.getElementById("factAttribute").value;
+    var aggregstyle = document.getElementById("aggregationStyle").value;
 
 
-   if (sport == "null" || league == "null" || team == "null" || season == "null" || match == "null" || factatt == "null" || aggregstyle == "null") {
+    //var parameters = [["sports", sport], ["league", league], ["team", team], ["season", season], ["match", match], ["factatt", //factatt], ["aggregfunc", aggregfunc], ["aggregstyle", aggregstyle], ["dimension", dimension]];
 
-      console.log("entered break");
-      document.getElementById("errorMessage").innerHTML = "Invalid Combination";
+    var parameters = [["sports", sport], ["league", league], ["team", team], ["season", season], ["match", match],["aggregstyle", aggregstyle]];
+    console.log(parameters);
 
-      const context = mainChart.getContext('2d');
-      context.clearRect(0, 0, mainChart.width, mainChart.height);
-         
-      const context1 = playerChart.getContext('2d');
-      context1.clearRect(0, 0, playerChart.width, secondChart.height);
+    var token = getRestResource("TokenResource", parameters);
+    var data = null;
 
-   } else {
-      document.getElementById("errorMessage").innerHTML = "";
-   }
+    // Error checking for invalid combinations
+    if (sport == "null" || league == "null" || team == "null" || season == "null" || match == "null" || factatt == "null" || aggregstyle == "null") {
+        // Print error message and destroy chart
+        document.getElementById("errorMessage").innerHTML = "Invalid Combination";
+        document.getElementById('mainChart').destroy();
+
+    } else {
+        document.getElementById("errorMessage").innerHTML = "";
+    }
 
 
-   // Get the data for the specific attribute selected
-   if (sport == "Soccer"){
-      data = getSoccerAttributeData(factatt, token);
-      console.log("Got soccer attributes");
-      console.log(data);
+    // Get the data for the specific attribute selected
+    if (sport == "Soccer"){
+        data = getSoccerAttributeData(factatt, token);
+        console.log("Got soccer attributes");
+        console.log(data);
 
-   } else if (sport == "Basketball"){
-      data = getBasketballAttributeData(factatt, token);
-      console.log("Got basketball attributes");
+    } else if (sport == "Basketball"){
+        data = getBasketballAttributeData(factatt, token);
+        console.log("Got basketball attributes");
 
-   } else {
-      console.log("Invalid sport selection");
-      return;
-   }
+    } else {
+        console.log("Invalid sport selection");
+        return;
+    }
 
-   var label = document.getElementById("factAttribute").value;
+    var label = document.getElementById("factAttribute").value;
 
-   // Plot a specific chart based on the one selected in the
-   chartType = document.getElementById("chartType").value;
-   switch (chartType) {
-      case ("bubble"):
-         // plotBubble(data);
-         break;
+    // Plot a specific chart based on the one selected in the
+    chartType = document.getElementById("chartType").value;
+    switch (chartType) {
+        case ("bubble"):
+            // plotBubble(data);
+            break;
 
-      case ("line"):
-         //plotLineChart(data);
-         window.chart1 = plotDefault('line', 'home', 'away', Array(data[0]), Array(data[1]), label);
-         break;
+        case ("line"):
+            //plotLineChart(data);
+            window.chart1 = plotDefault('line', 'home', 'away', Array(data[0]), Array(data[1]), label);
+            break;
 
-      case ("scatter"):
-         // plotScatter(data);
-         break;
+        case ("scatter"):
+            // plotScatter(data);
+            break;
 
-      case ("bar"):
-         // plotBarChart(data);
-         window.chart1 = plotDefault('bar', 'home', 'away', Array(data[0]), Array(data[1]), label);
-         break;
+        case ("bar"):
+            // plotBarChart(data);
+            window.chart1 = plotDefault('bar', 'home', 'away', Array(data[0]), Array(data[1]), label);
+            break;
 
-      case ("radar"):
-         // plotRadar(data);
-         window.chart1 = plotDefault('radar', 'home', 'away', Array(data[0]), Array(data[1]), label);
-         break;
+        case ("radar"):
+            // plotRadar(data);
+            window.chart1 = plotDefault('radar', 'home', 'away', Array(data[0]), Array(data[1]), label);
+            break;
 
-      default: 
-         break;
-   }
+        default: 
+            break;
+    }
 }
 
 /*
@@ -242,40 +180,39 @@ function getSoccerAttributeData(attribute, token){
 
   switch (attribute){
     case ("goals"):
-      var score = getRestResource("ScoreRestResource", [["token", token["token"]], ]);
-      return score["score"]; // add index
+        var score = getRestResource("ScoreRestResource", [["token", token["token"]], ]);
+        return score["score"]; // add index
 
    case ("corners"):
-      var corners = getRestResource("CornerStatRestResource", [["token", token["token"]], ]);
-      return corners["corners"]; // add index
+        var corners = getRestResource("CornerStatRestResource", [["token", token["token"]], ]);
+        return corners["corners"]; // add index
    
     case ("ballPossession"):
-      var ballPossession = getRestResource("BallPossessionStatResource", [["token", token["token"]], ]);
-      return ballPossession["possession"];
+        var ballPossession = getRestResource("BallPossessionStatResource", [["token", token["token"]], ]);
+        return ballPossession["possession"];
 
     case ("yellowCards"):
-      var yellowCards = getRestResource("YellowCardsStatResource", [["token", token["token"]], ]);
-      return yellowCards["yellowCards"]; // add index
+        var yellowCards = getRestResource("YellowCardsStatResource", [["token", token["token"]], ]);
+        return yellowCards["yellowCards"]; // add index
 
     case ("redCards"):
-      var redCards = getRestResource("RedCardsStatResource", [["token", token["token"]], ]);
-      return redCards["redCards"]; // add index
+        var redCards = getRestResource("RedCardsStatResource", [["token", token["token"]], ]);
+        return redCards["redCards"]; // add index
 
     case ("cornerStats"):
-      var cornerStats = getRestResource("CornerStatRestResource", [["token", token["token"]], ]);
-      return cornerStats["corners"]; // add index
+        var cornerStats = getRestResource("CornerStatRestResource", [["token", token["token"]], ]);
+        return cornerStats["corners"]; // add index
 
     case ("fouls"):
-      var fouls = getRestResource("FoulsStatResource", [["token", token["token"]], ]);
-      return fouls["fouls"]; // add index
+        var fouls = getRestResource("FoulsStatResource", [["token", token["token"]], ]);
+        return fouls["fouls"]; // add index
 
     case ("attendance"):
-      var attendance = getRestResource("AttendanceRestResource", [["token", token["token"]], ]);
-      return attendance["attendance"]; // add index
+        var attendance = getRestResource("AttendanceRestResource", [["token", token["token"]], ]);
+        return attendance["attendance"]; // add index
 
     default:
-      return null;
-      break;
+        return null;
   }
 }
 
@@ -290,10 +227,14 @@ function getSoccerAttributeData(attribute, token){
 function getBasketballAttributeData(attribute, token){
     switch (attribute){
         case ("points"):
-          var score = getRestResource("ScoreRestResource", [["token", token["token"]], ]);
-          return score["score"]; // add index
+            var score = getRestResource("ScoreRestResource", [["token", token["token"]], ]);
+            return score["score"]; // add index
         case ("assists"): break;
+            var assists = getRestResource("AssistRestResource", [["token", token["token"]], ]);
+            return assists["assists"]; // add index
         case ("rebounds"): break;
+            var rebounds = getRestResource("ReboundsRestResource", [["token", token["token"]], ]);
+            return rebounds["rebounds"]; // add index
         default: break;
     }
 }
@@ -314,43 +255,43 @@ function getBasketballAttributeData(attribute, token){
 */
 
 function displayPlayerStats(){
+    var sport = document.getElementById("sport").value;
+    var league = document.getElementById("league").value;
+    var team = document.getElementById("team").value;
+    var season = document.getElementById("season").value;
+    var match = document.getElementById("game").value;
+    // var name = document.getElementById('name').innerHTML = document.getElementById("player").options[document.getElementById('player').selectedIndex].text;
 
+    console.log(sport);
+    console.log(league);
+    
+    if (sport == "null" || league == "null" || team == "null" || season == "null" || match == "null" ){
+        console.log("Invalid Combination");
+        return;
+    }
 
-  var sport = document.getElementById("sport").value;
-  var league = document.getElementById("league").value;
-  var team = document.getElementById("team").value;
-  var season = document.getElementById("season").value;
-  var match = document.getElementById("game").value;
-  // var name = document.getElementById('name').innerHTML = document.getElementById("player").options[document.getElementById('player').selectedIndex].text;
+    var parameters = [["sports", sport], ["league", league], ["team", team], ["season", season], ["match", match], ["name", name]];
+    console.log(parameters);
 
-  console.log(sport);
-  console.log(league);
-  if (sport == "null" || league == "null" || team == "null" || season == "null" || match == "null" ){
-  
-     console.log("Not enough parameters");
-     return;
-  
-  }
+    var token = getRestResource("TokenResource", parameters);
+    console.log("Token: " + token["token"]);
 
-  var parameters = [["sports", sport], ["league", league], ["team", team], ["season", season], ["match", match], ["name", name]];
-  console.log(parameters);
+    playerData = getPlayerData(token);
+    createPlayerTable(playerData);
 
-  var token = getRestResource("TokenResource", parameters);
-  console.log("Token: " + token["token"]);
+    playerID = document.getElementById("players").value;
+    if (playerID == "null"){
+        console.log("No player selected.");
+        return;
+    }
 
-  playerData = getPlayerData(token);
-  createPlayerTable(playerData);
+    var player = getRestResource("PlayerResource", [["token", token["token"]], ["playerID", playerID]]);
+    player = Object.values(player);
 
-  playerID = document.getElementById("players").value;
-  if (playerID == "null"){
-    console.log("No player selected.");
-    return;
-  }
-  var player = getRestResource("PlayerResource", [["token", token["token"]], ["playerID", playerID]]);
-  player = Object.values(player);
-  var soccerplayerstatistics = getRestResource("SoccerPlayerResource", [["token", token["token"]], ["playerID", playerID]]);
-  soccerplayerstatistics = Object.values(soccerplayerstatistics);
-  window.chart1 = plotRadar(player[1], soccerplayerstatistics[0], soccerplayerstatistics[1], soccerplayerstatistics[2]);
+    var soccerplayerstatistics = getRestResource("SoccerPlayerResource", [["token", token["token"]], ["playerID", playerID]]);
+    soccerplayerstatistics = Object.values(soccerplayerstatistics);
+
+    window.chart1 = plotRadar(player[1], soccerplayerstatistics[0], soccerplayerstatistics[1], soccerplayerstatistics[2]);
 }
 
 
@@ -365,46 +306,44 @@ Notes:
   [ [a, b, c, d, e], [f, g, h, i, k], [l, m, n, o, p]]
 */
 function getPlayerData(token){
-  // Get the list of players with
-  var playerList = getRestResource("PlayerListResource", [["token", token["token"]], ]);
+    // Get the list of players with
+    var playerList = getRestResource("PlayerListResource", [["token", token["token"]], ]);
 
-  // Create list of IDs to get stats for each player
-  var ids = playerList.homePlayersID;
-  for (var i = 0; i < playerList.guestPlayersID.length; ++i){
+    // Create list of IDs to get stats for each player
+    var ids = playerList.homePlayersID;
+    for (var i = 0; i < playerList.guestPlayersID.length; ++i){
     ids.push(playerList.guestPlayersID[i]);
-  }
-
-  // Initialize playerData array
-  var playerData = [["Player ID", "Birthday", "Name", "Weight", "Height", "Rating", "Strength", "Shot Power", "Preferred Foot"], ];
-
-  // Let the first element of the array be the player's id
-  var statsList, playerstatistics, soccerplayerstatistics;
-
-  // Populate playerData for all found players
-  for (var i = 0; i < ids.length; ++i){
-    statsList = [ids[i]];
-
-    // Get general player stats and append
-    playerstatistics = getRestResource("PlayerResource", [["token", token["token"]], ["playerID", ids[i]]]);
-    playerstatistics = Object.values(playerstatistics);
-
-    for (var j = 0; j < playerstatistics.length; ++j){
-      statsList.push(playerstatistics[j]);
     }
 
-    // Get soccer player stats and append
-    soccerplayerstatistics = getRestResource("SoccerPlayerResource", [["token", token["token"]], ["playerID", ids[i]]]);
+    // Initialize playerData array
+    var playerData = [["Player ID", "Birthday", "Name", "Weight", "Height", "Rating", "Strength", "Shot Power", "Preferred Foot"], ];
 
-    soccerplayerstatistics = Object.values(soccerplayerstatistics);
+    // Let the first element of the array be the player's id
+    var statsList, playerstatistics, soccerplayerstatistics;
 
+    // Populate playerData for all found players
+    for (var i = 0; i < ids.length; ++i){
+        statsList = [ids[i]];
 
-    for (var j = 0; j < soccerplayerstatistics.length; ++j){
-      statsList.push(soccerplayerstatistics[j]);
+        // Get general player stats and append
+        playerstatistics = getRestResource("PlayerResource", [["token", token["token"]], ["playerID", ids[i]]]);
+        playerstatistics = Object.values(playerstatistics);
+
+        for (var j = 0; j < playerstatistics.length; ++j){
+            statsList.push(playerstatistics[j]);
+        }
+
+        // Get soccer player stats and append
+        soccerplayerstatistics = getRestResource("SoccerPlayerResource", [["token", token["token"]], ["playerID", ids[i]]]);
+        soccerplayerstatistics = Object.values(soccerplayerstatistics);
+
+        for (var j = 0; j < soccerplayerstatistics.length; ++j){
+            statsList.push(soccerplayerstatistics[j]);
+        }
+
+        // Push the stats list for the specific player onto the playerData dictionary
+        playerData.push(statsList);
     }
 
-    // Push the stats list for the specific player onto the playerData dictionary
-    playerData.push(statsList);
-  }
-
-  return playerData;
+    return playerData;
 }

@@ -24,6 +24,14 @@ function getRandomColor() {
   return color;
 }
 
+
+/*
+  Description:
+  Args:
+  Returns:
+  Raises:
+  Notes:
+*/
 function getAxisNumbers(ctx) {
 	var display;
 	if (ctx.canvas.id == "thirdChart") {
@@ -35,6 +43,15 @@ function getAxisNumbers(ctx) {
 	return display;
 }
 
+
+
+/*
+  Description:
+  Args:
+  Returns:
+  Raises:
+  Notes:
+*/
 function getTitle(ctx, league, agFunc, agData){
 	var title;
 	if (ctx.canvas.id == "mainChart") {
@@ -84,6 +101,8 @@ function backToDropdown(){
   }
 }
 
+
+
 /*
   Description:
   Args:
@@ -103,6 +122,7 @@ function loadResource()
     xhttp.open("GET", "/rest/DemoRestResource?caller=".concat(parameter), true);
     xhttp.send();
 }
+
 
 
 /*
@@ -153,6 +173,14 @@ function createPlayerTable(data){
 }
 
 
+
+/*
+  Description:
+  Args:
+  Returns:
+  Raises:
+  Notes:
+*/
 function w3_open() {
     document.getElementById("main").style.marginLeft = "20%";
     document.getElementById("mySidebar").style.width = "20%";
@@ -160,11 +188,21 @@ function w3_open() {
     document.getElementById("openNav").style.display = 'none';
 }
 
+
+
+/*
+  Description:
+  Args:
+  Returns:
+  Raises:
+  Notes:
+*/
 function w3_close() {
     document.getElementById("main").style.marginLeft = "0%";
     document.getElementById("mySidebar").style.display = "none";
     document.getElementById("openNav").style.display = "inline-block";
 }
+
 
 
 /*

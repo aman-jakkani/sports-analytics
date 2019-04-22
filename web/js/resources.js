@@ -84,7 +84,6 @@ var dropdown = {
          }
 
          $("#aggData").html(getAggData(sport));
-
       }
 
       else if ($(this).attr('id') == 'league') {
@@ -111,6 +110,7 @@ var dropdown = {
          // Reset games
          $("#game").html(defaultString);
       }
+
 
       else if ($(this).attr('id') == 'season') {
          season = $("#season").val();
@@ -327,12 +327,14 @@ function getCubeOrRollup(){
    console.log("QueryPairs: "+aggieFunc)   
    var json;
 
+   // 
    var nullValues = {
       "aggie": [], 
       "dim1": [],
       "dim2": []
    };
 
+   // 
    var nullValues1 =  {
       "aggie": [], 
       "dim1": [],
@@ -341,12 +343,10 @@ function getCubeOrRollup(){
 
    switch (agStyle){
       // Not using Rollup resource because ...
-      case "Rollup": json = getRestResource("CubeResource", aggieFunc);
-         console.log(json);
+      case "Rollup": 
+         json = getRestResource("CubeResource", aggieFunc);
          for (i = 0; i < json.dim2.length; ++i){
-         
             if (json.dim2[i] == null) {
-            
                //add null values to new array
                nullValues.dim2.push(json.dim2[i]);
                nullValues.dim1.push(json.dim1[i]);
@@ -356,8 +356,9 @@ function getCubeOrRollup(){
             }
          
          }
-
-         /*for (i = json.dim2.length - 1; i >= 0; --i){
+         
+         /*
+         for (i = json.dim2.length - 1; i >= 0; --i){
          
             if (json.dim2[i] == null) {
             
@@ -367,13 +368,14 @@ function getCubeOrRollup(){
                json.aggie.splice(i,1);
                
             }
-         
          }*/
          
          plotRollup(json, nullValues);
          break;
 
-      case "Cube": json = getRestResource("CubeResource",aggieFunc);
+      case "Cube": 
+         json = getRestResource("CubeResource",aggieFunc);
+
          for (i = 0; i < json.dim2.length; ++i){
             if (json.dim2[i] == null) {
                //add null values to new array
@@ -383,10 +385,9 @@ function getCubeOrRollup(){
             }
          
          }
+
          for (i = 0; i < json.dim1.length; ++i){
-         
             if (json.dim1[i] == null) {
-            
                //add null values to new array
                nullValues1.dim2.push(json.dim2[i]);
                nullValues1.dim1.push(json.dim1[i]);

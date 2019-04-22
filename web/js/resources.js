@@ -54,12 +54,12 @@ var dropdown = {
    chartType: "null",
    token: "null",
    player: "null",
-   factatt: "null",
+   factAttribute: "null",
 
    run: $(document).ready(function() {
       var defaultString = "<option value = \"null\" >--Make a choice--</option>";
 
-      $("#sport, #league, #team, #season, #game, #aggregationFunction, #aggregationStyle, #aggData").change(function() {
+      $("#sport, #league, #team, #season, #game, #aggregationFunction, #aggregationStyle, #aggData, #factAttribute").change(function() {
 
       if ($(this).attr('id') == 'sport') {
          sport = $(this).val();
@@ -72,11 +72,12 @@ var dropdown = {
          $("#season").html(defaultString);
          $("#game").html(defaultString);
          $("#stat1").html(defaultString);    // stat1 doesn't exist anymore, need to update later
-         $("#chartType").html(getCharts(aggregationStyle)); 
+         //$("#chartType").html(getCharts(aggregationStyle)); 
          $("#axes").html(defaultString);
-         $("#factAttribute").html(getFactAttribute(sport));
-         $("#dimensions").html(getDimensions(sport));
-         $("#aggregationFunction").html(getAggregationFunction(league));
+         $("#factAttribute").html(defaultString);
+         //$("#dimensions").html(getDimensions(sport));
+         //$("#aggregationFunction").html(getAggregationFunction(league));
+         $("#players").html(defaultString);
 
          // Not putting aggregration style on player analytics page
          if (window.location.pathname =="/CubeRollupMock.html") {
@@ -89,18 +90,22 @@ var dropdown = {
       else if ($(this).attr('id') == 'league') {
          league = $("#league").val();
          $("#team").html(getTeams(sport, league));
-         $("#aggregationFunction").html(getAggregationFunction(league));
 
          // Reset options below team
          $("#season").html(defaultString);
          $("#game").html(defaultString);
          $("#stat1").html(defaultString);    // stat1 doesn't exist anymore, need to update later
-         $("#chartType").html(getCharts(aggregationStyle)); 
+         $("#chartType").html(defaultString); 
          $("#axes").html(defaultString);
-         $("#factAttribute").html(getFactAttribute(sport));
-         $("#dimensions").html(getDimensions(sport));
-         $("#aggregationStyle").html(getAggregationStyle(aggregationFunction));
-         $("#aggData").html(getAggData(sport));
+         $("#factAttribute").html(defaultString);
+         $("#dimensions").html(defaultString);
+         $("#aggregationStyle").html(defaultString);
+         $("#aggData").html(defaultString);
+         $("#players").html(defaultString);
+         
+         
+         // had to put on bottom because it gives an undefined error for analytics one and exits prematurely
+         $("#aggregationFunction").html(getAggregationFunction(league));
       }
 
       else if ($(this).attr('id') == 'team') {
@@ -109,6 +114,8 @@ var dropdown = {
 
          // Reset games
          $("#game").html(defaultString);
+         $("#factAttribute").html(defaultString);
+         $("#players").html(defaultString);
       }
 
 
@@ -120,18 +127,29 @@ var dropdown = {
          $("#stat1").html(defaultString);
          // $("#chartType").html(defaultString);
          $("#axes").html(defaultString);
+         $("#factAttribute").html(defaultString);
+         $("#players").html(defaultString);
       }
 
       else if ($(this).attr('id') == "game"){
          game = $("#game").val();
          //$("#stat1").html(getStats(sport, league, team, season));
-         $("#players").html(getPlayerList(sport, league, team, game));
+         //$("#players").html(getPlayerList(sport, league, team, game));
+         $("#factAttribute").html(getFactAttribute(sport));
 
          // token = getToken(sport, league, team, season, game);
 
          // Reset chart type and axes
-         // $("#chartType").html(getCharts());
-         // Populate players once games are selected
+         $("#players").html(defaultString);
+      }
+      
+      else if ($(this).attr('id') == "factAttribute"){
+         factAttribute = $("#factAttribute").val();
+         
+         $("#players").html(getPlayerList(sport, league, team, game));
+
+         // Reset chart type and axes
+         
       }
 
       else if ($(this).attr('id') == 'aggregationFunction') {
@@ -140,7 +158,7 @@ var dropdown = {
 
          // Reset games
          $("#aggregationStyle").html(getAggregationStyle(aggregationFunction));
-         $("#aggData").html(getAggData(sport));
+         $("#aggData").html(defaultString);
          $("#chartType").html(getCharts(aggregationStyle));
       }
       
@@ -301,23 +319,20 @@ function getCubeOrRollup(){
    console.log(agFunc);
    console.log(agStyle);
    console.log(chart);
+   
+   try {
+    window.chart1.destroy();
+    window.chart2.destroy();
+    window.chart3.destroy();
+
+  	} catch (TypeError){
+    console.log('No charts to destroy or rollup called.');
+  	}
 
    if (sport == "null" || league == "null" || agFunc == "null" || agStyle == "null" || agData == "null" || chart == "null") {
 
       console.log("entered break");
       document.getElementById("errorMessage").innerHTML = "Invalid Combination";
-
-      // Need to replace these with window.destroy()
-      const context = mainChart.getContext('2d');
-      context.clearRect(0, 0, mainChart.width, mainChart.height);
-         
-      const context1 = secondChart.getContext('2d');
-      context1.clearRect(0, 0, secondChart.width, secondChart.height);
-         
-      const context2 = thirdChart.getContext('2d');
-      context2.clearRect(0, 0, thirdChart.width, thirdChart.height);
-
-      return;
 
    } else {
       document.getElementById("errorMessage").innerHTML = "";

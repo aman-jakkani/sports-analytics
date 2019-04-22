@@ -91,6 +91,7 @@ Returns:
 function plotChart() {
     document.getElementById('mainChart').style.display="block";
 
+<<<<<<< HEAD
     var sport = document.getElementById("sport").value;
     var league = document.getElementById("league").value;
     var team = document.getElementById("team").value;
@@ -98,12 +99,28 @@ function plotChart() {
     var match  = document.getElementById("game").value;
     var factatt = document.getElementById("factAttribute").value;
     var aggregstyle = document.getElementById("aggregationStyle").value;
+=======
+   var sport = document.getElementById("sport").value;
+   var league = document.getElementById("league").value;
+   var team = document.getElementById("team").value;
+   var season = document.getElementById("season").value;
+   var match  = document.getElementById("game").value;
+   var factatt = document.getElementById("factAttribute").value;
+   //var aggregfunc = document.getElementById("aggregationFunction").value;
+   //var aggregstyle = document.getElementById("aggregationStyle").value;
+   //var dimension  = document.getElementById("dimensions").value;
+>>>>>>> 6111c4bad9d81ce8fcc166316ac4c2e6c5a8fd35
 
 
     //var parameters = [["sports", sport], ["league", league], ["team", team], ["season", season], ["match", match], ["factatt", //factatt], ["aggregfunc", aggregfunc], ["aggregstyle", aggregstyle], ["dimension", dimension]];
 
+<<<<<<< HEAD
     var parameters = [["sports", sport], ["league", league], ["team", team], ["season", season], ["match", match],["aggregstyle", aggregstyle]];
     console.log(parameters);
+=======
+   var parameters = [["sports", sport], ["league", league], ["team", team], ["season", season], ["match", match]];
+      console.log(parameters);
+>>>>>>> 6111c4bad9d81ce8fcc166316ac4c2e6c5a8fd35
 
     var token = getRestResource("TokenResource", parameters);
     var data = null;
@@ -114,11 +131,16 @@ function plotChart() {
         document.getElementById("errorMessage").innerHTML = "Invalid Combination";
         document.getElementById('mainChart').destroy();
 
+<<<<<<< HEAD
     } else {
         document.getElementById("errorMessage").innerHTML = "";
     }
+=======
+   if (sport == "null" || league == "null" || team == "null" || season == "null" || match == "null" || factatt == "null") {
+>>>>>>> 6111c4bad9d81ce8fcc166316ac4c2e6c5a8fd35
 
 
+<<<<<<< HEAD
     // Get the data for the specific attribute selected
     if (sport == "Soccer"){
         data = getSoccerAttributeData(factatt, token);
@@ -128,6 +150,25 @@ function plotChart() {
     } else if (sport == "Basketball"){
         data = getBasketballAttributeData(factatt, token);
         console.log("Got basketball attributes");
+=======
+      /*const context = mainChart.getContext('2d');
+      context.clearRect(0, 0, mainChart.width, mainChart.height);
+         
+      const context1 = playerChart.getContext('2d');
+      context1.clearRect(0, 0, playerChart.width, secondChart.height);*/
+      
+      window.chart1.destroy();
+
+   } else {
+      document.getElementById("errorMessage").innerHTML = "";
+   }
+   
+   if (window.chart1 != null) {
+  
+  	window.chart1.destroy();
+  
+  }
+>>>>>>> 6111c4bad9d81ce8fcc166316ac4c2e6c5a8fd35
 
     } else {
         console.log("Invalid sport selection");
@@ -148,6 +189,7 @@ function plotChart() {
             window.chart1 = plotDefault('line', 'home', 'away', Array(data[0]), Array(data[1]), label);
             break;
 
+<<<<<<< HEAD
         case ("scatter"):
             // plotScatter(data);
             break;
@@ -156,15 +198,47 @@ function plotChart() {
             // plotBarChart(data);
             window.chart1 = plotDefault('bar', 'home', 'away', Array(data[0]), Array(data[1]), label);
             break;
+=======
+   var label = document.getElementById("factAttribute").value;
+   
+   window.chart1 = plotDefault('bar', 'home', 'away', Array(data[0]), Array(data[1]), label);
+
+   // Plot a specific chart based on the one selected in the
+   /*chartType = document.getElementById("chartType").value;
+   switch (chartType) {
+      case ("bubble"):
+         // plotBubble(data);
+         break;
+>>>>>>> 6111c4bad9d81ce8fcc166316ac4c2e6c5a8fd35
 
         case ("radar"):
             // plotRadar(data);
             window.chart1 = plotDefault('radar', 'home', 'away', Array(data[0]), Array(data[1]), label);
             break;
 
+<<<<<<< HEAD
         default: 
             break;
     }
+=======
+      case ("scatter"):
+         // plotScatter(data);
+         break;
+
+      case ("bar"):
+         // plotBarChart(data);
+         window.chart1 = plotDefault('bar', 'home', 'away', Array(data[0]), Array(data[1]), label);
+         break;
+
+      case ("radar"):
+         // plotRadar(data);
+         window.chart1 = plotDefault('radar', 'home', 'away', Array(data[0]), Array(data[1]), label);
+         break;
+
+      default: 
+         break;
+   }*/
+>>>>>>> 6111c4bad9d81ce8fcc166316ac4c2e6c5a8fd35
 }
 
 /*
@@ -273,8 +347,37 @@ function displayPlayerStats(){
     var parameters = [["sports", sport], ["league", league], ["team", team], ["season", season], ["match", match], ["name", name]];
     console.log(parameters);
 
+<<<<<<< HEAD
     var token = getRestResource("TokenResource", parameters);
     console.log("Token: " + token["token"]);
+=======
+  var sport = document.getElementById("sport").value;
+  var league = document.getElementById("league").value;
+  var team = document.getElementById("team").value;
+  var season = document.getElementById("season").value;
+  var match = document.getElementById("game").value;
+  // var name = document.getElementById('name').innerHTML = document.getElementById("player").options[document.getElementById('player').selectedIndex].text;
+
+
+  
+  console.log(sport);
+  console.log(league);
+  if (sport == "null" || league == "null" || team == "null" || season == "null" || match == "null" ){
+  
+     console.log("Not enough parameters");
+     
+     document.getElementById("errorMessage").innerHTML = "Invalid Combination";
+     
+     return;
+  
+  }
+  
+  if (window.chart1 != null) {
+  
+  	window.chart1.destroy();
+  
+  }
+>>>>>>> 6111c4bad9d81ce8fcc166316ac4c2e6c5a8fd35
 
     playerData = getPlayerData(token);
     createPlayerTable(playerData);

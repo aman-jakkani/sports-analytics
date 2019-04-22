@@ -82,9 +82,8 @@ var dropdown = {
          // Not putting aggregration style on player analytics page
          if (window.location.pathname =="/CubeRollupMock.html") {
             $("#aggregationStyle").html(getAggregationStyle(aggregationFunction));
+            $("#aggData").html(getAggData(sport));
          }
-
-         $("#aggData").html(getAggData(sport));
       }
 
       else if ($(this).attr('id') == 'league') {
@@ -105,7 +104,9 @@ var dropdown = {
          
          
          // had to put on bottom because it gives an undefined error for analytics one and exits prematurely
-         $("#aggregationFunction").html(getAggregationFunction(league));
+         if (window.location.pathname =="/CubeRollupMock.html") {
+            $("#aggregationFunction").html(getAggregationFunction(league));
+         }
       }
 
       else if ($(this).attr('id') == 'team') {
@@ -699,7 +700,6 @@ function getAggData(sport){
 }
 
 
-
 /*
   Description:
     Returns a string in html to populate the chart dropdown based on the aggregration function selected
@@ -712,13 +712,6 @@ function getCharts(aggregationStyle){
 
    // Default value for the string
    var htmlChartString = "<option value = \"null\" >--Make a choice--</option>";
-
-   /*
-   // Dictionary of potential charts
-   var charts = [['bar', 'Bar Chart'], ['line','Line Chart'], ['horizontalBar', 'Horizontal Bar Chart'],
-                  ['pie', 'Pie Chart'], ['doughnut', 'Doughnut Chart'], ['radar','Radar Chart'],
-                  ['polarArea', 'Polar Area Chart']];
-   */
 
 
    if (aggregationStyle == "Cube"){
@@ -761,7 +754,8 @@ function getCharts(aggregationStyle){
   Notes:
 */
 function getPlayerList(sport, league, team, game){
-   var htmlPlayerString = "<option value = \"null\" >--Make a choice--</option>";
+   var htmlPlayerString = "<option value = \"null\" >--Make a choice--</option>"
+                           + "<option value = \"all\" >All Players</option>";
 
    // place conditionals to get allow passing null values when other values are present (pass in all teams)
    if (sport == "null" || league == "null" || team == "null" || season == "null" || game == "null") return htmlPlayerString;
@@ -786,31 +780,6 @@ function getPlayerList(sport, league, team, game){
    return htmlPlayerString;
 }
 
-
-/*
-  Description:
-    Return rollup or cube resource
-  Args:
-  Returns:
-  Raises:
-  Notes:
-*/
-function getGroupBy(chartType){
-  var aggieFunc = [["aggregation", document.getElementById("aggregationFunction").value], ];
-  var json;
-
-  switch(document.getElementById("aggregationStyle").value){
-      case "Rollup": json = getRestResource("RollupResource", aggieFunc);
-          break;
-
-      case "Cube": json = getRestResource("CubeResource", aggieFunc);
-          break;
-
-      default: console.log("No aggie function chosen")
-          return;
-  }
-  showChart(json, chartType);
-}
 
 
 /*

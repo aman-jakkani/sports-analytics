@@ -24,24 +24,27 @@ Args:
 Returns:
 */
 function plotRollup(json, nullValues) {
-   chartType = document.getElementById("chartType").value;
-   console.log(chartType)
-   var mainCanvas = document.getElementById("mainChart").getContext('2d');
-   var secondCanvas = document.getElementById("secondChart").getContext('2d');
+    chartType = document.getElementById("chartType").value;
+    console.log(chartType)
+    var mainCanvas = document.getElementById("mainChart").getContext('2d');
+    var secondCanvas = document.getElementById("secondChart").getContext('2d');
 
-   switch (chartType){
-      case "bubble": window.chart1 = plotBubble(json, mainCanvas);
-                  window.chart2 = plotBubble(nullValues, secondCanvas);
-         break;
-      case "scatter": window.chart1 = plotScatter(json, mainCanvas);
-                  window.chart2 = plotScatter(nullValues, secondCanvas);
-         break;
-      case "line": window.chart1 = plotLineChart(json, mainCanvas);
-               window.chart2 = plotLineChart(nullValues, secondCanvas);
-         break; // create plotLine(json) function
-      default:
-         break;
-   }
+    switch (chartType){
+        case "bubble": 
+            window.chart1 = plotBubble(json, mainCanvas);
+            window.chart2 = plotBubble(nullValues, secondCanvas);
+            break;
+        case "scatter": 
+            window.chart1 = plotScatter(json, mainCanvas);
+            window.chart2 = plotScatter(nullValues, secondCanvas);
+            break;
+        case "line": 
+            window.chart1 = plotLineChart(json, mainCanvas);
+            window.chart2 = plotLineChart(nullValues, secondCanvas);
+            break; // create plotLine(json) function
+        default:
+            break;
+    }
 }
 
 
@@ -55,29 +58,40 @@ Args:
 Returns:
 */
 function plotCube(json, nullValues, nullValues1) {
-   chartType = document.getElementById("chartType").value;
-   console.log(chartType)
+    chartType = document.getElementById("chartType").value;
+    // console.log(chartType)
 
-   var mainCanvas = document.getElementById("mainChart").getContext('2d');
-   var secondCanvas = document.getElementById("secondChart").getContext('2d');
-   var thirdCanvas = document.getElementById("thirdChart").getContext('2d');
+    var mainCanvas = document.getElementById("mainChart").getContext('2d');
+    var secondCanvas = document.getElementById("secondChart").getContext('2d');
+    var thirdCanvas = document.getElementById("thirdChart").getContext('2d');
 
-   switch (chartType){
-      case "bubble": window.chart1 = plotBubble(json, mainCanvas);
-        window.chart2 = plotBubble(nullValues, secondCanvas);
-        window.chart3 = plotBubble(nullValues1, thirdCanvas);
-         break;
-      case "scatter": window.chart1 = plotScatter(json, mainCanvas);
-        window.chart2 = plotScatter(nullValues, secondCanvas);
-        window.chart3 = plotScatter(nullValues1, thirdCanvas);
-         break;
-      case "line": window.chart1 = plotLineChart(json, mainCanvas);
-        window.chart2 = plotLineChart(nullValues, secondCanvas);
-        window.chart3 = plotLineChart(nullValues1, thirdCanvas);
-         break; // create plotLine(json) function
-      default:
-         break;
-   }
+    console.log('Null Values:');
+    console.log(nullValues);
+    console.log('Null Values 1:');
+    console.log(nullValues1);
+
+    switch (chartType){
+        case "bubble": 
+            window.chart1 = plotBubble(json, mainCanvas);
+            window.chart2 = plotBubble(nullValues, secondCanvas);
+            window.chart3 = plotBubble(nullValues1, thirdCanvas);
+            break;
+
+        case "scatter": 
+            window.chart1 = plotScatter(json, mainCanvas);
+            window.chart2 = plotScatter(nullValues, secondCanvas);
+            window.chart3 = plotScatter(nullValues1, thirdCanvas);
+            break;
+
+        case "line": 
+            window.chart1 = plotLineChart(json, mainCanvas);
+            window.chart2 = plotLineChart(nullValues, secondCanvas);
+            window.chart3 = plotLineChart(nullValues1, thirdCanvas);
+            break; // create plotLine(json) function
+
+        default:
+            break;
+    }
 }
 
 
@@ -97,8 +111,11 @@ function plotChart() {
     var season = document.getElementById("season").value;
     var match  = document.getElementById("game").value;
     var factatt = document.getElementById("factAttribute").value;
-    var aggregstyle = document.getElementById("aggregationStyle").value;
 
+    // Only have aggregration style for team analytics
+    if (window.location.pathname =="/CubeRollupMock.html") {
+        var aggregstyle = document.getElementById("aggregationStyle").value;
+    }
 
     //var parameters = [["sports", sport], ["league", league], ["team", team], ["season", season], ["match", match], ["factatt", //factatt], ["aggregfunc", aggregfunc], ["aggregstyle", aggregstyle], ["dimension", dimension]];
 
@@ -137,7 +154,9 @@ function plotChart() {
     var label = document.getElementById("factAttribute").value;
 
     // Plot a specific chart based on the one selected in the
-    chartType = document.getElementById("chartType").value;
+    // chartType = document.getElementById("chartType").value;
+    chartType = "bar";
+
     switch (chartType) {
         case ("bubble"):
             // plotBubble(data);
@@ -145,7 +164,7 @@ function plotChart() {
 
         case ("line"):
             //plotLineChart(data);
-            window.chart1 = plotDefault('line', 'home', 'away', Array(data[0]), Array(data[1]), label);
+            window.chart = plotDefault('line', 'home', 'away', Array(data[0]), Array(data[1]), label);
             break;
 
         case ("scatter"):
@@ -154,12 +173,12 @@ function plotChart() {
 
         case ("bar"):
             // plotBarChart(data);
-            window.chart1 = plotDefault('bar', 'home', 'away', Array(data[0]), Array(data[1]), label);
+            window.chart = plotDefault('bar', 'home', 'away', Array(data[0]), Array(data[1]), label);
             break;
 
         case ("radar"):
             // plotRadar(data);
-            window.chart1 = plotDefault('radar', 'home', 'away', Array(data[0]), Array(data[1]), label);
+            window.chart = plotDefault('radar', 'home', 'away', Array(data[0]), Array(data[1]), label);
             break;
 
         default: 
@@ -279,6 +298,7 @@ function displayPlayerStats(){
     playerData = getPlayerData(token);
     createPlayerTable(playerData);
 
+/*
     playerID = document.getElementById("players").value;
     if (playerID == "null"){
         console.log("No player selected.");
@@ -291,7 +311,8 @@ function displayPlayerStats(){
     var soccerplayerstatistics = getRestResource("SoccerPlayerResource", [["token", token["token"]], ["playerID", playerID]]);
     soccerplayerstatistics = Object.values(soccerplayerstatistics);
 
-    window.chart1 = plotRadar(player[1], soccerplayerstatistics[0], soccerplayerstatistics[1], soccerplayerstatistics[2]);
+   window.chart1 = plotRadar(player[1], soccerplayerstatistics[0], soccerplayerstatistics[1], soccerplayerstatistics[2]);
+*/
 }
 
 
@@ -299,7 +320,9 @@ function displayPlayerStats(){
 Description:
   Returns an array of player data given a token. This data is used to populate the player table.
 Args:
+    token: token generated for sport, league, team, season, game combination
 Returns:
+    json that contains player data
 Raises:
 Notes:
   Format:
@@ -311,11 +334,12 @@ function getPlayerData(token){
 
     // Create list of IDs to get stats for each player
     var ids = playerList.homePlayersID;
+
     for (var i = 0; i < playerList.guestPlayersID.length; ++i){
-    ids.push(playerList.guestPlayersID[i]);
+        ids.push(playerList.guestPlayersID[i]);
     }
 
-    // Initialize playerData array
+    // Build header for playerdata table. Two element array to append individual players
     var playerData = [["Player ID", "Birthday", "Name", "Weight", "Height", "Rating", "Strength", "Shot Power", "Preferred Foot"], ];
 
     // Let the first element of the array be the player's id
@@ -341,7 +365,7 @@ function getPlayerData(token){
             statsList.push(soccerplayerstatistics[j]);
         }
 
-        // Push the stats list for the specific player onto the playerData dictionary
+        // Push the stats list for the specific player onto the playerData array
         playerData.push(statsList);
     }
 

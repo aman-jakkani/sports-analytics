@@ -147,7 +147,7 @@ function plotChart() {
    var match  = document.getElementById("game").value;
    var factatt = document.getElementById("factAttribute").value;
    //var aggregfunc = document.getElementById("aggregationFunction").value;
-   var aggregstyle = document.getElementById("aggregationStyle").value;
+   //var aggregstyle = document.getElementById("aggregationStyle").value;
    //var dimension  = document.getElementById("dimensions").value;
 
    /****************************************+************
@@ -158,27 +158,35 @@ function plotChart() {
 
    //var parameters = [["sports", sport], ["league", league], ["team", team], ["season", season], ["match", match], ["factatt", //factatt], ["aggregfunc", aggregfunc], ["aggregstyle", aggregstyle], ["dimension", dimension]];
 
-   var parameters = [["sports", sport], ["league", league], ["team", team], ["season", season], ["match", match],["aggregstyle", aggregstyle]];
+   var parameters = [["sports", sport], ["league", league], ["team", team], ["season", season], ["match", match]];
       console.log(parameters);
 
    var token = getRestResource("TokenResource", parameters);
    var data = null;
 
 
-   if (sport == "null" || league == "null" || team == "null" || season == "null" || match == "null" || factatt == "null" || aggregstyle == "null") {
+   if (sport == "null" || league == "null" || team == "null" || season == "null" || match == "null" || factatt == "null") {
 
       console.log("entered break");
       document.getElementById("errorMessage").innerHTML = "Invalid Combination";
 
-      const context = mainChart.getContext('2d');
+      /*const context = mainChart.getContext('2d');
       context.clearRect(0, 0, mainChart.width, mainChart.height);
          
       const context1 = playerChart.getContext('2d');
-      context1.clearRect(0, 0, playerChart.width, secondChart.height);
+      context1.clearRect(0, 0, playerChart.width, secondChart.height);*/
+      
+      window.chart1.destroy();
 
    } else {
       document.getElementById("errorMessage").innerHTML = "";
    }
+   
+   if (window.chart1 != null) {
+  
+  	window.chart1.destroy();
+  
+  }
 
 
    // Get the data for the specific attribute selected
@@ -197,9 +205,11 @@ function plotChart() {
    }
 
    var label = document.getElementById("factAttribute").value;
+   
+   window.chart1 = plotDefault('bar', 'home', 'away', Array(data[0]), Array(data[1]), label);
 
    // Plot a specific chart based on the one selected in the
-   chartType = document.getElementById("chartType").value;
+   /*chartType = document.getElementById("chartType").value;
    switch (chartType) {
       case ("bubble"):
          // plotBubble(data);
@@ -226,7 +236,7 @@ function plotChart() {
 
       default: 
          break;
-   }
+   }*/
 }
 
 /*
@@ -323,12 +333,23 @@ function displayPlayerStats(){
   var match = document.getElementById("game").value;
   // var name = document.getElementById('name').innerHTML = document.getElementById("player").options[document.getElementById('player').selectedIndex].text;
 
+
+  
   console.log(sport);
   console.log(league);
   if (sport == "null" || league == "null" || team == "null" || season == "null" || match == "null" ){
   
      console.log("Not enough parameters");
+     
+     document.getElementById("errorMessage").innerHTML = "Invalid Combination";
+     
      return;
+  
+  }
+  
+  if (window.chart1 != null) {
+  
+  	window.chart1.destroy();
   
   }
 

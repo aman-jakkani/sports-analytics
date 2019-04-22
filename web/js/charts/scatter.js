@@ -71,7 +71,7 @@ function plotScatter(json, ctx){
                         x: dim1[j],
                         y: json.aggie[j]
                     });
-                console.log('x: ' + dim1[j] + ' (' +typeof dim1[j] + ') '+ ' y: ' + json.aggie[j] );
+                // console.log('x: ' + dim1[j] + ' (' +typeof dim1[j] + ') '+ ' y: ' + json.aggie[j] );
             }
         }
 

@@ -273,37 +273,8 @@ function displayPlayerStats(){
     var parameters = [["sports", sport], ["league", league], ["team", team], ["season", season], ["match", match], ["name", name]];
     console.log(parameters);
 
-<<<<<<< HEAD
     var token = getRestResource("TokenResource", parameters);
     console.log("Token: " + token["token"]);
-=======
-  var sport = document.getElementById("sport").value;
-  var league = document.getElementById("league").value;
-  var team = document.getElementById("team").value;
-  var season = document.getElementById("season").value;
-  var match = document.getElementById("game").value;
-  // var name = document.getElementById('name').innerHTML = document.getElementById("player").options[document.getElementById('player').selectedIndex].text;
-
-
-  
-  console.log(sport);
-  console.log(league);
-  if (sport == "null" || league == "null" || team == "null" || season == "null" || match == "null" ){
-  
-     console.log("Not enough parameters");
-     
-     document.getElementById("errorMessage").innerHTML = "Invalid Combination";
-     
-     return;
-  
-  }
-  
-  if (window.chart1 != null) {
-  
-  	window.chart1.destroy();
-  
-  }
->>>>>>> 6111c4bad9d81ce8fcc166316ac4c2e6c5a8fd35
 
     playerData = getPlayerData(token);
     createPlayerTable(playerData);

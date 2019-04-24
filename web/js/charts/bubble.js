@@ -18,6 +18,11 @@ function plotBubble(json, ctx){
         console.log("window destroy bubble");
     
     }*/
+
+    var _globalDim1 = json.dim1;
+    var _globalDim2 = json.dim2;
+
+
     var league = document.getElementById("league").value;
     var agFunc = document.getElementById("aggregationFunction").value;
     var agData = document.getElementById("aggData").value;
@@ -105,6 +110,7 @@ function plotBubble(json, ctx){
         		backgroundColor: col,
         		hidden: false   
             };
+            console.log("DIM2");
             console.log(json.dim2[i]);
 
         datasets.push(teamData);
@@ -151,6 +157,27 @@ function plotBubble(json, ctx){
             		},
             		min: 0
                 }]
+            },
+
+            tooltips: {
+                callbacks: {
+                    label: function(t, d){
+                        team = d.datasets[t.datasetIndex].label;
+                        season = d.datasets[t.datasetIndex].data[t.index].y;
+                        value = 'N/A';
+
+                        nextSeason = parseInt(season, 10) + 1;
+                        
+                        for (i = 0; i < json.aggie.length; ++i){
+                            s = (season + "/" + nextSeason);
+
+                            if (_globalDim1[i] == s && _globalDim2[i] == team){
+                                value = json.aggie[i].toFixed(2);
+                            }
+                        }
+                        return team + ": (" + season + ", " + value + ")";
+                    }
+                }
             }
         }
     }

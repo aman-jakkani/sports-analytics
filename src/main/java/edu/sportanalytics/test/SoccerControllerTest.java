@@ -81,68 +81,47 @@ class SoccerControllerTest {
         Assert.assertEquals(listOfTeams, teams);
     }
 
-
-    @Test
-    void getLeaguesList() {
-    }
-
-    @Test
-    void getTeamList() {
-    }
-
-    @Test
-    void getStatMatch() {
-    }
-
-    @Test
-    void getStatSeasonAccumulated() {
-    }
-
-    @Test
-    void getStatAccumulated() {
-    }
-
-    @Test
-    void tryClose() {
-    }
-
     @Test
     void getAwayTeamPlayerID() {
+        //testing Arsenal vs Manchester City, 2014/2015 season
+        List<String> awayplayers = sc.getAwayTeamPlayerID("4329");
+        List<String> listOfPlayers = new ArrayList<>();
+        listOfPlayers.add("31432");
+        listOfPlayers.add("30509");
+        listOfPlayers.add("30459");
+        Assert.assertEquals(listOfPlayers,awayplayers.subList(0,3));
     }
 
     @Test
     void getHomeTeamPlayerID() {
+        //testing Arsenal vs Manchester City, 2014/2015 season
+        List<String> homeplayers = sc.getHomeTeamPlayerID("4329");
+        List<String> listOfPlayers = new ArrayList<>();
+        listOfPlayers.add("169718");
+        listOfPlayers.add("26154");
+        listOfPlayers.add("46539");
+        Assert.assertEquals(listOfPlayers,homeplayers.subList(0,3));
     }
 
     @Test
     void getAwayPlayerList() {
+        //testing Arsenal vs Manchester City, 2014/2015 season
+        List<String> awayplayers = sc.getAwayPlayerList("4329");
+        List<String> listOfPlayers = new ArrayList<>();
+        listOfPlayers.add("Joe Hart");
+        listOfPlayers.add("Pablo Zabaleta");
+        listOfPlayers.add("Martin Demichelis");
+        Assert.assertEquals(listOfPlayers,awayplayers.subList(0,3));
     }
 
     @Test
     void getHomePlayerList() {
+        List<String> homeplayers = sc.getHomePlayerList("4329");
+        List<String> listOfPlayers = new ArrayList<>();
+        listOfPlayers.add("Wojciech Szczesny");
+        listOfPlayers.add("Mathieu Debuchy");
+        listOfPlayers.add("Laurent Koscielny");
+        Assert.assertEquals(listOfPlayers,homeplayers.subList(0,3));
     }
 
-    @Test
-    void getPlayerStats() {
-    }
-
-    @Test
-    void getPlayer() {
-    }
-
-    @Test
-    void getCube() {
-    }
-
-    @Test
-    void getRollup() {
-    }
-
-    @Test
-    void setDB() {
-    }
-
-    @Test
-    void getDb() {
-    }
 }

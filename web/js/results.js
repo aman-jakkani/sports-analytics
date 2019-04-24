@@ -117,8 +117,6 @@ function plotChart() {
         var aggregstyle = document.getElementById("aggregationStyle").value;
     }
 
-    //var parameters = [["sports", sport], ["league", league], ["team", team], ["season", season], ["match", match], ["factatt", //factatt], ["aggregfunc", aggregfunc], ["aggregstyle", aggregstyle], ["dimension", dimension]];
-
     var parameters = [["sports", sport], ["league", league], ["team", team], ["season", season], ["match", match],["aggregstyle", aggregstyle]];
     console.log(parameters);
 
@@ -145,6 +143,7 @@ function plotChart() {
     } else if (sport == "Basketball"){
         data = getBasketballAttributeData(factatt, token);
         console.log("Got basketball attributes");
+        console.log(data);
 
     } else {
         console.log("Invalid sport selection");
@@ -242,19 +241,28 @@ function getSoccerAttributeData(attribute, token){
   Returns:
   Raises:
   Notes:
+    Remove breaks from in front of some case statements once attribute has been added
 */
 function getBasketballAttributeData(attribute, token){
     switch (attribute){
         case ("points"):
             var score = getRestResource("ScoreRestResource", [["token", token["token"]], ]);
             return score["score"]; // add index
+
         case ("assists"): break;
             var assists = getRestResource("AssistRestResource", [["token", token["token"]], ]);
             return assists["assists"]; // add index
+
         case ("rebounds"): break;
             var rebounds = getRestResource("ReboundsRestResource", [["token", token["token"]], ]);
             return rebounds["rebounds"]; // add index
-        default: break;
+
+        case ("steals"): break;
+            var steals = getRestResource("StealsRestResource", [["token", token["token"]], ]);
+            return steals["steals"];
+
+        default: 
+            break;
     }
 }
 

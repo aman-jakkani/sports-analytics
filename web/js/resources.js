@@ -251,11 +251,11 @@ function getFactAttribute(sport) {
    }
 
    if (sport == "Basketball") {
-      htmlFactAttribute += "<option value='1'>Points</option>"
-                           + "<option value='2'>Assists</option>"
-                           + "<option value='3'>Rebounds</option>"
-                           + "<option value='4'>Steals</option>"
-                           + "<option value='5'>Blocks</option>";
+      htmlFactAttribute += "<option value='points'>Points</option>"
+                           + "<option value='assists'>Assists</option>"
+                           + "<option value='rebounds'>Rebounds</option>"
+                           + "<option value='steals'>Steals</option>"
+                           + "<option value='blocks'>Blocks</option>";
    }
 
    else if (sport == "Soccer"){
@@ -268,35 +268,6 @@ function getFactAttribute(sport) {
    }
 
    return htmlFactAttribute;
-}
-
-
-
-/*
-  Description:
-  Args:
-  Returns:
-  Raises:
-  Notes:
-*/
-function getDimensions(sport) {
-
-   var parameters = [["sports", sport], ];
-   var htmlDimensions = "<option value = \"null\" >--Make a choice--</option>";
-
-   if (sport == "null") {
-      return htmlDimensions;
-   }
-
-   if (sport == "Basketball") {
-      var htmlDimensions = "<option value='0'>--Make a choice--</option><option value='1'>Point Guard</option><option value='2'>Shooting Guard</option><option value='3'>Small Forward</option><option value='4'>Power Forward</option><option value='5'>Center</option>";
-   }
-
-   else if (sport == "Soccer"){
-      var htmlDimensions =  "<option value='0'>--Make a choice--</option><option value='1'>Goalkeeper</option><option value='2'>Fullback</option><option value='3'>Center Back</option><option value='4'>Midfielder</option><option value='5'>Striker</option>";
-   }
-
-   return htmlDimensions;
 }
 
 
@@ -373,19 +344,6 @@ function getCubeOrRollup(){
          
          }
          
-         /*
-         for (i = json.dim2.length - 1; i >= 0; --i){
-         
-            if (json.dim2[i] == null) {
-            
-               //remove null values from old array
-               json.dim1.splice(i,1);
-               json.dim2.splice(i,1);
-               json.aggie.splice(i,1);
-               
-            }
-         }*/
-         
          plotRollup(json, nullValues);
          break;
 
@@ -411,30 +369,6 @@ function getCubeOrRollup(){
             }
          
          }
-
-         /*
-
-         for (i = json.dim2.length - 1; i >= 0; --i){
-            if (json.dim2[i] == null) {
-               //remove null values from old array
-               json.dim1.splice(i,1);
-               json.dim2.splice(i,1);
-               json.aggie.splice(i,1);
-            }
-         }
-
-         for (i = json.dim1.length - 1; i >= 0; --i){
-         
-            if (json.dim1[i] == null) {
-            
-               //remove null values from old array
-               json.dim1.splice(i,1);
-               json.dim2.splice(i,1);
-               json.aggie.splice(i,1);
-               
-            }
-      
-         }*/
          
          plotCube(json, nullValues, nullValues1);
          break;
@@ -791,21 +725,21 @@ function getPlayerList(sport, league, team, game){
   Notes:
 */
 function getStats(sport, league, team, game){
-  var htmlStatString = "<option value = \"null\" >--Make a choice--</option>";
+   var htmlStatString = "<option value = \"null\" >--Make a choice--</option>";
 
-  // place conditionals to get allow passing null values when other values are present (pass in all teams)
-  if (sport == "null" || league == "null" || team == "null" || season == "null") return htmlStatString;
+   // place conditionals to get allow passing null values when other values are present (pass in all teams)
+   if (sport == "null" || league == "null" || team == "null" || season == "null") return htmlStatString;
 
-  console.log("Sport: " + sport + ", League: " + league + ", Team: " + team + "Game: " + game);
+   console.log("Sport: " + sport + ", League: " + league + ", Team: " + team + "Game: " + game);
 
-  if (sport == "Soccer"){
-    htmlTokenString = getSoccerStats(htmlTokenString);
+   if (sport == "Soccer"){
+      htmlTokenString = getSoccerStats(htmlTokenString);
 
-  } else if (sport == "Basketball"){
-    htmlTokenString = getBasketballStats(htmlTokenString);
-  }
+   } else if (sport == "Basketball"){
+      htmlTokenString = getBasketballStats(htmlTokenString);
+   }
 
-  return htmlStatString;
+   return htmlStatString;
 }
 
 /*function getPlayerList(sport, league, team, game){

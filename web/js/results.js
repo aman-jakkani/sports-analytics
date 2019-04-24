@@ -168,6 +168,7 @@ function plotChart() {
 
         case ("line"):
             //plotLineChart(data);
+            console.log(data);
             window.chart = plotDefault('line', 'home', 'away', Array(data[0]), Array(data[1]), label);
             break;
 
@@ -177,11 +178,17 @@ function plotChart() {
 
         case ("bar"):
             // plotBarChart(data);
-            window.chart = plotDefault('bar', 'home', 'away', Array(data[0]), Array(data[1]), label);
+            console.log(data);
+            if (data == null){
+            	window.chart = plotDefault('bar', 'home', 'away', Array(0), Array(0), label);
+            } else {
+            	window.chart = plotDefault('bar', 'home', 'away', Array(data[0]), Array(data[1]), label);
+            }
             break;
 
         case ("radar"):
             // plotRadar(data);
+            console.log(data);
             window.chart = plotDefault('radar', 'home', 'away', Array(data[0]), Array(data[1]), label);
             break;
 

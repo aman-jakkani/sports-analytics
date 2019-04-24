@@ -392,15 +392,6 @@ public class BasketballController extends DatabaseController {
 		return gid;
 	}
 
-
-	public List<Basketball_League> getLeaguesList() {
-		return leaguesList;
-	}
-
-	public List<Basketball_Team> getTeamList() {
-		return teamList;
-	}
-
 	@Override
 	public List<String> getHomePlayerList (String matchid) {
 		List<String> playerList = new ArrayList<>();
@@ -698,7 +689,6 @@ public class BasketballController extends DatabaseController {
 		}
 		tryClose();
 		return data;
-
 	}
 
     public void tryClose(){
@@ -713,7 +703,7 @@ public class BasketballController extends DatabaseController {
 				rs.close();
 			}
 		} catch (SQLException e) {
-			log.severe("tryClose: "+e.getMessage());
+			log.severe("tryClose: "+ e.getMessage());
 		}
 	}
 }

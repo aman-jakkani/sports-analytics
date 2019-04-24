@@ -67,12 +67,6 @@ class BasketballControllerTest {
     }
 
     @Test
-    void getGame() {
-        //List<String> games = bc.getGame("2018", "Celtics");
-        //System.out.println(games);
-    }
-
-    @Test
     void getHomeAndAwayTeam() {
         //testing Celtics vs Lakers, 2017 season
         List<String> teams = bc.getHomeAndAwayTeam("21700161");

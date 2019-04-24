@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.logging.Logger;
 
 public class SoccerController extends DatabaseController
-
 {
 	private Statement stmt;
 	private PreparedStatement ps;
@@ -196,14 +195,6 @@ public class SoccerController extends DatabaseController
 		tryClose();
 		return tempList;
 
-	}
-
-	public List<Soccer_League> getLeaguesList() {
-		return leaguesList;
-	}
-
-	public List<Soccer_Team> getTeamList() {
-		return teamList;
 	}
 
 	// This method returns a piece of data for the home- and away-team for a

@@ -14,10 +14,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class BasketballControllerTest {
     private BasketballController bc;
-    private List<Basketball_League> leaguesList;
-    private List<Basketball_Team> teamList;
-    private List<Basketball_Game> gamesList;
-    private List<Basketball_Season> seasonList;
 
     @BeforeEach
     void setUp() {
@@ -153,17 +149,5 @@ class BasketballControllerTest {
 
     @Test
     void getRollup() {
-    }
-
-    @Test
-    void tryClose() {
-    }
-
-    @Test
-    void setDB() {
-    }
-
-    @Test
-    void getDb() {
     }
 }

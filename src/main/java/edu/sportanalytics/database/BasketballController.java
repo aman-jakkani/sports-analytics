@@ -533,7 +533,7 @@ public class BasketballController extends DatabaseController {
 		return player;
 	}
 
-<<<<<<< HEAD
+
 	//To-Do
 	public String getRollupStats(String factatt, String aggregfunc, String dimension){
 		ps = null;
@@ -583,8 +583,6 @@ public class BasketballController extends DatabaseController {
 	}
 
 
-=======
->>>>>>> e30c3ca9e009fc9eb2fcf70e91ae004f20d599a2
 	public List<String> getHomeTeamPlayerID(String matchid){
 		List<String> home_playerlist = new ArrayList<>();
 		ps = null;

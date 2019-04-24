@@ -112,7 +112,7 @@ class BasketballControllerTest {
         Assert.assertEquals(listOfPlayers,awayplayers.subList(0,3));
     }
 
-<<<<<<< HEAD
+
     @Test
     void getHomeAssistsById(){
 
@@ -134,8 +134,7 @@ class BasketballControllerTest {
     void getCubeStats() {
     }
 
-=======
->>>>>>> e30c3ca9e009fc9eb2fcf70e91ae004f20d599a2
+
     @Test
     void getHomeTeamPlayerID() {
         //testing Bulls vs Mavericks, 2018 season

@@ -122,12 +122,17 @@ function plotChart() {
 
     var token = getRestResource("TokenResource", parameters);
     var data = null;
+    
+    if(window.chart != null) { 
+    window.chart.destroy();
+    }
 
     // Error checking for invalid combinations
     if (sport == "null" || league == "null" || team == "null" || season == "null" || match == "null" || factatt == "null" || aggregstyle == "null") {
         // Print error message and destroy chart
         document.getElementById("errorMessage").innerHTML = "Invalid Combination";
-        document.getElementById('mainChart').destroy();
+        window.chart.destroy();
+        //document.getElementById('mainChart').destroy();
 
     } else {
         document.getElementById("errorMessage").innerHTML = "";

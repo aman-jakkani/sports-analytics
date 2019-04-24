@@ -43,6 +43,115 @@ function getAxisNumbers(ctx) {
 	return display;
 }
 
+function getyLabel(agData) {
+
+	var label = "";
+	
+	if (agData == 0){
+	
+		label = "Points";
+	
+	}
+
+	return label;
+}
+
+
+function getMax(ctx, json){
+
+	var max = Math.min(...json.aggie);
+	
+	if (ctx.canvas.id == "mainChart") {
+	for (i = 0; i < json.aggie.length; ++i){
+	
+		if (json.aggie[i] > max && json.dim1[i] != null && json.dim2[i] != null) {
+		
+			max = json.aggie[i];
+		
+		}
+	
+	}
+	return max;
+	}
+	else if (ctx.canvas.id == "secondChart"){
+	
+		for (i = 0; i < json.aggie.length; ++i){
+	
+		if (json.aggie[i] > max && json.dim1[i] != null && json.dim2[i] == null) {
+		
+			max = json.aggie[i];
+		
+		}
+		
+	}
+	return max;
+	}
+	else if (ctx.canvas.id == "thirdChart"){
+	
+		for (i = 0; i < json.aggie.length; ++i){
+	
+		if (json.aggie[i] > max && json.dim1[i] == null && json.dim2[i] != null) {
+		
+			max = json.aggie[i];
+		
+		}
+	
+	}
+	return max;
+	}
+	
+	return max;
+
+}
+
+function getMin(ctx, json){
+
+	var min = Math.max(...json.aggie);
+	
+	if (ctx.canvas.id == "mainChart") {
+	for (i = 0; i < json.aggie.length; ++i){
+	
+		if (json.aggie[i] < min && json.dim1[i] != null && json.dim2[i] != null) {
+		
+			min = json.aggie[i];
+			console.log(min);
+		
+		}
+	
+	}
+	return min;
+	}
+	else if (ctx.canvas.id == "secondChart"){
+	
+		for (i = 0; i < json.aggie.length; ++i){
+	
+		if (json.aggie[i] < min && json.dim1[i] != null && json.dim2[i] == null) {
+		
+			min = json.aggie[i];
+		
+		}
+	
+	}
+	return min;
+	}
+	else if (ctx.canvas.id == "thirdChart"){
+	
+		for (i = 0; i < json.aggie.length; ++i){
+	
+		if (json.aggie[i] < min && json.dim1[i] == null && json.dim2[i] != null) {
+		
+			min = json.aggie[i];
+		
+		}
+	
+	}
+	return min;
+	}
+	
+	return min;
+
+}
+
 
 
 /*
@@ -54,6 +163,13 @@ function getAxisNumbers(ctx) {
 */
 function getTitle(ctx, league, agFunc, agData){
 	var title;
+	
+	if (agData == 0){
+	
+		agData = "Points";
+	
+	}
+	
 	if (ctx.canvas.id == "mainChart") {
 		title = agFunc + ' ' + agData + ' By Each Team In ' + league + ' By Season';
 	}

@@ -118,6 +118,7 @@ class BasketballControllerTest {
         Assert.assertEquals(listOfPlayers,awayplayers.subList(0,3));
     }
 
+<<<<<<< HEAD
     @Test
     void getHomeAssistsById(){
 
@@ -139,19 +140,27 @@ class BasketballControllerTest {
     void getCubeStats() {
     }
 
+=======
+>>>>>>> e30c3ca9e009fc9eb2fcf70e91ae004f20d599a2
     @Test
     void getHomeTeamPlayerID() {
+        //testing Bulls vs Mavericks, 2018 season
+        List<String> homeplayers = bc.getHomeTeamPlayerID("21800193");
+        List<String> listOfPlayers = new ArrayList<>();
+        listOfPlayers.add("203084");
+        listOfPlayers.add("1629029");
+        listOfPlayers.add("201599");
+        Assert.assertEquals(listOfPlayers,homeplayers.subList(0,3));
     }
 
     @Test
     void getAwayTeamPlayerID() {
-    }
-
-    @Test
-    void getCube() {
-    }
-
-    @Test
-    void getRollup() {
+        //testing Bulls vs Mavericks, 2018 season
+        List<String> awayplayers = bc.getAwayTeamPlayerID("21800193");
+        List<String> listOfPlayers = new ArrayList<>();
+        listOfPlayers.add("203200");
+        listOfPlayers.add("203953");
+        listOfPlayers.add("1628976");
+        Assert.assertEquals(listOfPlayers,awayplayers.subList(0,3));
     }
 }

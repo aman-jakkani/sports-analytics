@@ -117,19 +117,22 @@ function plotChart() {
         var aggregstyle = document.getElementById("aggregationStyle").value;
     }
 
-    //var parameters = [["sports", sport], ["league", league], ["team", team], ["season", season], ["match", match], ["factatt", //factatt], ["aggregfunc", aggregfunc], ["aggregstyle", aggregstyle], ["dimension", dimension]];
-
     var parameters = [["sports", sport], ["league", league], ["team", team], ["season", season], ["match", match],["aggregstyle", aggregstyle]];
     console.log(parameters);
 
     var token = getRestResource("TokenResource", parameters);
     var data = null;
+    
+    if(window.chart != null) { 
+    window.chart.destroy();
+    }
 
     // Error checking for invalid combinations
     if (sport == "null" || league == "null" || team == "null" || season == "null" || match == "null" || factatt == "null" || aggregstyle == "null") {
         // Print error message and destroy chart
         document.getElementById("errorMessage").innerHTML = "Invalid Combination";
-        document.getElementById('mainChart').destroy();
+        window.chart.destroy();
+        //document.getElementById('mainChart').destroy();
 
     } else {
         document.getElementById("errorMessage").innerHTML = "";
@@ -145,6 +148,7 @@ function plotChart() {
     } else if (sport == "Basketball"){
         data = getBasketballAttributeData(factatt, token);
         console.log("Got basketball attributes");
+        console.log(data);
 
     } else {
         console.log("Invalid sport selection");
@@ -164,6 +168,7 @@ function plotChart() {
 
         case ("line"):
             //plotLineChart(data);
+            console.log(data);
             window.chart = plotDefault('line', 'home', 'away', Array(data[0]), Array(data[1]), label);
             break;
 
@@ -173,11 +178,17 @@ function plotChart() {
 
         case ("bar"):
             // plotBarChart(data);
-            window.chart = plotDefault('bar', 'home', 'away', Array(data[0]), Array(data[1]), label);
+            console.log(data);
+            if (data == null){
+            	window.chart = plotDefault('bar', 'home', 'away', Array(0), Array(0), label);
+            } else {
+            	window.chart = plotDefault('bar', 'home', 'away', Array(data[0]), Array(data[1]), label);
+            }
             break;
 
         case ("radar"):
             // plotRadar(data);
+            console.log(data);
             window.chart = plotDefault('radar', 'home', 'away', Array(data[0]), Array(data[1]), label);
             break;
 
@@ -242,19 +253,28 @@ function getSoccerAttributeData(attribute, token){
   Returns:
   Raises:
   Notes:
+    Remove breaks from in front of some case statements once attribute has been added
 */
 function getBasketballAttributeData(attribute, token){
     switch (attribute){
         case ("points"):
             var score = getRestResource("ScoreRestResource", [["token", token["token"]], ]);
             return score["score"]; // add index
+
         case ("assists"): break;
             var assists = getRestResource("AssistRestResource", [["token", token["token"]], ]);
             return assists["assists"]; // add index
+
         case ("rebounds"): break;
             var rebounds = getRestResource("ReboundsRestResource", [["token", token["token"]], ]);
             return rebounds["rebounds"]; // add index
-        default: break;
+
+        case ("steals"): break;
+            var steals = getRestResource("StealsRestResource", [["token", token["token"]], ]);
+            return steals["steals"];
+
+        default: 
+            break;
     }
 }
 

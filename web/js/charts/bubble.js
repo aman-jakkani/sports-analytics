@@ -19,9 +19,6 @@ function plotBubble(json, ctx){
     
     }*/
 
-    var _globalDim1 = json.dim1;
-    var _globalDim2 = json.dim2;
-
 
     var league = document.getElementById("league").value;
     var agFunc = document.getElementById("aggregationFunction").value;
@@ -39,6 +36,9 @@ function plotBubble(json, ctx){
         
     }
     
+    var _globalDim1 = dim1;
+    var _globalDim2 = json.dim2;
+    
     // Pushes all of dim2 into xLabels and skips over duplicates
     var xLabels = new Array();
     for (var i = 0; i < json.dim2.length; i++) {
@@ -49,6 +49,39 @@ function plotBubble(json, ctx){
             xLabels.push(json.dim2[i]);
         }
     }
+    
+    
+    var normalizedR = [];
+    //var min = Math.min(...json.aggie);
+    var min = getMin(ctx, json);
+    console.log("min");
+    console.log(min);
+    //var max = Math.max(...json.aggie);
+    var max = getMax(ctx, json);
+    console.log("max");
+    console.log(max);
+        
+        for (i = 0; i < json.aggie.length; ++i){
+        
+        	
+        	var result = ((json.aggie[i] - (min - 0.001))/(max - min)) * 15;
+        	
+        	console.log("result");
+        	console.log(result);
+        	
+        	normalizedR.push(result);
+        	
+        
+        }
+        
+       
+        
+        console.log("normalizedR");
+        console.log(normalizedR);
+        console.log("json aggie");
+        console.log(json.aggie);
+        console.log("json dim1");
+        console.log(json.dim1);
 
 	console.log(ctx);
     var datasets = new Array();
@@ -61,6 +94,7 @@ function plotBubble(json, ctx){
         else {
             teamset.push(json.dim2[i]);
         }
+        
     
 		var label;
         var seasonData = new Array();
@@ -92,7 +126,7 @@ function plotBubble(json, ctx){
                 seasonData.push({
                 		x: i,
                         y: dim1[j],
-                        r: json.aggie[j].toFixed(2)
+                        r: normalizedR[j] //json.aggie[j].toFixed(2)
                     });
             }
         }
@@ -164,15 +198,27 @@ function plotBubble(json, ctx){
                     label: function(t, d){
                         team = d.datasets[t.datasetIndex].label;
                         season = d.datasets[t.datasetIndex].data[t.index].y;
+                        //r = d.datasets[t.datasetIndex].data[t.index].r[t.datasetIndex + 1];
                         value = 'N/A';
+                        console.log("d");
+                        console.log(d);
+                        console.log("t");
+                        console.log(t);
+                        
 
-                        nextSeason = parseInt(season, 10) + 1;
+                        //nextSeason = parseInt(season, 10) + 1;
                         
                         for (i = 0; i < json.aggie.length; ++i){
-                            s = (season + "/" + nextSeason);
+                            //s = (season + "/" + nextSeason);
 
-                            if (_globalDim1[i] == s && _globalDim2[i] == team){
+                            if (_globalDim1[i] == season && _globalDim2[i] == team){
+                            
                                 value = json.aggie[i].toFixed(2);
+                                
+                            } else if (_globalDim1[i] == season && _globalDim2[i] == null) {
+                            
+                            	value = json.aggie[i].toFixed(2);
+                            
                             }
                         }
                         return team + ": (" + season + ", " + value + ")";

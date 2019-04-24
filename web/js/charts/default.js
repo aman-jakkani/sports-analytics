@@ -46,21 +46,21 @@ function plotDefault(chartType, homeTeamName, awayTeamName, homeTeamData, awayTe
   };
 
   var chartOptions = {
-          scales: {
-                  xAxes: [{
-                  		ticks: {
-                					beginAtZero: true
-        				},
-                          barPercentage: 1,
-                          categoryPercentage: 0.6
-                  }],
-                  yAxes: [{
-                          id: "y-axis",
-                          ticks: {
-                					beginAtZero: true
-        					}
-                  }]
-          }
+        scales: {
+                xAxes: [{
+                        ticks: {
+                                beginAtZero: true
+                        },
+                        barPercentage: 1,
+                                categoryPercentage: 0.6
+                        }],
+                        yAxes: [{
+                                id: "y-axis",
+                        ticks: {
+                                beginAtZero: true
+                        }
+                }]
+        }
   };
 
   var config = {

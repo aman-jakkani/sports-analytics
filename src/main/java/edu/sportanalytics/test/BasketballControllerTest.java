@@ -14,10 +14,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class BasketballControllerTest {
     private BasketballController bc;
-    private List<Basketball_League> leaguesList;
-    private List<Basketball_Team> teamList;
-    private List<Basketball_Game> gamesList;
-    private List<Basketball_Season> seasonList;
 
     @BeforeEach
     void setUp() {
@@ -122,48 +118,25 @@ class BasketballControllerTest {
         Assert.assertEquals(listOfPlayers,awayplayers.subList(0,3));
     }
 
-
-    @Test
-    void getPlayer() {
-    }
-
-    @Test
-    void getBBPlayer() {
-    }
-
-    @Test
-    void getRollupStats() {
-    }
-
-    @Test
-    void getCubeStats() {
-    }
-
     @Test
     void getHomeTeamPlayerID() {
+        //testing Bulls vs Mavericks, 2018 season
+        List<String> homeplayers = bc.getHomeTeamPlayerID("21800193");
+        List<String> listOfPlayers = new ArrayList<>();
+        listOfPlayers.add("203084");
+        listOfPlayers.add("1629029");
+        listOfPlayers.add("201599");
+        Assert.assertEquals(listOfPlayers,homeplayers.subList(0,3));
     }
 
     @Test
     void getAwayTeamPlayerID() {
-    }
-
-    @Test
-    void getCube() {
-    }
-
-    @Test
-    void getRollup() {
-    }
-
-    @Test
-    void tryClose() {
-    }
-
-    @Test
-    void setDB() {
-    }
-
-    @Test
-    void getDb() {
+        //testing Bulls vs Mavericks, 2018 season
+        List<String> awayplayers = bc.getAwayTeamPlayerID("21800193");
+        List<String> listOfPlayers = new ArrayList<>();
+        listOfPlayers.add("203200");
+        listOfPlayers.add("203953");
+        listOfPlayers.add("1628976");
+        Assert.assertEquals(listOfPlayers,awayplayers.subList(0,3));
     }
 }

@@ -28,12 +28,18 @@ public class AssistRestResource {
         Token tk = Token.getToken(token);
         List<String> assists = new ArrayList<>();
 
+        // Fill this in later if there is an assists attribute for soccer
+        if (tk.getSports() == SportsEnum.SOCCER){
+            return "null";
+        }
+
+        // Get the assists for home and away team
         if (tk.getSports() == SportsEnum.BASKETBALL) {
             BasketballController bc = (BasketballController) DBAccess.getInstance()
                     .getController(SportsEnum.BASKETBALL);
 
-            // assists.add(bc.HomeScoreById(tk.getMatchID()));
-            // assists.add(bc.GuestScoreById(tk.getMatchID()));
+            assists.add(bc.HomeAssistsById(tk.getMatchID()));
+            assists.add(bc.GuestAssistsById(tk.getMatchID()));
 
             JSONObject jo = new JSONObject();
             jo.put("assists", assists);
@@ -43,12 +49,8 @@ public class AssistRestResource {
 
             return returnString;
 
-        } else if (tk.getSports() == SportsEnum.SOCCER) {
-            // Fill this in later if there is an assists attribute for soccer
-            return null;
-
         } else {
-            return null;
+            return "null";
         }
     }
 }

@@ -118,6 +118,10 @@ class BasketballControllerTest {
         Assert.assertEquals(listOfPlayers,awayplayers.subList(0,3));
     }
 
+    @Test
+    void getHomeAssistsById(){
+
+    }
 
     @Test
     void getPlayer() {

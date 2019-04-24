@@ -268,7 +268,7 @@ public class BasketballController extends DatabaseController {
 		return teamList;
 	}
 	
-	//Retrieves The Score of HomeTeam by MatchID
+	// Retrieves The Score of HomeTeam by MatchID
 	public String HomeScoreById(String id) {
 		ps = null;
 		rs = null;
@@ -294,7 +294,7 @@ public class BasketballController extends DatabaseController {
 		
 	}
 	
-	//Retrieves The Score of GuestTeam by MatchID
+	// Retrieves The assists of GuestTeam by MatchID
 	public String GuestScoreById(String id) {
 		ps = null;
 		rs = null;
@@ -318,24 +318,77 @@ public class BasketballController extends DatabaseController {
 		return id;
 
 	}
+
+
+    // Retrieves The assists of HomeTeam by MatchID
+    public String HomeAssistsById(String id) {
+        ps = null;
+        rs = null;
+
+        // replaced visitortid with hometid and replaced points with assists
+        try {
+            ps = DBAccess.getConn().prepareStatement("SELECT ASSISTS From BASKETBALL.GAME "
+                    + "join BASKETBALL.SCORE_GAME on ( HOMETID = Team_id) and (GID = GAME_ID) WHERE GID = ?");
+            ps.setString(1, id);
+            rs = ps.executeQuery();
+
+            while(rs.next()) {
+                id = rs.getString("POINTS");
+            }
+
+        } catch (SQLException e) {
+
+            log.severe(e.getMessage());
+        }
+
+        tryClose();
+        return id;
+    }
+
+
+    //Retrieves The Score of GuestTeam by MatchID
+    public String GuestAssistsById(String id) {
+        ps = null;
+        rs = null;
+
+        try {
+            ps = DBAccess.getConn().prepareStatement("SELECT ASSISTS From BASKETBALL.GAME "
+                    + "join BASKETBALL.SCORE_GAME on ( VISITORTID = Team_id) and (GID = GAME_ID) WHERE GID = ?");
+            ps.setString(1, id);
+            rs = ps.executeQuery();
+
+            while(rs.next()) {
+                id = rs.getString("POINTS");
+
+            }
+        }catch (SQLException e) {
+
+            log.severe(e.getMessage());
+        }
+
+        tryClose();
+        return id;
+
+    }
+
 	public String GetAttendanceByGame(String gid) {
 		ps = null;
 		rs = null;
 
-	try {
-		ps = DBAccess.getConn().prepareStatement("SELECT ATTENDANCE From BASKETBALL.GAME WHERE GID = ?");
-		ps.setString(1, gid);
-		rs = ps.executeQuery();
+		try {
+			ps = DBAccess.getConn().prepareStatement("SELECT ATTENDANCE From BASKETBALL.GAME WHERE GID = ?");
+			ps.setString(1, gid);
+			rs = ps.executeQuery();
 
-		while(rs.next()) {
-			gid = rs.getString("ATTENDANCE");
+			while(rs.next()) {
+				gid = rs.getString("ATTENDANCE");
+			}
+		} catch (SQLException e) {
+
+			log.severe(e.getMessage());
 		}
-	}catch (SQLException e) {
 
-		log.severe(e.getMessage());
-	}
-
-	tryClose();
+		tryClose();
 		return gid;
 	}
 
@@ -512,6 +565,7 @@ public class BasketballController extends DatabaseController {
 		return factatt;
 	}
 
+
 	//To-Do
 	public String getCubeStats(String aggregval, String aggregfunc, String dimension1, String dimension2){
 		ps = null;
@@ -535,6 +589,8 @@ public class BasketballController extends DatabaseController {
 		tryClose();
 		return aggregval;
 	}
+
+
 	public List<String> getHomeTeamPlayerID(String matchid){
 		List<String> home_playerlist = new ArrayList<>();
 		ps = null;
@@ -646,11 +702,13 @@ public class BasketballController extends DatabaseController {
 
     public void tryClose(){
 		try {
-			if(stmt !=null){
+			if (stmt != null){
 				stmt.close();
-			}else if(ps != null){
+
+			} else if (ps != null){
 				ps.close();
-			}else if(rs !=null){
+
+			} else if(rs != null){
 				rs.close();
 			}
 		} catch (SQLException e) {

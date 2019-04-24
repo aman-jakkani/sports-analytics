@@ -241,7 +241,7 @@ function getLeagues(sport) {
   Raises:
   Notes:
 */
-function getFactAttribute(sport) {
+/*function ribute(sport) {
 
    var parameters = [["sports", sport], ];
    var htmlFactAttribute = "<option value = \"null\" >--Make a choice--</option>";
@@ -264,7 +264,7 @@ function getFactAttribute(sport) {
    }
 
    return htmlFactAttribute;
-}
+}*/
 
 
 /*
@@ -474,16 +474,12 @@ function getGames(sport, league, team, season){
   Notes:
 */
 // Attributes are currently hard coded in, should be fine for now
-/*function getFactAttribute(sport) {
+function getFactAttribute(sport) {
    var htmlFactAttribute = "<option value = \"null\" >--Make a choice--</option>";
   if (sport == "null") return htmlFactAttribute;
 
    if (sport == "Basketball") {
-    htmlFactAttribute += "<option value='points'>Points</option>"
-                        + "<option value='assists'>Assists</option>"
-                        + "<option value='rebounds'>Rebounds</option>"
-                        + "<option value='steals'>Steals</option>"
-                        + "<option value='blocks'>Blocks</option>";
+    htmlFactAttribute += "<option value='points'>Points</option>";
    }
 
    else if (sport == "Soccer"){
@@ -496,7 +492,7 @@ function getGames(sport, league, team, season){
   }
 
    return htmlFactAttribute;
-}*/
+}
 
 
 /*
@@ -507,7 +503,7 @@ function getGames(sport, league, team, season){
   Raises:
   Notes:
 */
-function getDimensions(sport) {
+/*function getDimensions(sport) {
    var htmlDimensions = "<option value = \"null\" >--Make a choice--</option>";
   if (sport == "null") return htmlDimensions;
 
@@ -528,7 +524,7 @@ function getDimensions(sport) {
   }
 
    return htmlDimensions;
-}
+}*/
 
 
 

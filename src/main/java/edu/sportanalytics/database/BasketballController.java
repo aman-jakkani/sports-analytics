@@ -489,52 +489,6 @@ public class BasketballController extends DatabaseController {
 		return player;
 	}
 
-	//To-Do
-	public String getRollupStats(String factatt, String aggregfunc, String dimension){
-		ps = null;
-		rs = null;
-		try {
-			//ps = DBAccess.getConn().prepareStatement("SELECT ? From BASKETBALL.PLAYER_NEW_STATS WHERE GID = ?");
-			ps.setString(1, factatt);
-			ps.setString(2, aggregfunc);
-			ps.setString(3, dimension);
-			rs = ps.executeQuery();
-
-			while(rs.next()) {
-				factatt = rs.getString("ATTENDANCE");
-			}
-		}catch (SQLException e) {
-
-			log.severe(e.getMessage());
-		}
-
-		tryClose();
-		return factatt;
-	}
-
-	//To-Do
-	public String getCubeStats(String aggregval, String aggregfunc, String dimension1, String dimension2){
-		ps = null;
-		rs = null;
-		try {
-			//ps = DBAccess.getConn().prepareStatement("SELECT ? From BASKETBALL.PLAYER_NEW_STATS WHERE GID = ?");
-			ps.setString(1, aggregval);
-			ps.setString(2, aggregfunc);
-			ps.setString(3, dimension1);
-			ps.setString(4, dimension2);
-			rs = ps.executeQuery();
-
-			while(rs.next()) {
-				//aggregval = rs.getString("ATTENDANCE");
-			}
-		}catch (SQLException e) {
-
-			log.severe(e.getMessage());
-		}
-
-		tryClose();
-		return aggregval;
-	}
 	public List<String> getHomeTeamPlayerID(String matchid){
 		List<String> home_playerlist = new ArrayList<>();
 		ps = null;

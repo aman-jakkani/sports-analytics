@@ -31,7 +31,7 @@ class SoccerControllerTest {
         String port = DBAccess.getInstance().getPort();
         String sid = DBAccess.getInstance().getSid();
         String username = DBAccess.getInstance().getUsername();
-        String pw = "howdy"; //Enter db password here before testing but DO NOT push pw to git!!
+        String pw = ""; //Enter db password here before testing but DO NOT push pw to git!!
         char[] pwArr = pw.toCharArray();
 
         DBAccess.getInstance().setDBParams(server, port, sid, username, pwArr);
@@ -144,53 +144,5 @@ class SoccerControllerTest {
 
     @Test
     void getDb() {
-    }
-
-    @Test
-    void getLeagues1() {
-    }
-
-    @Test
-    void getTeams1() {
-    }
-
-    @Test
-    void getSeason1() {
-    }
-
-    @Test
-    void getGame1() {
-    }
-
-    @Test
-    void getHomeAndAwayTeam1() {
-    }
-
-    @Test
-    void getAwayTeamPlayerID1() {
-    }
-
-    @Test
-    void getHomeTeamPlayerID1() {
-    }
-
-    @Test
-    void getAwayPlayerList1() {
-    }
-
-    @Test
-    void getHomePlayerList1() {
-    }
-
-    @Test
-    void getPlayer1() {
-    }
-
-    @Test
-    void getCube1() {
-    }
-
-    @Test
-    void getRollup1() {
     }
 }

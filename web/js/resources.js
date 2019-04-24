@@ -147,7 +147,7 @@ var dropdown = {
       else if ($(this).attr('id') == "factAttribute"){
          factAttribute = $("#factAttribute").val();
          
-         $("#players").html(getPlayerList(sport, league, team, game));
+         //$("#players").html(getPlayerList(sport, league, team, game));
 
          // Reset chart type and axes
          

@@ -69,7 +69,7 @@ function plotScatter(json, ctx){
             	}
                 seasonData.push({
                         x: dim1[j],
-                        y: json.aggie[j]
+                        y: json.aggie[j].toFixed(2)
                     });
                 // console.log('x: ' + dim1[j] + ' (' +typeof dim1[j] + ') '+ ' y: ' + json.aggie[j] );
             }
@@ -94,6 +94,7 @@ function plotScatter(json, ctx){
     
     var axisNumbers = getAxisNumbers(ctx);
     var title = getTitle(ctx, league, agFunc, agData);
+    var yLabel = getyLabel(agData);
 
     var config = {
     		title: {
@@ -115,7 +116,7 @@ function plotScatter(json, ctx){
             yAxes: [{
                 	scaleLabel: {
                 	display: true,
-        			labelString: agData
+        			labelString: yLabel
         			},
         			ticks: {
                 					display: axisNumbers,
@@ -123,7 +124,40 @@ function plotScatter(json, ctx){
             		},
             		min: 0
             }]
-        }
+        },
+        tooltips: {
+                callbacks: {
+                    label: function(t, d){
+                        team = d.datasets[t.datasetIndex].label;
+                        season = d.datasets[t.datasetIndex].data[t.index].x;
+                        result = d.datasets[t.datasetIndex].data[t.index].y;
+                        //r = d.datasets[t.datasetIndex].data[t.index].r[t.datasetIndex + 1];
+                        value = 'N/A';
+                        console.log("d");
+                        console.log(d);
+                        console.log("t");
+                        console.log(t);
+                        
+
+                        //nextSeason = parseInt(season, 10) + 1;
+                        
+                        /*for (i = 0; i < json.aggie.length; ++i){
+                            //s = (season + "/" + nextSeason);
+
+                            if (_globalDim1[i] == season && _globalDim2[i] == team){
+                            
+                                value = json.aggie[i].toFixed(2);
+                                
+                            } else if (_globalDim1[i] == season && _globalDim2[i] == null) {
+                            
+                            	value = json.aggie[i].toFixed(2);
+                            
+                            }
+                        }*/
+                        return team + ": (" + season + ", " + result + ")";
+                    }
+                }
+            }
     }
 
     // window.bar just added without testing.

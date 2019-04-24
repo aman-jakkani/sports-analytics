@@ -715,7 +715,7 @@ function getCharts(aggregationStyle){
 
 
    if (aggregationStyle == "Cube"){
-      var charts = [['bubble','Bubble Chart'], ['line','Line'], ['scatter','Scatter Plot']];
+      var charts = [['bubble','Bubble Chart'], ['scatter','Scatter Plot']];
       console.log("Number of charts: ".concat(charts.length));
 
       for (i = 0; i < charts.length; ++i){

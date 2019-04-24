@@ -88,7 +88,7 @@ function plotLineChart(json, ctx){
                 seasonData.push(
                     {
                         x: dim1Int[j],
-                        y: aggie[j]
+                        y: aggie[j].toFixed(2)
                     }
                 );
                 //console.log('x: ' + dim1Int[j] + ' (' +typeof dim1Int[j] + ') '+ ' y: ' + aggie[j] );
@@ -114,6 +114,7 @@ function plotLineChart(json, ctx){
     
     var axisNumbers = getAxisNumbers(ctx);
     var title = getTitle(ctx, league, agFunc, agData);
+    var yLabel = getyLabel(agData);
     
     return new Chart(ctx, {
         type: 'line',
@@ -141,7 +142,7 @@ function plotLineChart(json, ctx){
             	 yAxes: [{
                 	scaleLabel: {
                 	display: true,
-        			labelString: agData
+        			labelString: yLabel
         			},
         			ticks: {
                 					display: axisNumbers,

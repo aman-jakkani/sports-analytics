@@ -15,8 +15,7 @@
   Notes:
     Move this to its own separate js file within charts
 */
-function plotDefault(chartType, homeTeamName, awayTeamName, homeTeamData, awayTeamData, label){
-  var canvas = document.getElementById("mainChart");
+function plotDefault(chartType, homeTeamName, awayTeamName, homeTeamData, awayTeamData, label, canvas){
 
   if (window.bar != undefined){
           window.bar.destroy();

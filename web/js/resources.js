@@ -74,7 +74,7 @@ var dropdown = {
          $("#stat1").html(defaultString);    // stat1 doesn't exist anymore, need to update later
          //$("#chartType").html(getCharts(aggregationStyle)); 
          $("#axes").html(defaultString);
-         $("#factAttribute").html(defaultString);
+         $("#factAttribute").html();
          //$("#dimensions").html(getDimensions(sport));
          //$("#aggregationFunction").html(getAggregationFunction(league));
          $("#players").html(defaultString);
@@ -96,7 +96,7 @@ var dropdown = {
          $("#stat1").html(defaultString);    // stat1 doesn't exist anymore, need to update later
          $("#chartType").html(defaultString); 
          $("#axes").html(defaultString);
-         $("#factAttribute").html(defaultString);
+         $("#factAttribute").html();
          $("#dimensions").html(defaultString);
          $("#aggregationStyle").html(defaultString);
          $("#aggData").html(defaultString);
@@ -115,7 +115,7 @@ var dropdown = {
 
          // Reset games
          $("#game").html(defaultString);
-         $("#factAttribute").html(defaultString);
+         $("#factAttribute").html();
          $("#players").html(defaultString);
       }
 
@@ -128,7 +128,7 @@ var dropdown = {
          $("#stat1").html(defaultString);
          // $("#chartType").html(defaultString);
          $("#axes").html(defaultString);
-         $("#factAttribute").html(defaultString);
+         $("#factAttribute").html();
          $("#players").html(defaultString);
       }
 
@@ -475,7 +475,7 @@ function getGames(sport, league, team, season){
 */
 // Attributes are currently hard coded in, should be fine for now
 function getFactAttribute(sport) {
-   var htmlFactAttribute = "<option value = \"null\" >--Make a choice--</option>";
+   var htmlFactAttribute; //= "<option value = \"null\" >--Make a choice--</option>";
   if (sport == "null") return htmlFactAttribute;
 
    if (sport == "Basketball") {

@@ -335,7 +335,7 @@ function teamReset() {
   $("#season").html(defaultString);
   $("#game").html(defaultString);
   $("#chartType").html(defaultString); 
-  $("#factAttribute").html(defaultString);
+  $("#factAttribute").html("");
   $("#dimensions").html(defaultString);
   $("#aggregationFunction").html(defaultString);
   $("#aggregationStyle").html(defaultString);
@@ -382,14 +382,15 @@ function playerReset() {
   $("#team").html(defaultString);
   $("#season").html(defaultString);
   $("#game").html(defaultString);
-  $("#factAttribute").html(defaultString);
+  $("#factAttribute").html("");
   $("#players").html(defaultString);
 
   // Reset error message
   document.getElementById("errorMessage").innerHTML = "";
 
   // Destroy chart
-  window.chart.destroy();
+
+  window.chart.forEach(function (value) { value.destroy(); });
 
   // Reset table
   document.getElementById("table").innerHTML = "";

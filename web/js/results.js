@@ -103,97 +103,111 @@ Args:
 Returns:
 */
 function plotChart() {
-    document.getElementById('mainChart').style.display="block";
+    document.getElementById('mainChart').style.display="none";
 
     var sport = document.getElementById("sport").value;
     var league = document.getElementById("league").value;
     var team = document.getElementById("team").value;
     var season = document.getElementById("season").value;
     var match  = document.getElementById("game").value;
-    var factatt = document.getElementById("factAttribute").value;
+    var factatt = $("#factAttribute").val();
 
     // Only have aggregration style for team analytics
     if (window.location.pathname =="/CubeRollupMock.html") {
         var aggregstyle = document.getElementById("aggregationStyle").value;
     }
 
-    var parameters = [["sports", sport], ["league", league], ["team", team], ["season", season], ["match", match],["aggregstyle", aggregstyle]];
+    var parameters = [["sports", sport], ["league", league], ["team", team], ["season", season], ["match", match],["aggregstyle", aggregstyle], ["factatt", factatt]];
     console.log(parameters);
 
     var token = getRestResource("TokenResource", parameters);
     var data = null;
     
     if(window.chart != null) { 
-    window.chart.destroy();
+    window.chart.forEach(function(item)
+    {
+        item.destroy();
+    });
+    window.chart=new Array();
     }
-
-    // Error checking for invalid combinations
-    if (sport == "null" || league == "null" || team == "null" || season == "null" || match == "null" || factatt == "null" || aggregstyle == "null") {
-        // Print error message and destroy chart
-        document.getElementById("errorMessage").innerHTML = "Invalid Combination";
-        window.chart.destroy();
-        //document.getElementById('mainChart').destroy();
-
-    } else {
-        document.getElementById("errorMessage").innerHTML = "";
+    else
+    {
+        window.chart=new Array();
     }
 
 
-    // Get the data for the specific attribute selected
-    if (sport == "Soccer"){
-        data = getSoccerAttributeData(factatt, token);
-        console.log("Got soccer attributes");
-        console.log(data);
+    for (var it in factatt)
+    {
+        var canvasID = "mainChart".concat(String(it));
+        var canvas = document.getElementById(canvasID);
+        // Error checking for invalid combinations
+        if (sport == "null" || league == "null" || team == "null" || season == "null" || match == "null" || factatt == "null" || aggregstyle == "null") {
+            // Print error message and destroy chart
+            document.getElementById("errorMessage").innerHTML = "Invalid Combination";
+            //window.chart.destroy();
+            //document.getElementById('mainChart').destroy();
 
-    } else if (sport == "Basketball"){
-        data = getBasketballAttributeData(factatt, token);
-        console.log("Got basketball attributes");
-        console.log(data);
+        } else {
+            document.getElementById("errorMessage").innerHTML = "";
+        }
 
-    } else {
-        console.log("Invalid sport selection");
-        return;
-    }
 
-    var label = document.getElementById("factAttribute").value;
-
-    // Plot a specific chart based on the one selected in the
-    // chartType = document.getElementById("chartType").value;
-    chartType = "bar";
-
-    switch (chartType) {
-        case ("bubble"):
-            // plotBubble(data);
-            break;
-
-        case ("line"):
-            //plotLineChart(data);
+        // Get the data for the specific attribute selected
+        if (sport == "Soccer"){
+            data = getSoccerAttributeData(factatt[it], token);
+            console.log("Got soccer attributes");
             console.log(data);
-            window.chart = plotDefault('line', 'home', 'away', Array(data[0]), Array(data[1]), label);
-            break;
 
-        case ("scatter"):
-            // plotScatter(data);
-            break;
-
-        case ("bar"):
-            // plotBarChart(data);
+        } else if (sport == "Basketball"){
+            data = getBasketballAttributeData(factatt[it], token);
+            console.log("Got basketball attributes");
             console.log(data);
-            if (data == null){
-            	window.chart = plotDefault('bar', 'home', 'away', Array(0), Array(0), label);
-            } else {
-            	window.chart = plotDefault('bar', 'home', 'away', Array(data[0]), Array(data[1]), label);
-            }
-            break;
 
-        case ("radar"):
-            // plotRadar(data);
-            console.log(data);
-            window.chart = plotDefault('radar', 'home', 'away', Array(data[0]), Array(data[1]), label);
-            break;
+        } else {
+            console.log("Invalid sport selection");
+            return;
+        }
 
-        default: 
-            break;
+        var label = factatt[it];
+
+        // Plot a specific chart based on the one selected in the
+        // chartType = document.getElementById("chartType").value;
+        chartType = "bar";
+
+        switch (chartType) {
+            case ("bubble"):
+                // plotBubble(data);
+                break;
+
+            case ("line"):
+                //plotLineChart(data);
+                console.log(data);
+                window.chart.push(plotDefault('line', 'home', 'away', Array(data[0]), Array(data[1]), label, canvas));
+                break;
+
+            case ("scatter"):
+                // plotScatter(data);
+                break;
+
+            case ("bar"):
+                // plotBarChart(data);
+                console.log(data);
+                if (data == null){
+                    window.chart.push(plotDefault('bar', 'home', 'away', Array(0), Array(0), label, canvas));
+                } else {
+                    window.chart.push(plotDefault('bar', 'home', 'away', Array(data[0]), Array(data[1]), label, canvas));
+                }
+                break;
+
+            case ("radar"):
+                // plotRadar(data);
+                console.log(data);
+                window.chart.push(plotDefault('radar', 'home', 'away', Array(data[0]), Array(data[1]), label, canvas));
+                break;
+
+            default:
+                break;
+        }
     }
 }
 

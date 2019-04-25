@@ -146,7 +146,7 @@
 
             <!-- 3rd Row: Fact Attribute -->
 
-            <!--<tr>
+            <tr>
 
                 <td>
                     <fieldset>
@@ -158,7 +158,7 @@
                         </p>
                     </fieldset>
                 </td>
-            </tr>-->
+            </tr>
             </table>
         </form>
     <br>
@@ -172,9 +172,9 @@
             </td>
 
             <!-- Create Submit Button, link to showData() function -->
-            <!--<td>
+            <td>
                 <button class="btn btn-info" onclick="displayPlayerStats()" id="STATS">GET PLAYER STATS</button> 
-            </td>-->
+            </td>
             
             <!-- Create Submit Button, link to showData() function -->
             <td>
@@ -182,6 +182,29 @@
             </td>
         </tr>
     </table>
+ 
+<style>
+@keyframes spinner {
+  to {transform: rotate(360deg);}
+}
+ 
+.spinner:before {
+  content: '';
+  box-sizing: border-box;
+  position: absolute;
+  top: 75%;
+  left: 50%;
+  width: 40px;
+  height: 40px;
+  margin-top: -15px;
+  margin-left: -15px;
+  border-radius: 50%;
+  border: 1px solid #ccc;
+  border-top-color: #07d;
+  animation: spinner .6s linear infinite;
+}
+</style>
+    
 
     <!-- Div where error message will be printed out if the combination isn't valid -->
     <div><font id = "errorMessage" color = "red"></font></div>

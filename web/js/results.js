@@ -94,8 +94,6 @@ function plotCube(json, nullValues, nullValues1) {
     }
 }
 
-
-
 /* 
 Description:
    This function will plot the chart on the player analytics page
@@ -204,6 +202,16 @@ function plotChart() {
                 console.log(data);
                 window.chart.push(plotDefault('radar', 'home', 'away', Array(data[0]), Array(data[1]), label, canvas));
                 break;
+        case ("radar"):
+            // plotRadar(data);
+            console.log(data);
+            window.chart = plotDefault('radar', 'home', 'away', Array(data[0]), Array(data[1]), label);
+            break;
+
+        case ("pie"):
+            console.log(data);
+            window.chart = plotPie('home', 'away', Array(data[0]), Array(data[1]), label, canvas);
+            break;
 
             default:
                 break;

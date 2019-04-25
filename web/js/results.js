@@ -322,12 +322,19 @@ function displayPlayerStats(){
     var season = document.getElementById("season").value;
     var match = document.getElementById("game").value;
     // var name = document.getElementById('name').innerHTML = document.getElementById("player").options[document.getElementById('player').selectedIndex].text;
-
+	
+	$('#STATS').addClass('spinner');
+	
     console.log(sport);
     console.log(league);
     
+
+
+
+    
     if (sport == "null" || league == "null" || team == "null" || season == "null" || match == "null" ){
         console.log("Invalid Combination");
+        $('#STATS').removeClass('spinner');
         return;
     }
 
@@ -339,11 +346,15 @@ function displayPlayerStats(){
 
     playerData = getPlayerData(token);
     createPlayerTable(playerData);
+    
+    $('#STATS').removeClass('spinner');
 
-/*
+
     playerID = document.getElementById("players").value;
     if (playerID == "null"){
         console.log("No player selected.");
+        $('#STATS').removeClass('spinner');
+
         return;
     }
 
@@ -354,7 +365,10 @@ function displayPlayerStats(){
     soccerplayerstatistics = Object.values(soccerplayerstatistics);
 
    window.chart1 = plotRadar(player[1], soccerplayerstatistics[0], soccerplayerstatistics[1], soccerplayerstatistics[2]);
-*/
+
+
+	    $('#STATS').removeClass('spinner');
+
 }
 
 

@@ -141,13 +141,13 @@ var dropdown = {
          // token = getToken(sport, league, team, season, game);
 
          // Reset chart type and axes
-         $("#players").html(defaultString);
+         $("#players").html(getPlayerList(sport, league, team, game));
       }
       
       else if ($(this).attr('id') == "factAttribute"){
          factAttribute = $("#factAttribute").val();
          
-         //$("#players").html(getPlayerList(sport, league, team, game));
+        // $("#players").html(getPlayerList(sport, league, team, game));
 
          // Reset chart type and axes
          
@@ -704,6 +704,7 @@ function getPlayerList(sport, league, team, game){
 
    document.getElementById("players").innerHTML = htmlPlayerString;
    return htmlPlayerString;
+   
 }
 
 

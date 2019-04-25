@@ -1,4 +1,4 @@
-function plotPie(homeTeamName, awayTeamName, homeTeamData, awayTeamData, label, canvas){
+function plotPie(homeTeamName, awayTeamName, homeTeamData, awayTeamData, label, canvas, chartType){
     if (window.bar != undefined){
           window.bar.destroy();
   }
@@ -22,7 +22,7 @@ function plotPie(homeTeamName, awayTeamName, homeTeamData, awayTeamData, label, 
 
 var allData = {
     
-                labels:["HOME","AWAY"],
+                labels:[homeTeamName,awayTeamName],
                  datasets:[
                      {label:"STATS",
                       data:[homeTeamData.data[0], awayTeamData.data[0]],
@@ -36,10 +36,14 @@ var allData = {
   };
   
     var config = {
-          type: "pie",
           data: allData,
           options: chartOptions
   };
+    if(chartType==="pie"){
+        config.type = "pie";
+    }else{
+        config.type = "doughnut";
+    }
      return new Chart(canvas, config);
     
 }

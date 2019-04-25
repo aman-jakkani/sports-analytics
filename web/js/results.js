@@ -109,7 +109,10 @@ function plotChart() {
     var season = document.getElementById("season").value;
     var match  = document.getElementById("game").value;
     var factatt = $("#factAttribute").val();
-
+    
+    var temp = match.split(' (')[0];
+    var teamNames = temp.split(' vs ');
+    
     // Only have aggregration style for team analytics
     if (window.location.pathname =="/CubeRollupMock.html") {
         var aggregstyle = document.getElementById("aggregationStyle").value;
@@ -169,8 +172,7 @@ function plotChart() {
         var label = factatt[it];
 
         // Plot a specific chart based on the one selected in the
-        // chartType = document.getElementById("chartType").value;
-        chartType = "bar";
+        chartType = document.getElementById("chartType").value;
 
         switch (chartType) {
             case ("bubble"):
@@ -180,7 +182,7 @@ function plotChart() {
             case ("line"):
                 //plotLineChart(data);
                 console.log(data);
-                window.chart.push(plotDefault('line', 'home', 'away', Array(data[0]), Array(data[1]), label, canvas));
+                window.chart.push(plotDefault('line', teamNames[0], teamNames[1], Array(data[0]), Array(data[1]), label, canvas));
                 break;
 
             case ("scatter"):
@@ -191,31 +193,30 @@ function plotChart() {
                 // plotBarChart(data);
                 console.log(data);
                 if (data == null){
-                    window.chart.push(plotDefault('bar', 'home', 'away', Array(0), Array(0), label, canvas));
+                    window.chart.push(plotDefault('bar', teamNames[0], teamNames[1], Array(0), Array(0), label, canvas));
                 } else {
-                    window.chart.push(plotDefault('bar', 'home', 'away', Array(data[0]), Array(data[1]), label, canvas));
+                    window.chart.push(plotDefault('bar', teamNames[0], teamNames[1], Array(data[0]), Array(data[1]), label, canvas));
                 }
-                break;
-
-            case ("radar"):
-                // plotRadar(data);
-                console.log(data);
-                window.chart.push(plotDefault('radar', 'home', 'away', Array(data[0]), Array(data[1]), label, canvas));
                 break;
         case ("radar"):
             // plotRadar(data);
             console.log(data);
-            window.chart = plotDefault('radar', 'home', 'away', Array(data[0]), Array(data[1]), label);
+            window.chart.push(plotDefault('radar', teamNames[0], teamNames[1], Array(data[0]), Array(data[1]), label), canvas);
             break;
 
         case ("pie"):
             console.log(data);
-            window.chart = plotPie('home', 'away', Array(data[0]), Array(data[1]), label, canvas);
+            window.chart.push(plotPie(teamNames[0], teamNames[1], Array(data[0]), Array(data[1]), label, canvas, chartType));
+            break;
+        case ("doughnut"):
+            console.log(data);
+            window.chart.push(plotPie(teamNames[0], teamNames[1], Array(data[0]), Array(data[1]), label, canvas, chartType));
             break;
 
             default:
                 break;
         }
+        
     }
 }
 

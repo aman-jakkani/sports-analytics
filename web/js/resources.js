@@ -126,7 +126,7 @@ var dropdown = {
 
          // reset options below game
          $("#stat1").html(defaultString);
-         // $("#chartType").html(defaultString);
+         $("#chartType").html(defaultString);
          $("#axes").html(defaultString);
          $("#factAttribute").html();
          $("#players").html(defaultString);
@@ -134,6 +134,7 @@ var dropdown = {
 
       else if ($(this).attr('id') == "game"){
          game = $("#game").val();
+          $("#chartType").html(getCharts("Simple"));
          //$("#stat1").html(getStats(sport, league, team, season));
          //$("#players").html(getPlayerList(sport, league, team, game));
          $("#factAttribute").html(getFactAttribute(sport));
@@ -657,7 +658,7 @@ function getCharts(aggregationStyle){
       }
 
    } else if (aggregationStyle=="Simple"){
-      var charts = [['bar', 'Bar Chart'], ['line','Line Chart'], ['radar','Radar Chart']];
+      var charts = [['bar', 'Bar Chart'], ['pie','Pie Chart'], ['doughnut','Doughnut Chart']];
       console.log("Number of charts: ".concat(charts.length));
 
       for (i = 0; i < charts.length; ++i){

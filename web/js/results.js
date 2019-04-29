@@ -136,11 +136,12 @@ function plotChart() {
         window.chart=new Array();
     }
 
-
+    
     for (var it in factatt)
     {
         var canvasID = "mainChart".concat(String(it));
         var canvas = document.getElementById(canvasID);
+        canvas.style.display="block";
         // Error checking for invalid combinations
         if (sport == "null" || league == "null" || team == "null" || season == "null" || match == "null" || factatt == "null" || aggregstyle == "null") {
             // Print error message and destroy chart

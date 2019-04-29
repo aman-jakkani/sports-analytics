@@ -366,6 +366,10 @@ function displayPlayerStats(){
     var soccerplayerstatistics = getRestResource("SoccerPlayerResource", [["token", token["token"]], ["playerID", playerID]]);
     soccerplayerstatistics = Object.values(soccerplayerstatistics);
 
+   if(window.chart1 != null){
+	   window.chart1.destroy();
+	   window.chart1 = null;
+	 }
    window.chart1 = plotRadar(player[1], soccerplayerstatistics[0], soccerplayerstatistics[1], soccerplayerstatistics[2]);
 
 

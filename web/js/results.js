@@ -403,6 +403,13 @@ function getPlayerData(token){
     // Let the first element of the array be the player's id
     var statsList, playerstatistics, soccerplayerstatistics;
 
+    for(var it in ids){
+        if(ids[it]==0)
+        {
+            ids.splice(it, 1);
+        }
+    };
+
     // Populate playerData for all found players
     for (var i = 0; i < ids.length; ++i){
         statsList = [ids[i]];

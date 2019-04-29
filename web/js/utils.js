@@ -384,13 +384,32 @@ function playerReset() {
   $("#game").html(defaultString);
   $("#factAttribute").html("");
   $("#players").html(defaultString);
+  $("#chartType").html(defaultString);
 
   // Reset error message
   document.getElementById("errorMessage").innerHTML = "";
 
-  // Destroy chart
 
-  window.chart.forEach(function (value) { value.destroy(); });
+  // Destroy chart
+    if(window.chart1 != null)
+    {
+        window.chart1.destroy();
+    }
+
+    if(typeof(window.chart) != "undefined" || window.chart != null) {
+        window.chart.forEach(function (value) {
+            value.destroy();
+        });
+        window.chart = null;
+    }
+    for( var it = 0; it < 8; it++ )
+    {
+        var canvasID = "mainChart".concat(String(it));
+        var canvas = document.getElementById(canvasID);
+        canvas.style.display="none";
+    }
+
+    document.getElementById("playerChart").style.display="none";
 
   // Reset table
   document.getElementById("table").innerHTML = "";

@@ -24,7 +24,7 @@ function plotDefault(chartType, homeTeamName, awayTeamName, homeTeamData, awayTe
   var homeTeamData = {
           label: homeTeamName,
           data: homeTeamData,
-          backgroundColor: 'rgba(148, 28, 47, 0.6)',
+          backgroundColor: "rgb(255, 99, 132)",
           borderWidth: 0,
           yAxisID: "y-axis"
   };
@@ -32,7 +32,7 @@ function plotDefault(chartType, homeTeamName, awayTeamName, homeTeamData, awayTe
   var awayTeamData = {
           label: awayTeamName,
           data: awayTeamData,
-          backgroundColor: 'rgba(32, 164, 243, 0.6)',
+          backgroundColor: "rgb(54, 162, 235)",
           borderWidth: 0,
           yAxisID: "y-axis"
   };

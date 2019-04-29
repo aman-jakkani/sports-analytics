@@ -183,10 +183,8 @@
 
             <!-- Create Submit Button, link to showData() function -->
             <td>
-				<div id= "reloader">
-				       <button class="btn btn-info" onclick="displayPlayerStats()" id="STATS">GET PLAYER STATS</button> 
+				<button class="btn btn-info" onclick="displayPlayerStats()" id="STATS">GET PLAYER STATS</button> 
 
-				</div>
             </td>
             
             <!-- Create Submit Button, link to showData() function -->
@@ -216,14 +214,6 @@
   border-top-color: #07d;
   animation: spinner .6s linear infinite;
 }
-
-$(document).ready(function() {
- 	 $("#reloader").load("analytics.html");
-   var refreshId = setInterval(function() {
-      $("#reloader").load('analytics.html');
-   });
-   $.ajaxSetup({ cache: false });
-});
 
 </style>
     

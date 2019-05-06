@@ -37,7 +37,11 @@ function plotRadar(name, stat0, stat1, stat2) {
     },
     legend: {
       position: 'left'
-    }
+    },
+      title: {
+            display: true,
+            text: [name]
+        }
   };
 
   var config = {

@@ -32,7 +32,10 @@ var allData = {
 
 	console.log(allData);
     var chartOptions = {
-        
+        title: {
+            display: true,
+            text: [label]
+        }
   };
   
     var config = {

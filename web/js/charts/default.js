@@ -59,6 +59,10 @@ function plotDefault(chartType, homeTeamName, awayTeamName, homeTeamData, awayTe
                                 beginAtZero: true
                         }
                 }]
+        },
+      title: {
+            display: true,
+            text: [label]
         }
   };
 

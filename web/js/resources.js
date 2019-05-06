@@ -695,12 +695,16 @@ function getPlayerList(sport, league, team, game){
    console.log("Players found: ".concat(json.homePlayers.length + json.guestPlayers.length));
 
    for (i = 0; i < json.homePlayers.length; ++i){
-      htmlPlayerString = htmlPlayerString.concat("<option class=\"w3-red\" value = \"" + json.homePlayersID[i] + "\">" + json.homePlayers[i] + "</option>");
+	 if(json.homePlayers[i] != "NotFound"){
+		htmlPlayerString = htmlPlayerString.concat("<option class=\"w3-red\" value = \"" + json.homePlayersID[i] + "\">" + json.homePlayers[i] + "</option>");
+	}
    }
 
    // json.guestPlayersID[i + json.homePlayers.length]
    for (i = 0; i < json.guestPlayers.length; ++i){
+	 if(json.guestPlayers[i] != "NotFound"){
       htmlPlayerString = htmlPlayerString.concat("<option class=\"w3-light-blue\" value = \"" + json.guestPlayersID[i] + "\">" + json.guestPlayers[i] + "</option>");
+	}
    }
 
    document.getElementById("players").innerHTML = htmlPlayerString;

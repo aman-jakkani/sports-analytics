@@ -346,7 +346,7 @@ function displayPlayerStats(){
     var token = getRestResource("TokenResource", parameters);
     console.log("Token: " + token["token"]);
 
-    playerData = getPlayerData(token);
+    playerData = getPlayerData(token, sport);
     createPlayerTable(playerData);
     
     $('#STATS').removeClass('spinner');
@@ -363,16 +363,18 @@ function displayPlayerStats(){
     var player = getRestResource("PlayerResource", [["token", token["token"]], ["playerID", playerID]]);
     player = Object.values(player);
 
-    var soccerplayerstatistics = getRestResource("SoccerPlayerResource", [["token", token["token"]], ["playerID", playerID]]);
-    soccerplayerstatistics = Object.values(soccerplayerstatistics);
-
-   if(window.chart1 != null){
-	   window.chart1.destroy();
-	   window.chart1 = null;
-	 }
-   window.chart1 = plotRadar(player[1], soccerplayerstatistics[0], soccerplayerstatistics[1], soccerplayerstatistics[2]);
+    if(sport == "Soccer") {
+        var soccerplayerstatistics = getRestResource("SoccerPlayerResource", [["token", token["token"]], ["playerID", playerID]]);
+        soccerplayerstatistics = Object.values(soccerplayerstatistics);
 
 
+        if (window.chart1 != null) {
+            window.chart1.destroy();
+            window.chart1 = null;
+        }
+        window.chart1 = plotRadar(player[1], soccerplayerstatistics[0], soccerplayerstatistics[1], soccerplayerstatistics[2]);
+
+    }
 	    $('#STATS').removeClass('spinner');
 
 }
@@ -390,7 +392,7 @@ Notes:
   Format:
   [ [a, b, c, d, e], [f, g, h, i, k], [l, m, n, o, p]]
 */
-function getPlayerData(token){
+function getPlayerData(token, sport){
     // Get the list of players with
     var playerList = getRestResource("PlayerListResource", [["token", token["token"]], ]);
 
@@ -405,10 +407,10 @@ function getPlayerData(token){
     var playerData = [["Player ID", "Birthday", "Name", "Weight", "Height", "Rating", "Strength", "Shot Power", "Preferred Foot"], ];
 
     // Let the first element of the array be the player's id
-    var statsList, playerstatistics, soccerplayerstatistics;
+    var statsList, playerstatistics, soccerplayerstatistics, basketballplayerstatistics;
 
     for(var it in ids){
-        if(ids[it]==0)
+        if(ids[it]==0 || ids[it] == null)
         {
             ids.splice(it, 1);
         }
@@ -426,13 +428,30 @@ function getPlayerData(token){
             statsList.push(playerstatistics[j]);
         }
 
-        // Get soccer player stats and append
-        soccerplayerstatistics = getRestResource("SoccerPlayerResource", [["token", token["token"]], ["playerID", ids[i]]]);
-        soccerplayerstatistics = Object.values(soccerplayerstatistics);
+        if(sport == "Soccer")
+        {
+            // Get soccer player stats and append
+            soccerplayerstatistics = getRestResource("SoccerPlayerResource", [["token", token["token"]], ["playerID", ids[i]]]);
+            soccerplayerstatistics = Object.values(soccerplayerstatistics);
 
-        for (var j = 0; j < soccerplayerstatistics.length; ++j){
-            statsList.push(soccerplayerstatistics[j]);
+            for (var j = 0; j < soccerplayerstatistics.length; ++j){
+                statsList.push(soccerplayerstatistics[j]);
+            }
         }
+        else
+        {
+            basketballplayerstatistics = getRestResource("BaseketballPlayerResource", [["token", token["token"]], ["playerID", ids[i]]]);
+
+
+            if (basketballplayerstatistics = !null) {
+                basketballplayerstatistics = Object.values(basketballplayerstatistics);
+
+                for (var j = 0; j < basketballplayerstatistics.length; ++j) {
+                    statsList.push(basketballplayerstatistics[j]);
+                }
+            }
+        }
+
 
         // Push the stats list for the specific player onto the playerData array
         playerData.push(statsList);

@@ -1,14 +1,19 @@
 package edu.sportanalytics.database;
 
+import com.sun.javafx.tools.packager.Log;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.logging.Logger;
 
 public class BasketballController extends DatabaseController {
@@ -486,11 +491,10 @@ public class BasketballController extends DatabaseController {
 				name = firstname + lastname;
 				String chopDate = rs.getString(3).substring(0,10);
 				birthday = df.parse(chopDate);
-				//height = rs.getInt(4); Bad Data
 				weight = rs.getInt(5);
 			}
 
-			player = new Basketball_Player(id, name, birthday, height, weight);
+			player = new Basketball_Player(id, name, birthday, height , weight);
 		}catch(Exception e){
 			log.severe(e.getMessage());
 		}
@@ -520,7 +524,6 @@ public class BasketballController extends DatabaseController {
 				String lastname = rs.getString(2);
 				name = firstname + lastname;
 				birthday = rs.getDate(3);
-				height = rs.getInt(4);
 				weight = rs.getInt(5);
 			}
 
@@ -591,7 +594,7 @@ public class BasketballController extends DatabaseController {
 		try {
 			ps = DBAccess.getConn().prepareStatement("SELECT PLAYER1_ID,PLAYER2_ID,PLAYER3_ID,PLAYER4_ID,PLAYER5_ID,PLAYER6_ID,PLAYER7_ID,PLAYER8_ID,PLAYER9_ID,PLAYER10_ID,PLAYER11_ID,PLAYER12_ID,PLAYER13_ID " +
 					"FROM BASKETBALL.GAMELINEUP " +
-					"JOIN BASKETBALL.GAME ON BASKETBALL.GAME.HOMETID = BASKETBALL.GAMELINEUP.TEAM_ID " +
+					"JOIN BASKETBALL.GAME ON (BASKETBALL.GAME.HOMETID = BASKETBALL.GAMELINEUP.TEAM_ID AND GAME_ID = GID)" +
 					"WHERE GAME_ID = ?");
 			ps.setString(1, matchid);
 			rs = ps.executeQuery();
@@ -618,7 +621,7 @@ public class BasketballController extends DatabaseController {
 		try {
 			ps = DBAccess.getConn().prepareStatement("SELECT PLAYER1_ID,PLAYER2_ID,PLAYER3_ID,PLAYER4_ID,PLAYER5_ID,PLAYER6_ID,PLAYER7_ID,PLAYER8_ID,PLAYER9_ID,PLAYER10_ID,PLAYER11_ID,PLAYER12_ID,PLAYER13_ID " +
 					"FROM BASKETBALL.GAMELINEUP " +
-					"JOIN BASKETBALL.GAME ON BASKETBALL.GAME.VISITORTID = BASKETBALL.GAMELINEUP.TEAM_ID " +
+					"JOIN BASKETBALL.GAME ON (BASKETBALL.GAME.VISITORTID = BASKETBALL.GAMELINEUP.TEAM_ID AND GAME_ID = GID)" +
 					"WHERE GAME_ID = ?");
 			ps.setString(1, matchid);
 			rs = ps.executeQuery();

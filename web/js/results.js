@@ -347,7 +347,7 @@ function displayPlayerStats(){
     console.log("Token: " + token["token"]);
 
     playerData = getPlayerData(token, sport);
-    createPlayerTable(playerData);
+    createPlayerTable(playerData, sport);
     
     $('#STATS').removeClass('spinner');
 
@@ -375,7 +375,7 @@ function displayPlayerStats(){
         window.chart1 = plotRadar(player[1], soccerplayerstatistics[0], soccerplayerstatistics[1], soccerplayerstatistics[2]);
 
     }
-	    $('#STATS').removeClass('spinner');
+	   
 
 }
 
@@ -440,7 +440,7 @@ function getPlayerData(token, sport){
         }
         else
         {
-            basketballplayerstatistics = getRestResource("BaseketballPlayerResource", [["token", token["token"]], ["playerID", ids[i]]]);
+            basketballplayerstatistics = getRestResource("BasketballPlayerResource", [["token", token["token"]], ["playerID", ids[i]]]);
 
 
             if (basketballplayerstatistics = !null) {

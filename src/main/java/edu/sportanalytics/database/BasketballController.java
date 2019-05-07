@@ -1,7 +1,5 @@
 package edu.sportanalytics.database;
 
-import com.sun.javafx.tools.packager.Log;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;

@@ -79,6 +79,7 @@ var dropdown = {
          //$("#aggregationFunction").html(getAggregationFunction(league));
          $("#players").html(defaultString);
 
+
          // Not putting aggregration style on player analytics page
          if (window.location.pathname =="/CubeRollupMock.html") {
             $("#aggregationStyle").html(getAggregationStyle(aggregationFunction));
@@ -681,8 +682,7 @@ function getCharts(aggregationStyle){
   Notes:
 */
 function getPlayerList(sport, league, team, game){
-   var htmlPlayerString = "<option value = \"null\" >--Make a choice--</option>"
-                           + "<option value = \"all\" >All Players</option>";
+   var htmlPlayerString = "<option value = \"null\" >--Make a choice--</option>";
 
    // place conditionals to get allow passing null values when other values are present (pass in all teams)
    if (sport == "null" || league == "null" || team == "null" || season == "null" || game == "null") return htmlPlayerString;

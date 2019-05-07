@@ -251,7 +251,7 @@ Returns:
 Raises:
 Notes:
 */
-function createPlayerTable(data){
+function createPlayerTable(data, sport){
    // Create an HTML table element
    var table = document.createElement("TABLE");
    table.border = "1";
@@ -262,10 +262,12 @@ function createPlayerTable(data){
    // Create a HTML Table element.
    var table = document.createElement("TABLE");
    table.border = "1";
+    
+    if(sport==='Basketball'){
 
    // Add the header row
    var row = table.insertRow(-1);
-   for (var i = 0; i < columnCount; ++i) {
+   for (var i = 0; i < columnCount-5; ++i) {
       var headerCell = document.createElement("TH");
       headerCell.innerHTML = data[0][i];
       row.appendChild(headerCell);
@@ -273,12 +275,38 @@ function createPlayerTable(data){
 
    // Add the data rows
    for (var i = 1; i < data.length; ++i) {
-      row = table.insertRow(-1);
-      for (var j = 0; j < columnCount; ++j) {
-         var cell = row.insertCell(-1);
-         cell.innerHTML = data[i][j];
+       if(data[i][2]===''){
+           console.log('Player not in DB');
+       }else{
+           console.log('Player found in DB');
+          row = table.insertRow(-1);
+          for (var j = 0; j < columnCount-5; ++j) {
+             var cell = row.insertCell(-1);
+             cell.innerHTML = data[i][j];
+      }
       }
    }
+    }else if(sport==='Soccer'){
+        
+         // Add the header row
+    var row = table.insertRow(-1);
+    for (var i = 0; i < columnCount; ++i) {
+       var headerCell = document.createElement("TH");
+       headerCell.innerHTML = data[0][i];
+       row.appendChild(headerCell);
+    }
+    
+       // Add the data rows
+       for (var i = 1; i < data.length; ++i) {
+              row = table.insertRow(-1);
+              for (var j = 0; j < columnCount; ++j) {
+                 var cell = row.insertCell(-1);
+                 cell.innerHTML = data[i][j];
+          }
+          }
+       }
+
+    
 
    var dvTable = document.getElementById("table");
    dvTable.innerHTML = "";
@@ -413,6 +441,7 @@ function playerReset() {
 
   // Reset table
   document.getElementById("table").innerHTML = "";
+     $('#STATS').removeClass('spinner');
   
 }
         
